@@ -1,0 +1,19 @@
+
+services:
+  jupyter:
+    image: quay.io/jupyter/all-spark-notebook:spark-3.5.0
+    ports:
+      - "8889:8888"
+    volumes:
+      # - "./:/home/nkaurelien/work"
+      - "./volumes/jupyter:/home/jovyan/work"
+    environment:
+      - NOTEBOOK_APP_TOKEN=secret
+    command: start-notebook.sh --NotebookApp.token='secret'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
