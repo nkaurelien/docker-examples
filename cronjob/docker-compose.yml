@@ -3,6 +3,8 @@ services:
     image: mcuadros/ofelia:latest
     depends_on:
       - nginx
+      - bullmq
+      - agenda
     command: daemon --docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -26,6 +28,10 @@ services:
     command: "node build/agenda.js"
     depends_on:
       - mongodb
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-exec.agenda-uname-cron.schedule: "@every 5s"
+      ofelia.job-exec.agenda-uname-cron.command: "uname -a"
 
   bullmq:
     build:
@@ -36,6 +42,10 @@ services:
     command: "node build/bullmq.js"
     depends_on:
       - redis
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-exec.bullmq-uname-cron.schedule: "@every 5s"
+      ofelia.job-exec.bullmq-uname-cron.command: "uname -a"
 
   pm2-node-cron:
     build:
