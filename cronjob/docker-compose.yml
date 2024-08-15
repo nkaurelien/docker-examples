@@ -26,7 +26,6 @@ services:
     command: "node build/agenda.js"
     depends_on:
       - mongodb
-      - redis
 
   bullmq:
     build:
@@ -36,7 +35,6 @@ services:
 #    command: "npx pm2 start build/bullmq.js"
     command: "node build/bullmq.js"
     depends_on:
-      - mongodb
       - redis
 
   pm2-node-cron:
