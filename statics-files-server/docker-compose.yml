@@ -1,0 +1,46 @@
+services:
+  patient-webapp:
+    build:
+      context: ./frontend
+      dockerfile: caddy.Dockerfile
+      args:
+        SITE: ${SITE:-patient}
+    ports:
+      - "8001:80"
+    environment:
+      SITE: "patient"
+
+  doctor-webapp:
+    build:
+      context: ./frontend
+      dockerfile: httpd.Dockerfile
+      args:
+        SITE: ${SITE:-doctor}
+    ports:
+      - "8002:80"
+    environment:
+      SITE: "doctor"
+
+  backend-webapi:
+    build: backend/flask
+    restart: always
+    ports:
+      - "9000:8080"
+    environment:
+      - COUCHDB_URL=http://admin:s3cr3t@couchdb:5984/
+    command: uvicorn main:app --host 0.0.0.0 --port 8080
+    depends_on:
+      - couchdb
+
+  couchdb:
+    image: couchdb:3.1
+    environment:
+      COUCHDB_USER: ${COUCHDB_USER:-admin}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD:-s3cr3t}
+    volumes:
+      - couchdb_data:/opt/couchdb/data
+    ports:
+      - "5984:5984"
+
+volumes:
+  couchdb_data:
