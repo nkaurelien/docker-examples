@@ -1,0 +1,97 @@
+services:
+  traefik:
+    image: traefik:v2.9
+    container_name: "traefik"
+    ports:
+      - "80:80"       # The HTTP port for routing traffic
+      - "8080:8080"   # The Traefik dashboard
+    command:
+      - "--api.insecure=true"
+      - "--log.level=DEBUG"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=true"
+      - "--entrypoints.web.address=:80"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - traefik-public
+
+  patient-webapp:
+    build:
+      context: ./frontend
+      dockerfile: caddy.Dockerfile
+      args:
+        SITE: ${SITE:-patient}
+    ports:
+      - "8001:80"
+    networks:
+      - my-network
+      - traefik-public
+    environment:
+      SITE: "patient"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.patient-web-app.rule=Host(`patient.kamitcare.localhost`)"
+      - "traefik.http.routers.patient-web-app.entrypoints=web"
+
+
+  doctor-webapp:
+    build:
+      context: ./frontend
+      dockerfile: busybox.Dockerfile
+      args:
+        SITE: ${SITE:-doctor}
+    ports:
+      - "8002:3000"
+    networks:
+      - my-network
+      - traefik-public
+    environment:
+      SITE: "doctor"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.doctor-web-app.rule=Host(`doctor.kamitcare.localhost`)"
+      - "traefik.http.routers.doctor-web-app.entrypoints=web"
+      - "traefik.http.services.doctor-web-app.loadbalancer.server.port=3000"
+
+  backend-webapi:
+    build: backend/flask
+    restart: always
+    ports:
+      - "8000:8000"
+    networks:
+      - my-network
+      - traefik-public
+    environment:
+      - COUCHDB_URL=http://admin:s3cr3t@couchdb:5984/
+#    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    depends_on:
+      - couchdb
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend-web-api.rule=Host(`api.kamitcare.localhost`)"
+      - "traefik.http.routers.backend-web-api.entrypoints=web"
+      - "traefik.http.services.backend-web-api.loadbalancer.server.port=8000"
+
+
+  couchdb:
+    image: couchdb:3.1
+    environment:
+      COUCHDB_USER: ${COUCHDB_USER:-admin}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD:-s3cr3t}
+    volumes:
+      - couchdb_data:/opt/couchdb/data
+    ports:
+      - "5984:5984"
+    networks:
+      - my-network
+
+volumes:
+  couchdb_data:
+
+networks:
+  my-network:
+    driver: bridge
+
+  traefik-public:
+    external: true
