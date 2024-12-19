@@ -12,7 +12,13 @@ services:
       MINIO_SECRET_KEY: "minioadmin"
     volumes:
       - minio_data:/data
+    networks:
+      - minio_network
     command: server /data --console-address ":9001"
 
 volumes:
   minio_data:
+
+networks:
+  minio_network:
+    external: true
