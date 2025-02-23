@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      # - ./nginx/conf.d:/etc/nginx/conf.d
+      # - ./nginx/html:/usr/share/nginx/html
+      # - /mnt/minio-nginx/nginx/conf.d:/etc/nginx/conf.d
+      - /mnt/minio-nginx/nginx/html:/usr/share/nginx/html
+      # - minio_nginx_volume:/path/to/minio/in/nginx
+    depends_on:
+      - minio
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - "9000:9000" # Api
+      - "9001:9001" # Admin Web Console
+    environment:
+      MINIO_ROOT_USER: "minioadmin"
+      MINIO_ROOT_PASSWORD: "minioadmin"
+      MINIO_ACCESS_KEY: "minioadmin"
+      MINIO_SECRET_KEY: "minioadmin"
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+
+  # minio:
+  #   image: bitnami/minio:latest
+  #   container_name: minio
+  #   ports:
+  #     - "9000:9000" # Api
+  #     - "9001:9001" # Admin Web Console
+  #   environment:
+  #     MINIO_DATA_DIR: /bitnami/minio/data
+  #     MINIO_ROOT_USER: "minioadmin"
+  #     MINIO_ROOT_PASSWORD: "minioadmin"
+  #     MINIO_ACCESS_KEY: "minioadmin"
+  #     MINIO_SECRET_KEY: "minioadmin"
+  #   volumes:
+  #     - minio_data:/bitnami/minio/data
+
+volumes:
+  minio_data:
+  # minio_nginx_volume:
+  #   external: true
