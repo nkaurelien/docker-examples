@@ -1,0 +1,33 @@
+
+services:
+  hoppscotch:
+    image: hoppscotch/hoppscotch  # The Docker image to use for the Hoppscotch service
+    ports:
+      - "3000:3000"  # Map port 3000 on the host to port 3000 in the container (typically for the frontend)
+      - "3100:3100"  # Map port 3100 on the host to port 3100 in the container (typically for the admin interface)
+      - "3170:3170"  # Map port 3170 on the host to port 3170 in the container (typically for the backend)
+    env_file:
+      - .env.example  # Load environment variables from the .env file in the same directory
+    restart: unless-stopped  # Restart the container unless it is explicitly stopped
+
+  hoppscotch-db:
+    image: postgres:15
+    user: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: testpass
+      POSTGRES_DB: hoppscotch
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "sh -c 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}'"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+# This configuration sets up a single service named "hoppscotch" that uses the
+# hoppscotch/hoppscotch Docker image. It maps three ports from the host to the
+# container, loads environment variables from a .env file, and ensures the
+# container restarts automatically unless it is explicitly stopped.
