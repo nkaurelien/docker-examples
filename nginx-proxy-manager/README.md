@@ -10,3 +10,10 @@ Default Admin User:
 Email:    admin@example.com
 Password: changeme
 ```
+
+
+```text
+Email:    admin@kamitbrains.com
+Password: Secret2Login
+```
+

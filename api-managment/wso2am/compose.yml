@@ -1,0 +1,18 @@
+services:
+  api-manager:
+    image: wso2/wso2am:4.0.0
+    container_name: wso2-api-manager
+    ports:
+      - "8280:8280"
+      - "8243:8243"
+      - "8443:9443"
+    #   - "5005:5005"
+    # command: -debug *:5005
+    healthcheck:
+      test: ["CMD", "nc", "-z","localhost", "9443"]
+      interval: 10s
+      start_period: 180s
+      retries: 20
+    stdin_open: true
+    tty: true
+    
