@@ -17,7 +17,7 @@ docker compose -p mailu up -d
 
 and stop with
 
-docker compose -p mailu down -v --remove-orphans
+docker compose -p mailu down --volumes --remove-orphans --rmi all
 
 
 Before you can use Mailu, you must create the primary administrator user account. This should be admin@mailu.local. Use the following command, changing PASSWORD to your liking:
