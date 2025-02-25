@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:4.0-alpine
+    container_name: tyk-redis
+    networks:
+      - tyk
+    ports:
+      - "6379:6379"
+
+  tyk-gateway:
+    image: tykio/tyk-gateway:latest
+    container_name: tyk_gateway
+    networks:
+      - tyk
+    ports:
+      - "8080:8080"
+    # volumes:
+    #   - ./tyk.standalone.conf:/opt/tyk-gateway/tyk.conf
+    #   - ./apps:/opt/tyk-gateway/apps
+    depends_on:
+      - redis
+
+networks:
+  tyk:
+    driver: bridge
