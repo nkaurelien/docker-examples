@@ -1,0 +1,2 @@
+- https://blog.technitium.com/2017/11/running-dns-server-on-ubuntu-linux.html
+- https://hub.docker.com/r/technitium/dns-server
