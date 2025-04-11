@@ -1,0 +1,26 @@
+# Use an official Nginx image as the base image
+FROM nginx:bookworm
+
+# Install Node.js and PM2
+RUN apt-get update && \
+    apt-get install -y curl && \
+    curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g pm2 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+
+
+WORKDIR /usr/share/nginx/
+
+# Copy the specified static site content to the Nginx web root directory
+COPY --chmod=777 ecosystem.config.js .
+
+# Expose ports 80 and 3000 to the outside world
+EXPOSE 80 3000
+
+
+# Start PM2 when the container starts
+CMD ["pm2-runtime", "start", "ecosystem.config.js"]
+

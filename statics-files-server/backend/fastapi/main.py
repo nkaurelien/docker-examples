@@ -16,7 +16,8 @@ app = FastAPI()
 def read_root():
     return {"message": "Bienvenue dans le monde sombre et mystérieux de FastAPI."}
 
-if __name__ == '__main__':
-    import uvicorn
 
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+# if __name__ == '__main__':
+#     import uvicorn
+
+#     uvicorn.run(app, host="127.0.0.1", port=8000)
