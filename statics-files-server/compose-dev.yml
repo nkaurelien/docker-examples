@@ -1,0 +1,72 @@
+
+services:
+  patient-webapp:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev.watch
+      args:
+        SITE: ${SITE:-patient}
+    ports:
+      - "8081:8080"
+    # depends_on:
+    #   - backend-webapi
+    volumes:
+      - "./frontend/patient:/usr/share/nginx/app"
+    environment:
+      SITE: "patient"
+
+  doctor-webapp:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev.watch
+      args:
+        SITE: ${SITE:-doctor}
+    ports:
+      - "8082:8080"
+    # depends_on:
+    #   - backend-webapi
+    volumes:
+      - "./frontend/doctor:/usr/share/nginx/app"
+    environment:
+      SITE: "doctor"
+
+  backend-webapi:
+    container_name: "backend-webapi"
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev.watch
+    restart: always
+    ports:
+      - "9000:9000"
+#    env_file:
+#      - .env.exemple
+    environment:
+      - MODULE_NAME=main
+      - VARIABLE_NAME=app
+      - PORT=80
+      - COUCHDB_URL=http://admin:s3cr3t@couchdb:5984/
+    volumes:
+      - "./backend:/usr/src/app/src"
+    links:
+      - couchdb
+    depends_on:
+      - couchdb
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost/healthcheck || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  couchdb:
+    container_name: "asone4health-database"
+    image: couchdb:3.1
+    environment:
+      COUCHDB_USER: ${COUCHDB_USER:-admin}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD:-s3cr3t}
+    volumes:
+      - couchdb_data:/opt/couchdb/data
+    ports:
+      - "10000:5984"
+
+volumes:
+  couchdb_data:
