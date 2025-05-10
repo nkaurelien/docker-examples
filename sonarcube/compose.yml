@@ -11,9 +11,11 @@ services:
       - sonarcube
     volumes:
       - .:/app
-    command: ["sonar-scanner", "-Dsonar.projectBaseDir=/app", "-Dsonar.host.url=http://sonarcube:9000", "-Dsonar.login=sqp_5b9ba20df10ed45bfced7e30dec1e6cbf8a68c2c"]
+    command: ["sonar-scanner", "-Dsonar.projectBaseDir=/app", "-Dsonar.host.url=http://sonarcube:9000", "-Dsonar.login=sqp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "-Dsonar.projectKey=MyProjectKey"]
     networks:
       - sonarcube
+    environment:
+      - SONAR_SCANNER_JAVA_OPTS=-Xmx512m
 
   sonarcube:
     container_name: "sonarcube-server"
