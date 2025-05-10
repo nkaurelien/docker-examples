@@ -36,8 +36,14 @@ services:
       - sonarqube_extensions:/opt/sonarqube/extensions
       - sonarqube_logs:/opt/sonarqube/logs
       - sonarqube_temp:/opt/sonarqube/temp
+    healthcheck:
+      test: [ "CMD", "/bin/bash", "-c", "wget -qO- http://localhost:9000/api/system/status | grep -q -e '\"status\":\"UP\"' -e '\"status\":\"DB_MIGRATION_NEEDED\"' -e '\"status\":\"DB_MIGRATION_RUNNING\"' || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   sonar_db:
+    container_name: "sonarcube-db"
     image: postgres:13
     environment:
       POSTGRES_USER: sonar
@@ -48,6 +54,12 @@ services:
       - sonar_db_data:/var/lib/postgresql/data
     networks:
       - sonarcube
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "sonar", "-U", "sonar"]
+      interval: '10s'
+      timeout: '30s'
+      retries: 5
+      start_period: '20s'
 
 volumes:
   sonarqube_conf:
