@@ -1,0 +1,36 @@
+version: "2"
+
+services:
+  registry:
+    image: registry:2
+    ports:
+      - "25000:5000"
+    environment:
+      - REGISTRY_HTTP_SECRET=o43g2kjgn2iuhv2k4jn2f23f290qfghsdg
+      - REGISTRY_STORAGE_DELETE_ENABLED=true
+    volumes:
+      - ./registry-data:/var/lib/registry
+
+  ui:
+    image: jc21/registry-ui
+    environment:
+      - NODE_ENV=production
+      - REGISTRY_HOST=registry:5000
+      - REGISTRY_SSL=false
+      - REGISTRY_DOMAIN=192.168.0.201:25000
+      - REGISTRY_STORAGE_DELETE_ENABLED=true
+    links:
+      - registry
+    restart: on-failure
+
+  proxy:
+    image: jc21/registry-ui-proxy
+    ports:
+      - "21000:80"
+    depends_on:
+      - ui
+      - registry
+    links:
+      - ui
+      - registry
+    restart: on-failure
