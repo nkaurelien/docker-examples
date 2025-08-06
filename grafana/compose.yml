@@ -1,0 +1,15 @@
+services:
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana
+    restart: unless-stopped
+    environment:
+     - GF_SERVER_ROOT_URL=http://grafana.asone4health.fr/
+     - GF_PLUGINS_PREINSTALL=grafana-clock-panel
+    ports:
+     - '23000:3000'
+    volumes:
+     - ./grafana-config:/etc/grafana
+     - 'grafana_storage:/var/lib/grafana'
+volumes:
+  grafana_storage: {}
