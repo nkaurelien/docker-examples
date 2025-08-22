@@ -26,7 +26,7 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:29092,PLAINTEXT_HOST://197.13.35.212:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:29092,PLAINTEXT_HOST://${KAFKA_EXTERNAL_IP:-localhost}:${KAFKA_PORT_BASE:-909}2
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
@@ -48,7 +48,7 @@ services:
       KAFKA_BROKER_ID: 2
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:29093,PLAINTEXT_HOST://197.13.35.212:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:29093,PLAINTEXT_HOST://${KAFKA_EXTERNAL_IP:-localhost}:${KAFKA_PORT_BASE:-909}3
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
@@ -70,7 +70,7 @@ services:
       KAFKA_BROKER_ID: 3
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka3:29094,PLAINTEXT_HOST://197.13.35.212:9094
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka3:29094,PLAINTEXT_HOST://${KAFKA_EXTERNAL_IP:-localhost}:${KAFKA_PORT_BASE:-909}4
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
@@ -88,7 +88,7 @@ services:
       - kafka2
       - kafka3
     ports:
-      - "8081:8080"
+      - "${KAFKA_UI_PORT:-8081}:8080"
     environment:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka1:29092,kafka2:29093,kafka3:29094
@@ -109,10 +109,10 @@ services:
     volumes:
       - ./pipeline_index:/usr/share/logstash/pipeline:ro
     environment:
-      LS_JAVA_OPTS: "-Xmx2g -Xms2g -XX:+UseG1GC -XX:MaxGCPauseMillis=50"
-      PIPELINE_WORKERS: 1
-      PIPELINE_BATCH_SIZE: 1
-      PIPELINE_BATCH_DELAY: 1
+      LS_JAVA_OPTS: "-Xmx${LOGSTASH_HEAP_SIZE:-2g} -Xms${LOGSTASH_HEAP_SIZE:-2g} -XX:+UseG1GC -XX:MaxGCPauseMillis=50"
+      PIPELINE_WORKERS: ${LOGSTASH_PIPELINE_WORKERS:-1}
+      PIPELINE_BATCH_SIZE: ${LOGSTASH_BATCH_SIZE:-1}
+      PIPELINE_BATCH_DELAY: ${LOGSTASH_BATCH_DELAY:-1}
     logging:
       driver: "json-file"
       options:
@@ -128,14 +128,14 @@ services:
       - kafka3
     ports:
       - "5045:5044"
-      - "9601:9600"
+      - "${LOGSTASH_MONITORING_PORT:-9601}:9600"
     volumes:
       - ./pipeline_storage:/usr/share/logstash/pipeline:ro
     environment:
-      LS_JAVA_OPTS: "-Xmx2g -Xms2g -XX:+UseG1GC -XX:MaxGCPauseMillis=50"
-      PIPELINE_WORKERS: 1
-      PIPELINE_BATCH_SIZE: 1
-      PIPELINE_BATCH_DELAY: 1
+      LS_JAVA_OPTS: "-Xmx${LOGSTASH_HEAP_SIZE:-2g} -Xms${LOGSTASH_HEAP_SIZE:-2g} -XX:+UseG1GC -XX:MaxGCPauseMillis=50"
+      PIPELINE_WORKERS: ${LOGSTASH_PIPELINE_WORKERS:-1}
+      PIPELINE_BATCH_SIZE: ${LOGSTASH_BATCH_SIZE:-1}
+      PIPELINE_BATCH_DELAY: ${LOGSTASH_BATCH_DELAY:-1}
     logging:
       driver: "json-file"
       options:
@@ -160,14 +160,14 @@ services:
         
         echo 'All Kafka brokers are ready!'
         
-        kafka-topics --create --if-not-exists --topic Emotibit_rawdata --bootstrap-server kafka1:29092,kafka2:29093,kafka3:29094 --partitions 3 --replication-factor 3 --config min.insync.replicas=2 --config flush.messages=1 --config flush.ms=1000 --config segment.ms=60000 --config retention.ms=86400000
+        kafka-topics --create --if-not-exists --topic ${KAFKA_TOPIC_RAW_DATA:-Emotibit_rawdata} --bootstrap-server kafka1:29092,kafka2:29093,kafka3:29094 --partitions 3 --replication-factor 3 --config min.insync.replicas=2 --config flush.messages=1 --config flush.ms=1000 --config segment.ms=60000 --config retention.ms=86400000
         
-        kafka-topics --create --if-not-exists --topic Emotibit_processdata --bootstrap-server kafka1:29092,kafka2:29093,kafka3:29094 --partitions 3 --replication-factor 3 --config min.insync.replicas=2 --config flush.messages=1 --config flush.ms=1000 --config segment.ms=60000 --config retention.ms=86400000
+        kafka-topics --create --if-not-exists --topic ${KAFKA_TOPIC_PROCESSED_DATA:-Emotibit_processdata} --bootstrap-server kafka1:29092,kafka2:29093,kafka3:29094 --partitions 3 --replication-factor 3 --config min.insync.replicas=2 --config flush.messages=1 --config flush.ms=1000 --config segment.ms=60000 --config retention.ms=86400000
         
-        echo 'Topics Emotibit_rawdata and Emotibit_processdata configured for real-time processing!'
+        echo 'Topics ${KAFKA_TOPIC_RAW_DATA:-Emotibit_rawdata} and ${KAFKA_TOPIC_PROCESSED_DATA:-Emotibit_processdata} configured for real-time processing!'
         
-        kafka-topics --describe --topic Emotibit_rawdata --bootstrap-server kafka1:29092
-        kafka-topics --describe --topic Emotibit_processdata --bootstrap-server kafka1:29092
+        kafka-topics --describe --topic ${KAFKA_TOPIC_RAW_DATA:-Emotibit_rawdata} --bootstrap-server kafka1:29092
+        kafka-topics --describe --topic ${KAFKA_TOPIC_PROCESSED_DATA:-Emotibit_processdata} --bootstrap-server kafka1:29092
         "
     restart: "no"
     logging:

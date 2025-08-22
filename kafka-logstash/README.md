@@ -47,17 +47,27 @@ Ce projet déploie une infrastructure Kafka complète avec Logstash pour le trai
 
 ## 🚀 Installation et Démarrage
 
-### 1. Cloner le projet
+### 1. Configuration de l'environnement
 ```bash
-cd /opt/docker/kafka
+# Copier le template de configuration
+cp .env.example .env
+
+# Éditer le fichier .env avec vos valeurs
+nano .env
 ```
 
-### 2. Configuration des topics
-Les topics suivants sont automatiquement créés :
-- `Emotibit_rawdata` : Données brutes EmotiBit
-- `Emotibit_processdata` : Données traitées EmotiBit
+### 2. Configurer les variables importantes
+- `KAFKA_EXTERNAL_IP`: Adresse IP externe pour Kafka
+- `COUCHDB_*`: Paramètres de connexion CouchDB  
+- `ELASTICSEARCH_*`: Paramètres de connexion Elasticsearch
+- `KAFKA_TOPIC_*`: Noms des topics Kafka
 
-### 3. Démarrer le stack
+### 3. Configuration des topics
+Les topics suivants sont automatiquement créés (configurables via `.env`) :
+- `${KAFKA_TOPIC_RAW_DATA}` : Données brutes des capteurs (défaut: `Emotibit_rawdata`)
+- `${KAFKA_TOPIC_PROCESSED_DATA}` : Données traitées des capteurs (défaut: `Emotibit_processdata`)
+
+### 4. Démarrer le stack
 ```bash
 # Démarrage complet
 docker-compose up -d
@@ -81,7 +91,7 @@ docker exec kafka1 kafka-topics --list --bootstrap-server localhost:9092
 ## 🔍 Monitoring et Administration
 
 ### Kafka UI
-- **URL** : http://197.13.35.212:8081
+- **URL** : http://localhost:${KAFKA_UI_PORT} (défaut: 8081)
 - **Fonctionnalités** :
   - Visualisation des topics
   - Monitoring des partitions
@@ -91,7 +101,7 @@ docker exec kafka1 kafka-topics --list --bootstrap-server localhost:9092
 ### Logstash Monitoring
 ```bash
 # API Logstash Storage
-curl http://197.13.35.212:9601/_node/stats
+curl http://localhost:${LOGSTASH_MONITORING_PORT}/_node/stats
 
 # Logs Logstash
 docker-compose logs logstash-storage

@@ -1,0 +1,19 @@
+# Environment files
+.env
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker volumes (if created locally)
+data/
