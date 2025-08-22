@@ -1,0 +1,15 @@
+services:
+  haproxy:
+    image: haproxy:2.6
+    ports:
+      - "5984:5984"
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    networks:
+      asone4health_network:
+        ipv4_address: 172.19.0.200 # Remplacez par l'adresse IP souhaitée
+
+
+networks:
+  asone4health_network:
+    external: true

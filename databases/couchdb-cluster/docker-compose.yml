@@ -1,0 +1,67 @@
+services:
+
+  couchdb-0:
+    restart: always
+    environment:
+      COUCHDB_USER: ${COUCHDB_USER}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
+      COUCHDB_SECRET: ${COUCHDB_SECRET}
+      NODENAME: couchdb-0.${COUCHDB_NODE_NAME}
+      ERL_FLAGS: "-setcookie ${COUCHDB_COOKIE}"
+    image: couchdb:3.4.2
+    networks:
+      asone4health_network:
+        ipv4_address: 172.19.0.10
+    ports:
+      - "${PORT_BASE}0:5984"
+    volumes:
+      - "data-couch-0:/opt/couchdb/data"
+      - "./config/couchdb0/local.ini:/opt/couchdb/etc/local.ini"
+
+  couchdb-1:
+    restart: always
+    environment:
+      COUCHDB_USER: ${COUCHDB_USER}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
+      COUCHDB_SECRET: ${COUCHDB_SECRET}
+      NODENAME: couchdb-1.${COUCHDB_NODE_NAME}
+      ERL_FLAGS: "-setcookie ${COUCHDB_COOKIE}"
+    image: couchdb:3.4.2
+    networks:
+      asone4health_network:
+        ipv4_address: 172.19.0.11
+    ports:
+      - "${PORT_BASE}1:5984"
+    volumes:
+      - "data-couch-1:/opt/couchdb/data"
+      - "./config/couchdb1/local.ini:/opt/couchdb/etc/local.ini"
+
+  couchdb-2:
+    restart: always
+    environment:
+      COUCHDB_USER: ${COUCHDB_USER}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
+      COUCHDB_SECRET: ${COUCHDB_SECRET}
+      NODENAME: couchdb-2.${COUCHDB_NODE_NAME}
+      ERL_FLAGS: "-setcookie ${COUCHDB_COOKIE}"
+    image: couchdb:3.4.2
+    networks:
+      asone4health_network:
+        ipv4_address: 172.19.0.12
+    ports:
+      - "${PORT_BASE}2:5984"
+    volumes:
+      - "data-couch-2:/opt/couchdb/data"
+      - "./config/couchdb2/local.ini:/opt/couchdb/etc/local.ini"
+
+networks:
+  asone4health_network:
+    external: true
+
+volumes:
+  data-couch-0:
+  cfg-couch-0:
+  data-couch-1:
+  cfg-couch-1:
+  data-couch-2:
+  cfg-couch-2:
