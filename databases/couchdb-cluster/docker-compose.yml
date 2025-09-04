@@ -6,17 +6,23 @@ services:
       COUCHDB_USER: ${COUCHDB_USER}
       COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
       COUCHDB_SECRET: ${COUCHDB_SECRET}
-      NODENAME: couchdb-0.${COUCHDB_NODE_NAME}
+      NODENAME: couchdb-0
       ERL_FLAGS: "-setcookie ${COUCHDB_COOKIE}"
     image: couchdb:3.4.2
     networks:
       asone4health_network:
-        ipv4_address: 172.19.0.10
+        ipv4_address: ${NODE0_IP}
     ports:
       - "${PORT_BASE}0:5984"
     volumes:
       - "data-couch-0:/opt/couchdb/data"
       - "./config/couchdb0/local.ini:/opt/couchdb/etc/local.ini"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5984/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
 
   couchdb-1:
     restart: always
@@ -24,17 +30,23 @@ services:
       COUCHDB_USER: ${COUCHDB_USER}
       COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
       COUCHDB_SECRET: ${COUCHDB_SECRET}
-      NODENAME: couchdb-1.${COUCHDB_NODE_NAME}
+      NODENAME: couchdb-1
       ERL_FLAGS: "-setcookie ${COUCHDB_COOKIE}"
     image: couchdb:3.4.2
     networks:
       asone4health_network:
-        ipv4_address: 172.19.0.11
+        ipv4_address: ${NODE1_IP}
     ports:
       - "${PORT_BASE}1:5984"
     volumes:
       - "data-couch-1:/opt/couchdb/data"
       - "./config/couchdb1/local.ini:/opt/couchdb/etc/local.ini"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5984/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
 
   couchdb-2:
     restart: always
@@ -42,21 +54,94 @@ services:
       COUCHDB_USER: ${COUCHDB_USER}
       COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
       COUCHDB_SECRET: ${COUCHDB_SECRET}
-      NODENAME: couchdb-2.${COUCHDB_NODE_NAME}
+      NODENAME: couchdb-2
       ERL_FLAGS: "-setcookie ${COUCHDB_COOKIE}"
     image: couchdb:3.4.2
     networks:
       asone4health_network:
-        ipv4_address: 172.19.0.12
+        ipv4_address: ${NODE2_IP}
     ports:
       - "${PORT_BASE}2:5984"
     volumes:
       - "data-couch-2:/opt/couchdb/data"
       - "./config/couchdb2/local.ini:/opt/couchdb/etc/local.ini"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5984/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+
+  # Service pour initialiser le cluster automatiquement
+  cluster-init:
+    image: curlimages/curl:latest
+    container_name: ${COMPOSE_PROJECT_NAME}_cluster-init_1
+    depends_on:
+      couchdb-0:
+        condition: service_healthy
+      couchdb-1:
+        condition: service_healthy
+      couchdb-2:
+        condition: service_healthy
+    environment:
+      - COUCHDB_USER=${COUCHDB_USER}
+      - COUCHDB_PASSWORD=${COUCHDB_PASSWORD}
+      - COUCHDB_NODE_NAME=${COUCHDB_NODE_NAME}
+      - COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME}
+    networks:
+      asone4health_network:
+        ipv4_address: ${CLUSTER_INIT_IP}
+    volumes:
+      - ./init-cluster-docker.sh:/init-cluster.sh:ro
+    command: ["/bin/sh", "/init-cluster.sh"]
+    restart: "no"
+
+  # CouchDB Management UI
+  couchdb-manager:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM python:3.11-slim
+        WORKDIR /app
+        RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+        COPY requirements.txt .
+        RUN pip install --no-cache-dir -r requirements.txt
+        COPY couchdb_manager.py .
+        COPY manage/ ./manage/
+        RUN mkdir -p backups
+        EXPOSE 8501
+        HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+          CMD curl -f http://localhost:8501/_stcore/health || exit 1
+        CMD ["streamlit", "run", "couchdb_manager.py", \
+             "--server.port=8501", \
+             "--server.address=0.0.0.0", \
+             "--server.headless=true", \
+             "--browser.gatherUsageStats=false"]
+    container_name: ${COMPOSE_PROJECT_NAME}_couchdb-manager_1
+    depends_on:
+      couchdb-0:
+        condition: service_healthy
+      couchdb-1:
+        condition: service_healthy
+      couchdb-2:
+        condition: service_healthy
+    environment:
+      - SOURCE_COUCHDB_URL=${SOURCE_COUCHDB_URL}
+      - TARGET_COUCHDB_URL=${TARGET_COUCHDB_URL}
+    networks:
+      asone4health_network:
+        ipv4_address: ${MANAGER_IP:-172.19.0.24}
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./backups:/app/backups
+      - ./manage:/app/manage:ro
+    restart: unless-stopped
 
 networks:
   asone4health_network:
     external: true
+
 
 volumes:
   data-couch-0:
