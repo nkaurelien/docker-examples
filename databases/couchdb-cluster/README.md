@@ -65,27 +65,28 @@ CLUSTER_INIT_IP=172.19.0.23
 
 ## Management UI
 
-The included `couchdb_manager.py` provides a web interface for:
+The CouchDB Manager is **automatically included** as a Docker service and provides a comprehensive web interface for:
 
-- **Dashboard**: View database statistics across nodes
+- **Dashboard**: View database statistics across all nodes
 - **Backup**: Create local backups with full attachment support
-- **Restore**: Restore databases from backup files
-- **Sync**: Synchronize databases between instances
-- **Delete**: Safely remove databases with confirmations
+- **Restore**: Restore databases from backup files (handles all formats)
+- **Sync**: Synchronize databases between different instances
+- **Delete**: Safely remove databases with multiple confirmations
+- **Real-time monitoring**: Live progress tracking and detailed logging
 
-### Prerequisites for Management UI
+### Access
+
+- **Web Interface**: http://localhost:8501 (starts automatically with cluster)
+- **No installation required**: Everything runs in Docker containers
+
+### Manual Installation (Optional)
+
+If you want to run the UI outside Docker:
 
 ```bash
-pip install streamlit requests python-dotenv pandas
-```
-
-### Running Management UI
-
-```bash
+pip install -r requirements.txt
 streamlit run couchdb_manager.py
 ```
-
-Access at: http://localhost:8501
 
 ## Cluster Architecture
 
@@ -103,7 +104,22 @@ Access at: http://localhost:8501
                           │  172.19.0.23        │
                           │  (Auto-setup)       │
                           └─────────────────────┘
+                                      │
+                          ┌─────────────────────┐
+                          │  CouchDB Manager    │
+                          │  172.19.0.24:8501   │
+                          │  (Streamlit UI)     │
+                          └─────────────────────┘
 ```
+
+### Services Overview
+
+| Service | URL | Purpose |
+|---------|-----|---------|
+| **Node 0** | http://localhost:5984/_utils | Primary CouchDB node (coordinator) |
+| **Node 1** | http://localhost:5985/_utils | Secondary CouchDB node |
+| **Node 2** | http://localhost:5986/_utils | Secondary CouchDB node |
+| **Manager** | http://localhost:8501 | Web-based management interface |
 
 ## Common Operations
 
