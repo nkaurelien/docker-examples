@@ -1,0 +1,13 @@
+# Ignore all backup files and directories
+*
+
+# But keep this .gitignore file
+!.gitignore
+
+# Ignore all backup archives
+*.tar.gz
+*.zip
+*.json
+
+# Ignore log files
+*.log
