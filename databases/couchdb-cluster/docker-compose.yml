@@ -8,7 +8,15 @@ services:
       COUCHDB_SECRET: ${COUCHDB_SECRET}
       NODENAME: couchdb-0
       ERL_FLAGS: "-setcookie ${COUCHDB_COOKIE}"
+      BACKUP_RETENTION_DAYS: ${BACKUP_RETENTION_DAYS:-7}
     image: couchdb:3.4.2
+    # Ofelia backup job configuration via Docker labels
+    # These labels are read by Ofelia when running in "daemon --docker" mode
+    # To modify: edit labels here, then run: docker-compose up -d couchdb-0 && docker-compose restart ofelia
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-exec.couchdb-backup-daily.schedule: "0 2 * * *"  # Daily at 2 AM
+      ofelia.job-exec.couchdb-backup-daily.command: "/opt/scripts/backup-job.sh"
     networks:
       asone4health_network:
         ipv4_address: ${NODE0_IP}
@@ -17,6 +25,9 @@ services:
     volumes:
       - "data-couch-0:/opt/couchdb/data"
       - "./config/couchdb0/local.ini:/opt/couchdb/etc/local.ini"
+      - "./manage:/opt/manage:ro"
+      - "./scripts:/opt/scripts:ro"
+      - "./backups:/opt/backups"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5984/"]
       interval: 30s
@@ -103,7 +114,6 @@ services:
       dockerfile_inline: |
         FROM python:3.11-slim
         WORKDIR /app
-        RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
         COPY requirements.txt .
         RUN pip install --no-cache-dir -r requirements.txt
         COPY couchdb_manager.py .
@@ -137,6 +147,30 @@ services:
       - ./backups:/app/backups
       - ./manage:/app/manage:ro
     restart: unless-stopped
+
+  # Ofelia Job Scheduler
+  # Runs in "daemon --docker" mode to read job configurations from container labels
+  # Alternative: Use "daemon --config" mode to read from config/ofelia.ini file
+  # See README.md for detailed configuration instructions
+  ofelia:
+    image: mcuadros/ofelia:latest
+    container_name: ${COMPOSE_PROJECT_NAME}_ofelia_1
+    command: daemon --docker  # Docker labels mode (reads labels from containers)
+    depends_on:
+      couchdb-0:
+        condition: service_healthy
+      couchdb-1:
+        condition: service_healthy
+      couchdb-2:
+        condition: service_healthy
+    networks:
+      asone4health_network:
+        ipv4_address: ${BACKUP_SERVICE_IP:-172.19.0.25}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
+    profiles: ["backup"]
+
 
 networks:
   asone4health_network:
