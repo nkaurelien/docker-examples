@@ -1,1 +1,15 @@
+# WordPress files
 wordpress/
+
+# Environment variables
+.env
+
+# Database backups
+database/dumps/*
+!database/dumps/.gitkeep
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
