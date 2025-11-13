@@ -1,0 +1,19 @@
+# Environment file with secrets
+.env
+
+# n8n data directories
+workflows/
+credentials/
+
+# Backup directory
+backups/
+
+# Logs
+*.log
+
+# macOS
+.DS_Store
+
+# Temporary files
+*.tmp
+*.temp
