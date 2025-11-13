@@ -5,7 +5,7 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME:-wordpress}_db
     volumes:
       - db_data:/var/lib/mysql
-    restart: always
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-secret}
       MYSQL_DATABASE: ${MYSQL_DATABASE:-wordpress}
@@ -16,6 +16,19 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
   
   phpmyadmin:
     image: phpmyadmin
@@ -23,7 +36,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    restart: always
+    restart: unless-stopped
     ports:
       - "${PHPMYADMIN_PORT:-8080}:80"
     environment:
@@ -32,6 +45,19 @@ services:
       PMA_USER: root
       PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD:-secret}
       PMA_ARBITRARY: 1
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
 
   dbexport:
     image: mysql:8.0
@@ -92,6 +118,19 @@ services:
       ofelia.job-run.wordpress-backup-daily.schedule: "${BACKUP_SCHEDULE:-0 2 * * *}"
       ofelia.job-run.wordpress-backup-daily.container: "${COMPOSE_PROJECT_NAME:-wordpress}_dbexport"
       ofelia.job-run.wordpress-backup-daily.no-overlap: "true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
         
   wordpress:
     image: wordpress:latest
@@ -103,12 +142,25 @@ services:
       - ./wordpress:/var/www/html:rw
     ports:
       - "${WORDPRESS_PORT:-8000}:80"
-    restart: always
+    restart: unless-stopped
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: ${MYSQL_USER:-wordpress}
       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD:-wordpress}
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE:-wordpress}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 256M
 
 volumes:
   db_data:

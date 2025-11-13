@@ -1,7 +1,7 @@
 services:
 
   couchdb-0:
-    restart: always
+    restart: unless-stopped
     environment:
       COUCHDB_USER: ${COUCHDB_USER}
       COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
@@ -34,9 +34,22 @@ services:
       timeout: 10s
       retries: 5
       start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
 
   couchdb-1:
-    restart: always
+    restart: unless-stopped
     environment:
       COUCHDB_USER: ${COUCHDB_USER}
       COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
@@ -58,9 +71,22 @@ services:
       timeout: 10s
       retries: 5
       start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
 
   couchdb-2:
-    restart: always
+    restart: unless-stopped
     environment:
       COUCHDB_USER: ${COUCHDB_USER}
       COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
