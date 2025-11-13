@@ -1,0 +1,12 @@
+# Environment variables
+.env
+
+# macOS
+.DS_Store
+
+# Docker volumes data
+mongodb/
+minio_data/
+
+# Logs
+*.log

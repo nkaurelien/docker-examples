@@ -1,0 +1,12 @@
+# Environment variables
+.env
+
+# macOS
+.DS_Store
+
+# Data directories
+cache/
+data/
+
+# Logs
+*.log
