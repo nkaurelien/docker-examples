@@ -1,0 +1,108 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: ${COMPOSE_PROJECT_NAME:-postgres}_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: ${COMPOSE_PROJECT_NAME:-postgres}_pgadmin
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@example.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    restart: unless-stopped
+    profiles:
+      - tools
+
+  dbexport:
+    image: postgres:16-alpine
+    container_name: ${COMPOSE_PROJECT_NAME:-postgres}_dbexport
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./backups:/backups
+      - ./scripts:/scripts
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      BACKUP_DIR: /backups
+      RETENTION_DAYS: ${BACKUP_RETENTION_DAYS:-7}
+      BACKUP_ALL_DBS: ${BACKUP_ALL_DBS:-false}
+    command: /bin/sh /scripts/backup-export.sh
+    restart: "no"
+    profiles:
+      - manual
+
+  dbimport:
+    image: postgres:16-alpine
+    container_name: ${COMPOSE_PROJECT_NAME:-postgres}_dbimport
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./backups:/backups
+      - ./scripts:/scripts
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      BACKUP_DIR: /backups
+      BACKUP_FILE: ${BACKUP_FILE:-}
+      RESTORE_ALL_DBS: ${RESTORE_ALL_DBS:-false}
+    command: /bin/sh /scripts/backup-import.sh
+    restart: "no"
+    profiles:
+      - manual
+
+  ofelia:
+    image: mcuadros/ofelia:latest
+    container_name: ${COMPOSE_PROJECT_NAME:-postgres}_ofelia
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
+    profiles:
+      - backup
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-run.postgres-backup-daily.schedule: "${BACKUP_SCHEDULE:-0 2 * * *}"
+      ofelia.job-run.postgres-backup-daily.container: "${COMPOSE_PROJECT_NAME:-postgres}_dbexport"
+      ofelia.job-run.postgres-backup-daily.no-overlap: "true"
+
+volumes:
+  postgres_data:
+    driver: local
+  pgadmin_data:
+    driver: local
