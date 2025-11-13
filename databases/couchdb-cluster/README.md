@@ -19,12 +19,26 @@ A complete CouchDB cluster setup with 3 nodes, automatic initialization, and a c
    ```
 
 2. **Start the Cluster**:
+
+   Using Makefile (recommended):
+   ```bash
+   # Quick start with everything
+   make quick-start
+
+   # Or with backup scheduler
+   make quick-start-with-backup
+   ```
+
+   Using docker-compose directly:
    ```bash
    # Create network if not exists
-   docker network create asone4health_network --subnet=172.19.0.0/16
-   
+   docker network create asone4health_network --subnet=172.24.0.0/16
+
    # Start cluster
    docker-compose up -d
+
+   # Or with backup scheduler
+   docker-compose --profile backup up -d
    ```
 
 3. **Access Services**:
@@ -50,11 +64,13 @@ COUCHDB_USER=admin
 COUCHDB_PASSWORD=admin123
 
 # Network (customize to avoid conflicts)
-NETWORK_SUBNET=172.19.0.0/16
-NODE0_IP=172.19.0.20
-NODE1_IP=172.19.0.21
-NODE2_IP=172.19.0.22
-CLUSTER_INIT_IP=172.19.0.23
+NETWORK_SUBNET=172.24.0.0/16
+NODE0_IP=172.24.0.20
+NODE1_IP=172.24.0.21
+NODE2_IP=172.24.0.22
+CLUSTER_INIT_IP=172.24.0.23
+MANAGER_IP=172.24.0.24
+BACKUP_SERVICE_IP=172.24.0.25
 ```
 
 ### Port Mapping
@@ -94,32 +110,276 @@ streamlit run couchdb_manager.py
 ┌─────────────────────┐    ┌─────────────────────┐    ┌─────────────────────┐
 │    CouchDB Node 0   │    │    CouchDB Node 1   │    │    CouchDB Node 2   │
 │   (Coordinator)     │    │                     │    │                     │
-│  172.19.0.20:5984   │    │  172.19.0.21:5985   │    │  172.19.0.22:5986   │
+│  172.24.0.20:5984   │    │  172.24.0.21:5985   │    │  172.24.0.22:5986   │
 └─────────────────────┘    └─────────────────────┘    └─────────────────────┘
            │                           │                           │
            └───────────────────────────┼───────────────────────────┘
                                       │
                           ┌─────────────────────┐
                           │   Cluster Init      │
-                          │  172.19.0.23        │
+                          │  172.24.0.23        │
                           │  (Auto-setup)       │
                           └─────────────────────┘
                                       │
                           ┌─────────────────────┐
                           │  CouchDB Manager    │
-                          │  172.19.0.24:8501   │
+                          │  172.24.0.24:8501   │
                           │  (Streamlit UI)     │
+                          └─────────────────────┘
+                                      │
+                          ┌─────────────────────┐
+                          │      Ofelia         │
+                          │  172.24.0.25        │
+                          │  (Backup Scheduler) │
                           └─────────────────────┘
 ```
 
 ### Services Overview
 
-| Service | URL | Purpose |
-|---------|-----|---------|
-| **Node 0** | http://localhost:5984/_utils | Primary CouchDB node (coordinator) |
-| **Node 1** | http://localhost:5985/_utils | Secondary CouchDB node |
-| **Node 2** | http://localhost:5986/_utils | Secondary CouchDB node |
-| **Manager** | http://localhost:8501 | Web-based management interface |
+| Service | URL | IP Address | Purpose |
+|---------|-----|------------|---------|
+| **Node 0** | http://localhost:5984/_utils | 172.24.0.20 | Primary CouchDB node (coordinator) |
+| **Node 1** | http://localhost:5985/_utils | 172.24.0.21 | Secondary CouchDB node |
+| **Node 2** | http://localhost:5986/_utils | 172.24.0.22 | Secondary CouchDB node |
+| **Cluster Init** | - | 172.24.0.23 | Automatic cluster initialization |
+| **Manager** | http://localhost:8501 | 172.24.0.24 | Web-based management interface |
+| **Ofelia** | - | 172.24.0.25 | Automated backup scheduler (optional) |
+
+## Automated Backups with Ofelia
+
+The cluster includes Ofelia job scheduler for automated backups. By default, it's configured as an optional profile.
+
+### Enable Automated Backups
+
+Using Makefile commands (recommended):
+
+```bash
+# Start cluster with backup scheduler
+make up-with-backup
+
+# Or start backup scheduler on running cluster
+make backup-service-start
+
+# Check backup scheduler status
+make backup-service-status
+
+# View Ofelia logs
+make backup-service-logs
+
+# Stop backup scheduler
+make backup-service-stop
+
+# Run backup immediately (without waiting for schedule)
+make backup-now
+```
+
+Using docker-compose directly:
+
+```bash
+# Start Ofelia service with backup profile
+docker-compose --profile backup up -d ofelia
+
+# Check Ofelia status
+docker-compose ps ofelia
+
+# View Ofelia logs
+docker-compose logs ofelia
+```
+
+### Backup Configuration
+
+#### Two Configuration Methods (Choose One)
+
+Ofelia supports two mutually exclusive ways to configure jobs. You must choose one method:
+
+---
+
+#### Method 1: Docker Labels (Currently Active - Recommended)
+
+**How it works:**
+- Ofelia runs in `daemon --docker` mode
+- It scans all running containers and reads their Docker labels
+- Jobs are discovered automatically from container labels
+- No configuration file needed
+
+**Current Configuration:**
+
+In [docker-compose.yml](docker-compose.yml), the Ofelia service is configured as:
+
+```yaml
+ofelia:
+  image: mcuadros/ofelia:latest
+  command: daemon --docker    # <-- Docker labels mode
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+  # NO config file mounted
+```
+
+The backup job is defined via labels on the `couchdb-0` service:
+
+```yaml
+couchdb-0:
+  labels:
+    ofelia.enabled: "true"
+    ofelia.job-exec.couchdb-backup-daily.schedule: "0 2 * * *"
+    ofelia.job-exec.couchdb-backup-daily.command: "/opt/scripts/backup-job.sh"
+```
+
+**How to modify the schedule or command:**
+
+1. Edit the labels in `docker-compose.yml` (couchdb-0 service)
+2. Recreate the container with new labels:
+   ```bash
+   docker-compose up -d couchdb-0  # Recreate with new labels
+   docker-compose restart ofelia    # Reload Ofelia to discover new labels
+   ```
+3. Verify the job is registered:
+   ```bash
+   make backup-service-status
+   ```
+
+**Advantages:**
+- ✅ Infrastructure-as-code (everything in docker-compose.yml)
+- ✅ No external configuration files
+- ✅ Auto-discovery of containers
+- ✅ Easy to version control
+
+---
+
+#### Method 2: Configuration File (Alternative)
+
+**How it works:**
+- Ofelia runs in `daemon --config` mode
+- It reads jobs from `/etc/ofelia/config.ini`
+- You must specify the exact container name
+- Labels are ignored in this mode
+
+**To switch to this method:**
+
+1. **Update the Ofelia service** in [docker-compose.yml](docker-compose.yml):
+
+   ```yaml
+   ofelia:
+     image: mcuadros/ofelia:latest
+     command: daemon --config    # <-- Config file mode
+     volumes:
+       - /var/run/docker.sock:/var/run/docker.sock:ro
+       - ./config/ofelia.ini:/etc/ofelia/config.ini:ro  # Mount config
+   ```
+
+2. **Remove labels** from the couchdb-0 service (optional but cleaner):
+
+   ```yaml
+   couchdb-0:
+     # Remove or comment out these labels:
+     # labels:
+     #   ofelia.enabled: "true"
+     #   ...
+   ```
+
+3. **Create/Edit** [config/ofelia.ini](config/ofelia.ini):
+
+   ```ini
+   [job-exec "couchdb-backup-daily"]
+   # Daily backup job at 2 AM
+   schedule = 0 2 * * *
+   container = couchdb-cluster-example-couchdb-0-1
+   command = /opt/scripts/backup-job.sh
+   ```
+
+4. **Restart Ofelia**:
+   ```bash
+   docker-compose restart ofelia
+   make backup-service-status
+   ```
+
+**Advantages:**
+- ✅ Centralized configuration
+- ✅ Can define multiple jobs in one file
+- ✅ Easier to manage many jobs
+
+**Note:** The container name must match exactly. Get it with:
+```bash
+docker ps --filter "name=couchdb-0"
+```
+
+---
+
+#### Comparison Table
+
+| Feature | Docker Labels (`daemon --docker`) | Config File (`daemon --config`) |
+|---------|-----------------------------------|----------------------------------|
+| Configuration location | docker-compose.yml | config/ofelia.ini |
+| Auto-discovery | ✅ Yes | ❌ No (must specify container name) |
+| Hot reload | Restart Ofelia + recreate container | Restart Ofelia only |
+| Multiple jobs | Multiple label sets | Single file |
+| Currently active | ✅ **Yes** | ❌ No |
+
+**Schedule Format**: `minute hour day month weekday` (cron syntax)
+- `0 2 * * *` = Daily at 2:00 AM
+- `0 */6 * * *` = Every 6 hours
+- `0 0 * * 0` = Weekly (Sundays at midnight)
+
+### Backup Script
+
+Create your backup script at [scripts/backup-job.sh](scripts/backup-job.sh):
+
+```bash
+#!/bin/bash
+# Example backup script
+DATE=$(date +%Y%m%d_%H%M%S)
+BACKUP_DIR="/opt/backups"
+# Add your backup logic here
+```
+
+## Makefile Commands
+
+The project includes a comprehensive Makefile for easy cluster management. Run `make help` to see all available commands:
+
+### Quick Start Commands
+```bash
+make quick-start              # Complete setup: network + cluster + init
+make quick-start-with-backup  # Quick start with Ofelia backup scheduler
+```
+
+### Cluster Management
+```bash
+make up                # Start cluster (without backup)
+make up-with-backup    # Start cluster with backup scheduler
+make down              # Stop and remove cluster
+make restart           # Restart cluster
+make status            # Show cluster status
+make logs              # Show cluster logs
+```
+
+### Backup Scheduler (Ofelia)
+```bash
+make backup-service-start    # Start Ofelia backup scheduler
+make backup-service-stop     # Stop Ofelia backup scheduler
+make backup-service-status   # Show Ofelia status and jobs
+make backup-service-logs     # View Ofelia logs
+make backup-now              # Run backup immediately
+```
+
+**Note:** Ofelia uses Docker labels to configure jobs. If you modify the backup schedule or command in `docker-compose.yml`, recreate the couchdb-0 container and restart Ofelia:
+```bash
+docker-compose up -d couchdb-0
+docker-compose restart ofelia
+```
+
+### Manual Backup/Sync
+```bash
+make backup              # Backup local databases
+make list-backups        # List available backups
+make clean-backups       # Clean old backups
+```
+
+### Utilities
+```bash
+make test-cluster   # Test cluster connectivity
+make shell          # Open shell in CouchDB node 0
+make manager        # Launch CouchDB Manager UI
+```
 
 ## Common Operations
 
@@ -163,7 +423,7 @@ curl http://admin:admin123@localhost:5986/testdb
 
 3. **Manual Network Creation**:
    ```bash
-   docker network create asone4health_network --subnet=172.19.0.0/16
+   docker network create asone4health_network --subnet=172.24.0.0/16
    ```
 
 ### Connection Issues
@@ -177,11 +437,21 @@ curl http://admin:admin123@localhost:5986/testdb
 
 2. **IP Conflicts**: If you have network conflicts, modify `.env`:
    ```env
-   NETWORK_SUBNET=172.20.0.0/16
-   NODE0_IP=172.20.0.20
-   NODE1_IP=172.20.0.21
-   NODE2_IP=172.20.0.22
-   CLUSTER_INIT_IP=172.20.0.23
+   NETWORK_SUBNET=172.25.0.0/16
+   NODE0_IP=172.25.0.20
+   NODE1_IP=172.25.0.21
+   NODE2_IP=172.25.0.22
+   CLUSTER_INIT_IP=172.25.0.23
+   MANAGER_IP=172.25.0.24
+   BACKUP_SERVICE_IP=172.25.0.25
+   ```
+
+   Then recreate the network:
+   ```bash
+   docker-compose down
+   docker network rm asone4health_network
+   docker network create asone4health_network --subnet=172.25.0.0/16
+   docker-compose up -d
    ```
 
 ## Security Notes
