@@ -1,0 +1,24 @@
+# Environment variables
+.env
+
+# Database backups
+backups/*
+!backups/.gitkeep
+
+# Init scripts (may contain sensitive data)
+init/*
+!init/.gitkeep
+!init/README.md
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
