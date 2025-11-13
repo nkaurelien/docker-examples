@@ -1,63 +1,115 @@
 services:
   db:
-    image: mysql:5.7
+    image: mysql:8.0
+    platform: linux/amd64
+    container_name: ${COMPOSE_PROJECT_NAME:-wordpress}_db
     volumes:
       - db_data:/var/lib/mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-secret}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-wordpress}
+      MYSQL_USER: ${MYSQL_USER:-wordpress}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-wordpress}
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   
   phpmyadmin:
     image: phpmyadmin
+    container_name: ${COMPOSE_PROJECT_NAME:-wordpress}_phpmyadmin
+    depends_on:
+      db:
+        condition: service_healthy
     restart: always
     ports:
-      - 8080:80
+      - "${PHPMYADMIN_PORT:-8080}:80"
     environment:
-      - PMA_ARBITRARY=1
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD:-secret}
+      PMA_ARBITRARY: 1
 
   dbexport:
-    image: mysql:5.7
+    image: mysql:8.0
+    platform: linux/amd64
+    container_name: ${COMPOSE_PROJECT_NAME:-wordpress}_dbexport
     depends_on:
-        - db
+      db:
+        condition: service_healthy
     volumes:
-        - ./database/dumps:/dumps
-    command: >
-        sh -c '
-        echo "Exporting databases from /dumps/wordpress_$(date +%Y-%m-%d).sql" &&
-        mysqldump -P 3306 -h db -uroot -p"secret" --databases wordpress | gzip  > /dumps/wordpress_$(date +%Y-%m-%d).sql.gz &&
-        mysqldump -P 3306 -h db -uroot -p"secret" --databases wordpress --no-data > /dumps/wordpress_shema_$(date +%Y-%m-%d).sql'
+      - ./database/dumps:/dumps
+      - ./scripts:/scripts
+    environment:
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-secret}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-wordpress}
+      BACKUP_DIR: /dumps
+      RETENTION_DAYS: ${BACKUP_RETENTION_DAYS:-7}
+    command: /bin/bash /scripts/backup-export.sh
     restart: "no"
+    profiles:
+      - manual
 
   dbimport:
-    image: mysql:5.7
+    image: mysql:8.0
+    platform: linux/amd64
+    container_name: ${COMPOSE_PROJECT_NAME:-wordpress}_dbimport
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
-        - ./database/dumps:/dumps
-    command: >
-        sh -c '
-        echo "Restoring databases to /dumps/wordpress_shema_$(date +%Y-%m-%d).sql" &&
-        mysql -h db -uroot -p"secret" < /dumps/wordpress_shema_$(date +%Y-%m-%d).sql'
+      - ./database/dumps:/dumps
+      - ./scripts:/scripts
+    environment:
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-secret}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-wordpress}
+      BACKUP_DIR: /dumps
+      BACKUP_FILE: ${BACKUP_FILE:-}
+    command: /bin/bash /scripts/backup-import.sh
     restart: "no"
+
+  ofelia:
+    image: mcuadros/ofelia:latest
+    container_name: ${COMPOSE_PROJECT_NAME:-wordpress}_ofelia
+    depends_on:
+      db:
+        condition: service_healthy
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
+    profiles:
+      - backup
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-run.wordpress-backup-daily.schedule: "${BACKUP_SCHEDULE:-0 2 * * *}"
+      ofelia.job-run.wordpress-backup-daily.container: "${COMPOSE_PROJECT_NAME:-wordpress}_dbexport"
+      ofelia.job-run.wordpress-backup-daily.no-overlap: "true"
         
   wordpress:
-    depends_on:
-      - db
     image: wordpress:latest
+    container_name: ${COMPOSE_PROJECT_NAME:-wordpress}_wordpress
+    depends_on:
+      db:
+        condition: service_healthy
     volumes:
-    - ./wordpress:/var/www/html:rw
-    # - /var/www/html/wp-content
-    # - /var/www/html/wp-admin
-    # - /var/www/html/wp-includes
+      - ./wordpress:/var/www/html:rw
     ports:
-      - "8000:80"
+      - "${WORDPRESS_PORT:-8000}:80"
     restart: always
     environment:
       WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_USER: ${MYSQL_USER:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD:-wordpress}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE:-wordpress}
+
 volumes:
-    db_data:
+  db_data:
+    driver: local
