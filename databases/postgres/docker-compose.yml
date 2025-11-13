@@ -17,6 +17,19 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
 
   pgadmin:
     image: dpage/pgadmin4:latest
@@ -36,6 +49,19 @@ services:
     restart: unless-stopped
     profiles:
       - tools
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.25'
+          memory: 256M
 
   dbexport:
     image: postgres:16-alpine
@@ -100,6 +126,19 @@ services:
       ofelia.job-run.postgres-backup-daily.schedule: "${BACKUP_SCHEDULE:-0 2 * * *}"
       ofelia.job-run.postgres-backup-daily.container: "${COMPOSE_PROJECT_NAME:-postgres}_dbexport"
       ofelia.job-run.postgres-backup-daily.no-overlap: "true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
 
 volumes:
   postgres_data:
