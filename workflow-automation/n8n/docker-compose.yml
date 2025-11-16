@@ -5,10 +5,8 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-n8n}
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres_admin_2024}
-      POSTGRES_NON_ROOT_USER: ${POSTGRES_NON_ROOT_USER:-n8n}
-      POSTGRES_NON_ROOT_PASSWORD: ${POSTGRES_NON_ROOT_PASSWORD:-n8n_db_2024}
+      POSTGRES_USER: ${POSTGRES_NON_ROOT_USER:-n8n}
+      POSTGRES_PASSWORD: ${POSTGRES_NON_ROOT_PASSWORD:-n8n_db_2024}
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init-data.sh:/docker-entrypoint-initdb.d/init-data.sh
