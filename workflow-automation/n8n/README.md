@@ -11,6 +11,7 @@ A production-ready n8n setup with PostgreSQL database backend, featuring automat
 - 🛠️ **Makefile Management**: Simplified operations with make commands
 - 📊 **Health Monitoring**: Built-in health checks and status commands
 - 🔄 **Auto-restart**: Services restart automatically on failure
+- 🌐 **Nginx Reverse Proxy**: Production-ready reverse proxy with WebSocket support
 
 ## Quick Start
 
@@ -48,7 +49,8 @@ make logs
 
 ### 3. Access n8n
 
-- **URL**: http://localhost:5678
+- **URL**: http://localhost (via nginx reverse proxy on port 80)
+- **Direct URL**: http://localhost:5678 (if enabled in docker-compose.yml)
 - **Username**: admin (configurable in .env)
 - **Password**: Set in .env as `N8N_BASIC_AUTH_PASSWORD`
 
@@ -56,9 +58,17 @@ make logs
 
 ```
 ┌─────────────────────────────────────┐
+│         Nginx Container             │
+│      Reverse Proxy (Port 80)        │
+│   WebSocket & HTTP/HTTPS Support    │
+└─────────────┬───────────────────────┘
+              │
+              │ Proxy Pass
+              │
+┌─────────────▼───────────────────────┐
 │          n8n Container              │
 │     Workflow Automation Engine      │
-│         Port: 5678                  │
+│         Internal Port: 5678         │
 └─────────────┬───────────────────────┘
               │
               │ PostgreSQL Connection
@@ -76,19 +86,20 @@ make logs
 
 | Variable | Description | Default |
 |----------|-------------|---------|
+| `NGINX_PORT` | Nginx HTTP port | 80 |
+| `NGINX_HTTPS_PORT` | Nginx HTTPS port | 443 |
 | `N8N_HOST` | n8n hostname | localhost |
-| `N8N_PORT` | External port | 5678 |
+| `N8N_PORT` | n8n internal port | 5678 |
 | `N8N_PROTOCOL` | Protocol (http/https) | http |
 | `N8N_BASIC_AUTH_ACTIVE` | Enable basic auth | true |
 | `N8N_BASIC_AUTH_USER` | Username | admin |
 | `N8N_BASIC_AUTH_PASSWORD` | Password | (required) |
+| `N8N_SECURE_COOKIE` | Secure cookie flag | false |
 | `N8N_ENCRYPTION_KEY` | Encryption key | (required) |
 | `POSTGRES_DB` | Database name | n8n |
-| `POSTGRES_USER` | Root user | postgres |
-| `POSTGRES_PASSWORD` | Root password | (required) |
 | `POSTGRES_NON_ROOT_USER` | n8n DB user | n8n |
 | `POSTGRES_NON_ROOT_PASSWORD` | n8n DB password | (required) |
-| `TIMEZONE` | Timezone | UTC |
+| `TIMEZONE` | Timezone | Europe/Paris |
 
 ### Webhook Configuration
 
@@ -340,26 +351,78 @@ make restart
 make logs-n8n | grep "n8n ready"
 ```
 
-## Integration Examples
+## Nginx Reverse Proxy
 
-### With Reverse Proxy
+This setup includes a pre-configured nginx reverse proxy with:
 
-Example nginx configuration:
+- ✅ WebSocket support for real-time updates
+- ✅ Long-running workflow timeout configurations
+- ✅ GZIP compression for better performance
+- ✅ Health check endpoints
+- ✅ SSL/TLS ready configuration
 
-```nginx
-server {
-    listen 80;
-    server_name n8n.example.com;
+### HTTP Access (Default)
 
-    location / {
-        proxy_pass http://localhost:5678;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
+The nginx service is configured to proxy requests from port 80 to n8n on port 5678:
+
+```bash
+# Access n8n through nginx
+http://localhost
+
+# Or use a custom port
+NGINX_PORT=8080 docker compose up -d
+http://localhost:8080
 ```
+
+### HTTPS Configuration
+
+To enable HTTPS:
+
+1. **Generate SSL certificates** (see `ssl/README.md`):
+   ```bash
+   # Self-signed for development
+   openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+     -keyout ssl/key.pem \
+     -out ssl/cert.pem \
+     -subj "/C=FR/ST=IDF/L=Paris/O=Dev/CN=localhost"
+   ```
+
+2. **Update nginx.conf**:
+   - Uncomment the HTTPS server block
+   - Update `server_name` with your domain
+
+3. **Update docker-compose.yml**:
+   - Uncomment the HTTPS port mapping
+   - Uncomment the SSL volume mount
+
+4. **Update .env**:
+   ```env
+   N8N_PROTOCOL=https
+   N8N_SECURE_COOKIE=true
+   WEBHOOK_URL=https://your-domain.com
+   ```
+
+5. **Restart services**:
+   ```bash
+   make restart
+   ```
+
+### Custom nginx Configuration
+
+The nginx configuration file is located at `./nginx.conf`. You can customize:
+
+- Timeout values for long-running workflows
+- Buffer sizes for large payloads
+- SSL/TLS settings
+- Custom headers
+- Rate limiting
+
+After modifying `nginx.conf`, restart nginx:
+```bash
+docker compose restart nginx
+```
+
+## Integration Examples
 
 ### With Docker Compose Networks
 
