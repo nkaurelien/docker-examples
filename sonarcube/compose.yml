@@ -1,78 +1,149 @@
+# SonarQube Docker Compose Configuration
+# @see: https://medium.com/@rikza.kurnia/sonarqube-static-code-analysis-tools-74072ebef727
+#
+# Pour Mac ARM64 (Apple Silicon): activer Rosetta dans Docker Desktop
+# Settings > Features in development > Use Rosetta for x86_64/amd64 emulation on Apple Silicon
+#
+# Usage:
+#   1. Start SonarQube server (first time):
+#      docker compose --profile dev up -d
+#   2. Create tokens at http://localhost:9000 (admin/admin -> change on first login)
+#      -> My Account -> Security -> Generate Token
+#   3. Add token to .env: SONAR_TOKEN=sqp_xxx
+#   4. Run scanner (server starts automatically if not running):
+#      docker compose --profile scan up sonar-scanner
+#   5. Stop everything:
+#      docker compose --profile dev down
 
-# @see : https://medium.com/@rikza.kurnia/sonarqube-static-code-analysis-tools-74072ebef727
+x-scanner-common: &scanner-common
+  image: "sonarsource/sonar-scanner-cli:5"
+  platform: linux/amd64
+  entrypoint: [""]
+  networks:
+    - sonarcube
+  environment:
+    - SONAR_SCANNER_JAVA_OPTS=-Xmx512m
+    - SONAR_TOKEN=${SONAR_TOKEN}
+  logging:
+    driver: "json-file"
+    options:
+      max-size: "10m"
+      max-file: "3"
+  deploy:
+    resources:
+      limits:
+        cpus: '1.0'
+        memory: 1G
+      reservations:
+        cpus: '0.25'
+        memory: 256M
 
 services:
-  
+
+  # Scanner service
   sonar-scanner:
+    <<: *scanner-common
     container_name: "sonar-scanner"
-    image: "sonarsource/sonar-scanner-cli:latest"
-    entrypoint: [""]
+    profiles:
+      - scan
     depends_on:
-      - sonarcube
+      sonarcube:
+        condition: service_healthy
     volumes:
       - .:/app
-    command: ["sonar-scanner", "-Dsonar.projectBaseDir=/app", "-Dsonar.host.url=http://sonarcube:9000", "-Dsonar.login=sqp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "-Dsonar.projectKey=MyProjectKey"]
-    networks:
-      - sonarcube
-    environment:
-      - SONAR_SCANNER_JAVA_OPTS=-Xmx512m
+    command: >
+      sonar-scanner
+      -Dsonar.projectKey=MyProjectKey
+      -Dsonar.projectName=MyProject
+      -Dsonar.projectBaseDir=/app
+      -Dsonar.sources=.
+      -Dsonar.exclusions=**/node_modules/**,**/.next/**,**/dist/**,**/__pycache__/**,**/venv/**,**/.venv/**
+      -Dsonar.host.url=http://sonarcube:9000
 
+  # SonarQube server
   sonarcube:
     container_name: "sonarcube-server"
     image: "sonarqube:lts-community"
+    # platform: linux/amd64  # Uncomment if needed for ARM64 without Rosetta
+    profiles:
+      - dev
+      - scan
     ports:
-      - "9000:9000"    
+      - "9000:9000"
     networks:
       - sonarcube
     depends_on:
-      - sonar_db
+      sonar_db:
+        condition: service_healthy
     environment:
       SONAR_JDBC_URL: jdbc:postgresql://sonar_db:5432/sonar
       SONAR_JDBC_USERNAME: sonar
       SONAR_JDBC_PASSWORD: sonar
-      GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
-
+      GIT_DEPTH: "0"
     volumes:
-      - sonarqube_conf:/opt/sonarqube/conf
       - sonarqube_data:/opt/sonarqube/data
       - sonarqube_extensions:/opt/sonarqube/extensions
       - sonarqube_logs:/opt/sonarqube/logs
-      - sonarqube_temp:/opt/sonarqube/temp
     healthcheck:
       test: [ "CMD", "/bin/bash", "-c", "wget -qO- http://localhost:9000/api/system/status | grep -q -e '\"status\":\"UP\"' -e '\"status\":\"DB_MIGRATION_NEEDED\"' -e '\"status\":\"DB_MIGRATION_RUNNING\"' || exit 1" ]
-      interval: 10s
-      timeout: 5s
-      retries: 3
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
 
+  # PostgreSQL database for SonarQube
   sonar_db:
     container_name: "sonarcube-db"
     image: postgres:13
+    profiles:
+      - dev
+      - scan
     environment:
       POSTGRES_USER: sonar
       POSTGRES_PASSWORD: sonar
       POSTGRES_DB: sonar
-    volumes:
-      - sonar_db:/var/lib/postgresql
-      - sonar_db_data:/var/lib/postgresql/data
     networks:
       - sonarcube
+    volumes:
+      - sonarqube_db:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready", "-d", "sonar", "-U", "sonar"]
-      interval: '10s'
-      timeout: '30s'
+      test: ["CMD-SHELL", "pg_isready -d sonar -U sonar"]
+      interval: 10s
+      timeout: 5s
       retries: 5
-      start_period: '20s'
+      start_period: 20s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.25'
+          memory: 256M
 
 volumes:
-  sonarqube_conf:
   sonarqube_data:
   sonarqube_extensions:
   sonarqube_logs:
-  sonarqube_temp:
-  sonar_db:
-  sonar_db_data:
-
-
+  sonarqube_db:
 
 networks:
   sonarcube:
