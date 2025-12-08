@@ -47,7 +47,32 @@ Enable Rosetta in Docker Desktop:
 3. Enable **Use Rosetta for x86_64/amd64 emulation on Apple Silicon**
 4. Click **Apply & Restart**
 
-## Commands
+## Makefile Commands
+
+```bash
+make help           # Show all available commands
+
+# Server
+make up             # Start SonarQube server
+make down           # Stop SonarQube server
+make status         # Check SonarQube status
+make logs           # View SonarQube logs
+make clean          # Stop and remove all data
+
+# Authentication
+make token          # Generate scanner token via API
+
+# Scanning
+make scan           # Run code scanner
+make full           # Full workflow (up + token + scan)
+
+# Security
+make security-npm   # Audit npm dependencies
+make security-pip   # Audit Python dependencies
+make security-trivy IMAGE=myimage:tag  # Scan Docker image
+```
+
+## Docker Compose Commands (Alternative)
 
 ```bash
 # Start server only
