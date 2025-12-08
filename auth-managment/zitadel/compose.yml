@@ -4,34 +4,46 @@ services:
     networks:
       - 'zitadel'
     image: 'ghcr.io/zitadel/zitadel:latest'
-    command: 'start-from-init --masterkey "MasterkeyNeedsToHave32Characters" --tlsMode disabled'
+    command: 'start-from-init --masterkey "${ZITADEL_MASTERKEY}" --tlsMode disabled'
     environment:
       ZITADEL_DATABASE_POSTGRES_HOST: db
       ZITADEL_DATABASE_POSTGRES_PORT: 5432
-      ZITADEL_DATABASE_POSTGRES_DATABASE: zitadel
-      ZITADEL_DATABASE_POSTGRES_USER_USERNAME: zitadel
-      ZITADEL_DATABASE_POSTGRES_USER_PASSWORD: zitadel
+      ZITADEL_DATABASE_POSTGRES_DATABASE: ${POSTGRES_DB}
+      ZITADEL_DATABASE_POSTGRES_USER_USERNAME: ${ZITADEL_DB_USER}
+      ZITADEL_DATABASE_POSTGRES_USER_PASSWORD: ${ZITADEL_DB_PASSWORD}
       ZITADEL_DATABASE_POSTGRES_USER_SSL_MODE: disable
-      ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME: postgres
-      ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD: postgres
+      ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME: ${POSTGRES_USER}
+      ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD: ${POSTGRES_PASSWORD}
       ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE: disable
-      ZITADEL_EXTERNALSECURE: false
+      ZITADEL_EXTERNALSECURE: ${ZITADEL_EXTERNALSECURE}
+      ZITADEL_EXTERNALDOMAIN: ${ZITADEL_EXTERNALDOMAIN}
+      ZITADEL_EXTERNALPORT: ${ZITADEL_EXTERNALPORT}
     depends_on:
       db:
         condition: 'service_healthy'
     ports:
-      - '8090:8080'
+      - '${ZITADEL_EXTERNALPORT:-8090}:8080'
+    healthcheck:
+      test: ["CMD", "/app/zitadel", "ready"]
+      interval: '10s'
+      timeout: '5s'
+      retries: 5
+      start_period: '30s'
 
   db:
     restart: 'always'
     image: postgres:16-alpine
     environment:
-      PGUSER: postgres
-      POSTGRES_PASSWORD: postgres
+      PGUSER: ${POSTGRES_USER}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     networks:
       - 'zitadel'
+    volumes:
+      - 'zitadel-db:/var/lib/postgresql/data'
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready", "-d", "zitadel", "-U", "postgres"]
+      test: ["CMD-SHELL", "pg_isready", "-d", "${POSTGRES_DB}", "-U", "${POSTGRES_USER}"]
       interval: '10s'
       timeout: '30s'
       retries: 5
@@ -39,3 +51,6 @@ services:
 
 networks:
   zitadel:
+
+volumes:
+  zitadel-db:
