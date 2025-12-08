@@ -71,6 +71,32 @@ docker compose --profile dev down -v
 | PostgreSQL | 1.0 | 1GB |
 | Scanner | 1.0 | 1GB |
 
+## Project Configuration Examples
+
+Example `sonar-project.properties` files are available in the `examples/` directory:
+
+| File | Description |
+|------|-------------|
+| `sonar-project-python.properties` | Python/FastAPI backend projects |
+| `sonar-project-nextjs.properties` | Next.js/TypeScript frontend projects |
+| `sonar-project-monorepo.properties` | Monorepo with multiple sub-projects |
+
+Copy the appropriate file to your project root as `sonar-project.properties` and customize it.
+
+### Generate Coverage Reports
+
+**Python (pytest):**
+```bash
+pytest --cov=src --cov-report=xml:coverage.xml
+```
+
+**JavaScript/TypeScript (Jest):**
+```bash
+yarn test --coverage
+# or
+npm test -- --coverage
+```
+
 ## References
 
 - [SonarQube Docker Compose Tutorial](https://medium.com/@denis.verkhovsky/sonarqube-with-docker-compose-complete-tutorial-2aaa8d0771d4)
