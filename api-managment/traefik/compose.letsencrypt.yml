@@ -1,0 +1,85 @@
+services:
+
+  #######################################
+  # Traefik with Let's Encrypt HTTPS
+  #######################################
+  traefik:
+    image: traefik:v3.2
+    container_name: traefik
+    restart: unless-stopped
+    networks:
+      - traefik-public
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    environment:
+      - ACME_EMAIL=${ACME_EMAIL:-admin@example.com}
+    command:
+      # API and Dashboard
+      - "--api.insecure=true"
+      - "--api.dashboard=true"
+      # Logging
+      - "--log.level=INFO"
+      # Docker provider
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=traefik-public"
+      # File provider
+      - "--providers.file.directory=/etc/traefik/dynamic"
+      - "--providers.file.watch=true"
+      # Entrypoints
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      # Redirect HTTP to HTTPS
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      # Let's Encrypt - HTTP Challenge
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL:-admin@example.com}"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+      # Staging server for testing (uncomment to avoid rate limits)
+      # - "--certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - ./config/dynamic:/etc/traefik/dynamic:ro
+      - ./letsencrypt:/letsencrypt
+    labels:
+      - "traefik.enable=true"
+      # Dashboard with HTTPS
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.${DOMAIN:-example.com}`)"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.dashboard.middlewares=basic-auth@file"
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  #######################################
+  # Example HTTPS service
+  #######################################
+  whoami:
+    image: traefik/whoami:v1.10
+    container_name: whoami
+    restart: unless-stopped
+    networks:
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      # HTTPS router
+      - "traefik.http.routers.whoami.rule=Host(`whoami.${DOMAIN:-example.com}`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=letsencrypt"
+      - "traefik.http.services.whoami.loadbalancer.server.port=80"
+
+volumes:
+  traefik_letsencrypt: {}
+
+networks:
+  traefik-public:
+    name: traefik-public
+    driver: bridge
