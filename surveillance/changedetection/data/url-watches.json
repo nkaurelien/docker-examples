@@ -1,0 +1,598 @@
+{
+  "note": "Hello! If you change this file manually, please be sure to restart your changedetection.io instance!",
+  "watching": {
+    "e3a94904-ed71-4d79-b390-7598081daeaa": {
+      "body": null,
+      "browser_steps": [],
+      "browser_steps_last_error_step": null,
+      "conditions": {},
+      "conditions_match_logic": "ALL",
+      "check_count": 1,
+      "check_unique_lines": false,
+      "consecutive_filter_failures": 0,
+      "content-type": "text/html; charset=utf-8",
+      "date_created": 1767793546,
+      "extract_text": [],
+      "fetch_backend": "html_requests",
+      "fetch_time": 1.154,
+      "filter_failure_notification_send": true,
+      "filter_text_added": true,
+      "filter_text_removed": true,
+      "filter_text_replaced": true,
+      "follow_price_changes": true,
+      "has_ldjson_price_data": false,
+      "headers": {},
+      "ignore_text": [],
+      "ignore_status_codes": null,
+      "in_stock_only": true,
+      "include_filters": [],
+      "last_checked": 1767793547,
+      "last_error": false,
+      "last_notification_error": false,
+      "last_viewed": 0,
+      "method": "GET",
+      "notification_alert_count": 0,
+      "notification_body": null,
+      "notification_format": "System default",
+      "notification_muted": false,
+      "notification_screenshot": false,
+      "notification_title": null,
+      "notification_urls": [],
+      "page_title": "Hacker News",
+      "paused": false,
+      "previous_md5": "c1b8c949aa092725b4095043cf2419ba",
+      "previous_md5_before_filters": "bc93108107eb84f2b8ca7bd193d81999",
+      "processor": "text_json_diff",
+      "price_change_threshold_percent": null,
+      "proxy": null,
+      "remote_server_reply": "nginx",
+      "sort_text_alphabetically": false,
+      "strip_ignored_lines": null,
+      "subtractive_selectors": [],
+      "tag": "",
+      "tags": [
+        "7e9be5ed-5ce6-4390-abf4-8ccdbdcfbdfa"
+      ],
+      "text_should_not_be_present": [],
+      "time_between_check": {
+        "weeks": null,
+        "days": null,
+        "hours": null,
+        "minutes": null,
+        "seconds": null
+      },
+      "time_between_check_use_default": true,
+      "time_schedule_limit": {
+        "enabled": false,
+        "monday": {
+          "enabled": true,
+          "start_time": "00:00",
+          "duration": {
+            "hours": "24",
+            "minutes": "00"
+          }
+        },
+        "tuesday": {
+          "enabled": true,
+          "start_time": "00:00",
+          "duration": {
+            "hours": "24",
+            "minutes": "00"
+          }
+        },
+        "wednesday": {
+          "enabled": true,
+          "start_time": "00:00",
+          "duration": {
+            "hours": "24",
+            "minutes": "00"
+          }
+        },
+        "thursday": {
+          "enabled": true,
+          "start_time": "00:00",
+          "duration": {
+            "hours": "24",
+            "minutes": "00"
+          }
+        },
+        "friday": {
+          "enabled": true,
+          "start_time": "00:00",
+          "duration": {
+            "hours": "24",
+            "minutes": "00"
+          }
+        },
+        "saturday": {
+          "enabled": true,
+          "start_time": "00:00",
+          "duration": {
+            "hours": "24",
+            "minutes": "00"
+          }
+        },
+        "sunday": {
+          "enabled": true,
+          "start_time": "00:00",
+          "duration": {
+            "hours": "24",
+            "minutes": "00"
+          }
+        }
+      },
+      "title": null,
+      "track_ldjson_price_data": null,
+      "trim_text_whitespace": false,
+      "remove_duplicate_lines": false,
+      "trigger_text": [],
+      "url": "https://news.ycombinator.com/",
+      "use_page_title_in_list": null,
+      "uuid": "e3a94904-ed71-4d79-b390-7598081daeaa",
+      "webdriver_delay": null,
+      "webdriver_js_execute_code": null,
+      "content_type": "text/html; charset=utf-8",
+      "last_check_status": 200
+    },
+    "4c123a9d-3a19-48e1-9e2f-890d7624cf25": {
+      "body": null,
+      "browser_steps": [],
+      "browser_steps_last_error_step": null,
+      "conditions": {},
+      "conditions_match_logic": "ALL",
+      "check_count": 1,
+      "check_unique_lines": false,
+      "consecutive_filter_failures": 0,
+      "content-type": "text/plain",
+      "date_created": 1767793546,
+      "extract_text": [],
+      "fetch_backend": "html_requests",
+      "fetch_time": 1.061,
+      "filter_failure_notification_send": true,
+      "filter_text_added": true,
+      "filter_text_removed": true,
+      "filter_text_replaced": true,
+      "follow_price_changes": true,
+      "has_ldjson_price_data": null,
+      "headers": {},
+      "ignore_text": [],
+      "ignore_status_codes": null,
+      "in_stock_only": true,
+      "include_filters": [],
+      "last_checked": 1767793547,
+      "last_error": false,
+      "last_notification_error": false,
+      "last_viewed": 0,
+      "method": "GET",
+      "notification_alert_count": 0,
+      "notification_body": null,
+      "notification_format": "System default",
+      "notification_muted": false,
+      "notification_screenshot": false,
+      "notification_title": null,
+      "notification_urls": [],
+      "page_title": null,
+      "paused": false,
+      "previous_md5": "5bd15691eda37ec20d6bde4369c5f6ab",
+      "previous_md5_before_filters": "f0c70c8bfb1ffb86694889293f3fbd9f",
+      "processor": "text_json_diff",
+      "price_change_threshold_percent": null,
+      "proxy": null,
+      "remote_server_reply": "nginx/1.24.0 (ubuntu)",
+      "sort_text_alphabetically": false,
+      "strip_ignored_lines": null,
+      "subtractive_selectors": [],
+      "tag": "",
+      "tags": [
+        "07e335bf-1e43-4062-abb9-d54505346313"
+      ],
+      "text_should_not_be_present": [],
+      "time_between_check": {
+        "weeks": null,
+        "days": null,
+        "hours": null,
+        "minutes": null,
+        "seconds": null
+      },
+      "time_between_check_use_default": true,
+      "time_schedule_limit": {
+        "enabled": false,
+        "monday": {
+          "enabled": true,
+          "start_time": "00:00",
+          "duration": {
+            "hours": "24",
+            "minutes": "00"
+          }
+        },
+        "tuesday": {
+          "enabled": true,
+          "start_time": "00:00",
+          "duration": {
+            "hours": "24",
+            "minutes": "00"
+          }
+        },
+        "wednesday": {
+          "enabled": true,
+          "start_time": "00:00",
+          "duration": {
+            "hours": "24",
+            "minutes": "00"
+          }
+        },
+        "thursday": {
+          "enabled": true,
+          "start_time": "00:00",
+          "duration": {
+            "hours": "24",
+            "minutes": "00"
+          }
+        },
+        "friday": {
+          "enabled": true,
+          "start_time": "00:00",
+          "duration": {
+            "hours": "24",
+            "minutes": "00"
+          }
+        },
+        "saturday": {
+          "enabled": true,
+          "start_time": "00:00",
+          "duration": {
+            "hours": "24",
+            "minutes": "00"
+          }
+        },
+        "sunday": {
+          "enabled": true,
+          "start_time": "00:00",
+          "duration": {
+            "hours": "24",
+            "minutes": "00"
+          }
+        }
+      },
+      "title": null,
+      "track_ldjson_price_data": null,
+      "trim_text_whitespace": false,
+      "remove_duplicate_lines": false,
+      "trigger_text": [],
+      "url": "https://changedetection.io/CHANGELOG.txt",
+      "use_page_title_in_list": null,
+      "uuid": "4c123a9d-3a19-48e1-9e2f-890d7624cf25",
+      "webdriver_delay": null,
+      "webdriver_js_execute_code": null,
+      "content_type": "text/plain",
+      "last_check_status": 200
+    }
+  },
+  "settings": {
+    "headers": {},
+    "requests": {
+      "extra_proxies": [],
+      "extra_browsers": [],
+      "jitter_seconds": 0,
+      "proxy": null,
+      "time_between_check": {
+        "weeks": null,
+        "days": null,
+        "hours": 3,
+        "minutes": null,
+        "seconds": null
+      },
+      "timeout": 45,
+      "workers": 10,
+      "default_ua": {
+        "html_requests": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Safari/537.36",
+        "html_webdriver": null
+      }
+    },
+    "application": {
+      "api_access_token_enabled": true,
+      "base_url": null,
+      "empty_pages_are_a_change": false,
+      "fetch_backend": "html_requests",
+      "filter_failure_notification_threshold_attempts": 6,
+      "global_ignore_text": [],
+      "global_subtractive_selectors": [],
+      "ignore_whitespace": true,
+      "ignore_status_codes": false,
+      "notification_body": "{{watch_url}} had a change.\n---\n{{diff}}\n---\n",
+      "notification_format": "htmlcolor",
+      "notification_title": "ChangeDetection.io Notification - {{watch_url}}",
+      "notification_urls": [],
+      "pager_size": 50,
+      "password": false,
+      "render_anchor_tag_content": false,
+      "rss_access_token": "3772fc448adace777b683b856abc552d",
+      "rss_content_format": "text",
+      "rss_template_type": "system_default",
+      "rss_template_override": null,
+      "rss_diff_length": 5,
+      "rss_hide_muted_watches": true,
+      "rss_reader_mode": false,
+      "scheduler_timezone_default": null,
+      "schema_version": 24,
+      "shared_diff_access": false,
+      "strip_ignored_lines": false,
+      "tags": {
+        "7e9be5ed-5ce6-4390-abf4-8ccdbdcfbdfa": {
+          "body": null,
+          "browser_steps": [],
+          "browser_steps_last_error_step": null,
+          "conditions": {},
+          "conditions_match_logic": "ALL",
+          "check_count": 0,
+          "check_unique_lines": false,
+          "consecutive_filter_failures": 0,
+          "content-type": null,
+          "date_created": 1767793546,
+          "extract_text": [],
+          "fetch_backend": "system",
+          "fetch_time": 0.0,
+          "filter_failure_notification_send": true,
+          "filter_text_added": true,
+          "filter_text_removed": true,
+          "filter_text_replaced": true,
+          "follow_price_changes": true,
+          "has_ldjson_price_data": null,
+          "headers": {},
+          "ignore_text": [],
+          "ignore_status_codes": null,
+          "in_stock_only": true,
+          "include_filters": [],
+          "last_checked": 0,
+          "last_error": false,
+          "last_notification_error": null,
+          "last_viewed": 0,
+          "method": "GET",
+          "notification_alert_count": 0,
+          "notification_body": null,
+          "notification_format": "System default",
+          "notification_muted": false,
+          "notification_screenshot": false,
+          "notification_title": null,
+          "notification_urls": [],
+          "page_title": null,
+          "paused": false,
+          "previous_md5": false,
+          "previous_md5_before_filters": false,
+          "processor": "text_json_diff",
+          "price_change_threshold_percent": null,
+          "proxy": null,
+          "remote_server_reply": null,
+          "sort_text_alphabetically": false,
+          "strip_ignored_lines": null,
+          "subtractive_selectors": [],
+          "tag": "",
+          "tags": [],
+          "text_should_not_be_present": [],
+          "time_between_check": {
+            "weeks": null,
+            "days": null,
+            "hours": null,
+            "minutes": null,
+            "seconds": null
+          },
+          "time_between_check_use_default": true,
+          "time_schedule_limit": {
+            "enabled": false,
+            "monday": {
+              "enabled": true,
+              "start_time": "00:00",
+              "duration": {
+                "hours": "24",
+                "minutes": "00"
+              }
+            },
+            "tuesday": {
+              "enabled": true,
+              "start_time": "00:00",
+              "duration": {
+                "hours": "24",
+                "minutes": "00"
+              }
+            },
+            "wednesday": {
+              "enabled": true,
+              "start_time": "00:00",
+              "duration": {
+                "hours": "24",
+                "minutes": "00"
+              }
+            },
+            "thursday": {
+              "enabled": true,
+              "start_time": "00:00",
+              "duration": {
+                "hours": "24",
+                "minutes": "00"
+              }
+            },
+            "friday": {
+              "enabled": true,
+              "start_time": "00:00",
+              "duration": {
+                "hours": "24",
+                "minutes": "00"
+              }
+            },
+            "saturday": {
+              "enabled": true,
+              "start_time": "00:00",
+              "duration": {
+                "hours": "24",
+                "minutes": "00"
+              }
+            },
+            "sunday": {
+              "enabled": true,
+              "start_time": "00:00",
+              "duration": {
+                "hours": "24",
+                "minutes": "00"
+              }
+            }
+          },
+          "title": "Tech news",
+          "track_ldjson_price_data": null,
+          "trim_text_whitespace": false,
+          "remove_duplicate_lines": false,
+          "trigger_text": [],
+          "url": "",
+          "use_page_title_in_list": null,
+          "uuid": "7e9be5ed-5ce6-4390-abf4-8ccdbdcfbdfa",
+          "webdriver_delay": null,
+          "webdriver_js_execute_code": null,
+          "datastore_path": "/datastore",
+          "overrides_watch": null
+        },
+        "07e335bf-1e43-4062-abb9-d54505346313": {
+          "body": null,
+          "browser_steps": [],
+          "browser_steps_last_error_step": null,
+          "conditions": {},
+          "conditions_match_logic": "ALL",
+          "check_count": 0,
+          "check_unique_lines": false,
+          "consecutive_filter_failures": 0,
+          "content-type": null,
+          "date_created": 1767793546,
+          "extract_text": [],
+          "fetch_backend": "system",
+          "fetch_time": 0.0,
+          "filter_failure_notification_send": true,
+          "filter_text_added": true,
+          "filter_text_removed": true,
+          "filter_text_replaced": true,
+          "follow_price_changes": true,
+          "has_ldjson_price_data": null,
+          "headers": {},
+          "ignore_text": [],
+          "ignore_status_codes": null,
+          "in_stock_only": true,
+          "include_filters": [],
+          "last_checked": 0,
+          "last_error": false,
+          "last_notification_error": null,
+          "last_viewed": 0,
+          "method": "GET",
+          "notification_alert_count": 0,
+          "notification_body": null,
+          "notification_format": "System default",
+          "notification_muted": false,
+          "notification_screenshot": false,
+          "notification_title": null,
+          "notification_urls": [],
+          "page_title": null,
+          "paused": false,
+          "previous_md5": false,
+          "previous_md5_before_filters": false,
+          "processor": "text_json_diff",
+          "price_change_threshold_percent": null,
+          "proxy": null,
+          "remote_server_reply": null,
+          "sort_text_alphabetically": false,
+          "strip_ignored_lines": null,
+          "subtractive_selectors": [],
+          "tag": "",
+          "tags": [],
+          "text_should_not_be_present": [],
+          "time_between_check": {
+            "weeks": null,
+            "days": null,
+            "hours": null,
+            "minutes": null,
+            "seconds": null
+          },
+          "time_between_check_use_default": true,
+          "time_schedule_limit": {
+            "enabled": false,
+            "monday": {
+              "enabled": true,
+              "start_time": "00:00",
+              "duration": {
+                "hours": "24",
+                "minutes": "00"
+              }
+            },
+            "tuesday": {
+              "enabled": true,
+              "start_time": "00:00",
+              "duration": {
+                "hours": "24",
+                "minutes": "00"
+              }
+            },
+            "wednesday": {
+              "enabled": true,
+              "start_time": "00:00",
+              "duration": {
+                "hours": "24",
+                "minutes": "00"
+              }
+            },
+            "thursday": {
+              "enabled": true,
+              "start_time": "00:00",
+              "duration": {
+                "hours": "24",
+                "minutes": "00"
+              }
+            },
+            "friday": {
+              "enabled": true,
+              "start_time": "00:00",
+              "duration": {
+                "hours": "24",
+                "minutes": "00"
+              }
+            },
+            "saturday": {
+              "enabled": true,
+              "start_time": "00:00",
+              "duration": {
+                "hours": "24",
+                "minutes": "00"
+              }
+            },
+            "sunday": {
+              "enabled": true,
+              "start_time": "00:00",
+              "duration": {
+                "hours": "24",
+                "minutes": "00"
+              }
+            }
+          },
+          "title": "changedetection.io",
+          "track_ldjson_price_data": null,
+          "trim_text_whitespace": false,
+          "remove_duplicate_lines": false,
+          "trigger_text": [],
+          "url": "",
+          "use_page_title_in_list": null,
+          "uuid": "07e335bf-1e43-4062-abb9-d54505346313",
+          "webdriver_delay": null,
+          "webdriver_js_execute_code": null,
+          "datastore_path": "/datastore",
+          "overrides_watch": null
+        }
+      },
+      "webdriver_delay": null,
+      "ui": {
+        "use_page_title_in_list": true,
+        "open_diff_in_new_tab": true,
+        "socket_io_enabled": true,
+        "favicons_enabled": true
+      },
+      "active_base_url": "(\"Base URL\" not set - see settings - notifications)",
+      "api_access_token": "c505c5cf2c51cc64b786f90529c35b74"
+    }
+  },
+  "build_sha": "39274f121c7eca724fcc1e888533ab30c3f45499\n",
+  "version_tag": "0.51.4",
+  "app_guid": "e1ac5991-3f2b-46f8-b8fe-26f0bf33f4d2"
+}
