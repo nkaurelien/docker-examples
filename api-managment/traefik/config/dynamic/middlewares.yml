@@ -1,0 +1,41 @@
+http:
+  middlewares:
+    # Rate limiting middleware
+    rate-limit:
+      rateLimit:
+        average: 100
+        burst: 50
+
+    # Basic authentication middleware
+    # Generate password: htpasswd -nb admin password | sed -e s/\\$/\\$\\$/g
+    basic-auth:
+      basicAuth:
+        users:
+          - "admin:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/"  # admin:password
+
+    # Security headers middleware
+    security-headers:
+      headers:
+        browserXssFilter: true
+        contentTypeNosniff: true
+        forceSTSHeader: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 31536000
+        customFrameOptionsValue: "SAMEORIGIN"
+
+    # Compression middleware
+    compress:
+      compress: {}
+
+    # Strip prefix middleware example
+    strip-api-prefix:
+      stripPrefix:
+        prefixes:
+          - "/api"
+
+    # Retry middleware
+    retry:
+      retry:
+        attempts: 3
+        initialInterval: 100ms
