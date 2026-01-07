@@ -42,10 +42,10 @@ services:
     networks:
       - traefik-public
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/api/health"]
+      test: ["CMD", "./tinyauth", "healthcheck"]
       interval: 5s
       timeout: 3s
-      retries: 3
+      retries: 5
       start_period: 10s
     environment:
       - APP_URL=https://tinyauth.${DOMAIN:-apps.local}
