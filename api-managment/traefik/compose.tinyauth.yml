@@ -48,7 +48,7 @@ services:
       retries: 5
       start_period: 10s
     environment:
-      - APP_URL=https://tinyauth.${DOMAIN:-apps.local}
+      - APP_URL=http://tinyauth.${DOMAIN:-apps.local}
       # Default user: user / password (generate with: htpasswd -nbB user password)
       - USERS=${TINYAUTH_USERS:-user:$$2a$$10$$UdLYoJ5lgPsC0RKqYH/jMua7zIn0g9kPqWmhYayJYLaZQ/FTmH2/u}
       - SECRET=${TINYAUTH_SECRET:-change-me-in-production}
