@@ -15,27 +15,35 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
       # Portainer requires more permissions than Traefik
-      - CONTAINERS=1
-      - IMAGES=1
-      - NETWORKS=1
-      - VOLUMES=1
-      - SERVICES=1
-      - TASKS=1
-      - INFO=1
-      - EVENTS=1
-      - EXEC=1
+      # Allow read/write operations
       - POST=1
-      - SYSTEM=1
-      # Deny dangerous operations
+      # API sections - enabled for Portainer
       - BUILD=0
       - COMMIT=0
       - CONFIGS=0
+      - CONTAINERS=1
       - DISTRIBUTION=0
+      - EXEC=1
+      - GRPC=0
+      - IMAGES=1
+      - INFO=1
+      - NETWORKS=1
       - NODES=0
       - PLUGINS=0
-      - SECRETS=0
+      - SERVICES=1
       - SESSION=0
       - SWARM=0
+      - SYSTEM=1
+      - TASKS=1
+      - VOLUMES=1
+      # Container-specific controls
+      - ALLOW_START=1
+      - ALLOW_STOP=1
+      - ALLOW_RESTARTS=1
+      # Secrets (keep disabled for security)
+      - SECRETS=0
+      # Events (needed for real-time updates)
+      - EVENTS=1
 
   #######################################
   # Portainer: Docker Management UI
