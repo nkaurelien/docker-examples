@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+
+  #######################################
+  # Docker Socket Proxy: Secure Docker API access
+  #######################################
+  socket-proxy:
+    image: tecnativa/docker-socket-proxy:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - socket-proxy
+    environment:
+      # Portainer requires these permissions
+      - CONTAINERS=1
+      - IMAGES=1
+      - NETWORKS=1
+      - VOLUMES=1
+      - SERVICES=1
+      - TASKS=1
+      - INFO=1
+      - EVENTS=1
+      - EXEC=1
+      - POST=1
+      - SYSTEM=1
+      # Swarm specific
+      - NODES=1
+      - SWARM=1
+      # Deny dangerous operations
+      - BUILD=0
+      - COMMIT=0
+      - CONFIGS=0
+      - DISTRIBUTION=0
+      - PLUGINS=0
+      - SECRETS=0
+      - SESSION=0
+    deploy:
+      mode: global
+      placement:
+        constraints: [node.platform.os == linux]
+
+  #######################################
+  # Portainer Agent: Communicate with Swarm nodes
+  #######################################
+  agent:
+    image: portainer/agent:lts
+    environment:
+      - AGENT_CLUSTER_ADDR=tasks.agent
+      - DOCKER_HOST=tcp://socket-proxy:2375
+    volumes:
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+    networks:
+      - agent_network
+      - socket-proxy
+    depends_on:
+      - socket-proxy
+    deploy:
+      mode: global
+      placement:
+        constraints: [node.platform.os == linux]
+
+  #######################################
+  # Portainer: Docker Management UI
+  #######################################
+  portainer:
+    image: portainer/portainer-ce:lts
+    command: -H tcp://tasks.agent:9001 --tlsskipverify
+    ports:
+      - "9443:9443"
+      - "9000:9000"
+      - "8000:8000"
+    volumes:
+      - portainer_data:/data
+    networks:
+      - agent_network
+      - socket-proxy
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+
+networks:
+  agent_network:
+    driver: overlay
+    attachable: true
+  socket-proxy:
+    driver: overlay
+    internal: true
+
+volumes:
+  portainer_data:
