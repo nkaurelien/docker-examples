@@ -1,0 +1,40 @@
+services:
+  changedetection:
+    image: ghcr.io/dgtlmoon/changedetection.io:latest
+    container_name: changedetection
+    hostname: changedetection
+    volumes:
+      - ./data:/datastore
+    ports:
+      - 5001:5000
+    environment:
+      - PLAYWRIGHT_DRIVER_URL=ws://changedetection-browser:3000
+      - PLAYWRIGHT_CONNECT_TIMEOUT=120000
+      - PLAYWRIGHT_NAVIGATION_TIMEOUT=120000
+      - PLAYWRIGHT_SKIP_BROWSER_INITIALIZATION=true
+      #- BASE_URL=https://changedetection.example.com
+      - HIDE_REFERER=true
+      - MINIMUM_SECONDS_RECHECK_TIME=3
+      - TZ=Europe/Paris
+    depends_on:
+      changedetection-browser:
+        condition: service_started
+    restart: unless-stopped
+
+  changedetection-browser:
+    hostname: changedetection-browser
+    container_name: changedetection-browser
+    image: dgtlmoon/sockpuppetbrowser:latest
+    restart: unless-stopped
+    environment:
+      - SCREEN_WIDTH=1920
+      - SCREEN_HEIGHT=1024
+      - SCREEN_DEPTH=16
+      - ENABLE_DEBUGGER=false
+      - PREBOOT_CHROME=true
+      - CONNECTION_TIMEOUT=300000
+      - MAX_CONCURRENT_CHROME_PROCESSES=6
+      - CHROME_REFRESH_TIME=600000
+      - DEFAULT_BLOCK_ADS=true
+      - DEFAULT_STEALTH=true
+      - DEFAULT_IGNORE_HTTPS_ERRORS=true
