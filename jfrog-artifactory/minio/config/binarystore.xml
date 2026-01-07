@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config version="2">
+    <chain>
+        <provider id="cache-fs" type="cache-fs">
+            <provider id="s3-storage-v3" type="s3-storage-v3"/>
+        </provider>
+    </chain>
+    <provider id="s3-storage-v3" type="s3-storage-v3">
+        <endpoint>http://minio:9000/</endpoint>
+        <bucketName>artifactory</bucketName>
+        <region>us-east-1</region>
+        <identity>minioadmin</identity>
+        <credential>minioadmin123</credential>
+        <path>filestore</path>
+        <useHttp>true</useHttp>
+        <pathStyleAccess>true</pathStyleAccess>
+        <port>9000</port>
+        <useInstanceCredentials>false</useInstanceCredentials>
+        <testConnection>false</testConnection>
+        <signerOverride>AWSS3V4SignerType</signerOverride>
+    </provider>
+</config>

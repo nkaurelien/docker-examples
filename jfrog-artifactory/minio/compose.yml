@@ -1,0 +1,104 @@
+services:
+  postgres:
+    image: ${DOCKER_REGISTRY}/postgres:16.6-alpine
+    container_name: artifactory-minio-postgresql
+    environment:
+      - POSTGRES_DB=artifactory
+      - POSTGRES_USER=artifactory
+      - POSTGRES_PASSWORD=password
+    ports:
+      - 5433:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "10"
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 32000
+        hard: 40000
+
+  minio:
+    image: minio/minio:latest
+    container_name: artifactory-minio
+    command: server /data --console-address ":9001"
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ACCESS_KEY}
+      - MINIO_ROOT_PASSWORD=${MINIO_SECRET_KEY}
+    ports:
+      - 9000:9000
+      - 9001:9001
+    volumes:
+      - minio_data:/data
+      - /etc/localtime:/etc/localtime:ro
+    restart: always
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "10"
+
+  minio-init:
+    image: minio/mc:latest
+    container_name: artifactory-minio-init
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      sleep 5;
+      mc alias set myminio http://minio:9000 ${MINIO_ACCESS_KEY} ${MINIO_SECRET_KEY};
+      mc mb myminio/${S3_BUCKET_NAME} --ignore-existing;
+      exit 0;
+      "
+
+  artifactory:
+    image: releases-docker.jfrog.io/jfrog/artifactory-jcr:${ARTIFACTORY_VERSION}
+    container_name: artifactory-minio-jcr
+    volumes:
+      - artifactory_data:/var/opt/jfrog/artifactory
+      # Uncomment to enable S3 storage (requires Pro/Enterprise license)
+      # - ./config/binarystore.xml:/var/opt/jfrog/artifactory/etc/artifactory/binarystore.xml:ro
+      - /etc/localtime:/etc/localtime:ro
+    restart: always
+    depends_on:
+      - postgres
+      - minio
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 32000
+        hard: 40000
+    environment:
+      - ENABLE_MIGRATION=y
+      - JF_SHARED_DATABASE_TYPE=postgresql
+      - JF_SHARED_DATABASE_USERNAME=artifactory
+      - JF_SHARED_DATABASE_PASSWORD=password
+      - JF_SHARED_DATABASE_URL=jdbc:postgresql://artifactory-minio-postgresql:5432/artifactory
+      - JF_SHARED_DATABASE_DRIVER=org.postgresql.Driver
+      - JF_SHARED_NODE_IP=${JF_SHARED_NODE_IP}
+      - JF_SHARED_NODE_ID=${JF_SHARED_NODE_ID}
+      - JF_SHARED_NODE_NAME=${JF_SHARED_NODE_NAME}
+      - JF_ROUTER_ENTRYPOINTS_EXTERNALPORT=${JF_ROUTER_ENTRYPOINTS_EXTERNALPORT}
+    ports:
+      - ${JF_ROUTER_ENTRYPOINTS_EXTERNALPORT}:${JF_ROUTER_ENTRYPOINTS_EXTERNALPORT}
+      - 8081:8081
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "10"
+
+volumes:
+  artifactory_data:
+  postgres_data:
+  minio_data:
