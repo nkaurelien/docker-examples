@@ -1,0 +1,147 @@
+services:
+
+  #######################################
+  # Docker Socket Proxy: Secure Docker API access
+  #######################################
+  socket-proxy:
+    image: tecnativa/docker-socket-proxy:latest
+    container_name: traefik-socket-proxy
+    restart: unless-stopped
+    networks:
+      - socket-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      # Traefik only needs read access
+      # Deny write operations
+      - POST=0
+      # API sections - minimal for Traefik
+      - BUILD=0
+      - COMMIT=0
+      - CONFIGS=0
+      - CONTAINERS=1          # Required: read container labels
+      - DISTRIBUTION=0
+      - EXEC=0
+      - GRPC=0
+      - IMAGES=0
+      - INFO=0
+      - NETWORKS=1            # Required: read network info
+      - NODES=0
+      - PLUGINS=0
+      - SERVICES=1            # Required: Swarm services
+      - SESSION=0
+      - SWARM=0
+      - SYSTEM=0
+      - TASKS=1               # Required: Swarm tasks
+      - VOLUMES=0
+      # Container-specific controls
+      - ALLOW_START=0
+      - ALLOW_STOP=0
+      - ALLOW_RESTARTS=0
+      # Secrets (disabled)
+      - SECRETS=0
+      # Events (needed for auto-discovery)
+      - EVENTS=1
+
+  #######################################
+  # Traefik: The Cloud Native Edge Router
+  #######################################
+  traefik:
+    image: traefik:v3.6
+    container_name: traefik
+    restart: unless-stopped
+    depends_on:
+      - socket-proxy
+    ports:
+      - "80:80"
+      - "8080:8080"
+    command:
+      - "--api.insecure=true"
+      - "--log.level=DEBUG"
+      - "--providers.docker=true"
+      - "--providers.docker.endpoint=tcp://socket-proxy:2375"
+      - "--providers.docker.exposedbydefault=true"
+      - "--entrypoints.web.address=:80"
+    networks:
+      - traefik-public
+      - socket-proxy
+
+  patient-webapp:
+    build:
+      context: ./frontend
+      dockerfile: caddy.Dockerfile
+      args:
+        SITE: ${SITE:-patient}
+    ports:
+      - "8001:80"
+    networks:
+      - my-network
+      - traefik-public
+    environment:
+      SITE: "patient"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.patient-web-app.rule=Host(`patient.kamitcare.localhost`)"
+      - "traefik.http.routers.patient-web-app.entrypoints=web"
+
+  doctor-webapp:
+    build:
+      context: ./frontend
+      dockerfile: busybox.Dockerfile
+      args:
+        SITE: ${SITE:-doctor}
+    ports:
+      - "8002:3000"
+    networks:
+      - my-network
+      - traefik-public
+    environment:
+      SITE: "doctor"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.doctor-web-app.rule=Host(`doctor.kamitcare.localhost`)"
+      - "traefik.http.routers.doctor-web-app.entrypoints=web"
+      - "traefik.http.services.doctor-web-app.loadbalancer.server.port=3000"
+
+  backend-webapi:
+    build: backend/flask
+    restart: always
+    ports:
+      - "8000:8000"
+    networks:
+      - my-network
+      - traefik-public
+    environment:
+      - COUCHDB_URL=http://admin:s3cr3t@couchdb:5984/
+    depends_on:
+      - couchdb
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend-web-api.rule=Host(`api.kamitcare.localhost`)"
+      - "traefik.http.routers.backend-web-api.entrypoints=web"
+      - "traefik.http.services.backend-web-api.loadbalancer.server.port=8000"
+
+  couchdb:
+    image: couchdb:3.1
+    environment:
+      COUCHDB_USER: ${COUCHDB_USER:-admin}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD:-s3cr3t}
+    volumes:
+      - couchdb_data:/opt/couchdb/data
+    ports:
+      - "5984:5984"
+    networks:
+      - my-network
+
+volumes:
+  couchdb_data:
+
+networks:
+  my-network:
+    driver: bridge
+  traefik-public:
+    external: true
+  socket-proxy:
+    name: traefik-socket-proxy
+    driver: bridge
+    internal: true

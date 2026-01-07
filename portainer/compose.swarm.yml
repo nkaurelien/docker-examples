@@ -12,29 +12,36 @@ services:
     networks:
       - socket-proxy
     environment:
-      # Portainer requires these permissions
-      - CONTAINERS=1
-      - IMAGES=1
-      - NETWORKS=1
-      - VOLUMES=1
-      - SERVICES=1
-      - TASKS=1
-      - INFO=1
-      - EVENTS=1
-      - EXEC=1
+      # Portainer Swarm requires more permissions
+      # Allow read/write operations
       - POST=1
-      - SYSTEM=1
-      # Swarm specific
-      - NODES=1
-      - SWARM=1
-      # Deny dangerous operations
+      # API sections - enabled for Portainer Swarm
       - BUILD=0
       - COMMIT=0
-      - CONFIGS=0
+      - CONFIGS=1             # Swarm configs
+      - CONTAINERS=1
       - DISTRIBUTION=0
+      - EXEC=1
+      - GRPC=0
+      - IMAGES=1
+      - INFO=1
+      - NETWORKS=1
+      - NODES=1               # Swarm nodes
       - PLUGINS=0
-      - SECRETS=0
+      - SERVICES=1            # Swarm services
       - SESSION=0
+      - SWARM=1               # Swarm management
+      - SYSTEM=1
+      - TASKS=1               # Swarm tasks
+      - VOLUMES=1
+      # Container-specific controls
+      - ALLOW_START=1
+      - ALLOW_STOP=1
+      - ALLOW_RESTARTS=1
+      # Secrets (enable for Swarm secrets management)
+      - SECRETS=1
+      # Events (needed for real-time updates)
+      - EVENTS=1
     deploy:
       mode: global
       placement:
