@@ -1,0 +1,23 @@
+services:
+
+  #######################################
+  # Rancher: Kubernetes Management Platform
+  #######################################
+  rancher:
+    image: rancher/rancher:latest
+    container_name: rancher
+    restart: unless-stopped
+    privileged: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # Persist Rancher data
+      - rancher-data:/var/lib/rancher
+    environment:
+      # Optional: Set audit log level (0-3, default: 0)
+      - AUDIT_LEVEL=${AUDIT_LEVEL:-0}
+
+volumes:
+  rancher-data:
+    name: rancher-data
