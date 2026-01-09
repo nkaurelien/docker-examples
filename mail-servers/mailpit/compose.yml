@@ -7,12 +7,16 @@ services:
     image: axllent/mailpit:latest
     container_name: mailpit
     restart: unless-stopped
+    profiles:
+      - dev
     volumes:
       - mailpit-data:/data
+      # - /etc/localtime:/etc/localtime:ro  # Linux only
     ports:
-      - "8025:8025"   # Web UI
-      - "1025:1025"   # SMTP
+      - "${MAILPIT_UI_PORT:-8025}:8025"     # Web UI
+      - "${MAILPIT_SMTP_PORT:-1025}:1025"   # SMTP
     environment:
+      - TZ=${TZ:-UTC}
       - MP_MAX_MESSAGES=${MP_MAX_MESSAGES:-5000}
       - MP_DATABASE=/data/mailpit.db
       - MP_SMTP_AUTH_ACCEPT_ANY=1
