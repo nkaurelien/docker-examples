@@ -136,6 +136,10 @@ nav:
   - Surveillance:
       - ChangeDetection.io: services/surveillance/changedetection.md
 
+  - File Sharing:
+      - Overview: services/file-sharing/index.md
+      - Erugo: services/file-sharing/erugo.md
+
   - Authentication:
       - Overview: services/auth/index.md
       - Keycloak: services/auth/keycloak.md
