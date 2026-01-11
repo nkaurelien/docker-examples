@@ -1,0 +1,30 @@
+services:
+
+  #######################################
+  # NeuVector Allinone: High Availability Setup
+  # Deploy on first 3+ nodes (odd numbers: 3, 5, 7)
+  #######################################
+  allinone:
+    image: neuvector/allinone:${NEUVECTOR_VERSION:-latest}
+    container_name: neuvector-allinone
+    restart: unless-stopped
+    pid: host
+    privileged: true
+    environment:
+      # Comma-separated list of all Allinone node IPs for HA cluster
+      # Example: 192.168.1.10,192.168.1.11,192.168.1.12
+      - CLUSTER_JOIN_ADDR=${CLUSTER_JOIN_ADDR}
+      - NV_PLATFORM_INFO=platform=Docker
+    ports:
+      - "18300:18300"       # Controller REST API
+      - "18301:18301"       # Controller cluster communication
+      - "18301:18301/udp"   # Controller cluster communication (UDP)
+      - "18400:18400"       # Enforcer communication
+      - "18401:18401"       # Enforcer cluster communication
+      - "8443:8443"         # Manager web UI (HTTPS)
+    volumes:
+      - /lib/modules:/lib/modules:ro
+      - /var/neuvector:/var/neuvector
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc:/host/proc:ro
+      - /sys/fs/cgroup:/host/cgroup:ro

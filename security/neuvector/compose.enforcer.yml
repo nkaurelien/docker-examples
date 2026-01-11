@@ -1,0 +1,26 @@
+services:
+
+  #######################################
+  # NeuVector Enforcer: Container Runtime Security
+  # Deploy on nodes where Allinone is NOT running
+  #######################################
+  enforcer:
+    image: neuvector/enforcer:${NEUVECTOR_VERSION:-latest}
+    container_name: neuvector-enforcer
+    restart: unless-stopped
+    pid: host
+    privileged: true
+    environment:
+      # Point to Allinone/Controller IP addresses
+      - CLUSTER_JOIN_ADDR=${CLUSTER_JOIN_ADDR}
+      - NV_PLATFORM_INFO=platform=Docker
+      # Uncomment to see system containers in Network Activity
+      # - NV_SYSTEM_GROUPS=System
+    ports:
+      - "18401:18401"       # Enforcer cluster communication
+    volumes:
+      - /lib/modules:/lib/modules:ro
+      - /var/neuvector:/var/neuvector
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc:/host/proc:ro
+      - /sys/fs/cgroup:/host/cgroup:ro
