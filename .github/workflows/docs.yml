@@ -45,6 +45,9 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements-docs.txt
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
       - name: Build documentation
         run: mkdocs build --strict
 
