@@ -113,6 +113,28 @@ Several services are configured for production deployment:
 
 ## 📚 Documentation
 
+### Online Documentation
+
+Full documentation is available at: **[https://nkaurelien.github.io/docker-examples/](https://nkaurelien.github.io/docker-examples/)**
+
+### Run Documentation Locally
+
+```bash
+# Install dependencies (with uv recommended)
+uv venv && source .venv/bin/activate
+uv pip install -r requirements-docs.txt
+
+# Or with pip
+pip install -r requirements-docs.txt
+
+# Serve documentation
+mkdocs serve
+```
+
+Documentation available at: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+### Service Documentation
+
 Each service directory contains:
 - `README.md` or `readme.md` - Service-specific documentation
 - `compose.yml` or `docker-compose.yml` - Docker Compose configuration
