@@ -1,0 +1,14 @@
+services:
+  app:
+    image: wardy784/erugo:latest
+    restart: unless-stopped
+    volumes:
+      - erugo_storage:/var/www/html/storage
+    ports:
+      - "${ERUGO_PORT:-9998}:80"
+    environment:
+      - APP_URL=${APP_URL:-http://localhost:9998}
+      - APP_ENV=${APP_ENV:-production}
+
+volumes:
+  erugo_storage:
