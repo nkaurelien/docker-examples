@@ -1,0 +1,35 @@
+services:
+
+  #######################################
+  # NeuVector Allinone: Non-Privileged Mode
+  # Uses capabilities instead of full privileged mode
+  #######################################
+  allinone:
+    image: neuvector/allinone:${NEUVECTOR_VERSION:-latest}
+    container_name: neuvector-allinone
+    restart: unless-stopped
+    pid: host
+    cap_add:
+      - SYS_ADMIN
+      - NET_ADMIN
+      - SYS_PTRACE
+      - IPC_LOCK
+    security_opt:
+      - apparmor:unconfined
+      - seccomp:unconfined
+    environment:
+      - CLUSTER_JOIN_ADDR=${CLUSTER_JOIN_ADDR:-}
+      - NV_PLATFORM_INFO=platform=Docker
+    ports:
+      - "18300:18300"       # Controller REST API
+      - "18301:18301"       # Controller cluster communication
+      - "18301:18301/udp"   # Controller cluster communication (UDP)
+      - "18400:18400"       # Enforcer communication
+      - "18401:18401"       # Enforcer cluster communication
+      - "8443:8443"         # Manager web UI (HTTPS)
+    volumes:
+      - /lib/modules:/lib/modules:ro
+      - /var/neuvector:/var/neuvector
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc:/host/proc:ro
+      - /sys/fs/cgroup:/host/cgroup:ro
