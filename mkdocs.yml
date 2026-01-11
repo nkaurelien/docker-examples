@@ -107,6 +107,7 @@ nav:
           - Socket Proxy: services/api-management/traefik/socket-proxy.md
       - Kong: services/api-management/kong.md
       - Hasura: services/api-management/hasura.md
+      - Nginx + Certbot: services/api-management/nginx-certbot.md
 
   - Orchestration:
       - Overview: services/orchestration/index.md
