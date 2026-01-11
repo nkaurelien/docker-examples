@@ -141,6 +141,30 @@ server {
 }
 ```
 
+## Exemple avec proxy_pass (Erugo)
+
+Voir `nginx/conf.d/erugo.conf.example` pour un exemple complet.
+
+```nginx
+server {
+    listen 443 ssl;
+    server_name erugo.it-connect.fr;
+
+    ssl_certificate /etc/letsencrypt/live/erugo.it-connect.fr/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/erugo.it-connect.fr/privkey.pem;
+
+    client_max_body_size 100M;
+
+    location / {
+        proxy_pass http://erugo:80;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
 ## Mode staging
 
 Pour les tests, utilisez le serveur staging de Let's Encrypt pour éviter les rate limits :

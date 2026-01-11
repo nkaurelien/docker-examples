@@ -1,0 +1,57 @@
+# Exemple de configuration pour Erugo avec SSL
+# Copier ce fichier vers erugo.conf et adapter le domaine
+
+server {
+    listen 80;
+    server_name erugo.it-connect.fr;
+
+    # Challenge ACME pour Let's Encrypt
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    # Redirection HTTP -> HTTPS
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl;
+    server_name erugo.it-connect.fr;
+
+    # Certificats SSL (générés avec: make cert DOMAIN=erugo.it-connect.fr)
+    ssl_certificate /etc/letsencrypt/live/erugo.it-connect.fr/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/erugo.it-connect.fr/privkey.pem;
+
+    # Configuration SSL
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384;
+    ssl_prefer_server_ciphers off;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 1d;
+
+    # HSTS
+    add_header Strict-Transport-Security "max-age=63072000" always;
+
+    # Taille max upload (pour partage de fichiers)
+    client_max_body_size 100M;
+
+    location / {
+        proxy_pass http://erugo:80;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # WebSocket support (si nécessaire)
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+
+        # Timeouts pour gros uploads
+        proxy_connect_timeout 300;
+        proxy_send_timeout 300;
+        proxy_read_timeout 300;
+    }
+}
