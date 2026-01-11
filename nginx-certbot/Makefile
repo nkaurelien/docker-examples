@@ -1,4 +1,4 @@
-.PHONY: help up down restart logs ps init reload renew shell clean
+.PHONY: help up down restart logs ps init reload renew shell clean setup
 
 # Default target
 help:
@@ -14,11 +14,17 @@ help:
 	@echo "  make reload    - Recharger la config Nginx"
 	@echo "  make renew     - Forcer le renouvellement du certificat"
 	@echo ""
+	@echo "  make setup     - Créer les répertoires nécessaires"
 	@echo "  make shell     - Shell dans le conteneur Nginx"
 	@echo "  make clean     - Supprimer les conteneurs et volumes"
 
+# Setup
+setup:
+	@mkdir -p nginx/conf.d certbot/conf certbot/www
+	@echo "Répertoires créés ✓"
+
 # Services
-up:
+up: setup
 	docker compose up -d
 
 down:
@@ -34,7 +40,7 @@ ps:
 	docker compose ps
 
 # SSL / Certbot
-init:
+init: setup
 	./init-letsencrypt.sh
 
 reload:
