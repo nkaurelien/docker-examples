@@ -142,6 +142,12 @@ nav:
       - Passbolt: services/auth/passbolt.md
       - Zitadel: services/auth/zitadel.md
 
+  - CI/CD:
+      - Overview: ci-cd/index.md
+      - GitLab CI: ci-cd/gitlab-ci.md
+      - GitHub Actions: ci-cd/github-actions.md
+      - Security Scanning: ci-cd/security-scanning.md
+
   - Reference:
       - Docker Capabilities: docker/capabilities.md
       - Docker Essentials: docker/essentials.md
