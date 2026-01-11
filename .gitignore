@@ -6,3 +6,20 @@
 .DS_Store
 .AppleDouble
 .LSOverride
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+.env.local
+
+# MkDocs
+site/
+
+# Snyk Security Extension - AI Rules (auto-generated)
+.github/instructions/snyk_rules.instructions.md
