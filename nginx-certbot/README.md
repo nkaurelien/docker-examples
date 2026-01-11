@@ -28,6 +28,26 @@ Reverse proxy Nginx avec gestion automatique des certificats SSL via Certbot/Let
 
 ```bash
 docker compose up -d
+# ou
+make up
+```
+
+## Commandes (Makefile)
+
+```bash
+make help      # Afficher l'aide
+make up        # Démarrer les services
+make down      # Arrêter les services
+make restart   # Redémarrer les services
+make logs      # Voir les logs
+make ps        # État des conteneurs
+
+make init      # Initialiser le certificat Let's Encrypt
+make reload    # Recharger la config Nginx
+make renew     # Forcer le renouvellement du certificat
+
+make shell     # Shell dans le conteneur Nginx
+make clean     # Supprimer les conteneurs et volumes
 ```
 
 ## Fonctionnement
