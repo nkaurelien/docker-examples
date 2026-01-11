@@ -25,6 +25,28 @@ Copy `.env.example` to `.env` and customize:
 cp .env.example .env
 ```
 
+## SSL avec Nginx
+
+Un exemple de configuration Nginx avec SSL est disponible dans `nginx-ssl.conf.example`.
+
+Pour l'utiliser avec le projet [nginx-certbot](../../nginx-certbot/):
+
+```bash
+# 1. Générer le certificat
+cd ../nginx-certbot
+make nginx-start
+make cert DOMAIN=erugo.example.com EMAIL=admin@example.com
+make nginx-stop
+
+# 2. Copier la config
+cp ../file-sharing/erugo/nginx-ssl.conf.example nginx/conf.d/erugo.conf
+
+# 3. Adapter le domaine dans erugo.conf
+
+# 4. Démarrer
+make up
+```
+
 ## Links
 
 - [GitHub](https://github.com/wardy784/erugo)

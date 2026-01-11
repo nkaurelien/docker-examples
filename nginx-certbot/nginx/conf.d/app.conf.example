@@ -1,9 +1,12 @@
-# Exemple de configuration pour Erugo avec SSL
-# Copier ce fichier vers erugo.conf et adapter le domaine
+# Exemple de configuration proxy avec SSL
+# Copier ce fichier vers myapp.conf et adapter:
+# - server_name: votre domaine
+# - proxy_pass: l'adresse de votre application
+# - Générer le certificat: make cert DOMAIN=myapp.example.com EMAIL=admin@example.com
 
 server {
     listen 80;
-    server_name erugo.it-connect.fr;
+    server_name myapp.example.com;
 
     # Challenge ACME pour Let's Encrypt
     location /.well-known/acme-challenge/ {
@@ -18,11 +21,11 @@ server {
 
 server {
     listen 443 ssl;
-    server_name erugo.it-connect.fr;
+    server_name myapp.example.com;
 
-    # Certificats SSL (générés avec: make cert DOMAIN=erugo.it-connect.fr)
-    ssl_certificate /etc/letsencrypt/live/erugo.it-connect.fr/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/erugo.it-connect.fr/privkey.pem;
+    # Certificats SSL (générés avec: make cert DOMAIN=myapp.example.com)
+    ssl_certificate /etc/letsencrypt/live/myapp.example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/myapp.example.com/privkey.pem;
 
     # Configuration SSL
     ssl_protocols TLSv1.2 TLSv1.3;
@@ -34,11 +37,12 @@ server {
     # HSTS
     add_header Strict-Transport-Security "max-age=63072000" always;
 
-    # Taille max upload (pour partage de fichiers)
+    # Taille max upload (ajuster selon besoin)
     client_max_body_size 100M;
 
     location / {
-        proxy_pass http://erugo:80;
+        # Remplacer par l'adresse de votre application
+        proxy_pass http://myapp:8080;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
