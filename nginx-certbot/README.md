@@ -46,8 +46,40 @@ make init      # Initialiser le certificat Let's Encrypt
 make reload    # Recharger la config Nginx
 make renew     # Forcer le renouvellement du certificat
 
+make setup     # Créer les répertoires nécessaires
 make shell     # Shell dans le conteneur Nginx
 make clean     # Supprimer les conteneurs et volumes
+```
+
+### Générer un certificat pour un domaine
+
+```bash
+# Production
+make cert DOMAIN=erugo.example.com EMAIL=admin@example.com
+
+# Staging (test - évite les rate limits)
+make cert-staging DOMAIN=erugo.example.com
+```
+
+### Exemple complet pour un nouveau domaine
+
+```bash
+# 1. Créer les répertoires
+make setup
+
+# 2. Démarrer Nginx seul (port 80 pour le challenge ACME)
+make nginx-start
+
+# 3. Générer le certificat
+make cert DOMAIN=erugo.it-connect.fr EMAIL=admin@it-connect.fr
+
+# 4. Arrêter nginx temporaire
+make nginx-stop
+
+# 5. Configurer nginx/conf.d/default.conf avec le nouveau domaine
+
+# 6. Démarrer le stack complet
+make up
 ```
 
 ## Fonctionnement
