@@ -141,22 +141,22 @@ server {
 }
 ```
 
-## Exemple avec proxy_pass (Erugo)
+## Exemple avec proxy_pass
 
-Voir `nginx/conf.d/erugo.conf.example` pour un exemple complet.
+Voir `nginx/conf.d/app.conf.example` pour un exemple complet avec SSL et proxy.
 
 ```nginx
 server {
     listen 443 ssl;
-    server_name erugo.it-connect.fr;
+    server_name myapp.example.com;
 
-    ssl_certificate /etc/letsencrypt/live/erugo.it-connect.fr/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/erugo.it-connect.fr/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/myapp.example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/myapp.example.com/privkey.pem;
 
     client_max_body_size 100M;
 
     location / {
-        proxy_pass http://erugo:80;
+        proxy_pass http://myapp:8080;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
