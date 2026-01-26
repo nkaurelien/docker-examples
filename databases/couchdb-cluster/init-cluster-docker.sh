@@ -6,13 +6,17 @@ echo "Starting CouchDB cluster initialization..."
 # Variables d'environnement
 COORDINATOR_NODE="0"
 ADDITIONAL_NODES="1 2"
-BASE_URL="http://${COUCHDB_USER}:${COUCHDB_PASSWORD}@couchdb-0:5984"
+# Note: BASE_URL uses FQDN because it's resolved via Docker DNS with hostname
+# The FQDN is used for Erlang node names which need to match hostnames
+BASE_URL="http://${COUCHDB_USER}:${COUCHDB_PASSWORD}@couchdb-0.${COUCHDB_NODE_NAME:-couchdb-cluster}:5984"
 
 # Network configuration (can be overridden by environment variables)
 NETWORK_SUBNET="${NETWORK_SUBNET:-172.19.0.0/24}"
-NODE0_HOST="${NODE0_HOST:-couchdb-0}"
-NODE1_HOST="${NODE1_HOST:-couchdb-1}"
-NODE2_HOST="${NODE2_HOST:-couchdb-2}"
+# COUCHDB_NODE_NAME is used to build the FQDN for Erlang node names
+CLUSTER_DOMAIN="${COUCHDB_NODE_NAME:-couchdb-cluster}"
+NODE0_HOST="couchdb-0.${CLUSTER_DOMAIN}"
+NODE1_HOST="couchdb-1.${CLUSTER_DOMAIN}"
+NODE2_HOST="couchdb-2.${CLUSTER_DOMAIN}"
 
 # Fonction pour attendre qu'un service soit prêt
 wait_for_service() {
@@ -54,16 +58,16 @@ echo "You may safely ignore the 'Cluster is already enabled' warning above."
 for NODE_ID in $ADDITIONAL_NODES; do
   echo "Setting up additional node: $NODE_ID"
 
-  # Activer le cluster sur le nœud distant avec le nom simple et l'IP
-  NODE_HOST="couchdb-${NODE_ID}"
+  # Use FQDN for the node host to match Erlang node names
+  NODE_HOST="couchdb-${NODE_ID}.${CLUSTER_DOMAIN}"
   echo "Enabling cluster on remote node: ${NODE_HOST}"
-  
+
   curl -X POST -H "Content-Type: application/json" "${BASE_URL}/_cluster_setup" \
     -d "{\"action\": \"enable_cluster\", \"bind_address\":\"0.0.0.0\", \"username\": \"${COUCHDB_USER}\", \"password\":\"${COUCHDB_PASSWORD}\", \"port\": 5984, \"node_count\": \"3\", \"remote_node\": \"${NODE_HOST}\", \"remote_current_user\": \"${COUCHDB_USER}\", \"remote_current_password\": \"${COUCHDB_PASSWORD}\"}"
 
   echo ""
 
-  # Ajouter le nœud au cluster avec le nom de nœud Erlang correct
+  # Ajouter le nœud au cluster avec le nom de nœud Erlang correct (FQDN)
   echo "Adding node to cluster: couchdb@${NODE_HOST}"
   curl -X POST -H "Content-Type: application/json" "${BASE_URL}/_cluster_setup" \
     -d "{\"action\": \"add_node\", \"host\":\"${NODE_HOST}\", \"port\": 5984, \"username\": \"${COUCHDB_USER}\", \"password\":\"${COUCHDB_PASSWORD}\", \"setup_type\":\"add_node\"}"

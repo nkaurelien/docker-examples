@@ -1,12 +1,13 @@
 services:
 
   couchdb-0:
+    hostname: couchdb-0.${COUCHDB_NODE_NAME:-couchdb-cluster}
     restart: unless-stopped
     environment:
       COUCHDB_USER: ${COUCHDB_USER}
       COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
       COUCHDB_SECRET: ${COUCHDB_SECRET}
-      NODENAME: couchdb-0
+      NODENAME: couchdb-0.${COUCHDB_NODE_NAME:-couchdb-cluster}
       ERL_FLAGS: "-setcookie ${COUCHDB_COOKIE}"
       BACKUP_RETENTION_DAYS: ${BACKUP_RETENTION_DAYS:-7}
     image: couchdb:3.4.2
@@ -49,12 +50,13 @@ services:
           memory: 512M
 
   couchdb-1:
+    hostname: couchdb-1.${COUCHDB_NODE_NAME:-couchdb-cluster}
     restart: unless-stopped
     environment:
       COUCHDB_USER: ${COUCHDB_USER}
       COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
       COUCHDB_SECRET: ${COUCHDB_SECRET}
-      NODENAME: couchdb-1
+      NODENAME: couchdb-1.${COUCHDB_NODE_NAME:-couchdb-cluster}
       ERL_FLAGS: "-setcookie ${COUCHDB_COOKIE}"
     image: couchdb:3.4.2
     networks:
@@ -86,12 +88,13 @@ services:
           memory: 512M
 
   couchdb-2:
+    hostname: couchdb-2.${COUCHDB_NODE_NAME:-couchdb-cluster}
     restart: unless-stopped
     environment:
       COUCHDB_USER: ${COUCHDB_USER}
       COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
       COUCHDB_SECRET: ${COUCHDB_SECRET}
-      NODENAME: couchdb-2
+      NODENAME: couchdb-2.${COUCHDB_NODE_NAME:-couchdb-cluster}
       ERL_FLAGS: "-setcookie ${COUCHDB_COOKIE}"
     image: couchdb:3.4.2
     networks:
