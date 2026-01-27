@@ -1,0 +1,12 @@
+services:
+  it-tools:
+    image: 'ghcr.io/corentinth/it-tools:latest'
+    ports:
+      - '7474:80'
+    restart: unless-stopped
+    container_name: it-tools
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.it-tools.rule=Host(`it-tools.${DOMAIN:-apps.local}`)"
+      - "traefik.http.routers.it-tools.entrypoints=web"
+      - "traefik.http.services.it-tools.loadbalancer.server.port=80"

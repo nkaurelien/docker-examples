@@ -147,6 +147,10 @@ nav:
       - Passbolt: services/auth/passbolt.md
       - Zitadel: services/auth/zitadel.md
 
+  - Development Tools:
+      - Overview: services/dev-tools/index.md
+      - IT-Tools: services/dev-tools/it-tools.md
+
   - CI/CD:
       - Overview: ci-cd/index.md
       - GitLab CI: ci-cd/gitlab-ci.md
