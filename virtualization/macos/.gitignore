@@ -1,0 +1,10 @@
+# Fichiers de configuration locale
+.env
+
+# Sauvegardes
+*.tar.gz
+*.zip
+backups/
+
+# Logs
+*.log

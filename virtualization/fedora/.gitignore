@@ -1,0 +1,13 @@
+# Fichiers de configuration locale
+.env
+
+# Dossier partagé
+shared/
+
+# Sauvegardes
+*.tar.gz
+*.zip
+backups/
+
+# Logs
+*.log

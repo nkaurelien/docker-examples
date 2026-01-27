@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  macos:
+    image: dockurr/macos
+    container_name: macos-ventura
+    environment:
+      # Version de macOS (ventura, monterey, big-sur, catalina, mojave, high-sierra)
+      VERSION: "ventura"
+      # Optionnel: Configurer la RAM (en Go)
+      RAM_SIZE: "4G"
+      # Optionnel: Configurer le CPU (nombre de cores)
+      CPU_CORES: "2"
+      # Optionnel: Configurer le disque (en Go)
+      DISK_SIZE: "64G"
+    devices:
+      - /dev/kvm
+    cap_add:
+      - NET_ADMIN
+    ports:
+      # Interface web noVNC
+      - 8007:8006
+      # VNC
+      - 5900:5900/tcp
+      - 5900:5900/udp
+    volumes:
+      # Persister les données macOS
+      - macos_data:/storage
+    restart: unless-stopped
+    networks:
+      - macos_network
+
+networks:
+  macos_network:
+    driver: bridge
+
+volumes:
+  macos_data:
+    driver: local
