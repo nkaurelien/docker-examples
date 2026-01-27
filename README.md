@@ -33,6 +33,7 @@ A comprehensive collection of production-ready Docker Compose configurations for
 - **[SonarQube](sonarcube/)** - Code quality and security analysis
 - **[Docker Registry](docker-registry/)** - Private Docker image registry with UI
 - **[Portainer](portainer/)** - Docker container management UI
+- **[IT-Tools](it-tools/)** - Collection of handy online tools for developers (network, encoding, generators, etc.)
 
 ### Communication & Collaboration
 - **[Mail Servers](mail-servers/)** - Complete email solutions (Docker Mailserver, Mailcatcher, Mailu)
