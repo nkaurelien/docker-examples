@@ -1,0 +1,48 @@
+services:
+  windows:
+    image: dockurr/windows
+    container_name: windows-11
+    environment:
+      VERSION: "11l"
+      # Langue de l'installation Windows
+      # LANGUAGE: "French"
+      # Optionnel: Configurer la région et le clavier
+      REGION: "fr-FR"
+      KEYBOARD: "fr-FR"
+      # Optionnel: Configurer la RAM (en Go)
+      RAM_SIZE: "4G"
+      # Optionnel: Configurer le CPU (nombre de cores)
+      CPU_CORES: "2"
+      # Optionnel: Configurer le disque (en Go)
+      DISK_SIZE: "64G"
+      # Optionnel: Configurer le compte utilisateur
+      USERNAME: "Docker"
+      PASSWORD: "admin"
+      # Sur macOS, désactiver KVM car non disponible (utilise HVF à la place)
+      KVM: "N"
+    # Note: Sur macOS, /dev/kvm n'existe pas. Docker Desktop utilise HVF (Hypervisor Framework)
+    # Décommentez la ligne suivante si vous êtes sur Linux :
+    # devices:
+    #   - /dev/kvm
+    cap_add:
+      - NET_ADMIN
+    ports:
+      # Interface web noVNC
+      - 8006:8006
+      # Bureau à distance RDP
+      - 3389:3389/tcp
+      - 3389:3389/udp
+    volumes:
+      # Persister les données Windows
+      - windows_data:/storage
+    restart: unless-stopped
+    networks:
+      - windows_network
+
+networks:
+  windows_network:
+    driver: bridge
+
+volumes:
+  windows_data:
+    driver: local

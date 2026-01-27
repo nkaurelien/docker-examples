@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  fedora:
+    image: dockurr/fedora
+    container_name: fedora-workstation
+    environment:
+      # Version de Fedora (40, 39, 38)
+      VERSION: "40"
+      # Optionnel: Configurer la RAM (en Go)
+      RAM_SIZE: "4G"
+      # Optionnel: Configurer le CPU (nombre de cores)
+      CPU_CORES: "2"
+      # Optionnel: Configurer le disque (en Go)
+      DISK_SIZE: "32G"
+    devices:
+      - /dev/kvm
+    cap_add:
+      - NET_ADMIN
+    ports:
+      # Interface web noVNC
+      - 8009:8006
+      # VNC
+      - 5902:5900/tcp
+      - 5902:5900/udp
+      # SSH (optionnel)
+      - 2223:22
+    volumes:
+      # Persister les données Fedora
+      - fedora_data:/storage
+      # Partager des fichiers avec l'hôte (optionnel)
+      - ./shared:/shared
+    restart: unless-stopped
+    networks:
+      - fedora_network
+
+networks:
+  fedora_network:
+    driver: bridge
+
+volumes:
+  fedora_data:
+    driver: local

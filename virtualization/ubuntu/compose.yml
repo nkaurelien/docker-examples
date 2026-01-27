@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  ubuntu:
+    image: dockurr/ubuntu
+    container_name: ubuntu-desktop
+    environment:
+      # Version d'Ubuntu (24.04, 23.10, 22.04, 20.04)
+      VERSION: "24.04"
+      # Optionnel: Configurer la RAM (en Go)
+      RAM_SIZE: "4G"
+      # Optionnel: Configurer le CPU (nombre de cores)
+      CPU_CORES: "2"
+      # Optionnel: Configurer le disque (en Go)
+      DISK_SIZE: "32G"
+    devices:
+      - /dev/kvm
+    cap_add:
+      - NET_ADMIN
+    ports:
+      # Interface web noVNC
+      - 8008:8006
+      # VNC
+      - 5901:5900/tcp
+      - 5901:5900/udp
+      # SSH (optionnel)
+      - 2222:22
+    volumes:
+      # Persister les données Ubuntu
+      - ubuntu_data:/storage
+      # Partager des fichiers avec l'hôte (optionnel)
+      - ./shared:/shared
+    restart: unless-stopped
+    networks:
+      - ubuntu_network
+
+networks:
+  ubuntu_network:
+    driver: bridge
+
+volumes:
+  ubuntu_data:
+    driver: local
