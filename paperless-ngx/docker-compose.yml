@@ -23,6 +23,9 @@ services:
       - broker
     ports:
       - "8000:8000"
+    networks:
+      - default
+      - traefik-public
     volumes:
       - data:/usr/src/paperless/data
       - media:/usr/src/paperless/media
@@ -40,6 +43,10 @@ services:
       - "traefik.http.routers.paperless.rule=Host(`paperless.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.paperless.entrypoints=web"
       - "traefik.http.services.paperless.loadbalancer.server.port=8000"
+
+networks:
+  traefik-public:
+    external: true
 
 volumes:
   data:
