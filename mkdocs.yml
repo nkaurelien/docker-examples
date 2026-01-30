@@ -98,6 +98,10 @@ nav:
       - Docker Essentials: docker/essentials.md
       - Docker Capabilities: docker/capabilities.md
 
+  - Infrastructure:
+      - Overview: services/infrastructure/index.md
+      - Bind9 DNS: services/infrastructure/bind9.md
+
   - API Management:
       - Overview: services/api-management/index.md
       - Traefik:
