@@ -5,11 +5,19 @@ services:
     restart: unless-stopped
     ports:
       # - "8000:8000"
-      # - "9000:9000"
+      - "9000:9000"
       - "9443:9443"
+    networks:
+      - default
+      - traefik-public
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portainer.rule=Host(`portainer.${DOMAIN:-apps.local}`)"
+      - "traefik.http.routers.portainer.entrypoints=web"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost:9000/api/status"]
       interval: 30s
@@ -29,6 +37,10 @@ services:
         reservations:
           cpus: '0.25'
           memory: 256M
+
+networks:
+  traefik-public:
+    external: true
 
 volumes:
   portainer_data:

@@ -7,6 +7,14 @@ services:
       - ./data:/datastore
     ports:
       - 5001:5000
+    networks:
+      - default
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.changedetection.rule=Host(`changedetection.${DOMAIN:-apps.local}`)"
+      - "traefik.http.routers.changedetection.entrypoints=web"
+      - "traefik.http.services.changedetection.loadbalancer.server.port=5000"
     environment:
       - PLAYWRIGHT_DRIVER_URL=ws://changedetection-browser:3000
       - PLAYWRIGHT_CONNECT_TIMEOUT=120000
@@ -38,3 +46,7 @@ services:
       - DEFAULT_BLOCK_ADS=true
       - DEFAULT_STEALTH=true
       - DEFAULT_IGNORE_HTTPS_ERRORS=true
+
+networks:
+  traefik-public:
+    external: true

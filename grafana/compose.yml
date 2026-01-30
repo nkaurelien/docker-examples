@@ -4,12 +4,25 @@ services:
     container_name: grafana
     restart: unless-stopped
     environment:
-     - GF_SERVER_ROOT_URL=http://grafana.asone4health.fr/
+     - GF_SERVER_ROOT_URL=http://grafana.${DOMAIN:-apps.local}/
      - GF_PLUGINS_PREINSTALL=grafana-clock-panel
     ports:
      - '23000:3000'
+    networks:
+      - default
+      - traefik-public
     volumes:
      - ./grafana-config:/etc/grafana
      - 'grafana_storage:/var/lib/grafana'
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.${DOMAIN:-apps.local}`)"
+      - "traefik.http.routers.grafana.entrypoints=web"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+
+networks:
+  traefik-public:
+    external: true
+
 volumes:
   grafana_storage: {}

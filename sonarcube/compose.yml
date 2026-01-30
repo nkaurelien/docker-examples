@@ -72,6 +72,12 @@ services:
       - "9000:9000"
     networks:
       - sonarcube
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sonarqube.rule=Host(`sonarqube.${DOMAIN:-apps.local}`)"
+      - "traefik.http.routers.sonarqube.entrypoints=web"
+      - "traefik.http.services.sonarqube.loadbalancer.server.port=9000"
     depends_on:
       sonar_db:
         condition: service_healthy
@@ -148,3 +154,5 @@ volumes:
 networks:
   sonarcube:
     driver: bridge
+  traefik-public:
+    external: true
