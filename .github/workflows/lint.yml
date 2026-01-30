@@ -22,18 +22,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Find Dockerfiles
-        id: dockerfiles
-        run: |
-          FILES=$(find . -type f \( -name 'Dockerfile' -o -name 'Dockerfile.*' -o -name '*.Dockerfile' \) | tr '\n' ' ')
-          echo "files=$FILES" >> $GITHUB_OUTPUT
-          echo "Found Dockerfiles: $FILES"
-
       - name: Lint Dockerfiles with Hadolint
-        if: steps.dockerfiles.outputs.files != ''
         uses: hadolint/hadolint-action@v3.1.0
         with:
-          dockerfile: ${{ steps.dockerfiles.outputs.files }}
+          recursive: true
           failure-threshold: error
           ignore: DL3008,DL3013,DL3018,DL3059
           format: sarif
