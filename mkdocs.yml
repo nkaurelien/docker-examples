@@ -146,6 +146,7 @@ nav:
   - Security & Identity:
       - Overview: services/security/index.md
       - ClamAV: services/security/clamav.md
+      - Wazuh SIEM: services/security/wazuh.md
       - NeuVector: services/security/neuvector.md
       - Docker Socket Proxy: services/security/socket-proxy.md
 
