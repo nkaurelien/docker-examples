@@ -15,7 +15,13 @@ services:
       - minio_data:/data
     networks:
       - minio_network
+      - traefik-public
     command: server /data --console-address ":9001"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.minio.rule=Host(`minio.${DOMAIN:-apps.local}`)"
+      - "traefik.http.routers.minio.entrypoints=web"
+      - "traefik.http.services.minio.loadbalancer.server.port=9001"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
       interval: 30s
@@ -41,4 +47,6 @@ volumes:
 
 networks:
   minio_network:
+    external: true
+  traefik-public:
     external: true
