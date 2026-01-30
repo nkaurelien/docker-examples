@@ -1,0 +1,24 @@
+services:
+  bind9:
+    image: ubuntu/bind9:9.18-22.04_beta
+    container_name: bind9
+    restart: unless-stopped
+    ports:
+      - "53:53"
+      - "53:53/udp"
+    environment:
+      - TZ=${TZ:-Europe/Paris}
+      - BIND9_USER=bind
+    volumes:
+      - ./config/named.conf:/etc/bind/named.conf:ro
+      - ./cache:/var/cache/bind
+      - ./records:/var/lib/bind
+    networks:
+      - default
+      - traefik-public
+    labels:
+      - "traefik.enable=false"
+
+networks:
+  traefik-public:
+    external: true
