@@ -1,8 +1,8 @@
 FROM php:8.3-apache
 
-RUN  apt-get update && apt-get install --fix-missing -y \
+RUN apt-get update && apt-get install --fix-missing --no-install-recommends -y \
         zlib1g-dev \
-        libzip-dev \          
+        libzip-dev \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libpng-dev \
@@ -11,16 +11,18 @@ RUN  apt-get update && apt-get install --fix-missing -y \
         libwebp-dev \
     && docker-php-ext-configure gd --with-jpeg --with-webp \
     && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
-    && docker-php-ext-install -j$(nproc) gd pdo_mysql zip ldap opcache
+    && docker-php-ext-install -j"$(nproc)" gd pdo_mysql zip ldap opcache \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/web
 # COPY .backend/vhost.conf /etc/apache2/sites-available/000-default.conf
 
-ENV APACHE_RUN_USER www-data
-ENV APACHE_RUN_GROUP www-data
+ENV APACHE_RUN_USER=www-data
+ENV APACHE_RUN_GROUP=www-data
 
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+RUN sed -ri -e "s!/var/www/html!\${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/sites-available/*.conf \
+    && sed -ri -e "s!/var/www/!\${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 # Install Composer
 # RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
