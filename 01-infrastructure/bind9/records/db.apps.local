@@ -1,15 +1,42 @@
-$TTL    604800
-@       IN      SOA     ns1.apps.local. admin.apps.local. (
-                              2024010101         ; Serial
-                         604800         ; Refresh
-                          86400         ; Retry
-                        2419200         ; Expire
-                         604800 )       ; Negative Cache TTL
+; =============================================================================
+; Zone file for apps.local
+; =============================================================================
+; $ORIGIN is optional - BIND uses the zone name from named.conf by default
+; $ORIGIN apps.local.
 ;
-; Name servers
-@       IN      NS      ns1.apps.local.
+; $TTL (Time To Live) - How long resolvers should cache these records
+; Use shorter values (1h) for lab/dev, longer (1d-7d) for production
+; =============================================================================
 
-; A records - point to your Docker host IP
+$TTL 1h
+
+; -----------------------------------------------------------------------------
+; SOA (Start of Authority) Record
+; -----------------------------------------------------------------------------
+; Format: @ IN SOA <primary-ns> <admin-email> ( serial refresh retry expire min-ttl )
+; - primary-ns: Primary nameserver for this zone
+; - admin-email: Admin email (@ replaced with .)
+; - serial: Version number (YYYYMMDDNN format recommended)
+; - refresh: How often secondaries check for updates
+; - retry: How long to wait before retrying failed refresh
+; - expire: How long secondaries keep data without successful refresh
+; - min-ttl: Minimum TTL for negative caching (NXDOMAIN responses)
+; -----------------------------------------------------------------------------
+@       IN      SOA     ns1.apps.local. admin.apps.local. (
+                        2024013001      ; Serial (YYYYMMDDNN)
+                        3600            ; Refresh (1 hour)
+                        600             ; Retry (10 minutes)
+                        604800          ; Expire (1 week)
+                        1800 )          ; Negative Cache TTL (30 minutes)
+
+; -----------------------------------------------------------------------------
+; NS (Name Server) Records
+; -----------------------------------------------------------------------------
+@               IN      NS      ns1.apps.local.
+
+; -----------------------------------------------------------------------------
+; A Records - Update 192.168.1.100 to your Docker host IP
+; -----------------------------------------------------------------------------
 ns1             IN      A       192.168.1.100
 @               IN      A       192.168.1.100
 
@@ -25,5 +52,7 @@ paperless       IN      A       192.168.1.100
 changedetection IN      A       192.168.1.100
 it-tools        IN      A       192.168.1.100
 
-; Wildcard for all subdomains
+; -----------------------------------------------------------------------------
+; Wildcard Record - Catch-all for undefined subdomains
+; -----------------------------------------------------------------------------
 *               IN      A       192.168.1.100
