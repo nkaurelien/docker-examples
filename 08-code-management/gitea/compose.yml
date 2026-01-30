@@ -71,6 +71,61 @@ services:
       timeout: 5s
       retries: 5
 
+  # Docker Socket Proxy - Secure Docker API access
+  # https://github.com/Tecnativa/docker-socket-proxy
+  docker-socket-proxy:
+    image: tecnativa/docker-socket-proxy:latest
+    container_name: gitea-docker-proxy
+    restart: unless-stopped
+    profiles:
+      - runner
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      # Disable most endpoints by default
+      - LOG_LEVEL=info
+      # Required for act_runner
+      - CONTAINERS=1
+      - IMAGES=1
+      - NETWORKS=1
+      - VOLUMES=1
+      - EXEC=1
+      - TASKS=1
+      # Disabled for security
+      - AUTH=0
+      - SECRETS=0
+      - SWARM=0
+      - BUILD=1
+      - COMMIT=0
+      - CONFIGS=0
+      - DISTRIBUTION=0
+      - EVENTS=1
+      - GRPC=0
+      - INFO=1
+      - NODES=0
+      - PING=1
+      - PLUGINS=0
+      - POST=1
+      - SERVICES=0
+      - SESSION=0
+      - SYSTEM=0
+      - VERSION=1
+    networks:
+      - docker-proxy-network
+    # Security hardening
+    read_only: true
+    tmpfs:
+      - /run
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:2375/version"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
   # Gitea Actions Runner (act_runner)
   # https://gitea.com/gitea/act_runner
   # Start with: docker compose --profile runner up -d
@@ -81,13 +136,13 @@ services:
     profiles:
       - runner
     volumes:
-      # Docker socket for running containers
-      - /var/run/docker.sock:/var/run/docker.sock
       # Runner data and cache
       - gitea-runner-data:/data
       # Optional: custom config
       # - ./runner/config.yaml:/config.yaml
     environment:
+      # Use Docker Socket Proxy instead of direct socket access
+      - DOCKER_HOST=tcp://docker-socket-proxy:2375
       # Gitea instance URL (use service name, not localhost)
       - GITEA_INSTANCE_URL=http://gitea:3000
       # Registration token from: Gitea Admin > Actions > Runners
@@ -101,8 +156,11 @@ services:
     depends_on:
       gitea:
         condition: service_healthy
+      docker-socket-proxy:
+        condition: service_healthy
     networks:
       - gitea-network
+      - docker-proxy-network
     # Security: limit capabilities
     security_opt:
       - no-new-privileges:true
@@ -118,5 +176,8 @@ volumes:
 networks:
   gitea-network:
     driver: bridge
+  docker-proxy-network:
+    driver: bridge
+    internal: true
   traefik-public:
     external: true
