@@ -3,6 +3,59 @@
 # Alternative to Vercel, Heroku, Netlify
 
 services:
+  # Docker Socket Proxy - Secure Docker API access
+  # https://github.com/Tecnativa/docker-socket-proxy
+  docker-socket-proxy:
+    image: tecnativa/docker-socket-proxy:latest
+    container_name: dokploy-docker-proxy
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      # Logging
+      - LOG_LEVEL=info
+      # Required for Dokploy PaaS functionality
+      - CONTAINERS=1
+      - IMAGES=1
+      - NETWORKS=1
+      - VOLUMES=1
+      - EXEC=1
+      - TASKS=1
+      - BUILD=1
+      - COMMIT=1
+      - EVENTS=1
+      - INFO=1
+      - PING=1
+      - POST=1
+      - VERSION=1
+      # Disabled for security
+      - AUTH=0
+      - SECRETS=0
+      - SWARM=0
+      - CONFIGS=0
+      - DISTRIBUTION=0
+      - GRPC=0
+      - NODES=0
+      - PLUGINS=0
+      - SERVICES=0
+      - SESSION=0
+      - SYSTEM=0
+    networks:
+      - docker-proxy-network
+    # Security hardening
+    read_only: true
+    tmpfs:
+      - /run
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:2375/version"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
   dokploy:
     image: dokploy/dokploy:latest
     container_name: dokploy
@@ -10,15 +63,19 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      # Docker socket for container management
-      - /var/run/docker.sock:/var/run/docker.sock
       # Persistent data
       - dokploy-data:/app/data
     environment:
       - NODE_ENV=production
       - TZ=${TZ:-Europe/Paris}
+      # Use Docker Socket Proxy
+      - DOCKER_HOST=tcp://docker-socket-proxy:2375
+    depends_on:
+      docker-socket-proxy:
+        condition: service_healthy
     networks:
       - dokploy-network
+      - docker-proxy-network
       - traefik-public
     labels:
       - "traefik.enable=true"
@@ -26,6 +83,8 @@ services:
       - "traefik.http.routers.dokploy.entrypoints=websecure"
       - "traefik.http.routers.dokploy.tls=true"
       - "traefik.http.services.dokploy.loadbalancer.server.port=3000"
+    security_opt:
+      - no-new-privileges:true
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/api/health"]
       interval: 30s
@@ -40,5 +99,8 @@ volumes:
 networks:
   dokploy-network:
     driver: bridge
+  docker-proxy-network:
+    driver: bridge
+    internal: true
   traefik-public:
     external: true
