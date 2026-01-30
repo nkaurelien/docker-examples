@@ -30,14 +30,17 @@ jobs:
           echo "Found Dockerfiles: $FILES"
 
       - name: Lint Dockerfiles with Hadolint
+        if: steps.dockerfiles.outputs.files != ''
         uses: hadolint/hadolint-action@v3.1.0
         with:
           dockerfile: ${{ steps.dockerfiles.outputs.files }}
           failure-threshold: warning
           ignore: DL3008,DL3013
+          format: sarif
+          output-file: hadolint-results.sarif
 
       - name: Upload Hadolint Report
-        if: always()
+        if: always() && hashFiles('hadolint-results.sarif') != ''
         uses: actions/upload-artifact@v4
         with:
           name: hadolint-report
