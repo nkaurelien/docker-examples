@@ -1,0 +1,54 @@
+# Checkmk - IT Infrastructure Monitoring
+# https://docs.checkmk.com/latest/en/introduction_docker.html
+# Enterprise-grade monitoring solution
+
+services:
+  checkmk:
+    image: checkmk/check-mk-raw:2.4.0-latest
+    container_name: checkmk
+    restart: unless-stopped
+    ports:
+      - "8080:5000"   # Web UI
+      - "8000:8000"   # Agent receiver
+    volumes:
+      # Persistent site data
+      - checkmk-data:/omd/sites
+    tmpfs:
+      # Performance optimization (use RAM for temp files)
+      - /opt/omd/sites/cmk/tmp:uid=1000,gid=1000
+    environment:
+      # Admin password (change in production!)
+      - CMK_PASSWORD=${CMK_PASSWORD:-checkmk}
+      # Timezone
+      - TZ=${TZ:-Europe/Paris}
+      # Site ID (default: cmk)
+      - CMK_SITE_ID=${CMK_SITE_ID:-cmk}
+      # Enable Livestatus TCP (for distributed monitoring)
+      # - CMK_LIVESTATUS_TCP=on
+      # SMTP relay for notifications
+      # - MAIL_RELAY_HOST=smtp.example.com
+    networks:
+      - checkmk-network
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.checkmk.rule=Host(`checkmk.apps.local`)"
+      - "traefik.http.routers.checkmk.entrypoints=websecure"
+      - "traefik.http.routers.checkmk.tls=true"
+      - "traefik.http.services.checkmk.loadbalancer.server.port=5000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/cmk/check_mk/login.py"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  checkmk-data:
+    driver: local
+
+networks:
+  checkmk-network:
+    driver: bridge
+  traefik-public:
+    external: true
