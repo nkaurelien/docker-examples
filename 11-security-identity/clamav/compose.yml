@@ -1,0 +1,94 @@
+# ClamAV - Open Source Antivirus Engine
+# https://docs.clamav.net/manual/Installing/Docker.html
+# Use cases: Mail scanning, file uploads, CI/CD pipelines
+
+services:
+  # ClamAV Daemon - Main antivirus service
+  clamav:
+    image: clamav/clamav:stable
+    container_name: clamav
+    restart: unless-stopped
+    ports:
+      # TCP socket for remote scanning (clamd)
+      - "3310:3310"
+    volumes:
+      # Virus database persistence
+      - clamav-db:/var/lib/clamav
+      # Custom configuration (optional)
+      - ./config/clamd.conf:/etc/clamav/clamd.conf:ro
+      - ./config/freshclam.conf:/etc/clamav/freshclam.conf:ro
+      # Directory to scan (mount your application uploads here)
+      - scan-volume:/scandir:ro
+    environment:
+      # Update virus definitions on startup
+      - CLAMAV_NO_FRESHCLAMD=false
+      # Clamd TCP socket
+      - CLAMAV_NO_CLAMD=false
+      # Milter for mail integration (disable if not needed)
+      - CLAMAV_NO_MILTERD=true
+      - TZ=${TZ:-Europe/Paris}
+    networks:
+      - clamav-network
+      - traefik-public
+    # Resource limits (ClamAV requires significant memory for virus signatures)
+    # Official recommendation: 3GB minimum, 4GB preferred
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 2G
+    healthcheck:
+      test: ["CMD", "clamdcheck.sh"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+
+  # ClamAV REST API - HTTP interface for easy integration
+  # https://github.com/benzino77/clamav-rest
+  clamav-rest:
+    image: benzino77/clamav-rest:latest
+    container_name: clamav-rest
+    restart: unless-stopped
+    profiles:
+      - api
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=production
+      - APP_PORT=8080
+      - APP_FORM_KEY=FILES
+      - APP_MAX_FILE_SIZE=26214400
+      - CLAMD_IP=clamav
+      - CLAMD_PORT=3310
+      - TZ=${TZ:-Europe/Paris}
+    depends_on:
+      clamav:
+        condition: service_healthy
+    networks:
+      - clamav-network
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.clamav-api.rule=Host(`clamav.apps.local`)"
+      - "traefik.http.routers.clamav-api.entrypoints=websecure"
+      - "traefik.http.routers.clamav-api.tls=true"
+      - "traefik.http.services.clamav-api.loadbalancer.server.port=8080"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080/api/v1/version"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  clamav-db:
+    driver: local
+  scan-volume:
+    driver: local
+
+networks:
+  clamav-network:
+    driver: bridge
+  traefik-public:
+    external: true
