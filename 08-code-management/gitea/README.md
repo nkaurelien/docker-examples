@@ -208,9 +208,11 @@ DEFAULT_ACTIONS_URL = github
 
 ## Gitea Actions (CI/CD)
 
+Gitea Actions is compatible with GitHub Actions workflows. It uses [act_runner](https://gitea.com/gitea/act_runner) to execute jobs.
+
 ### Enable Actions
 
-Add to environment or `app.ini`:
+Actions are enabled by default in this setup. To verify:
 
 ```yaml
 environment:
@@ -218,32 +220,92 @@ environment:
   - GITEA__actions__DEFAULT_ACTIONS_URL=github
 ```
 
-### Runner Setup
+### Start the Runner
 
-```yaml
-# Add to compose.yml
-services:
-  gitea-runner:
-    image: docker.gitea.com/act_runner:latest
-    container_name: gitea-runner
-    restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - gitea-runner-data:/data
-    environment:
-      - GITEA_INSTANCE_URL=http://gitea:3000
-      - GITEA_RUNNER_REGISTRATION_TOKEN=${RUNNER_TOKEN}
-      - GITEA_RUNNER_NAME=docker-runner
-    depends_on:
-      - gitea
-    networks:
-      - gitea-network
+The runner is included in the compose file with a profile:
 
-volumes:
-  gitea-runner-data:
+```bash
+# Start Gitea with the runner
+docker compose --profile runner up -d
 ```
 
-### Register Runner
+### Get Registration Token
+
+Before starting the runner, you need a registration token:
+
+```bash
+# Method 1: Via Gitea CLI
+docker exec gitea gitea actions generate-runner-token
+
+# Method 2: Via Gitea UI
+# Go to: Site Administration > Actions > Runners > Create new runner
+```
+
+Add the token to your `.env` file:
+
+```bash
+RUNNER_TOKEN=your-token-here
+```
+
+### Runner Configuration
+
+The runner supports custom configuration via `runner/config.yaml`:
+
+```yaml
+runner:
+  # Max concurrent jobs
+  capacity: 1
+  # Job timeout
+  timeout: 3h
+  # Runner labels
+  labels:
+    - "ubuntu-latest:docker://node:20-bookworm"
+    - "ubuntu-22.04:docker://node:20-bookworm"
+```
+
+### Runner Labels
+
+Labels define which Docker images to use for each workflow `runs-on` value:
+
+| Label | Docker Image | Use Case |
+|-------|--------------|----------|
+| `ubuntu-latest` | `node:20-bookworm` | Node.js projects |
+| `ubuntu-22.04` | `node:20-bookworm` | Specific Ubuntu version |
+| `ubuntu-20.04` | `node:18-bullseye` | Older Node.js |
+
+Custom labels in `.env`:
+
+```bash
+RUNNER_LABELS=ubuntu-latest:docker://node:20-bookworm,python:docker://python:3.11,golang:docker://golang:1.21
+```
+
+### Manual Registration (Alternative)
+
+```bash
+# Interactive registration
+docker exec -it gitea-runner act_runner register
+
+# Non-interactive registration
+docker exec gitea-runner act_runner register \
+  --instance http://gitea:3000 \
+  --token <your-token> \
+  --no-interactive
+
+# Start daemon
+docker exec gitea-runner act_runner daemon
+```
+
+### Verify Runner Status
+
+```bash
+# Check runner logs
+docker logs -f gitea-runner
+
+# List registered runners in Gitea
+# Go to: Site Administration > Actions > Runners
+```
+
+### Register Runner (Legacy)
 
 ```bash
 # Get registration token from Gitea UI:
