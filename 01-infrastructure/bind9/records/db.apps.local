@@ -1,0 +1,29 @@
+$TTL    604800
+@       IN      SOA     ns1.apps.local. admin.apps.local. (
+                              2024010101         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+; Name servers
+@       IN      NS      ns1.apps.local.
+
+; A records - point to your Docker host IP
+ns1             IN      A       192.168.1.100
+@               IN      A       192.168.1.100
+
+; Services
+traefik         IN      A       192.168.1.100
+portainer       IN      A       192.168.1.100
+grafana         IN      A       192.168.1.100
+sonarqube       IN      A       192.168.1.100
+jenkins         IN      A       192.168.1.100
+n8n             IN      A       192.168.1.100
+minio           IN      A       192.168.1.100
+paperless       IN      A       192.168.1.100
+changedetection IN      A       192.168.1.100
+it-tools        IN      A       192.168.1.100
+
+; Wildcard for all subdomains
+*               IN      A       192.168.1.100
