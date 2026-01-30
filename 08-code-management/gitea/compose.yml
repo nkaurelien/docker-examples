@@ -71,26 +71,41 @@ services:
       timeout: 5s
       retries: 5
 
-  # Optional: Gitea Actions Runner
+  # Gitea Actions Runner (act_runner)
+  # https://gitea.com/gitea/act_runner
+  # Start with: docker compose --profile runner up -d
   gitea-runner:
-    image: docker.gitea.com/act_runner:latest
+    image: gitea/act_runner:latest
     container_name: gitea-runner
     restart: unless-stopped
     profiles:
       - runner
     volumes:
+      # Docker socket for running containers
       - /var/run/docker.sock:/var/run/docker.sock
+      # Runner data and cache
       - gitea-runner-data:/data
+      # Optional: custom config
+      # - ./runner/config.yaml:/config.yaml
     environment:
+      # Gitea instance URL (use service name, not localhost)
       - GITEA_INSTANCE_URL=http://gitea:3000
+      # Registration token from: Gitea Admin > Actions > Runners
       - GITEA_RUNNER_REGISTRATION_TOKEN=${RUNNER_TOKEN:-}
-      - GITEA_RUNNER_NAME=docker-runner
-      - GITEA_RUNNER_LABELS=ubuntu-latest:docker://node:20-bookworm,ubuntu-22.04:docker://node:20-bookworm
+      # Runner name
+      - GITEA_RUNNER_NAME=${RUNNER_NAME:-docker-runner}
+      # Runner labels (format: label:docker://image)
+      - GITEA_RUNNER_LABELS=${RUNNER_LABELS:-ubuntu-latest:docker://node:20-bookworm,ubuntu-22.04:docker://node:20-bookworm,ubuntu-20.04:docker://node:18-bullseye}
+      # Config file path (optional)
+      # - CONFIG_FILE=/config.yaml
     depends_on:
       gitea:
         condition: service_healthy
     networks:
       - gitea-network
+    # Security: limit capabilities
+    security_opt:
+      - no-new-privileges:true
 
 volumes:
   gitea-data:

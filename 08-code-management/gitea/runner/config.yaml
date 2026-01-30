@@ -1,0 +1,66 @@
+# Gitea Actions Runner Configuration
+# https://gitea.com/gitea/act_runner
+# Generate default config: act_runner generate-config > config.yaml
+
+log:
+  # Log level: trace, debug, info, warn, error, fatal
+  level: info
+
+runner:
+  # Runner registration file
+  file: .runner
+  # Capacity: max concurrent jobs
+  capacity: 1
+  # Environment variables for all jobs
+  envs: {}
+  # Extra environment file
+  env_file: .env
+  # Timeout for job execution
+  timeout: 3h
+  # Graceful shutdown timeout
+  shutdown_timeout: 3s
+  # Insecure skip TLS verify
+  insecure: false
+  # Fetch job interval
+  fetch_timeout: 5s
+  # Fetch job interval when no job
+  fetch_interval: 2s
+  # Labels (will be overridden by GITEA_RUNNER_LABELS env var)
+  labels:
+    - "ubuntu-latest:docker://node:20-bookworm"
+    - "ubuntu-22.04:docker://node:20-bookworm"
+    - "ubuntu-20.04:docker://node:18-bullseye"
+
+cache:
+  # Enable cache server
+  enabled: true
+  # Cache directory
+  dir: ""
+  # Cache server address (for external cache)
+  host: ""
+  # Cache server port
+  port: 0
+  # External cache server URL
+  external_server: ""
+
+container:
+  # Container network mode
+  network: ""
+  # Enable IPv6
+  enable_ipv6: false
+  # Privileged mode (required for Docker-in-Docker)
+  privileged: false
+  # Container options
+  options: ""
+  # Working directory inside container
+  workdir_parent: ""
+  # Valid volumes (security: limit which volumes can be mounted)
+  valid_volumes: []
+  # Docker host (default: unix:///var/run/docker.sock)
+  docker_host: ""
+  # Force pull images
+  force_pull: false
+
+host:
+  # Working directory for host mode
+  workdir_parent: ""
