@@ -1,6 +1,6 @@
 services:
   bind9:
-    image: ubuntu/bind9:9.18-22.04_beta
+    image: ubuntu/bind9:latest
     container_name: bind9
     restart: unless-stopped
     ports:
@@ -10,7 +10,7 @@ services:
       - TZ=${TZ:-Europe/Paris}
       - BIND9_USER=bind
     volumes:
-      - ./config/named.conf:/etc/bind/named.conf:ro
+      - ./config:/etc/bind
       - ./cache:/var/cache/bind
       - ./records:/var/lib/bind
     networks:
