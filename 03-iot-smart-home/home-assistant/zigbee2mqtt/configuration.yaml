@@ -1,0 +1,99 @@
+# Zigbee2MQTT Configuration
+# https://www.zigbee2mqtt.io/guide/configuration/
+
+# =============================================================================
+# Home Assistant Integration
+# =============================================================================
+homeassistant: true
+
+# =============================================================================
+# MQTT Settings
+# =============================================================================
+mqtt:
+  # MQTT base topic
+  base_topic: zigbee2mqtt
+  # MQTT server (use container name)
+  server: mqtt://mosquitto:1883
+  # Uncomment for authentication:
+  # user: zigbee2mqtt
+  # password: your_password
+
+# =============================================================================
+# Serial Port
+# =============================================================================
+serial:
+  # USB adapter path (mapped in Docker)
+  port: /dev/ttyUSB0
+  # Adapter type (auto-detected in most cases)
+  # adapter: zstack
+
+  # For network-based adapters:
+  # port: tcp://192.168.1.100:6638
+
+# =============================================================================
+# Web Frontend
+# =============================================================================
+frontend:
+  port: 8080
+  # Optional: authentication
+  # auth_token: your_secret_token
+
+# =============================================================================
+# Device Joining
+# =============================================================================
+# SECURITY: Set to false after pairing devices
+permit_join: false
+
+# =============================================================================
+# Advanced Settings
+# =============================================================================
+advanced:
+  # Home Assistant discovery
+  homeassistant_discovery_topic: homeassistant
+  homeassistant_status_topic: homeassistant/status
+
+  # Logging level: debug, info, warning, error
+  log_level: info
+  log_output:
+    - console
+
+  # Network security (GENERATE on first run, then keep fixed)
+  # Generate with: openssl rand -hex 16
+  network_key: GENERATE
+
+  # PAN ID (GENERATE on first run)
+  pan_id: GENERATE
+
+  # Extended PAN ID (optional)
+  # ext_pan_id: GENERATE
+
+  # Channel (11-26, default 11)
+  # channel: 11
+
+  # Transmit power (adapter dependent)
+  # transmit_power: 20
+
+  # Last seen tracking
+  last_seen: ISO_8601
+
+  # Elapsed time since last seen
+  elapsed: false
+
+# =============================================================================
+# Device Options
+# =============================================================================
+device_options:
+  # Retain MQTT messages
+  retain: true
+
+  # Legacy entity attributes (disable for cleaner HA)
+  legacy: false
+
+# =============================================================================
+# Availability
+# =============================================================================
+availability:
+  active:
+    timeout: 10
+  passive:
+    timeout: 1500

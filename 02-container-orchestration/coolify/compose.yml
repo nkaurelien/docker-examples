@@ -1,0 +1,109 @@
+# Coolify - Self-Hostable PaaS
+# https://coolify.io/
+# Alternative to Vercel, Heroku, Netlify, Railway
+
+services:
+  coolify:
+    image: ghcr.io/coollabsio/coolify:latest
+    container_name: coolify
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      # Docker socket for container management
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Persistent data
+      - coolify-data:/data
+      - coolify-ssh:/data/coolify/ssh
+      - coolify-applications:/data/coolify/applications
+      - coolify-databases:/data/coolify/databases
+      - coolify-services:/data/coolify/services
+    environment:
+      - APP_ENV=production
+      - APP_KEY=${APP_KEY:-base64:REPLACE_WITH_GENERATED_KEY}
+      - APP_URL=${APP_URL:-http://localhost:8000}
+      - DB_CONNECTION=pgsql
+      - DB_HOST=coolify-db
+      - DB_PORT=5432
+      - DB_DATABASE=coolify
+      - DB_USERNAME=coolify
+      - DB_PASSWORD=${DB_PASSWORD:-coolify}
+      - REDIS_HOST=coolify-redis
+      - REDIS_PORT=6379
+      - TZ=${TZ:-Europe/Paris}
+    depends_on:
+      coolify-db:
+        condition: service_healthy
+      coolify-redis:
+        condition: service_healthy
+    networks:
+      - coolify-network
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.coolify.rule=Host(`coolify.apps.local`)"
+      - "traefik.http.routers.coolify.entrypoints=websecure"
+      - "traefik.http.routers.coolify.tls=true"
+      - "traefik.http.services.coolify.loadbalancer.server.port=8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  coolify-db:
+    image: postgres:15-alpine
+    container_name: coolify-db
+    restart: unless-stopped
+    volumes:
+      - coolify-postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=coolify
+      - POSTGRES_USER=coolify
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-coolify}
+      - TZ=${TZ:-Europe/Paris}
+    networks:
+      - coolify-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U coolify -d coolify"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  coolify-redis:
+    image: redis:7-alpine
+    container_name: coolify-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - coolify-redis-data:/data
+    networks:
+      - coolify-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  coolify-data:
+    driver: local
+  coolify-ssh:
+    driver: local
+  coolify-applications:
+    driver: local
+  coolify-databases:
+    driver: local
+  coolify-services:
+    driver: local
+  coolify-postgres:
+    driver: local
+  coolify-redis-data:
+    driver: local
+
+networks:
+  coolify-network:
+    driver: bridge
+  traefik-public:
+    external: true

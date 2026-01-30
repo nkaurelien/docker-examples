@@ -1,0 +1,80 @@
+# Home Assistant - Smart Home Platform
+# https://www.home-assistant.io/docs/
+# Complete IoT stack with Zigbee support
+
+services:
+  # Home Assistant Core
+  homeassistant:
+    container_name: homeassistant
+    image: ghcr.io/home-assistant/home-assistant:stable
+    restart: unless-stopped
+    # Host network recommended for discovery and integrations
+    network_mode: host
+    volumes:
+      - ./config:/config
+      - /etc/localtime:/etc/localtime:ro
+      # Required for Bluetooth support
+      - /run/dbus:/run/dbus:ro
+    environment:
+      - TZ=${TZ:-Europe/Paris}
+    # Required for USB device access and some integrations
+    privileged: true
+    depends_on:
+      - mosquitto
+      - zigbee2mqtt
+    labels:
+      - "traefik.enable=false"
+
+  # Zigbee2MQTT - Zigbee to MQTT bridge
+  zigbee2mqtt:
+    container_name: zigbee2mqtt
+    image: koenkk/zigbee2mqtt:latest
+    restart: unless-stopped
+    ports:
+      - "8080:8080"  # Web UI
+    volumes:
+      - ./zigbee2mqtt:/app/data
+      - /run/udev:/run/udev:ro
+    environment:
+      - TZ=${TZ:-Europe/Paris}
+    # USB Zigbee adapter (adjust device path as needed)
+    devices:
+      - ${ZIGBEE_DEVICE:-/dev/ttyUSB0}:/dev/ttyUSB0
+    # Required for USB access
+    privileged: true
+    depends_on:
+      - mosquitto
+    networks:
+      - homeassistant-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.zigbee2mqtt.rule=Host(`zigbee.apps.local`)"
+      - "traefik.http.routers.zigbee2mqtt.entrypoints=websecure"
+      - "traefik.http.routers.zigbee2mqtt.tls=true"
+      - "traefik.http.services.zigbee2mqtt.loadbalancer.server.port=8080"
+
+  # Mosquitto - MQTT Broker
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto:2
+    restart: unless-stopped
+    ports:
+      - "1883:1883"   # MQTT
+      - "9001:9001"   # WebSocket
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    environment:
+      - TZ=${TZ:-Europe/Paris}
+    networks:
+      - homeassistant-network
+    healthcheck:
+      test: ["CMD", "mosquitto_sub", "-t", "$$SYS/#", "-C", "1", "-i", "healthcheck", "-W", "3"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  homeassistant-network:
+    driver: bridge
