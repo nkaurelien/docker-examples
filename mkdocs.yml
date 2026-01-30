@@ -102,7 +102,56 @@ nav:
       - Overview: services/infrastructure/index.md
       - Bind9 DNS: services/infrastructure/bind9.md
 
-  - API Management:
+  - Orchestration:
+      - Overview: services/orchestration/index.md
+      - Portainer: services/orchestration/portainer.md
+      - Rancher: services/orchestration/rancher.md
+      - Coolify: services/orchestration/coolify.md
+      - Dokploy: services/orchestration/dokploy.md
+      - Longhorn (K8s): services/orchestration/longhorn.md
+      - cert-manager (K8s): services/orchestration/cert-manager.md
+
+  - IoT & Smart Home:
+      - Overview: services/iot/index.md
+      - Home Assistant: services/iot/home-assistant.md
+
+  - Network Management:
+      - Overview: services/network/index.md
+      - Asterisk VoIP: services/network/asterisk.md
+
+  - Monitoring:
+      - Overview: services/monitoring/index.md
+      - Glances: services/monitoring/glances.md
+      - Checkmk: services/monitoring/checkmk.md
+      - Uptime Kuma: services/monitoring/uptime-kuma.md
+
+  - AI & Machine Learning:
+      - Overview: services/ai/index.md
+
+  - Automation:
+      - Overview: services/automation/index.md
+
+  - Code Management:
+      - Overview: services/code-management/index.md
+      - Gitea: services/code-management/gitea.md
+
+  - App & Server Management:
+      - Overview: services/app-management/index.md
+
+  - Databases:
+      - Overview: services/databases/index.md
+      - CouchDB Cluster: services/databases/couchdb.md
+      - PostgreSQL: services/databases/postgresql.md
+
+  - Security & Identity:
+      - Overview: services/security/index.md
+      - NeuVector: services/security/neuvector.md
+      - Docker Socket Proxy: services/security/socket-proxy.md
+
+  - Document Management:
+      - Overview: services/document-management/index.md
+
+  - API Gateway:
       - Overview: services/api-management/index.md
       - Traefik:
           - Overview: services/api-management/traefik/index.md
@@ -113,37 +162,23 @@ nav:
       - Hasura: services/api-management/hasura.md
       - Nginx + Certbot: services/api-management/nginx-certbot.md
 
-  - Orchestration:
-      - Overview: services/orchestration/index.md
-      - Portainer: services/orchestration/portainer.md
-      - Rancher: services/orchestration/rancher.md
-
-  - Monitoring:
-      - Overview: services/monitoring/index.md
-      - Glances: services/monitoring/glances.md
-
   - Mail Servers:
       - Overview: services/mail/index.md
       - Mailpit: services/mail/mailpit.md
       - Docker Mailserver: services/mail/docker-mailserver.md
       - Mailcatcher: services/mail/mailcatcher.md
 
-  - Databases:
-      - Overview: services/databases/index.md
-      - CouchDB Cluster: services/databases/couchdb.md
-      - PostgreSQL: services/databases/postgresql.md
+  - Media & Storage:
+      - Overview: services/media-storage/index.md
+      - File Sharing:
+          - Overview: services/file-sharing/index.md
+          - Erugo: services/file-sharing/erugo.md
 
-  - Security:
-      - Overview: services/security/index.md
-      - NeuVector: services/security/neuvector.md
-      - Docker Socket Proxy: services/security/socket-proxy.md
+  - Data Processing:
+      - Overview: services/data-processing/index.md
 
-  - Surveillance:
-      - ChangeDetection.io: services/surveillance/changedetection.md
-
-  - File Sharing:
-      - Overview: services/file-sharing/index.md
-      - Erugo: services/file-sharing/erugo.md
+  - Communication:
+      - Overview: services/communication/index.md
 
   - Authentication:
       - Overview: services/auth/index.md
@@ -154,6 +189,9 @@ nav:
   - Development Tools:
       - Overview: services/dev-tools/index.md
       - IT-Tools: services/dev-tools/it-tools.md
+
+  - Surveillance:
+      - ChangeDetection.io: services/surveillance/changedetection.md
 
   - CI/CD:
       - Overview: ci-cd/index.md
