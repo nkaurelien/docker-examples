@@ -1,0 +1,125 @@
+# Asterisk VoIP Server
+# https://www.asterisk.org/
+# Open source PBX and telephony platform
+
+services:
+  asterisk:
+    image: mlan/asterisk:full
+    container_name: asterisk
+    restart: unless-stopped
+    ports:
+      # SIP signaling
+      - "5060:5060/udp"
+      - "5060:5060/tcp"
+      - "5061:5061/tcp"     # SIP TLS
+      # RTP media (audio/video)
+      - "10000-10099:10000-10099/udp"
+      # Web interface (if enabled)
+      - "8088:8088"         # HTTP
+      - "8089:8089"         # HTTPS
+    volumes:
+      # Persistent configuration and data
+      - asterisk-data:/srv
+      # Custom configuration (optional)
+      - ./config:/etc/asterisk:ro
+      # Sounds (optional)
+      # - ./sounds:/var/lib/asterisk/sounds/custom
+    environment:
+      - TZ=${TZ:-Europe/Paris}
+      - SYSLOG_LEVEL=${SYSLOG_LEVEL:-4}
+      - TLS_CERTDAYS=${TLS_CERTDAYS:-365}
+      - TLS_KEYBITS=${TLS_KEYBITS:-2048}
+      # Traefik Let's Encrypt integration (optional)
+      # - ACME_FILE=/acme/acme.json
+      # - HOSTNAME=pbx.apps.local
+    # Required for audio devices and network features
+    # privileged: true
+    network_mode: host  # Recommended for VoIP (avoids NAT issues)
+    # Alternative: use bridge network with proper port mapping
+    # networks:
+    #   - asterisk-network
+    labels:
+      - "traefik.enable=false"
+    healthcheck:
+      test: ["CMD", "asterisk", "-rx", "core show version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Optional: FreePBX Web UI
+  freepbx:
+    image: tiredofit/freepbx:latest
+    container_name: freepbx
+    restart: unless-stopped
+    profiles:
+      - freepbx
+    ports:
+      - "8080:80"
+      - "8443:443"
+      - "5060:5060/udp"
+      - "5060:5060/tcp"
+      - "5061:5061/tcp"
+      - "10000-10100:10000-10100/udp"
+    volumes:
+      - freepbx-data:/data
+      - freepbx-logs:/var/log
+      - freepbx-cdr:/var/log/asterisk/cdr-csv
+    environment:
+      - TZ=${TZ:-Europe/Paris}
+      - DB_HOST=freepbx-db
+      - DB_NAME=asterisk
+      - DB_USER=asterisk
+      - DB_PASS=${DB_PASSWORD:-asterisk}
+      - ENABLE_FAIL2BAN=TRUE
+      - ENABLE_SSL=TRUE
+      - WEBROOT=/var/www/html
+    depends_on:
+      freepbx-db:
+        condition: service_healthy
+    networks:
+      - asterisk-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.freepbx.rule=Host(`pbx.apps.local`)"
+      - "traefik.http.routers.freepbx.entrypoints=websecure"
+      - "traefik.http.routers.freepbx.tls=true"
+      - "traefik.http.services.freepbx.loadbalancer.server.port=443"
+      - "traefik.http.services.freepbx.loadbalancer.server.scheme=https"
+
+  freepbx-db:
+    image: mariadb:10.11
+    container_name: freepbx-db
+    restart: unless-stopped
+    profiles:
+      - freepbx
+    volumes:
+      - freepbx-mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD:-rootpassword}
+      - MYSQL_DATABASE=asterisk
+      - MYSQL_USER=asterisk
+      - MYSQL_PASSWORD=${DB_PASSWORD:-asterisk}
+    networks:
+      - asterisk-network
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  asterisk-data:
+    driver: local
+  freepbx-data:
+    driver: local
+  freepbx-logs:
+    driver: local
+  freepbx-cdr:
+    driver: local
+  freepbx-mysql:
+    driver: local
+
+networks:
+  asterisk-network:
+    driver: bridge

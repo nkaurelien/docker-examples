@@ -1,0 +1,179 @@
+# Longhorn Helm Values
+# https://github.com/longhorn/charts/blob/master/charts/longhorn/values.yaml
+
+# Global settings
+global:
+  cattle:
+    systemDefaultRegistry: ""
+
+# Service account
+serviceAccount:
+  annotations: {}
+
+# Longhorn Manager settings
+longhornManager:
+  priorityClass: ~
+  tolerations: []
+  nodeSelector: {}
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+# Longhorn Driver settings
+longhornDriver:
+  priorityClass: ~
+  tolerations: []
+  nodeSelector: {}
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+# Longhorn UI settings
+longhornUI:
+  replicas: 2
+  priorityClass: ~
+  tolerations: []
+  nodeSelector: {}
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+
+# Ingress configuration
+ingress:
+  enabled: true
+  ingressClassName: traefik
+  host: longhorn.apps.local
+  tls: true
+  tlsSecret: longhorn-tls
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+
+# Default settings for Longhorn
+defaultSettings:
+  # Path where Longhorn stores data on nodes
+  defaultDataPath: /var/lib/longhorn
+
+  # Default number of replicas for volumes
+  defaultReplicaCount: 3
+
+  # Backup target URL (s3://bucket@region/ or nfs://server:/path)
+  backupTarget: ""
+
+  # Secret containing backup target credentials
+  backupTargetCredentialSecret: ""
+
+  # Allow recurring job to retain deleted backup
+  allowRecurringJobWhileVolumeDetached: false
+
+  # Create default disk on labeled nodes only
+  createDefaultDiskLabeledNodes: false
+
+  # Default Longhorn StorageClass replica count
+  defaultLonghornStaticStorageClass: longhorn-static
+
+  # Node down pod deletion policy
+  nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
+
+  # Allow node drain with last replica
+  allowNodeDrainWithLastHealthyReplica: false
+
+  # Replica replenishment wait interval (seconds)
+  replicaReplenishmentWaitInterval: 600
+
+  # Concurrent replica rebuild per node limit
+  concurrentReplicaRebuildPerNodeLimit: 5
+
+  # Disable revision counter
+  disableRevisionCounter: false
+
+  # Storage network for dedicated data path
+  storageNetwork: ""
+
+  # Guaranteed instance manager CPU
+  guaranteedInstanceManagerCPU: 12
+
+  # Priority class name
+  priorityClass: ""
+
+  # Auto salvage setting
+  autoSalvage: true
+
+  # Auto delete pod when volume detached unexpectedly
+  autoDeletePodWhenVolumeDetachedUnexpectedly: true
+
+  # Replica zone anti-affinity
+  replicaZoneSoftAntiAffinity: true
+
+  # Replica disk anti-affinity
+  replicaDiskSoftAntiAffinity: true
+
+  # Backing image cleanup wait interval (minutes)
+  backingImageCleanupWaitInterval: 60
+
+  # Backing image recovery wait interval (seconds)
+  backingImageRecoveryWaitInterval: 300
+
+  # Upgrade checker setting
+  upgradeChecker: true
+
+  # Orphan auto deletion
+  orphanAutoDeletion: false
+
+# Persistence settings (StorageClass)
+persistence:
+  # Default storage class settings
+  defaultClass: true
+  defaultFsType: ext4
+  defaultMkfsParams: ""
+  defaultClassReplicaCount: 3
+  defaultDataLocality: disabled
+  reclaimPolicy: Delete
+  migratable: false
+  recurringJobSelector:
+    enabled: false
+    jobList: []
+  backingImage:
+    enable: false
+    name: ~
+    dataSourceType: ~
+    dataSourceParameters: ~
+    expectedChecksum: ~
+  defaultNodeSelector:
+    enable: false
+    selector: ""
+  removeSnapshotsDuringFilesystemTrim: ignored
+
+# CSI settings
+csi:
+  kubeletRootDir: /var/lib/kubelet
+  attacherReplicaCount: 3
+  provisionerReplicaCount: 3
+  resizerReplicaCount: 3
+  snapshotterReplicaCount: 3
+
+# Enable PSP (deprecated in K8s 1.25+)
+enablePSP: false
+
+# Namespace override
+namespaceOverride: ""
+
+# Annotations
+annotations: {}
+
+# Network policies
+networkPolicies:
+  enabled: false
+  type: k8s-cni

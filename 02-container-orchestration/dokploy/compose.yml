@@ -1,0 +1,44 @@
+# Dokploy - Self-Hosted PaaS
+# https://dokploy.com/
+# Alternative to Vercel, Heroku, Netlify
+
+services:
+  dokploy:
+    image: dokploy/dokploy:latest
+    container_name: dokploy
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      # Docker socket for container management
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Persistent data
+      - dokploy-data:/app/data
+    environment:
+      - NODE_ENV=production
+      - TZ=${TZ:-Europe/Paris}
+    networks:
+      - dokploy-network
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dokploy.rule=Host(`dokploy.apps.local`)"
+      - "traefik.http.routers.dokploy.entrypoints=websecure"
+      - "traefik.http.routers.dokploy.tls=true"
+      - "traefik.http.services.dokploy.loadbalancer.server.port=3000"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  dokploy-data:
+    driver: local
+
+networks:
+  dokploy-network:
+    driver: bridge
+  traefik-public:
+    external: true
