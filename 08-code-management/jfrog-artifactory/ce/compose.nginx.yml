@@ -1,0 +1,27 @@
+# Docker Compose override: Nginx reverse proxy with SSL termination
+#
+# Usage:
+#   docker compose -f compose.yml -f compose.nginx.yml up -d
+#
+# Prerequisites:
+#   1. Generate SSL certs: bash ssl/generate-certs.sh
+#   2. Add to /etc/hosts: 127.0.0.1 registry.localhost
+
+services:
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: artifactory-nginx
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./ssl/certs:/etc/nginx/ssl:ro
+    depends_on:
+      - artifactory
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
