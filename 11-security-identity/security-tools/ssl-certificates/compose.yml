@@ -1,0 +1,96 @@
+# SSL Certificate Generators
+# Tools for generating self-signed and locally-trusted development certificates
+# - omgwtfssl: Quick self-signed certificate generation
+# - mkcert: Locally-trusted development certificates
+
+services:
+  # OMGWTFSSL - Self-Signed SSL Certificate Generator
+  # https://github.com/paulczar/omgwtfssl
+  # Generates CA + server certificates in one shot
+  omgwtfssl:
+    image: paulczar/omgwtfssl:latest
+    container_name: omgwtfssl
+    profiles:
+      - omgwtfssl
+    environment:
+      # Certificate subject (domain name)
+      - SSL_SUBJECT=${SSL_SUBJECT:-localhost}
+      # Alternative DNS names (comma-separated)
+      - SSL_DNS=${SSL_DNS:-localhost,*.localhost}
+      # Alternative IP addresses (comma-separated)
+      - SSL_IP=${SSL_IP:-127.0.0.1}
+      # Key size in bits
+      - SSL_SIZE=${SSL_SIZE:-2048}
+      # Certificate validity in days
+      - SSL_EXPIRE=${SSL_EXPIRE:-365}
+      # Certificate Authority subject
+      - CA_SUBJECT=${CA_SUBJECT:-my-ca}
+      # CA expiry in days
+      - CA_EXPIRE=${CA_EXPIRE:-3650}
+    volumes:
+      # Output directory for generated certificates
+      - ./certs/omgwtfssl:/certs
+
+  # mkcert - Locally-Trusted Development Certificates
+  # https://github.com/FiloSottile/mkcert
+  # Creates certificates trusted by the local system (no browser warnings)
+  mkcert:
+    image: golang:alpine
+    container_name: mkcert
+    profiles:
+      - mkcert
+    environment:
+      # Domains to generate certificates for (space-separated)
+      - MKCERT_DOMAINS=${MKCERT_DOMAINS:-localhost 127.0.0.1 ::1}
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        apk add --no-cache nss-tools curl &&
+        curl -sL "https://dl.filippo.io/mkcert/latest?for=linux/amd64" -o /usr/local/bin/mkcert &&
+        chmod +x /usr/local/bin/mkcert &&
+        export CAROOT=/certs/ca &&
+        mkdir -p $$CAROOT &&
+        cd /certs &&
+        mkcert ${MKCERT_DOMAINS:-localhost 127.0.0.1 ::1} &&
+        echo "Certificates generated in /certs" &&
+        ls -la /certs/
+    volumes:
+      - ./certs/mkcert:/certs
+
+  # OpenSSL - System-level self-signed certificate generation
+  # Uses the standard openssl command from Alpine Linux
+  # Generates a self-signed certificate (no separate CA)
+  openssl:
+    image: alpine:latest
+    container_name: openssl
+    profiles:
+      - openssl
+    environment:
+      - SSL_SUBJECT=${SSL_SUBJECT:-localhost}
+      - SSL_DNS=${SSL_DNS:-localhost,*.localhost}
+      - SSL_IP=${SSL_IP:-127.0.0.1}
+      - SSL_SIZE=${SSL_SIZE:-2048}
+      - SSL_EXPIRE=${SSL_EXPIRE:-365}
+      - SSL_COUNTRY=${SSL_COUNTRY:-FR}
+      - SSL_STATE=${SSL_STATE:-Local}
+      - SSL_CITY=${SSL_CITY:-Dev}
+      - SSL_ORG=${SSL_ORG:-Development}
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        apk add --no-cache openssl &&
+        mkdir -p /certs &&
+        openssl req -x509 -nodes -days $${SSL_EXPIRE} \
+          -newkey rsa:$${SSL_SIZE} \
+          -keyout /certs/key.pem \
+          -out /certs/cert.pem \
+          -subj "/C=$${SSL_COUNTRY}/ST=$${SSL_STATE}/L=$${SSL_CITY}/O=$${SSL_ORG}/CN=$${SSL_SUBJECT}" \
+          -addext "subjectAltName=DNS:$${SSL_DNS//,/,DNS:},IP:$${SSL_IP//,/,IP:}" &&
+        echo "Certificates generated in /certs" &&
+        ls -la /certs/
+    volumes:
+      - ./certs/openssl:/certs
+
+volumes: {}
