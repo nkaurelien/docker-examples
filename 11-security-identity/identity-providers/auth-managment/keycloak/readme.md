@@ -19,6 +19,7 @@ keycloak/
 ├── docker-compose.yml          # Keycloak + PostgreSQL + init container
 ├── .env.example                # Environment variables template
 ├── realm-export.json           # Realm config (auto-imported on first start)
+├── keycloak-admin.http         # REST Client file for API testing
 ├── scripts/
 │   └── init-user-profile.sh    # Custom user profile attributes setup
 ├── themes/my-app/              # Custom theme (login, account, email)

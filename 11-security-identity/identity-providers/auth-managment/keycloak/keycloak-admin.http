@@ -1,0 +1,392 @@
+### Keycloak Admin API
+### REST Client file for testing Keycloak API endpoints
+###
+### Prerequisites:
+###   - Keycloak running on localhost:8080
+###   - Admin credentials configured in .env
+###
+### Usage in VS Code: Install "REST Client" extension
+### Usage in IntelliJ: Built-in HTTP Client support
+
+@baseUrl = http://localhost:8080
+@realm = my-realm
+@adminUsername = admin
+@adminPassword = changeme
+
+
+### ============================================
+### AUTHENTICATION
+### ============================================
+
+### Get Admin Access Token
+# @name getAdminToken
+POST {{baseUrl}}/realms/master/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&client_id=admin-cli&username={{adminUsername}}&password={{adminPassword}}
+
+###
+@accessToken = {{getAdminToken.response.body.access_token}}
+
+
+### ============================================
+### OIDC WELL-KNOWN
+### ============================================
+
+### Get OpenID Connect Discovery
+GET {{baseUrl}}/realms/{{realm}}/.well-known/openid-configuration
+
+### Check Health
+GET {{baseUrl}}/health/ready
+
+
+### ============================================
+### REALM INFO
+### ============================================
+
+### Get Realm Info
+GET {{baseUrl}}/admin/realms/{{realm}}
+Authorization: Bearer {{accessToken}}
+
+### Get Realm Keys
+GET {{baseUrl}}/admin/realms/{{realm}}/keys
+Authorization: Bearer {{accessToken}}
+
+
+### ============================================
+### USERS MANAGEMENT
+### ============================================
+
+### List All Users (max 20)
+GET {{baseUrl}}/admin/realms/{{realm}}/users?max=20
+Authorization: Bearer {{accessToken}}
+
+### Count Users
+GET {{baseUrl}}/admin/realms/{{realm}}/users/count
+Authorization: Bearer {{accessToken}}
+
+### Search User by Email
+# @name searchUser
+GET {{baseUrl}}/admin/realms/{{realm}}/users?email=user@example.com&exact=true
+Authorization: Bearer {{accessToken}}
+
+###
+@userId = {{searchUser.response.body.[0].id}}
+
+### Get User by ID
+GET {{baseUrl}}/admin/realms/{{realm}}/users/{{userId}}
+Authorization: Bearer {{accessToken}}
+
+### Get User Role Mappings
+GET {{baseUrl}}/admin/realms/{{realm}}/users/{{userId}}/role-mappings/realm
+Authorization: Bearer {{accessToken}}
+
+### Search Users by Attribute
+GET {{baseUrl}}/admin/realms/{{realm}}/users?q=user_type:admin&max=20
+Authorization: Bearer {{accessToken}}
+
+
+### ============================================
+### USER PROFILE (Keycloak 24+)
+### ============================================
+
+### Get User Profile Configuration
+GET {{baseUrl}}/admin/realms/{{realm}}/users/profile
+Authorization: Bearer {{accessToken}}
+
+### Configure User Profile with Custom Attributes
+### Run this after realm creation to add custom attributes
+PUT {{baseUrl}}/admin/realms/{{realm}}/users/profile
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "attributes": [
+    {
+      "name": "username",
+      "displayName": "${username}",
+      "validations": {
+        "length": { "min": 3, "max": 255 },
+        "username-prohibited-characters": {},
+        "up-username-not-idn-homograph": {}
+      },
+      "permissions": {
+        "view": ["admin", "user"],
+        "edit": ["admin", "user"]
+      },
+      "multivalued": false
+    },
+    {
+      "name": "email",
+      "displayName": "${email}",
+      "validations": {
+        "email": {},
+        "length": { "max": 255 }
+      },
+      "required": {
+        "roles": ["user"]
+      },
+      "permissions": {
+        "view": ["admin", "user"],
+        "edit": ["admin", "user"]
+      },
+      "multivalued": false
+    },
+    {
+      "name": "firstName",
+      "displayName": "${firstName}",
+      "validations": {
+        "length": { "max": 255 },
+        "person-name-prohibited-characters": {}
+      },
+      "required": {
+        "roles": ["user"]
+      },
+      "permissions": {
+        "view": ["admin", "user"],
+        "edit": ["admin", "user"]
+      },
+      "multivalued": false
+    },
+    {
+      "name": "lastName",
+      "displayName": "${lastName}",
+      "validations": {
+        "length": { "max": 255 },
+        "person-name-prohibited-characters": {}
+      },
+      "required": {
+        "roles": ["user"]
+      },
+      "permissions": {
+        "view": ["admin", "user"],
+        "edit": ["admin", "user"]
+      },
+      "multivalued": false
+    },
+    {
+      "name": "external_user_id",
+      "displayName": "External User ID",
+      "permissions": {
+        "view": ["admin"],
+        "edit": ["admin"]
+      },
+      "multivalued": false
+    },
+    {
+      "name": "user_type",
+      "displayName": "User Type",
+      "permissions": {
+        "view": ["admin"],
+        "edit": ["admin"]
+      },
+      "multivalued": false
+    },
+    {
+      "name": "phoneNumber",
+      "displayName": "Phone Number",
+      "permissions": {
+        "view": ["admin", "user"],
+        "edit": ["admin", "user"]
+      },
+      "multivalued": false
+    }
+  ],
+  "groups": [
+    {
+      "name": "user-metadata",
+      "displayHeader": "User metadata",
+      "displayDescription": "Attributes, which refer to user metadata"
+    }
+  ]
+}
+
+
+### ============================================
+### ROLES MANAGEMENT
+### ============================================
+
+### List Realm Roles
+GET {{baseUrl}}/admin/realms/{{realm}}/roles
+Authorization: Bearer {{accessToken}}
+
+### Get a Specific Role
+GET {{baseUrl}}/admin/realms/{{realm}}/roles/app-user
+Authorization: Bearer {{accessToken}}
+
+### Get Users with a Role
+GET {{baseUrl}}/admin/realms/{{realm}}/roles/app-user/users
+Authorization: Bearer {{accessToken}}
+
+
+### ============================================
+### CLIENTS
+### ============================================
+
+### List All Clients
+GET {{baseUrl}}/admin/realms/{{realm}}/clients
+Authorization: Bearer {{accessToken}}
+
+### Get Frontend Client
+# @name getFrontendClient
+GET {{baseUrl}}/admin/realms/{{realm}}/clients?clientId=my-frontend
+Authorization: Bearer {{accessToken}}
+
+###
+@frontendClientUuid = {{getFrontendClient.response.body.[0].id}}
+
+### Get Frontend Client Secret
+GET {{baseUrl}}/admin/realms/{{realm}}/clients/{{frontendClientUuid}}/client-secret
+Authorization: Bearer {{accessToken}}
+
+### Regenerate Frontend Client Secret
+POST {{baseUrl}}/admin/realms/{{realm}}/clients/{{frontendClientUuid}}/client-secret
+Authorization: Bearer {{accessToken}}
+
+### Get Backend Client
+GET {{baseUrl}}/admin/realms/{{realm}}/clients?clientId=my-backend
+Authorization: Bearer {{accessToken}}
+
+### Get Admin Service Client
+# @name getAdminClient
+GET {{baseUrl}}/admin/realms/{{realm}}/clients?clientId=my-admin-service
+Authorization: Bearer {{accessToken}}
+
+###
+@adminClientUuid = {{getAdminClient.response.body.[0].id}}
+
+### Get Admin Service Client Secret
+GET {{baseUrl}}/admin/realms/{{realm}}/clients/{{adminClientUuid}}/client-secret
+Authorization: Bearer {{accessToken}}
+
+
+### ============================================
+### CLIENT SCOPES
+### ============================================
+
+### List Client Scopes
+GET {{baseUrl}}/admin/realms/{{realm}}/client-scopes
+Authorization: Bearer {{accessToken}}
+
+
+### ============================================
+### TOKEN EXCHANGE (Service Account)
+### ============================================
+
+### Get Service Account Token (client_credentials)
+# @name getServiceToken
+POST {{baseUrl}}/realms/{{realm}}/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&client_id=my-admin-service&client_secret=CHANGE_ME
+
+###
+@serviceToken = {{getServiceToken.response.body.access_token}}
+
+### Use Service Account Token to List Users
+GET {{baseUrl}}/admin/realms/{{realm}}/users?max=5
+Authorization: Bearer {{serviceToken}}
+
+
+### ============================================
+### THEME MANAGEMENT
+### ============================================
+
+### Update Realm Themes
+PUT {{baseUrl}}/admin/realms/{{realm}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "loginTheme": "my-app",
+  "accountTheme": "my-app",
+  "emailTheme": "my-app"
+}
+
+### Reset Themes to Default
+# PUT {{baseUrl}}/admin/realms/{{realm}}
+# Authorization: Bearer {{accessToken}}
+# Content-Type: application/json
+#
+# {
+#   "loginTheme": "keycloak",
+#   "accountTheme": "keycloak.v2",
+#   "emailTheme": "keycloak"
+# }
+
+### List Available Themes (Server Info)
+GET {{baseUrl}}/admin/serverinfo
+Authorization: Bearer {{accessToken}}
+
+
+### ============================================
+### CREATE USER (Example)
+### ============================================
+
+### Create New User
+# POST {{baseUrl}}/admin/realms/{{realm}}/users
+# Authorization: Bearer {{accessToken}}
+# Content-Type: application/json
+#
+# {
+#   "email": "newuser@example.com",
+#   "emailVerified": false,
+#   "enabled": true,
+#   "firstName": "New",
+#   "lastName": "User",
+#   "username": "newuser@example.com",
+#   "requiredActions": ["UPDATE_PASSWORD", "VERIFY_EMAIL"],
+#   "attributes": {
+#     "external_user_id": ["ext-id-here"],
+#     "user_type": ["user"]
+#   }
+# }
+
+
+### ============================================
+### UPDATE USER ATTRIBUTES (Example)
+### ============================================
+
+### Update User Attributes
+# PUT {{baseUrl}}/admin/realms/{{realm}}/users/{{userId}}
+# Authorization: Bearer {{accessToken}}
+# Content-Type: application/json
+#
+# {
+#   "attributes": {
+#     "external_user_id": ["new-external-id"],
+#     "user_type": ["admin"],
+#     "phoneNumber": ["+33612345678"]
+#   }
+# }
+
+
+### ============================================
+### ASSIGN ROLE TO USER (Example)
+### ============================================
+
+### Get Role First (need role ID)
+# @name getRole
+# GET {{baseUrl}}/admin/realms/{{realm}}/roles/app-user
+# Authorization: Bearer {{accessToken}}
+
+### Assign Role to User
+# POST {{baseUrl}}/admin/realms/{{realm}}/users/{{userId}}/role-mappings/realm
+# Authorization: Bearer {{accessToken}}
+# Content-Type: application/json
+#
+# [
+#   {
+#     "id": "{{getRole.response.body.id}}",
+#     "name": "app-user"
+#   }
+# ]
+
+
+### ============================================
+### DELETE USER (Careful!)
+### ============================================
+
+### Delete User by ID
+# DELETE {{baseUrl}}/admin/realms/{{realm}}/users/{{userId}}
+# Authorization: Bearer {{accessToken}}
