@@ -1,0 +1,46 @@
+/* Custom login theme styles */
+/* Override Keycloak default login page */
+
+.login-pf body {
+  background-color: #f5f5f5;
+}
+
+#kc-header-wrapper {
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+  padding: 20px 0;
+}
+
+#kc-logo-wrapper {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#kc-logo-wrapper img {
+  max-width: 200px;
+  height: auto;
+}
+
+.card-pf {
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#kc-form-login .btn-primary {
+  background-color: #2563eb;
+  border-color: #2563eb;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-weight: 600;
+}
+
+#kc-form-login .btn-primary:hover {
+  background-color: #1d4ed8;
+  border-color: #1d4ed8;
+}
+
+.kc-social-links .zocial {
+  border-radius: 6px;
+}

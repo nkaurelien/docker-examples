@@ -1,0 +1,6 @@
+/* Custom account theme styles */
+
+:root {
+  --pf-global--primary-color--100: #2563eb;
+  --pf-global--primary-color--200: #1d4ed8;
+}
