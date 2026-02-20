@@ -30,18 +30,7 @@ grant_type=password&client_id=admin-cli&username={{adminUsername}}&password={{ad
 
 
 ### ============================================
-### OIDC WELL-KNOWN
-### ============================================
-
-### Get OpenID Connect Discovery
-GET {{baseUrl}}/realms/{{realm}}/.well-known/openid-configuration
-
-### Check Health
-GET {{baseUrl}}/health/ready
-
-
-### ============================================
-### REALM INFO
+### REALM INFO & SETTINGS
 ### ============================================
 
 ### Get Realm Info
@@ -51,6 +40,22 @@ Authorization: Bearer {{accessToken}}
 ### Get Realm Keys
 GET {{baseUrl}}/admin/realms/{{realm}}/keys
 Authorization: Bearer {{accessToken}}
+
+### Check Health
+GET {{baseUrl}}/health/ready
+
+### Update Realm Settings
+### IMPORTANT: registrationEmailAsUsername must be false if you use custom usernames
+### IMPORTANT: editUsernameAllowed must be true to change usernames via Admin API
+PUT {{baseUrl}}/admin/realms/{{realm}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "registrationEmailAsUsername": false,
+  "editUsernameAllowed": true,
+  "loginWithEmailAllowed": true
+}
 
 
 ### ============================================
@@ -85,6 +90,51 @@ Authorization: Bearer {{accessToken}}
 GET {{baseUrl}}/admin/realms/{{realm}}/users?q=user_type:admin&max=20
 Authorization: Bearer {{accessToken}}
 
+### Create New User
+POST {{baseUrl}}/admin/realms/{{realm}}/users
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "username": "newuser",
+  "email": "newuser@example.com",
+  "emailVerified": true,
+  "enabled": true,
+  "firstName": "New",
+  "lastName": "User",
+  "attributes": {
+    "external_user_id": ["ext-12345"],
+    "user_type": ["user"],
+    "phoneNumber": ["+33612345678"]
+  },
+  "credentials": [
+    {
+      "type": "password",
+      "value": "TempPassword2024!",
+      "temporary": true
+    }
+  ]
+}
+
+### Update User — Set username + attributes
+### Replace userId with actual UUID
+PUT {{baseUrl}}/admin/realms/{{realm}}/users/{{userId}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "username": "custom-username",
+  "attributes": {
+    "external_user_id": ["ext-12345"],
+    "user_type": ["user"],
+    "phoneNumber": ["+33612345678"]
+  }
+}
+
+### Delete User by ID (Careful!)
+# DELETE {{baseUrl}}/admin/realms/{{realm}}/users/{{userId}}
+# Authorization: Bearer {{accessToken}}
+
 
 ### ============================================
 ### USER PROFILE (Keycloak 24+)
@@ -95,7 +145,8 @@ GET {{baseUrl}}/admin/realms/{{realm}}/users/profile
 Authorization: Bearer {{accessToken}}
 
 ### Configure User Profile with Custom Attributes
-### Run this after realm creation to add custom attributes
+### IMPORTANT: All custom attributes must be declared here
+### otherwise Keycloak 24 silently drops them on PUT
 PUT {{baseUrl}}/admin/realms/{{realm}}/users/profile
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
@@ -203,6 +254,15 @@ Content-Type: application/json
 
 
 ### ============================================
+### CLIENT SCOPES & TOKEN MAPPERS
+### ============================================
+
+### List Client Scopes
+GET {{baseUrl}}/admin/realms/{{realm}}/client-scopes
+Authorization: Bearer {{accessToken}}
+
+
+### ============================================
 ### ROLES MANAGEMENT
 ### ============================================
 
@@ -217,6 +277,18 @@ Authorization: Bearer {{accessToken}}
 ### Get Users with a Role
 GET {{baseUrl}}/admin/realms/{{realm}}/roles/app-user/users
 Authorization: Bearer {{accessToken}}
+
+### Assign Role to User
+### First get role ID, then POST
+# @name getAppUserRole
+# GET {{baseUrl}}/admin/realms/{{realm}}/roles/app-user
+# Authorization: Bearer {{accessToken}}
+#
+# POST {{baseUrl}}/admin/realms/{{realm}}/users/{{userId}}/role-mappings/realm
+# Authorization: Bearer {{accessToken}}
+# Content-Type: application/json
+#
+# [{"id": "ROLE_UUID", "name": "app-user"}]
 
 
 ### ============================================
@@ -261,19 +333,29 @@ Authorization: Bearer {{accessToken}}
 
 
 ### ============================================
-### CLIENT SCOPES
+### OIDC WELL-KNOWN & TOKENS
 ### ============================================
 
-### List Client Scopes
-GET {{baseUrl}}/admin/realms/{{realm}}/client-scopes
-Authorization: Bearer {{accessToken}}
+### Get OpenID Connect Discovery
+GET {{baseUrl}}/realms/{{realm}}/.well-known/openid-configuration
 
+### Get JWKS (public keys for RS256 token verification)
+GET {{baseUrl}}/realms/{{realm}}/protocol/openid-connect/certs
 
-### ============================================
-### TOKEN EXCHANGE (Service Account)
-### ============================================
+### Get User Token via ROPC (password grant)
+### Use my-backend client for backend auth testing
+POST {{baseUrl}}/realms/{{realm}}/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
 
-### Get Service Account Token (client_credentials)
+grant_type=password&client_id=my-backend&client_secret=BACKEND_CLIENT_SECRET&username=USER_EMAIL&password=USER_PASSWORD
+
+### Introspect Token
+# POST {{baseUrl}}/realms/{{realm}}/protocol/openid-connect/token/introspect
+# Content-Type: application/x-www-form-urlencoded
+#
+# token=PASTE_TOKEN_HERE&client_id=my-backend&client_secret=BACKEND_CLIENT_SECRET
+
+### Token Exchange (Service Account — client_credentials)
 # @name getServiceToken
 POST {{baseUrl}}/realms/{{realm}}/protocol/openid-connect/token
 Content-Type: application/x-www-form-urlencoded
@@ -303,90 +385,23 @@ Content-Type: application/json
   "emailTheme": "my-app"
 }
 
-### Reset Themes to Default
-# PUT {{baseUrl}}/admin/realms/{{realm}}
-# Authorization: Bearer {{accessToken}}
-# Content-Type: application/json
-#
-# {
-#   "loginTheme": "keycloak",
-#   "accountTheme": "keycloak.v2",
-#   "emailTheme": "keycloak"
-# }
-
 ### List Available Themes (Server Info)
 GET {{baseUrl}}/admin/serverinfo
 Authorization: Bearer {{accessToken}}
 
 
 ### ============================================
-### CREATE USER (Example)
+### EVENTS & AUDIT
 ### ============================================
 
-### Create New User
-# POST {{baseUrl}}/admin/realms/{{realm}}/users
-# Authorization: Bearer {{accessToken}}
-# Content-Type: application/json
-#
-# {
-#   "email": "newuser@example.com",
-#   "emailVerified": false,
-#   "enabled": true,
-#   "firstName": "New",
-#   "lastName": "User",
-#   "username": "newuser@example.com",
-#   "requiredActions": ["UPDATE_PASSWORD", "VERIFY_EMAIL"],
-#   "attributes": {
-#     "external_user_id": ["ext-id-here"],
-#     "user_type": ["user"]
-#   }
-# }
+### Get Recent Login Events
+GET {{baseUrl}}/admin/realms/{{realm}}/events?type=LOGIN&max=20
+Authorization: Bearer {{accessToken}}
 
+### Get Recent Admin Events
+GET {{baseUrl}}/admin/realms/{{realm}}/admin-events?max=20
+Authorization: Bearer {{accessToken}}
 
-### ============================================
-### UPDATE USER ATTRIBUTES (Example)
-### ============================================
-
-### Update User Attributes
-# PUT {{baseUrl}}/admin/realms/{{realm}}/users/{{userId}}
-# Authorization: Bearer {{accessToken}}
-# Content-Type: application/json
-#
-# {
-#   "attributes": {
-#     "external_user_id": ["new-external-id"],
-#     "user_type": ["admin"],
-#     "phoneNumber": ["+33612345678"]
-#   }
-# }
-
-
-### ============================================
-### ASSIGN ROLE TO USER (Example)
-### ============================================
-
-### Get Role First (need role ID)
-# @name getRole
-# GET {{baseUrl}}/admin/realms/{{realm}}/roles/app-user
-# Authorization: Bearer {{accessToken}}
-
-### Assign Role to User
-# POST {{baseUrl}}/admin/realms/{{realm}}/users/{{userId}}/role-mappings/realm
-# Authorization: Bearer {{accessToken}}
-# Content-Type: application/json
-#
-# [
-#   {
-#     "id": "{{getRole.response.body.id}}",
-#     "name": "app-user"
-#   }
-# ]
-
-
-### ============================================
-### DELETE USER (Careful!)
-### ============================================
-
-### Delete User by ID
-# DELETE {{baseUrl}}/admin/realms/{{realm}}/users/{{userId}}
-# Authorization: Bearer {{accessToken}}
+### Get Login Error Events
+GET {{baseUrl}}/admin/realms/{{realm}}/events?type=LOGIN_ERROR&max=20
+Authorization: Bearer {{accessToken}}

@@ -12,13 +12,13 @@
   "defaultLocale": "en",
   "sslRequired": "external",
   "registrationAllowed": false,
-  "registrationEmailAsUsername": true,
+  "registrationEmailAsUsername": false,
   "rememberMe": true,
   "verifyEmail": true,
   "loginWithEmailAllowed": true,
   "duplicateEmailsAllowed": false,
   "resetPasswordAllowed": true,
-  "editUsernameAllowed": false,
+  "editUsernameAllowed": true,
   "bruteForceProtected": true,
   "permanentLockout": false,
   "maxFailureWaitSeconds": 900,
@@ -106,10 +106,14 @@
     {
       "clientId": "my-backend",
       "name": "Backend API",
-      "description": "Backend API service (FastAPI, Express, etc.)",
+      "description": "Backend API service (FastAPI, Express, etc.) — supports ROPC for testing",
       "enabled": true,
-      "bearerOnly": true,
+      "bearerOnly": false,
       "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "directAccessGrantsEnabled": true,
+      "standardFlowEnabled": false,
+      "serviceAccountsEnabled": false,
       "protocol": "openid-connect",
       "defaultClientScopes": [
         "openid",
@@ -201,6 +205,34 @@
             "id.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "phone_number",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "name": "email",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "userinfo.token.claim": "true",
+            "user.attribute": "email",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "email",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "name": "preferred_username",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "userinfo.token.claim": "true",
+            "user.attribute": "username",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "preferred_username",
             "jsonType.label": "String"
           }
         }
