@@ -41,12 +41,39 @@ keycloak/
 
 The `realm-export.json` creates a realm with:
 
-- **Clients**: `my-frontend` (OIDC + PKCE), `my-backend` (bearer-only), `my-admin-service` (service account)
+- **Clients**: `my-frontend` (OIDC + PKCE), `my-backend` (confidential + ROPC), `my-admin-service` (service account)
 - **Roles**: `app-user`, `app-admin`
-- **Custom Scopes**: `custom-attributes` with token mappers for `external_user_id`, `user_type`, `phone_number`
+- **Custom Scopes**: `custom-attributes` with token mappers for `external_user_id`, `user_type`, `phone_number`, `email`, `preferred_username`
 - **Security**: Brute force protection, password policy (8+ chars, digits, uppercase, special chars)
 - **SMTP**: Configurable via environment variables
 - **i18n**: English + French
+
+### Realm Settings
+
+| Setting | Value | Why |
+|---------|-------|-----|
+| `registrationEmailAsUsername` | `false` | Allows custom usernames (not just email) |
+| `editUsernameAllowed` | `true` | Allows changing usernames via Admin API |
+| `loginWithEmailAllowed` | `true` | Users can login with email or username |
+
+> **Important**: If `registrationEmailAsUsername` is `true`, Keycloak forces `username = email` and silently ignores any username you set via the Admin API.
+
+## User Profile (Keycloak 24+)
+
+Keycloak 24 introduced **Declarative User Profile**. Custom attributes must be declared in the User Profile configuration, otherwise they are **silently dropped** when updating users via the Admin API (the PUT returns 204 but the attribute is not saved).
+
+The `keycloak-init` container automatically configures these attributes:
+
+| Attribute | View | Edit | Description |
+|-----------|------|------|-------------|
+| `external_user_id` | admin | admin | Link to your external database |
+| `user_type` | admin | admin | User role/type classification |
+| `phoneNumber` | admin, user | admin, user | Phone number |
+
+To add new custom attributes:
+1. Add the attribute to `scripts/init-user-profile.sh`
+2. Add a token mapper in `realm-export.json` → `custom-attributes` scope
+3. Restart: `docker compose up -d --force-recreate keycloak-init`
 
 ## Integration
 
@@ -67,6 +94,27 @@ KEYCLOAK_CLIENT_ID=my-backend
 KEYCLOAK_CLIENT_SECRET=<from-keycloak-admin>
 KEYCLOAK_ADMIN_CLIENT_ID=my-admin-service
 KEYCLOAK_ADMIN_CLIENT_SECRET=<from-keycloak-admin>
+```
+
+### Token Verification (RS256/JWKS)
+
+Verify tokens using the JWKS endpoint:
+
+```
+GET http://localhost:8080/realms/my-realm/protocol/openid-connect/certs
+```
+
+### Password Grant (ROPC) for Backend Testing
+
+The `my-backend` client supports Resource Owner Password Credentials grant for testing:
+
+```bash
+curl -X POST "http://localhost:8080/realms/my-realm/protocol/openid-connect/token" \
+  -d "grant_type=password" \
+  -d "client_id=my-backend" \
+  -d "client_secret=BACKEND_SECRET" \
+  -d "username=user@example.com" \
+  -d "password=userpassword"
 ```
 
 ### Get Client Secrets
@@ -103,6 +151,17 @@ Replace files in `themes/my-app/` with your branding:
 - `email/html/template.ftl` — Email HTML template
 - `email/messages/` — Email text (en, fr)
 
+### Login Form Label
+
+The login form input label depends on realm settings:
+- If `registrationEmailAsUsername: true` → Keycloak uses the `email` message key
+- If `registrationEmailAsUsername: false` → Keycloak uses the `usernameOrEmail` message key
+
+Customize in `themes/my-app/login/messages/messages_en.properties`:
+```properties
+usernameOrEmail=Username or email address
+```
+
 ### Realm
 
 Edit `realm-export.json` to:
@@ -110,6 +169,8 @@ Edit `realm-export.json` to:
 - Change roles
 - Modify password policy
 - Add identity providers (Google, GitHub, etc.)
+
+> **Note**: `realm-export.json` is only imported on **first start** (`--import-realm` flag). To change settings on a running instance, use the Admin API or the admin console.
 
 ### Providers
 
@@ -119,18 +180,34 @@ Drop custom Keycloak provider JARs into `providers/` directory.
 
 For production behind a reverse proxy (Nginx):
 
-1. Bind Keycloak to `127.0.0.1:8080` (change port mapping in compose)
-2. Set `KEYCLOAK_HOSTNAME=auth.yourdomain.com`
-3. Configure Nginx with TLS termination and proxy to `127.0.0.1:8080`
-4. Important: allow `/.well-known` in Nginx if you block hidden files:
+1. Change `start-dev` to `start` in docker-compose.yml command
+2. Bind Keycloak to `127.0.0.1:8080` (change port mapping in compose)
+3. Set `KEYCLOAK_HOSTNAME=auth.yourdomain.com`
+4. Configure Nginx with TLS termination and proxy to `127.0.0.1:8080`
+5. Important: allow `/.well-known` in Nginx if you block hidden files:
    ```nginx
    location ~ /\.(?!well-known) {
        deny all;
    }
    ```
 
+## API Testing
+
+Use `keycloak-admin.http` with the REST Client extension (VS Code) or IntelliJ HTTP Client. It includes:
+
+- Admin authentication
+- Realm settings (registrationEmailAsUsername, editUsernameAllowed)
+- User CRUD with custom attributes
+- User Profile configuration
+- Role management
+- Client management and secrets
+- OIDC discovery, JWKS, ROPC, token introspection
+- Service account token exchange
+- Events and audit logs
+
 ## References
 
 - [Keycloak Documentation](https://www.keycloak.org/documentation)
 - [Keycloak Docker Guide](https://www.keycloak.org/getting-started/getting-started-docker)
 - [Keycloak Theme Development](https://www.keycloak.org/docs/latest/server_development/#_themes)
+- [Keycloak Admin REST API](https://www.keycloak.org/docs-api/latest/rest-api/)
