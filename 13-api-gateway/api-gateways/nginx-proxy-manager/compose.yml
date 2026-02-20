@@ -2,6 +2,9 @@ services:
   app:
     image: 'jc21/nginx-proxy-manager:latest'
     restart: unless-stopped
+    # network_mode: host works only on Linux, not on macOS/Windows (Docker Desktop)
+    # On Linux: uncomment network_mode and remove ports
+    # network_mode: host
     ports:
       - '80:80'
       - '81:81'
