@@ -94,6 +94,11 @@ KEYCLOAK_CLIENT_ID=my-backend
 KEYCLOAK_CLIENT_SECRET=<from-keycloak-admin>
 KEYCLOAK_ADMIN_CLIENT_ID=my-admin-service
 KEYCLOAK_ADMIN_CLIENT_SECRET=<from-keycloak-admin>
+
+# Master realm admin — required for reliable Admin API access in KC 24+
+# client_credentials on the app realm may lack full admin permissions
+KEYCLOAK_ADMIN=admin
+KEYCLOAK_ADMIN_PASSWORD=<your-admin-password>
 ```
 
 ### Token Verification (RS256/JWKS)
@@ -103,6 +108,25 @@ Verify tokens using the JWKS endpoint:
 ```
 GET http://localhost:8080/realms/my-realm/protocol/openid-connect/certs
 ```
+
+### Admin API Authentication (KC 24+)
+
+Two approaches for Admin API access:
+
+| Method | Token endpoint | Pros | Cons |
+|--------|---------------|------|------|
+| **Master realm ROPC** (recommended) | `POST /realms/master/.../token` with `admin-cli` + admin credentials | Full admin permissions, always works | Requires master admin password |
+| **Service account client_credentials** | `POST /realms/{realm}/.../token` with `my-admin-service` | No admin password needed | May lack some permissions in KC 24+, requires `fullScopeAllowed` + realm-management roles |
+
+> **Recommendation**: Use master realm ROPC for production backend admin operations (user creation, etc.). Use client_credentials for limited read-only operations.
+
+### ROPC and requiredActions
+
+When creating users programmatically for ROPC login (no browser), set:
+- `emailVerified: true` — otherwise KC adds `VERIFY_EMAIL` to `requiredActions`
+- `credentials[].temporary: false` — otherwise KC adds `UPDATE_PASSWORD` to `requiredActions`
+
+Both required actions **block ROPC login** because they require a browser-based flow to complete.
 
 ### Password Grant (ROPC) for Backend Testing
 
