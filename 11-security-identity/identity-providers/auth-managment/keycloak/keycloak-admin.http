@@ -91,6 +91,10 @@ GET {{baseUrl}}/admin/realms/{{realm}}/users?q=user_type:admin&max=20
 Authorization: Bearer {{accessToken}}
 
 ### Create New User
+### NOTE: If using ROPC (password grant) for login:
+###   - Set "emailVerified": true — otherwise KC adds VERIFY_EMAIL to requiredActions
+###   - Set "temporary": false — otherwise KC adds UPDATE_PASSWORD to requiredActions
+###   Both block ROPC login until the user completes the action via browser.
 POST {{baseUrl}}/admin/realms/{{realm}}/users
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
@@ -111,7 +115,7 @@ Content-Type: application/json
     {
       "type": "password",
       "value": "TempPassword2024!",
-      "temporary": true
+      "temporary": false
     }
   ]
 }
@@ -356,6 +360,8 @@ grant_type=password&client_id=my-backend&client_secret=BACKEND_CLIENT_SECRET&use
 # token=PASTE_TOKEN_HERE&client_id=my-backend&client_secret=BACKEND_CLIENT_SECRET
 
 ### Token Exchange (Service Account — client_credentials)
+### NOTE: client_credentials on app realm may not have full admin permissions
+### in KC 24+. If you get 403, use master realm ROPC (getAdminToken above).
 # @name getServiceToken
 POST {{baseUrl}}/realms/{{realm}}/protocol/openid-connect/token
 Content-Type: application/x-www-form-urlencoded

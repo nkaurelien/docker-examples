@@ -142,7 +142,8 @@
         "profile",
         "roles",
         "email"
-      ]
+      ],
+      "fullScopeAllowed": true
     }
   ],
   "clientScopes": [
@@ -293,5 +294,19 @@
     "contentSecurityPolicy": "frame-src 'self'; frame-ancestors 'self'; object-src 'none';",
     "xXSSProtection": "1; mode=block",
     "strictTransportSecurity": "max-age=31536000; includeSubDomains"
-  }
+  },
+  "users": [
+    {
+      "username": "service-account-my-admin-service",
+      "enabled": true,
+      "serviceAccountClientId": "my-admin-service",
+      "clientRoles": {
+        "realm-management": [
+          "manage-users",
+          "view-users",
+          "query-users"
+        ]
+      }
+    }
+  ]
 }
