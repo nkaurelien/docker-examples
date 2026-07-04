@@ -1,4 +1,8 @@
-# version: '3.8'
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/drupal.webp
+  urls:
+    - https://www.drupal.org/
+    - https://github.com/drupal/drupal
 
 services:
 
@@ -41,6 +45,7 @@ services:
       - "traefik.http.routers.drupal.rule=Host(`drupal.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.drupal.entrypoints=web"
       - "traefik.http.services.drupal.loadbalancer.server.port=80"
+      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/drupal.webp"
 
 networks:
   traefik-public:

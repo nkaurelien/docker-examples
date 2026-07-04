@@ -1,6 +1,8 @@
-# Arcane - Docker Dashboard and Manager
-# https://getarcane.app/
-# Secure setup with Docker Socket Proxy
+x-arcane:
+  icon: https://raw.githubusercontent.com/getarcaneapp/arcane/main/assets/icon.png
+  urls:
+    - https://getarcane.app/
+    - https://github.com/getarcaneapp/arcane
 
 services:
   # Docker Socket Proxy - Secure Docker API access
@@ -95,6 +97,7 @@ services:
       - "traefik.http.routers.arcane.rule=Host(`arcane.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.arcane.entrypoints=web"
       - "traefik.http.services.arcane.loadbalancer.server.port=3552"
+      - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/getarcaneapp/arcane/main/assets/icon.png"
 
   arcane-db-seeder:
     image: alpine:latest

@@ -1,3 +1,9 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/glances.webp
+  urls:
+    - https://nicolargo.github.io/glances/
+    - https://github.com/nicolargo/glances
+
 services:
 
   #######################################
@@ -35,6 +41,7 @@ services:
       - "traefik.http.routers.glances.rule=Host(`glances.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.glances.entrypoints=web"
       - "traefik.http.services.glances.loadbalancer.server.port=61208"
+      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/glances.webp"
 
 networks:
   traefik-public:
