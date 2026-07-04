@@ -1,3 +1,9 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/it-tools.webp
+  urls:
+    - https://it-tools.tech/
+    - https://github.com/CorentinTh/it-tools
+
 services:
   it-tools:
     image: 'ghcr.io/corentinth/it-tools:latest'
@@ -6,6 +12,7 @@ services:
     restart: unless-stopped
     container_name: it-tools
     labels:
+      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/it-tools.webp"
       - "traefik.enable=true"
       - "traefik.http.routers.it-tools.rule=Host(`it-tools.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.it-tools.entrypoints=web"

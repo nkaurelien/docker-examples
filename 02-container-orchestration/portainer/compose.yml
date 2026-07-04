@@ -1,3 +1,9 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/portainer.webp
+  urls:
+    - https://www.portainer.io/
+    - https://github.com/portainer/portainer
+
 services:
   portainer:
     image: portainer/portainer-ce:2.33.6
@@ -14,6 +20,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
     labels:
+      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/portainer.webp"
       - "traefik.enable=true"
       - "traefik.http.routers.portainer.rule=Host(`portainer.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.portainer.entrypoints=web"

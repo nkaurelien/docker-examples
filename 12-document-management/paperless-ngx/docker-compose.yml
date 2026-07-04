@@ -1,3 +1,9 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/paperless-ngx.webp
+  urls:
+    - https://docs.paperless-ngx.com/
+    - https://github.com/paperless-ngx/paperless-ngx
+
 services:
   broker:
     image: redis:8
@@ -39,6 +45,7 @@ services:
       PAPERLESS_DBUSER: paperless
       PAPERLESS_DBPASS: paperless
     labels:
+      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/paperless-ngx.webp"
       - "traefik.enable=true"
       - "traefik.http.routers.paperless.rule=Host(`paperless.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.paperless.entrypoints=web"

@@ -1,3 +1,9 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/changedetection.webp
+  urls:
+    - https://changedetection.io/
+    - https://github.com/dgtlmoon/changedetection.io
+
 services:
   changedetection:
     image: ghcr.io/dgtlmoon/changedetection.io:latest
@@ -11,6 +17,7 @@ services:
       - default
       - traefik-public
     labels:
+      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/changedetection.webp"
       - "traefik.enable=true"
       - "traefik.http.routers.changedetection.rule=Host(`changedetection.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.changedetection.entrypoints=web"

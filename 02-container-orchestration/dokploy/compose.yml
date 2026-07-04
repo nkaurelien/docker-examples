@@ -1,3 +1,9 @@
+x-arcane:
+  icon: https://nkaurelien.kamitbrains.fr/favicon.ico
+  urls:
+    - https://dokploy.com/
+    - https://github.com/dokploy/dokploy
+
 # Dokploy - Self-Hosted PaaS
 # https://dokploy.com/
 # Alternative to Vercel, Heroku, Netlify
@@ -78,6 +84,7 @@ services:
       - docker-proxy-network
       - traefik-public
     labels:
+      - "com.getarcaneapp.arcane.icon=https://nkaurelien.kamitbrains.fr/favicon.ico"
       - "traefik.enable=true"
       - "traefik.http.routers.dokploy.rule=Host(`dokploy.apps.local`)"
       - "traefik.http.routers.dokploy.entrypoints=websecure"
