@@ -119,6 +119,7 @@ def generate_registry():
                 "author": REPO_OWNER,
                 "compose_url": f"{RAW_BASE_URL}/{rel_dir}/{compose_file}",
                 "documentation_url": f"{GITHUB_BASE_URL}/{rel_dir}",
+                "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
                 "content_hash": content_hash,
                 "tags": list(set(tags))
             }
