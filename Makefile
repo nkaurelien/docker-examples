@@ -1,7 +1,7 @@
 # Docker Examples - Makefile
 # Usage: make <target>
 
-.PHONY: help docs docs-serve docs-build docs-deploy clean docker-clean install
+.PHONY: help docs docs-serve docs-build docs-deploy clean docker-clean install registry
 
 # Default target
 help:
@@ -39,17 +39,22 @@ install:
 # Serve documentation locally
 docs-serve:
 	@echo "Serving documentation at http://127.0.0.1:8000"
-	mkdocs serve
+	@if [ -f .venv/bin/mkdocs ]; then .venv/bin/mkdocs serve; else mkdocs serve; fi
 
 # Build documentation
-docs-build:
+docs-build: registry
 	@echo "Building documentation..."
-	mkdocs build
+	@if [ -f .venv/bin/mkdocs ]; then .venv/bin/mkdocs build; else mkdocs build; fi
+
+# Generate Arcane template registry
+registry:
+	@echo "Generating Arcane templates registry..."
+	python3 scripts/generate_registry.py
 
 # Deploy to GitHub Pages
 docs-deploy:
 	@echo "Deploying documentation to GitHub Pages..."
-	mkdocs gh-deploy --force
+	@if [ -f .venv/bin/mkdocs ]; then .venv/bin/mkdocs gh-deploy --force; else mkdocs gh-deploy --force; fi
 
 # Install and serve (convenience target)
 docs: install docs-serve
