@@ -1,3 +1,9 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/odoo.webp
+  urls:
+    - https://www.odoo.com/
+    - https://github.com/odoo/odoo
+
 services:
   web:
     image: odoo:14.0
@@ -19,6 +25,7 @@ services:
       - "traefik.http.routers.odoo.rule=Host(`odoo.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.odoo.entrypoints=web"
       - "traefik.http.services.odoo.loadbalancer.server.port=8069"
+      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/odoo.webp"
   db:
     image: postgres:13
     environment:

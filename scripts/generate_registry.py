@@ -111,6 +111,18 @@ def generate_registry():
                 # Fallback to category digits prefix
                 tags = [p.split('-', 1)[1] for p in rel_dir.split(os.sep) if '-' in p]
             
+            # Try to read x-arcane.icon from compose file
+            icon_url = "https://nkaurelien.kamitbrains.fr/favicon.ico"
+            try:
+                with open(compose_path, 'r', encoding='utf-8') as f:
+                    comp_content = f.read()
+                if "x-arcane:" in comp_content:
+                    icon_match = re.search(r'x-arcane:\s*\n(?:\s+.*\n)*?\s+icon:\s*["\'\s]?([^"\'\n\s]+)["\'\s]?', comp_content)
+                    if icon_match:
+                        icon_url = icon_match.group(1).strip()
+            except Exception:
+                pass
+
             template_info = {
                 "id": template_id,
                 "name": name,
@@ -119,7 +131,7 @@ def generate_registry():
                 "author": REPO_OWNER,
                 "compose_url": f"{RAW_BASE_URL}/{rel_dir}/{compose_file}",
                 "documentation_url": f"{GITHUB_BASE_URL}/{rel_dir}",
-                "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
+                "icon_url": icon_url,
                 "content_hash": content_hash,
                 "tags": list(set(tags))
             }
