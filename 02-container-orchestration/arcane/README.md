@@ -89,9 +89,41 @@ In addition, the socket proxy container runs:
 
 ---
 
+## Template Registries & Seeding
+
+This deployment is configured to automatically seed two template registries into the Arcane database at startup via the `arcane-db-seeder` service:
+1. **nkaurelien Docker Examples**: A custom registry containing all 60+ configurations in this repository (`https://nkaurelien.github.io/docker-examples/arcane-registry.json`).
+2. **Arcane Community Templates**: The official community registry (`https://registry.getarcane.app/registry.json`).
+
+### Custom Registry Generation
+To compile the template registry, the Python generator script scans the workspace for compose files and `.env.example` configurations:
+```bash
+# From the repository root:
+python3 scripts/generate_registry.py
+```
+
+### Metadata & Icons (`x-arcane`)
+You can define custom icons and documentation links for each service directly in its `compose.yml` using the `x-arcane` extension block and service labels:
+```yaml
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/app_name.webp
+  urls:
+    - https://homepage.url
+    - https://github.com/repo
+
+services:
+  app:
+    # ...
+    labels:
+      com.getarcaneapp.arcane.icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/app_name.webp
+```
+The generator script parses this block automatically to seed `icon_url` and `documentation_url` into the registry schema.
+
+---
+
 ## Adding Local Templates
 
-Arcane allows you to load custom local templates that automatically appear in the template creation dialog. This stack mounts the local `./templates` directory directly to Arcane's templates repository path inside the container.
+In addition to registries, Arcane loads custom templates placed in the local `./templates/` directory.
 
 ### Template Directory Structure
 
@@ -105,9 +137,10 @@ templates/
 ```
 
 - **compose.yaml** or **compose.yml**: The Docker Compose definition for the template.
-- **.env.example** (optional): Template environment variables that the user will be prompted to fill in when deploying the template in Arcane.
+- **.env.example** (optional): Environment variables the user will be prompted to fill when deploying.
 
-A WordPress template example is included by default.
+A WordPress static template is included by default for custom validation.
+
 
 ---
 
