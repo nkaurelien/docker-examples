@@ -14,7 +14,7 @@
       "author": "nkaurelien",
       "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/arcane/compose.yml",
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/02-container-orchestration/arcane",
-      "content_hash": "947850251dad268ae83692fcaf6daf72be685ce616aa469d3d4a69ddeb270bb2",
+      "content_hash": "18a4293103b9523d9b9ef0a2453b14537be763c648bccd623a808401eea0eab5",
       "tags": [
         "arcane"
       ],
@@ -114,8 +114,8 @@
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/10-databases/databases/couchdb-cluster",
       "content_hash": "b4956f74dfe0f62f1cf396686db129d39ad143441e5910f75e660fcf541cfbde",
       "tags": [
-        "couchdb-cluster",
-        "databases"
+        "databases",
+        "couchdb-cluster"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/10-databases/databases/couchdb-cluster/.env.example"
     },
@@ -129,8 +129,8 @@
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/07-automation/scheduling/cronjob",
       "content_hash": "aabb88f7074948c60c9312ddd52a48bd6ade0a642b35b08a135b1c56a848e947",
       "tags": [
-        "scheduling",
-        "cronjob"
+        "cronjob",
+        "scheduling"
       ]
     },
     {
@@ -228,9 +228,9 @@
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/05-monitoring-reporting/observability/monitoring/glances",
       "content_hash": "b13f363090281474d9a635f6b472e7440bf9df9df95a6aaa8dd82c0f08c8a61f",
       "tags": [
+        "observability",
         "monitoring",
-        "glances",
-        "observability"
+        "glances"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/05-monitoring-reporting/observability/monitoring/glances/.env.example"
     },
@@ -244,8 +244,8 @@
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/05-monitoring-reporting/observability/grafana",
       "content_hash": "223c4d04a2163361fa66a80834b41b6f36dd14b59fcd534fcb797528b467c32f",
       "tags": [
-        "grafana",
-        "observability"
+        "observability",
+        "grafana"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/05-monitoring-reporting/observability/grafana/.env.example"
     },
@@ -287,8 +287,8 @@
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/09-app-server-management/content-management/drupal",
       "content_hash": "d2570b6e9c117ac49b9e7f2e32fa27fa3d42bc9b15a4d372f77ff87c3f0b8ace",
       "tags": [
-        "content-management",
-        "drupal"
+        "drupal",
+        "content-management"
       ]
     },
     {
@@ -315,8 +315,8 @@
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/13-api-gateway/api-tools/hoppscotch",
       "content_hash": "c5750660cd295d8e718c01303225263dc1f670710491ac86f4ac7653874f7239",
       "tags": [
-        "hoppscotch",
-        "api-tools"
+        "api-tools",
+        "hoppscotch"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/13-api-gateway/api-tools/hoppscotch/.env.example"
     },
@@ -345,8 +345,8 @@
       "content_hash": "fcddf536f659a4d190c25b7f7ab539e633155e288e67f2f20e241942ebaf866f",
       "tags": [
         "identity-providers",
-        "zitadel",
-        "auth-managment"
+        "auth-managment",
+        "zitadel"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/identity-providers/auth-managment/zitadel/.env.example"
     },
@@ -361,8 +361,8 @@
       "content_hash": "5c62973a58685d8cc3a972e04f741a7ff5e17bc69745c51f5f61c4dbeeaa5894",
       "tags": [
         "identity-providers",
-        "super-token",
-        "auth-managment"
+        "auth-managment",
+        "super-token"
       ]
     },
     {
@@ -375,8 +375,8 @@
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/13-api-gateway/graphql/hasura",
       "content_hash": "48696964bafa416064f83767b530d147af4f977f87ac7eb26df6a5989eba7c78",
       "tags": [
-        "graphql",
-        "hasura"
+        "hasura",
+        "graphql"
       ]
     },
     {
@@ -389,8 +389,8 @@
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/08-code-management/jfrog-artifactory/oss",
       "content_hash": "dd10641c75ff8704acda17f450a09b072737264c7d0f76d65d09671cf8e0c8f0",
       "tags": [
-        "oss",
-        "jfrog-artifactory"
+        "jfrog-artifactory",
+        "oss"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/08-code-management/jfrog-artifactory/oss/.env.example"
     },
@@ -464,8 +464,8 @@
       "content_hash": "5bc44ed2015b238b873296d6c925175bb7e975c2f2c77f7fe2b93f9ebccca52d",
       "tags": [
         "identity-providers",
-        "keycloak",
-        "auth-managment"
+        "auth-managment",
+        "keycloak"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/identity-providers/auth-managment/keycloak/.env.example"
     },
@@ -479,8 +479,8 @@
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/14-mail-services/mail-servers/mailcatcher",
       "content_hash": "27a8d8fbb8dd5db78c4320f3b09e7ae0b2a34752059b572f540541be4a944072",
       "tags": [
-        "mail-servers",
-        "mailcatcher"
+        "mailcatcher",
+        "mail-servers"
       ]
     },
     {
@@ -508,8 +508,8 @@
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/15-media-storage/object-storage/minio-s3",
       "content_hash": "7147297f0ac3776437e73bfe0ca1acdc9d3e36280985854bad7c09a8ab54b7c7",
       "tags": [
-        "object-storage",
-        "minio-s3"
+        "minio-s3",
+        "object-storage"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/15-media-storage/object-storage/minio-s3/.env.example"
     },
@@ -523,9 +523,9 @@
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/11-security-identity/security-tools/security/neuvector",
       "content_hash": "2bcd1b42c59f7bbac6539b58fc28c9a39c8639644303cda6821970ad83502733",
       "tags": [
-        "security",
+        "neuvector",
         "security-tools",
-        "neuvector"
+        "security"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/security-tools/security/neuvector/.env.example"
     },
@@ -553,8 +553,8 @@
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/13-api-gateway/api-gateways/nginx-proxy-manager",
       "content_hash": "ed2561fd75a0380865c132cd70ba691bb84cd8e566d35fc7ee57fcde889d529f",
       "tags": [
-        "api-gateways",
-        "nginx-proxy-manager"
+        "nginx-proxy-manager",
+        "api-gateways"
       ]
     },
     {
@@ -567,8 +567,8 @@
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/18-communication/notification/novu",
       "content_hash": "3a4ff84c20afb86210d383d415c04755b3847150e0d22f0c21f3c831b4992bb0",
       "tags": [
-        "notification",
-        "novu"
+        "novu",
+        "notification"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/18-communication/notification/novu/.env.example"
     },
@@ -582,8 +582,8 @@
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/09-app-server-management/business-apps/odoo-erp",
       "content_hash": "a6d502a6a8cdc78fbde6f932ad24b2fd0b4731a469a2782b7b8c5ba69fe6031f",
       "tags": [
-        "odoo-erp",
-        "business-apps"
+        "business-apps",
+        "odoo-erp"
       ]
     },
     {
@@ -611,8 +611,8 @@
       "content_hash": "61c222065ed70f361e52e73fa4e9eac0eb8e179427d91ffd2132c1d0b18b892d",
       "tags": [
         "identity-providers",
-        "passbolt",
-        "auth-managment"
+        "auth-managment",
+        "passbolt"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/identity-providers/auth-managment/passbolt/.env.example"
     },
@@ -640,8 +640,8 @@
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/10-databases/databases/postgres",
       "content_hash": "b71faaa687bdaf965937af56352b0d1ec68255fb6f54a21cb15034423d272ae4",
       "tags": [
-        "postgres",
-        "databases"
+        "databases",
+        "postgres"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/10-databases/databases/postgres/.env.example"
     },
@@ -668,8 +668,8 @@
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/10-databases/databases/redis",
       "content_hash": "f5be0aa125c2956f3fb9b333d7beeb38b1b499dd22aca2a91b947537348636fc",
       "tags": [
-        "redis",
-        "databases"
+        "databases",
+        "redis"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/10-databases/databases/redis/.env.example"
     },
@@ -713,8 +713,8 @@
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/15-media-storage/static-files/statics-files-server",
       "content_hash": "f53a8abb742fd20fee8ec9d74b89f8e1ac7fc804c6333265ecb19db5488130c2",
       "tags": [
-        "static-files",
-        "statics-files-server"
+        "statics-files-server",
+        "static-files"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/15-media-storage/static-files/statics-files-server/.env.example"
     },
@@ -742,8 +742,8 @@
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/13-api-gateway/api-gateways/tyk",
       "content_hash": "22ab50651850492f78ea18d07ad031a40d95137c69f2b56176682506627bd6f2",
       "tags": [
-        "api-gateways",
-        "tyk"
+        "tyk",
+        "api-gateways"
       ]
     },
     {
@@ -873,8 +873,8 @@
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/18-communication/notification/ntfy",
       "content_hash": "fa57d2552a46396158675f6092f8ca75c342f5acc3ea8a1b898bf5454b9a9830",
       "tags": [
-        "ntfy",
-        "notification"
+        "notification",
+        "ntfy"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/18-communication/notification/ntfy/.env.example"
     }
