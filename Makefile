@@ -1,7 +1,7 @@
 # Docker Examples - Makefile
 # Usage: make <target>
 
-.PHONY: help docs docs-serve docs-build docs-deploy clean docker-clean install registry
+.PHONY: help docs docs-serve docs-build docs-deploy clean docker-clean install registry arcane-start
 
 # Default target
 help:
@@ -128,6 +128,12 @@ hosts-add:
 	else \
 		echo "hostctl not found. Install from: https://guumaster.github.io/hostctl/"; \
 	fi
+
+# Start Arcane and seed its registry
+arcane-start:
+	@echo "Starting Arcane stack..."
+	docker compose -f 02-container-orchestration/arcane/compose.yml up -d
+	./scripts/seed_registry.sh
 
 # Show project structure
 tree:
