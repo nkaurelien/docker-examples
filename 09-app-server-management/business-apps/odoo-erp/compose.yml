@@ -11,6 +11,14 @@ services:
       - odoo-web-data:/var/lib/odoo
       - /opt/odoo/odoo14/config:/etc/odoo
       - /opt/odoo/odoo14/addons:/mnt/extra-addons
+    networks:
+      - default
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.odoo.rule=Host(`odoo.${DOMAIN:-apps.local}`)"
+      - "traefik.http.routers.odoo.entrypoints=web"
+      - "traefik.http.services.odoo.loadbalancer.server.port=8069"
   db:
     image: postgres:13
     environment:
@@ -23,3 +31,7 @@ services:
 volumes:
   odoo-web-data:
   odoo-db-data:
+
+networks:
+  traefik-public:
+    external: true
