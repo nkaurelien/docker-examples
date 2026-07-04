@@ -109,10 +109,11 @@ services:
         until [ -f /app/data/arcane.db ]; do
           sleep 1
         done
-        echo "Database found, registering template registry..."
+        echo "Database found, registering template registries..."
         apk add --no-cache -q sqlite
         sqlite3 /app/data/arcane.db "INSERT OR IGNORE INTO template_registries (id, name, url, enabled, description) VALUES ('nkaurelien-docker-examples', 'nkaurelien Docker Examples', 'https://nkaurelien.github.io/docker-examples/arcane-registry.json', 1, 'Collection of production-ready Docker Compose templates');"
-        echo "Template registry seeded successfully!"
+        sqlite3 /app/data/arcane.db "INSERT OR IGNORE INTO template_registries (id, name, url, enabled, description) VALUES ('arcane-community-templates', 'Arcane Community Templates', 'https://registry.getarcane.app/registry.json', 1, 'Official community templates for Arcane');"
+        echo "Template registries seeded successfully!"
     depends_on:
       arcane:
         condition: service_started
