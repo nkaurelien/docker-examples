@@ -138,8 +138,8 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "aabb88f7074948c60c9312ddd52a48bd6ade0a642b35b08a135b1c56a848e947",
       "tags": [
-        "cronjob",
-        "scheduling"
+        "scheduling",
+        "cronjob"
       ]
     },
     {
@@ -182,8 +182,8 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "9f5bf263d8eb460c7fc2d425c9cf28483997c28f92bdfeb30b4d0cbf67ddf09d",
       "tags": [
-        "kong",
-        "api-gateways"
+        "api-gateways",
+        "kong"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/13-api-gateway/api-gateways/kong/.env.example"
     },
@@ -244,9 +244,9 @@
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/glances.webp",
       "content_hash": "6551d90deb54b07457ca81da474731851395c74066aa97a511043aa5cfdb602f",
       "tags": [
+        "glances",
         "monitoring",
-        "observability",
-        "glances"
+        "observability"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/05-monitoring-reporting/observability/monitoring/glances/.env.example"
     },
@@ -261,9 +261,9 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "a42a14995dbf727f4e1301a0c5911f3a6a1ce798a04d0a6fa39bfaf5f6a262bc",
       "tags": [
+        "glances",
         "projects",
-        "arcane",
-        "glances"
+        "arcane"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/arcane/projects/glances/.env.example"
     },
@@ -278,8 +278,8 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "223c4d04a2163361fa66a80834b41b6f36dd14b59fcd534fcb797528b467c32f",
       "tags": [
-        "grafana",
-        "observability"
+        "observability",
+        "grafana"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/05-monitoring-reporting/observability/grafana/.env.example"
     },
@@ -324,8 +324,8 @@
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/drupal.webp",
       "content_hash": "d1f89775889ea853f31f60c36ef243338ca217b5c90871e4a651fc97160fabb4",
       "tags": [
-        "drupal",
-        "content-management"
+        "content-management",
+        "drupal"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/09-app-server-management/content-management/drupal/.env.example"
     },
@@ -386,9 +386,9 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "fcddf536f659a4d190c25b7f7ab539e633155e288e67f2f20e241942ebaf866f",
       "tags": [
-        "zitadel",
+        "identity-providers",
         "auth-managment",
-        "identity-providers"
+        "zitadel"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/identity-providers/auth-managment/zitadel/.env.example"
     },
@@ -403,9 +403,9 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "5c62973a58685d8cc3a972e04f741a7ff5e17bc69745c51f5f61c4dbeeaa5894",
       "tags": [
+        "identity-providers",
         "super-token",
-        "auth-managment",
-        "identity-providers"
+        "auth-managment"
       ]
     },
     {
@@ -466,8 +466,8 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "0044b6771dcf8279a29c9731f94449bc31abf0867514fe4480483d333f75060c",
       "tags": [
-        "jfrog-artifactory",
-        "minio"
+        "minio",
+        "jfrog-artifactory"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/08-code-management/jfrog-artifactory/minio/.env.example"
     },
@@ -482,8 +482,8 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "4de90774ab6a8f1c7cbd51b2297f5477f8a3dfb963ab68a03dc5d361a7258cb0",
       "tags": [
-        "jenkins",
-        "ci-cd"
+        "ci-cd",
+        "jenkins"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/07-automation/ci-cd/jenkins/.env.example"
     },
@@ -513,9 +513,9 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "5bc44ed2015b238b873296d6c925175bb7e975c2f2c77f7fe2b93f9ebccca52d",
       "tags": [
-        "keycloak",
+        "identity-providers",
         "auth-managment",
-        "identity-providers"
+        "keycloak"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/identity-providers/auth-managment/keycloak/.env.example"
     },
@@ -530,8 +530,8 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "27a8d8fbb8dd5db78c4320f3b09e7ae0b2a34752059b572f540541be4a944072",
       "tags": [
-        "mailcatcher",
-        "mail-servers"
+        "mail-servers",
+        "mailcatcher"
       ]
     },
     {
@@ -545,8 +545,8 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "4f30c9c3670a2ab8a7e641d91c320baecf7f281522d8a50fe6293a5996882b74",
       "tags": [
-        "mailpit",
-        "mail-servers"
+        "mail-servers",
+        "mailpit"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/14-mail-services/mail-servers/mailpit/.env.example"
     },
@@ -672,8 +672,8 @@
       "content_hash": "61c222065ed70f361e52e73fa4e9eac0eb8e179427d91ffd2132c1d0b18b892d",
       "tags": [
         "passbolt",
-        "auth-managment",
-        "identity-providers"
+        "identity-providers",
+        "auth-managment"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/identity-providers/auth-managment/passbolt/.env.example"
     },
@@ -765,8 +765,8 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "7cb30e3d1d109fa800978a3aec67cc1042d371532b00a0a55f31e255db4b1ac4",
       "tags": [
-        "sonarcube",
-        "code-quality"
+        "code-quality",
+        "sonarcube"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/05-monitoring-reporting/code-quality/sonarcube/.env.example"
     },
@@ -827,8 +827,8 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "0a496ee6e18792c7f5ce477c674612489bf7c94a51ed3947f2291698292a26a0",
       "tags": [
-        "virtualization",
-        "ubuntu"
+        "ubuntu",
+        "virtualization"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/virtualization/ubuntu/.env.example"
     },
@@ -873,8 +873,8 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "63613d5f76d1774619767510a7329001a160648132b0a94601625895744e699c",
       "tags": [
-        "windows-11",
-        "virtualization"
+        "virtualization",
+        "windows-11"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/virtualization/windows-11/.env.example"
     },
@@ -889,8 +889,8 @@
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/wordpress.webp",
       "content_hash": "4a51387aaee385d6f0011ebf385c2b11e3580ef02e57a0cb447000f5176ec577",
       "tags": [
-        "mysql-wordpress",
-        "content-management"
+        "content-management",
+        "mysql-wordpress"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/09-app-server-management/content-management/mysql-wordpress/.env.example"
     },
@@ -905,8 +905,8 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "2e5a87d634abc87ce8317fe08e555d2866376e7a0522cacac14e38543323bed4",
       "tags": [
-        "object-storage",
-        "using-s3fs-volume"
+        "using-s3fs-volume",
+        "object-storage"
       ]
     },
     {
@@ -952,8 +952,8 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "fa57d2552a46396158675f6092f8ca75c342f5acc3ea8a1b898bf5454b9a9830",
       "tags": [
-        "notification",
-        "ntfy"
+        "ntfy",
+        "notification"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/18-communication/notification/ntfy/.env.example"
     }
