@@ -108,10 +108,16 @@ Several services are configured for production deployment:
 - Automatic cluster initialization
 - Persistent data storage
 
+### Arcane Docker Dashboard
+- Modern, lightweight PaaS dashboard for container orchestration and management
+- Hardened security configuration using Tecnativa Docker Socket Proxy
+- Integrated out-of-the-box with custom template registries
+
 ### Mail Servers
 - Complete SMTP/IMAP solutions
 - Anti-spam and security configurations
 - Web administration interfaces
+
 
 ## 📚 Documentation
 
