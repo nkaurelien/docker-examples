@@ -119,6 +119,18 @@ Several services are configured for production deployment:
 - Web administration interfaces
 
 
+## 🎛️ PaaS Integration (Arcane)
+
+This repository includes a production-ready **Arcane** container management setup (under `02-container-orchestration/arcane/`). All web configurations in this repository are pre-configured with custom branding metadata (using the `x-arcane:` block and community-approved WebP icons).
+
+You can load all 60+ configurations from this repository directly as templates in your Arcane dashboard by registering the custom template registry:
+* **Registry URL**: `https://nkaurelien.github.io/docker-examples/arcane-registry.json`
+
+To auto-deploy Arcane with this registry pre-configured, simply run:
+```bash
+make arcane-start
+```
+
 ## 📚 Documentation
 
 ### Online Documentation
