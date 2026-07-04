@@ -1,3 +1,9 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/coolify.webp
+  urls:
+    - https://coolify.io/
+    - https://github.com/coolifyomg/coolify
+
 # Coolify - Self-Hostable PaaS
 # https://coolify.io/
 # Alternative to Vercel, Heroku, Netlify, Railway
@@ -96,6 +102,7 @@ services:
       - docker-proxy-network
       - traefik-public
     labels:
+      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/coolify.webp"
       - "traefik.enable=true"
       - "traefik.http.routers.coolify.rule=Host(`coolify.apps.local`)"
       - "traefik.http.routers.coolify.entrypoints=websecure"

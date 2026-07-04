@@ -1,3 +1,9 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/uptime-kuma.webp
+  urls:
+    - https://github.com/louislam/uptime-kuma
+    - https://github.com/louislam/uptime-kuma
+
 # Uptime Kuma - Self-Hosted Uptime Monitoring
 # https://github.com/louislam/uptime-kuma
 # Alternative to Pingdom, StatusCake, UptimeRobot
@@ -18,6 +24,7 @@ services:
       - uptime-kuma-network
       - traefik-public
     labels:
+      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/uptime-kuma.webp"
       - "traefik.enable=true"
       - "traefik.http.routers.uptime-kuma.rule=Host(`status.apps.local`)"
       - "traefik.http.routers.uptime-kuma.entrypoints=websecure"

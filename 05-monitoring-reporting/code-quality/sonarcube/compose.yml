@@ -1,3 +1,9 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/sonarqube.webp
+  urls:
+    - https://www.sonarqube.org/
+    - https://github.com/SonarSource/sonarqube
+
 # SonarQube Docker Compose Configuration
 # @see: https://medium.com/@rikza.kurnia/sonarqube-static-code-analysis-tools-74072ebef727
 #
@@ -78,6 +84,7 @@ services:
       - "traefik.http.routers.sonarqube.rule=Host(`sonarqube.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.sonarqube.entrypoints=web"
       - "traefik.http.services.sonarqube.loadbalancer.server.port=9000"
+      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/sonarqube.webp"
     depends_on:
       sonar_db:
         condition: service_healthy

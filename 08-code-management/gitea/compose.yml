@@ -1,3 +1,9 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/gitea.webp
+  urls:
+    - https://gitea.com/
+    - https://github.com/go-gitea/gitea
+
 # Gitea - Self-Hosted Git Service
 # https://docs.gitea.com/installation/install-with-docker
 # Alternative to GitHub, GitLab, Bitbucket
@@ -41,6 +47,7 @@ services:
       - gitea-network
       - traefik-public
     labels:
+      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/gitea.webp"
       - "traefik.enable=true"
       - "traefik.http.routers.gitea.rule=Host(`git.apps.local`)"
       - "traefik.http.routers.gitea.entrypoints=websecure"

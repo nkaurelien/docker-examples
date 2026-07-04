@@ -1,3 +1,9 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/n8n.webp
+  urls:
+    - https://n8n.io/
+    - https://github.com/n8n-io/n8n
+
 services:
   nginx:
     image: nginx:alpine
@@ -27,6 +33,8 @@ services:
       retries: 3
     logging:
       driver: "json-file"
+        labels:
+          - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/n8n.webp"
       options:
         max-size: "10m"
         max-file: "3"

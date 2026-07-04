@@ -1,3 +1,9 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/jenkins.webp
+  urls:
+    - https://www.jenkins.io/
+    - https://github.com/jenkinsci/jenkins
+
 services:
   jenkins:
     image: jenkins/jenkins:lts
@@ -14,6 +20,7 @@ services:
       - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
     restart: unless-stopped
     labels:
+      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/jenkins.webp"
       - "traefik.enable=true"
       - "traefik.http.routers.jenkins.rule=Host(`jenkins.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.jenkins.entrypoints=web"
