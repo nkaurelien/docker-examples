@@ -32,7 +32,8 @@ A comprehensive collection of production-ready Docker Compose configurations for
 - **[Jenkins](jenkins/)** - CI/CD automation server
 - **[SonarQube](sonarcube/)** - Code quality and security analysis
 - **[Docker Registry](docker-registry/)** - Private Docker image registry with UI
-- **[Portainer](portainer/)** - Docker container management UI
+- **[Portainer](02-container-orchestration/portainer/)** - Docker container management UI
+- **[Arcane](02-container-orchestration/arcane/)** - Modern self-hosted Docker dashboard (with Socket Proxy)
 - **[IT-Tools](it-tools/)** - Collection of handy online tools for developers (network, encoding, generators, etc.)
 
 ### Communication & Collaboration
@@ -85,7 +86,7 @@ Install [hostctl](https://guumaster.github.io/hostctl/docs/installation/) for pr
 # Add all service domains
 hostctl add domains apps apps.local hub.apps.local \
         db.apps.local mysql.apps.local \
-        docker.apps.local portainer.apps.local \
+        docker.apps.local portainer.apps.local arcane.apps.local \
         s3.apps.local minio.apps.local \
         kong.apps.local admin.kong.apps.local manage.kong.apps.local api.kong.apps.local \
         jupyter.apps.local \

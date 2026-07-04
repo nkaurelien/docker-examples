@@ -114,7 +114,7 @@ hosts-add:
 	@if command -v hostctl >/dev/null 2>&1; then \
 		sudo hostctl add domains apps apps.local hub.apps.local \
 			db.apps.local mysql.apps.local \
-			docker.apps.local portainer.apps.local \
+			docker.apps.local portainer.apps.local arcane.apps.local \
 			s3.apps.local minio.apps.local \
 			kong.apps.local admin.kong.apps.local \
 			git.apps.local gitea.apps.local \

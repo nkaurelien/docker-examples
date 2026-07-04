@@ -14,6 +14,7 @@ Collection de configurations Docker Compose prêtes à l'emploi pour services se
 - **[Rancher](services/orchestration/rancher.md)** - Kubernetes management
 - **[Coolify](services/orchestration/coolify.md)** - PaaS self-hosted (alt. Heroku/Vercel)
 - **[Dokploy](services/orchestration/dokploy.md)** - PaaS self-hosted (alt. Netlify)
+- **[Arcane](services/orchestration/arcane.md)** - Docker Manager
 - **[Longhorn](services/orchestration/longhorn.md)** - Stockage distribué Kubernetes
 - **[cert-manager](services/orchestration/cert-manager.md)** - Gestion certificats TLS Kubernetes
 

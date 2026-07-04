@@ -4,8 +4,13 @@ Tools for managing, orchestrating, and deploying containers at scale.
 
 ## Existing Projects
 
-- **portainer/** - Container management UI
+- **arcane/** - Lightweight Docker stack and container manager
+- **coolify/** - Self-hostable PaaS (Vercel/Heroku alternative)
+- **dokploy/** - Self-hostable PaaS (Netlify/Heroku alternative)
+- **portainer/** - Docker & Swarm container management UI
 - **virtualization/** - OS virtualization examples with Docker
+- **k8s-cert-manager/** - cert-manager setup for Kubernetes TLS
+- **k8s-longhorn/** - Longhorn distributed storage for Kubernetes
 
 ## Suggested Open Source Services
 
@@ -22,6 +27,7 @@ Tools for managing, orchestrating, and deploying containers at scale.
 | **Dockge** | Self-hosted Docker Compose stack manager | [louislam/dockge](https://github.com/louislam/dockge) |
 | **Coolify** | Self-hostable Heroku/Netlify alternative | [coollabsio/coolify](https://github.com/coollabsio/coolify) |
 | **CapRover** | PaaS for Docker deployments | [caprover/caprover](https://github.com/caprover/caprover) |
+| **Arcane** | Modern self-hosted Docker dashboard | [getarcaneapp/arcane](https://github.com/getarcaneapp/arcane) |
 
 ## Quick Start
 

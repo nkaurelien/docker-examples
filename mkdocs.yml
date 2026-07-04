@@ -108,6 +108,7 @@ nav:
       - Rancher: services/orchestration/rancher.md
       - Coolify: services/orchestration/coolify.md
       - Dokploy: services/orchestration/dokploy.md
+      - Arcane: services/orchestration/arcane.md
       - Longhorn (K8s): services/orchestration/longhorn.md
       - cert-manager (K8s): services/orchestration/cert-manager.md
 
