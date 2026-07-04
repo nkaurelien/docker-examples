@@ -133,7 +133,7 @@ hosts-add:
 arcane-start:
 	@echo "Starting Arcane stack..."
 	docker compose -f 02-container-orchestration/arcane/compose.yml up -d
-	./scripts/seed_registry.sh
+
 
 # Show project structure
 tree:
