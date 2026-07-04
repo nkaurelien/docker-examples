@@ -138,15 +138,15 @@ def generate_registry():
         "templates": sorted(templates, key=lambda t: t["name"])
     }
     
-    # Save to docs/registry.json so it's compiled by mkdocs
+    # Save to docs/arcane-registry.json so it's compiled by mkdocs
     docs_dir = os.path.join(repo_root, "docs")
     os.makedirs(docs_dir, exist_ok=True)
-    registry_path = os.path.join(docs_dir, "registry.json")
+    registry_path = os.path.join(docs_dir, "arcane-registry.json")
     
     with open(registry_path, 'w', encoding='utf-8') as f:
         json.dump(registry, f, indent=2, ensure_ascii=False)
         
-    print(f"Registry generated successfully with {len(templates)} templates at: docs/registry.json")
+    print(f"Registry generated successfully with {len(templates)} templates at: docs/arcane-registry.json")
 
 if __name__ == "__main__":
     generate_registry()
