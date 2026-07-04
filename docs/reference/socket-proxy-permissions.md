@@ -116,6 +116,37 @@ environment:
   - SYSTEM=0
 ```
 
+### Arcane (Docker Manager)
+
+```yaml
+environment:
+  - EVENTS=1
+  - PING=1
+  - VERSION=1
+  - CONTAINERS=1
+  - EXEC=1
+  - IMAGES=1
+  - INFO=1
+  - NETWORKS=1
+  - VOLUMES=1
+  - POST=1
+  # Disabled
+  - AUTH=0
+  - SECRETS=0
+  - BUILD=0
+  - COMMIT=0
+  - CONFIGS=0
+  - DISTRIBUTION=0
+  - GRPC=0
+  - NODES=0
+  - PLUGINS=0
+  - SERVICES=0
+  - SESSION=0
+  - SWARM=0
+  - SYSTEM=0
+  - TASKS=0
+```
+
 ### Gitea Actions Runner (CI/CD)
 
 ```yaml
@@ -322,6 +353,7 @@ docker exec socket-proxy env | grep -E "^(CONTAINERS|IMAGES|POST|EXEC)="
 | Portainer | `02-container-orchestration/portainer/` | Full management |
 | Coolify | `02-container-orchestration/coolify/` | PaaS |
 | Dokploy | `02-container-orchestration/dokploy/` | PaaS |
+| Arcane | `02-container-orchestration/arcane/` | Docker Manager |
 | Gitea Runner | `08-code-management/gitea/` | CI/CD |
 | Glances | `05-monitoring-reporting/observability/monitoring/glances/` | Monitoring |
 

@@ -16,10 +16,14 @@ __pycache__/
 .venv/
 venv/
 ENV/
+.env
 .env.local
 
 # MkDocs
 site/
+
+# Arcane template dotfiles
+02-container-orchestration/arcane/templates/.*
 
 # Snyk Security Extension - AI Rules (auto-generated)
 .github/instructions/snyk_rules.instructions.md
