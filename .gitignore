@@ -24,6 +24,8 @@ site/
 
 # Arcane template dotfiles
 02-container-orchestration/arcane/templates/.*
+02-container-orchestration/arcane/projects/
+
 
 # Snyk Security Extension - AI Rules (auto-generated)
 .github/instructions/snyk_rules.instructions.md

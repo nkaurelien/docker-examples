@@ -39,6 +39,14 @@ services:
     restart: unless-stopped
     ports:
       - "${PHPMYADMIN_PORT:-8080}:80"
+    networks:
+      - default
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wordpress-phpmyadmin.rule=Host(`pma-wordpress.${DOMAIN:-apps.local}`)"
+      - "traefik.http.routers.wordpress-phpmyadmin.entrypoints=web"
+      - "traefik.http.services.wordpress-phpmyadmin.loadbalancer.server.port=80"
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
@@ -143,6 +151,14 @@ services:
     ports:
       - "${WORDPRESS_PORT:-8000}:80"
     restart: unless-stopped
+    networks:
+      - default
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wordpress.rule=Host(`wordpress.${DOMAIN:-apps.local}`)"
+      - "traefik.http.routers.wordpress.entrypoints=web"
+      - "traefik.http.services.wordpress.loadbalancer.server.port=80"
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: ${MYSQL_USER:-wordpress}
@@ -165,3 +181,7 @@ services:
 volumes:
   db_data:
     driver: local
+
+networks:
+  traefik-public:
+    external: true

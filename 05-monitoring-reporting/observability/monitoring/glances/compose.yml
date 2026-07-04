@@ -27,3 +27,16 @@ services:
       # Tell Glances where to find host proc/sys
       - GLANCES_PROC_PATH=/host/proc
       - GLANCES_SYS_PATH=/host/sys
+    networks:
+      - default
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.glances.rule=Host(`glances.${DOMAIN:-apps.local}`)"
+      - "traefik.http.routers.glances.entrypoints=web"
+      - "traefik.http.services.glances.loadbalancer.server.port=61208"
+
+networks:
+  traefik-public:
+    external: true
+
