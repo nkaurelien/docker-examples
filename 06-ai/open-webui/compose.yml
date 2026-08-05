@@ -1,22 +1,35 @@
 services:
 
+  # SSH Tunnel container connecting to the remote Ollama server
+  ollama-tunnel:
+    image: alpine:latest
+    container_name: ollama-tunnel
+    restart: always
+    ports:
+      - "4000:8080" # Maps port 4000 on host to 8080 in the shared network namespace (where Open WebUI runs)
+    entrypoint: sh -c "apk add --no-cache openssh-client sshpass && sshpass -p \"$$OLLAMA_SSH_PASSWORD\" ssh -N -L 127.0.0.1:11434:localhost:11434 -o StrictHostKeyChecking=no -p $$OLLAMA_SSH_PORT $$OLLAMA_SSH_USER@$$OLLAMA_SSH_HOST"
+    environment:
+      OLLAMA_SSH_HOST: ${OLLAMA_SSH_HOST:-your-remote-server-ip}
+      OLLAMA_SSH_PORT: ${OLLAMA_SSH_PORT:-22}
+      OLLAMA_SSH_USER: ${OLLAMA_SSH_USER:-username}
+      OLLAMA_SSH_PASSWORD: ${OLLAMA_SSH_PASSWORD:-your-password}
+
   #######################################
   # Open WebUI: User interface for LLMs
-  # Connected to Ollama on remote server
+  # Shares the network namespace of the tunnel container
   #######################################
   open-webui:
     image: ghcr.io/open-webui/open-webui:main
     container_name: open-webui
     restart: always
-    ports:
-      - "3000:8080"
+    network_mode: "service:ollama-tunnel" # Shares network namespace to connect to 127.0.0.1:11434 directly
     environment:
-      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://your-remote-ollama-ip:11434}
+      - OLLAMA_BASE_URL=http://127.0.0.1:11434
       - WEBUI_AUTH=${WEBUI_AUTH:-False}
     volumes:
       - open-webui:/app/backend/data
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    depends_on:
+      - ollama-tunnel
 
 volumes:
   open-webui:
