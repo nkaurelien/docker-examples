@@ -5,6 +5,7 @@ Artificial Intelligence, Machine Learning, and Data Science platforms.
 ## Existing Projects
 
 - **jupyter/** - Jupyter notebooks for data science
+- **open-webui/** - User interface for remote Ollama server
 
 ## Suggested Open Source Services
 

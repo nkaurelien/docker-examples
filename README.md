@@ -26,7 +26,8 @@ A comprehensive collection of production-ready Docker Compose configurations for
 ### Data Processing & Analytics
 - **[Kafka + Logstash](kafka-logstash/)** - Production-ready Kafka cluster with real-time data processing
 - **[Grafana](grafana/)** - Monitoring and observability platform
-- **[Jupyter](jupyter/)** - Data science notebooks with Spark integration
+- **[Jupyter](06-ai/jupyter/)** - Data science notebooks with Spark integration
+- **[Open WebUI](06-ai/open-webui/)** - ChatGPT-like user interface for Ollama (configured for remote GPU server)
 
 ### Development Tools
 - **[Jenkins](jenkins/)** - CI/CD automation server

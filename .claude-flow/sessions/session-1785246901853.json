@@ -1,0 +1,14 @@
+{
+  "id": "session-1785246901853",
+  "startedAt": "2026-07-28T13:55:01.853Z",
+  "cwd": "/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples",
+  "context": {},
+  "metrics": {
+    "edits": 0,
+    "commands": 0,
+    "tasks": 0,
+    "errors": 0
+  },
+  "endedAt": "2026-07-28T13:55:28.951Z",
+  "duration": 27098
+}

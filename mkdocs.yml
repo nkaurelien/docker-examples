@@ -128,6 +128,7 @@ nav:
 
   - AI & Machine Learning:
       - Overview: services/ai/index.md
+      - Open WebUI: services/ai/open-webui.md
 
   - Automation:
       - Overview: services/automation/index.md
