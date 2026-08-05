@@ -1,7 +1,7 @@
 # Docker Examples - Makefile
 # Usage: make <target>
 
-.PHONY: help docs docs-serve docs-build docs-deploy clean docker-clean install registry arcane-start
+.PHONY: help docs docs-serve docs-build docs-deploy clean docker-clean install registry arcane-start open-webui-env open-webui-tunnel open-webui-clean-port
 
 # Default target
 help:
@@ -17,6 +17,11 @@ help:
 	@echo "Docker:"
 	@echo "  make docker-clean  - Remove unused Docker resources"
 	@echo "  make docker-prune  - Deep clean Docker (volumes, networks, images)"
+	@echo ""
+	@echo "Open WebUI & Ollama:"
+	@echo "  make open-webui-env        - Create .env file for Open WebUI"
+	@echo "  make open-webui-tunnel     - Create SSH tunnel to remote Ollama host"
+	@echo "  make open-webui-clean-port - Free port 11434 if bound (kills local Ollama/ssh)"
 	@echo ""
 	@echo "Utilities:"
 	@echo "  make lint          - Run hadolint on all Dockerfiles"
@@ -141,3 +146,48 @@ tree:
 		echo "$$dir"; \
 		ls -1 "$$dir" 2>/dev/null | sed 's/^/  /'; \
 	done
+
+# ============================================================================
+# Open WebUI & Ollama Tunnel
+# ============================================================================
+
+# Create .env for Open WebUI with host.docker.internal configuration
+open-webui-env:
+	@echo "Creating .env for Open WebUI..."
+	@if [ ! -f 06-ai/open-webui/.env ]; then \
+		cp 06-ai/open-webui/.env.example 06-ai/open-webui/.env; \
+		sed -i '' 's|OLLAMA_BASE_URL=.*|OLLAMA_BASE_URL=http://host.docker.internal:11434|' 06-ai/open-webui/.env 2>/dev/null || \
+		sed -i 's|OLLAMA_BASE_URL=.*|OLLAMA_BASE_URL=http://host.docker.internal:11434|' 06-ai/open-webui/.env; \
+		echo "Created 06-ai/open-webui/.env with OLLAMA_BASE_URL=http://host.docker.internal:11434"; \
+	else \
+		echo "06-ai/open-webui/.env already exists."; \
+	fi
+
+# Load custom configurations from Open WebUI's local git-ignored environment file if it exists
+-include 06-ai/open-webui/.env
+
+# SSH Tunnel Configurations (override on command line or define in 06-ai/open-webui/.env)
+OLLAMA_HOST ?= $(OLLAMA_SSH_HOST)
+OLLAMA_PORT ?= $(OLLAMA_SSH_PORT)
+OLLAMA_USER ?= $(OLLAMA_SSH_USER)
+
+# Fallbacks if not set in .env or via command line arguments
+OLLAMA_HOST ?= your-remote-ollama-ip
+OLLAMA_PORT ?= 22
+OLLAMA_USER ?= username
+
+# Establish SSH tunnel to remote Ollama host
+open-webui-tunnel:
+	@echo "Opening SSH tunnel to $(OLLAMA_HOST) for Ollama..."
+	ssh -N -L 11434:localhost:11434 -p $(OLLAMA_PORT) $(OLLAMA_USER)@$(OLLAMA_HOST)
+
+# Kill any processes (local Ollama or old tunnels) listening on port 11434
+open-webui-clean-port:
+	@echo "Checking for processes on port 11434..."
+	@PID=$$(lsof -t -i:11434); \
+	if [ -n "$$PID" ]; then \
+		echo "Killing processes on port 11434 (PIDs: $$PID)..."; \
+		kill -9 $$PID 2>/dev/null || true; \
+	else \
+		echo "Port 11434 is free."; \
+	fi

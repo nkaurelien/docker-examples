@@ -1,0 +1,22 @@
+services:
+
+  #######################################
+  # Open WebUI: User interface for LLMs
+  # Connected to Ollama on remote server
+  #######################################
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    restart: always
+    ports:
+      - "3000:8080"
+    environment:
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://your-remote-ollama-ip:11434}
+      - WEBUI_AUTH=${WEBUI_AUTH:-False}
+    volumes:
+      - open-webui:/app/backend/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  open-webui:
