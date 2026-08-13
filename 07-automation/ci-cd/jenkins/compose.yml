@@ -30,5 +30,7 @@ networks:
   traefik-public:
     external: true
 
+    name: traefik-public
 volumes:
   jenkins_home:
+    name: jenkins_home

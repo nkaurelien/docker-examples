@@ -52,3 +52,4 @@ networks:
     external: true
 
 
+    name: traefik-public

@@ -69,7 +69,8 @@ services:
       - "traefik.http.services.whoami.loadbalancer.server.port=80"
 
 volumes:
-  traefik_letsencrypt: {}
+  traefik_letsencrypt:
+    name: traefik_letsencrypt
 
 networks:
   traefik-public:

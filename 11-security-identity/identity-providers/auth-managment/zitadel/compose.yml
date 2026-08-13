@@ -51,6 +51,8 @@ services:
 
 networks:
   zitadel:
+    name: zitadel
 
 volumes:
   zitadel-db:
+    name: zitadel-db

@@ -47,8 +47,11 @@ volumes:
   checkmk-data:
     driver: local
 
+    name: checkmk-data
 networks:
   checkmk-network:
     driver: bridge
+    name: checkmk-network
   traefik-public:
     external: true
+    name: traefik-public

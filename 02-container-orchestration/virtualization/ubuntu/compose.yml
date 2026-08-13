@@ -38,6 +38,8 @@ networks:
   ubuntu_network:
     driver: bridge
 
+    name: ubuntu_network
 volumes:
   ubuntu_data:
     driver: local
+    name: ubuntu_data

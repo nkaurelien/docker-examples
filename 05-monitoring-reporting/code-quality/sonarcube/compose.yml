@@ -98,7 +98,9 @@ services:
       - sonarqube_extensions:/opt/sonarqube/extensions
       - sonarqube_logs:/opt/sonarqube/logs
     healthcheck:
-      test: [ "CMD", "/bin/bash", "-c", "wget -qO- http://localhost:9000/api/system/status | grep -q -e '\"status\":\"UP\"' -e '\"status\":\"DB_MIGRATION_NEEDED\"' -e '\"status\":\"DB_MIGRATION_RUNNING\"' || exit 1" ]
+      test: ["CMD", "/bin/bash", "-c", "wget -qO- http://localhost:9000/api/system/status
+            | grep -q -e '\"status\":\"UP\"' -e '\"status\":\"DB_MIGRATION_NEEDED\"\
+            ' -e '\"status\":\"DB_MIGRATION_RUNNING\"' || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -154,12 +156,18 @@ services:
 
 volumes:
   sonarqube_data:
+    name: sonarqube_data
   sonarqube_extensions:
+    name: sonarqube_extensions
   sonarqube_logs:
+    name: sonarqube_logs
   sonarqube_db:
+    name: sonarqube_db
 
 networks:
   sonarcube:
     driver: bridge
+    name: sonarcube
   traefik-public:
     external: true
+    name: traefik-public

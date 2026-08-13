@@ -37,8 +37,11 @@ services:
       - odoo-db-data:/var/lib/postgresql/data/pgdata
 volumes:
   odoo-web-data:
+    name: odoo-web-data
   odoo-db-data:
+    name: odoo-db-data
 
 networks:
   traefik-public:
     external: true
+    name: traefik-public

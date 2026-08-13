@@ -84,11 +84,15 @@ services:
 volumes:
   clamav-db:
     driver: local
+    name: clamav-db
   scan-volume:
     driver: local
 
+    name: scan-volume
 networks:
   clamav-network:
     driver: bridge
+    name: clamav-network
   traefik-public:
     external: true
+    name: traefik-public

@@ -12,3 +12,4 @@ services:
 
 volumes:
   erugo_storage:
+    name: erugo_storage

@@ -49,5 +49,7 @@ networks:
   traefik-public:
     external: true
 
+    name: traefik-public
 volumes:
   portainer_data:
+    name: portainer_data

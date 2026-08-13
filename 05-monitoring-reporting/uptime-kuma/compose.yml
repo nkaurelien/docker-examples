@@ -46,8 +46,11 @@ volumes:
   uptime-kuma-data:
     driver: local
 
+    name: uptime-kuma-data
 networks:
   uptime-kuma-network:
     driver: bridge
+    name: uptime-kuma-network
   traefik-public:
     external: true
+    name: traefik-public

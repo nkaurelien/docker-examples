@@ -55,8 +55,13 @@ networks:
   traefik-public:
     external: true
 
+    name: traefik-public
 volumes:
   data:
+    name: data
   media:
+    name: media
   pgdata:
+    name: pgdata
   redisdata:
+    name: redisdata

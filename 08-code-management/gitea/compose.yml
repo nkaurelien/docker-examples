@@ -175,16 +175,22 @@ services:
 volumes:
   gitea-data:
     driver: local
+    name: gitea-data
   gitea-postgres:
     driver: local
+    name: gitea-postgres
   gitea-runner-data:
     driver: local
 
+    name: gitea-runner-data
 networks:
   gitea-network:
     driver: bridge
+    name: gitea-network
   docker-proxy-network:
     driver: bridge
     internal: true
+    name: docker-proxy-network
   traefik-public:
     external: true
+    name: traefik-public
