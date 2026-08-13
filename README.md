@@ -198,6 +198,22 @@ cd kafka-logstash/
 - [11 Open-Source SaaS Killers](https://withcodeexample.com/11-open-source-saas-killer-selfhost-with-docker-2/?utm_source=medium&utm_medium=article&utm_campaign=free_read)
 - [12 Open Source Auth Tools](https://www.permit.io/blog/top-12-open-source-auth-tools)
 
+## 💡 Proposed & Recommended Services to Add
+
+We are always looking to expand this repository with modern, production-ready configurations. Below is a curated list of high-value open-source tools that would be excellent additions:
+
+| Category | Recommended Project | Description | Target Use Case |
+|---|---|---|---|
+| **AI & LLM** | [Ollama](https://ollama.com/) | Run local LLMs (Llama 3, Mistral) in Docker | Core local AI backend |
+| | [Flowise](https://flowiseai.com/) / [Langflow](https://www.langflow.org/) | Low-code GUI for building RAG applications | AI Agent orchestration |
+| **BaaS / Low-Code** | [Supabase](https://supabase.com/) | Open-source Firebase alternative (Postgres, Auth, Storage) | Full-stack rapid app backend |
+| | [Appwrite](https://appwrite.io/) | Self-hosted backend-as-a-service for web/mobile apps | Unified backend suite |
+| **Databases** | [ClickHouse](https://clickhouse.com/) | Column-oriented DBMS for high-performance analytics | Big Data & Logging backend |
+| | [Meilisearch](https://www.meilisearch.com/) | Lightning-fast search engine (Elasticsearch alternative) | Instant search integration |
+| **Security & Auth** | [Authentik](https://goauthentik.io/) | Unified, identity provider with SSO | Secure Gateway portal |
+| | [Vault / OpenBao](https://openbao.org/) | Secrets management and data protection | Zero-trust secrets storage |
+| **Observability** | [Loki & Promtail](https://grafana.com/oss/loki/) | Log aggregation system (part of the LGTM stack) | Centralized application logging |
+
 ## 🤝 Contributing
 
 1. Each service should be self-contained in its own directory
