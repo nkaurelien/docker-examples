@@ -38,6 +38,8 @@ networks:
   fedora_network:
     driver: bridge
 
+    name: fedora_network
 volumes:
   fedora_data:
     driver: local
+    name: fedora_data

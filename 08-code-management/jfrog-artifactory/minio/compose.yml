@@ -100,5 +100,8 @@ services:
 
 volumes:
   artifactory_data:
+    name: artifactory_data
   postgres_data:
+    name: postgres_data
   minio_data:
+    name: minio_data

@@ -154,24 +154,34 @@ services:
 volumes:
   coolify-data:
     driver: local
+    name: coolify-data
   coolify-ssh:
     driver: local
+    name: coolify-ssh
   coolify-applications:
     driver: local
+    name: coolify-applications
   coolify-databases:
     driver: local
+    name: coolify-databases
   coolify-services:
     driver: local
+    name: coolify-services
   coolify-postgres:
     driver: local
+    name: coolify-postgres
   coolify-redis-data:
     driver: local
 
+    name: coolify-redis-data
 networks:
   coolify-network:
     driver: bridge
+    name: coolify-network
   docker-proxy-network:
     driver: bridge
     internal: true
+    name: docker-proxy-network
   traefik-public:
     external: true
+    name: traefik-public

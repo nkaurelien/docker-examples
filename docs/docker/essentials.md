@@ -73,12 +73,20 @@ volumes:
     target: /tmp
 ```
 
-### Déclaration des volumes
+### Déclaration et Bonnes Pratiques de Nommage
+
+> [!IMPORTANT]
+> **Pourquoi nommer explicitement vos volumes avec `name:` ?**
+> Par défaut, si vous déclarez un volume nommé (`app-data:`), Docker Compose crée un volume physique sous la forme `<nom_du_dossier_projet>_app-data`.
+> 
+> Si vous renommez le dossier du projet ou si vous le déplacez, et que vous n'avez pas configuré la variable `COMPOSE_PROJECT_NAME`, Docker Compose cherchera un volume avec le nouveau nom de dossier et créera un volume vide. **Vous risquez ainsi de perdre l'accès à vos données.**
+> 
+> En utilisant la propriété `name:` de façon explicite, le volume conserve le même nom sur le système hôte, garantissant la portabilité de votre projet et la sécurité de vos données même si le répertoire change.
 
 ```yaml
 volumes:
   app-data:
-    name: my-app-data
+    name: mon-projet-prod-app-data
     driver: local
 ```
 

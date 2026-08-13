@@ -10,16 +10,16 @@ services:
     container_name: grafana
     restart: unless-stopped
     environment:
-     - GF_SERVER_ROOT_URL=http://grafana.${DOMAIN:-apps.local}/
-     - GF_PLUGINS_PREINSTALL=grafana-clock-panel
+      - GF_SERVER_ROOT_URL=http://grafana.${DOMAIN:-apps.local}/
+      - GF_PLUGINS_PREINSTALL=grafana-clock-panel
     ports:
-     - '23000:3000'
+      - '23000:3000'
     networks:
       - default
       - traefik-public
     volumes:
-     - ./grafana-config:/etc/grafana
-     - 'grafana_storage:/var/lib/grafana'
+      - ./grafana-config:/etc/grafana
+      - 'grafana_storage:/var/lib/grafana'
     labels:
       - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/grafana.webp"
       - "traefik.enable=true"
@@ -31,5 +31,7 @@ networks:
   traefik-public:
     external: true
 
+    name: traefik-public
 volumes:
-  grafana_storage: {}
+  grafana_storage:
+    name: grafana_storage

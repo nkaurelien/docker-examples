@@ -59,5 +59,7 @@ services:
 volumes:
   artifactory_data:
     external: true
+    name: artifactory_data
   postgres_data:
     external: true
+    name: postgres_data

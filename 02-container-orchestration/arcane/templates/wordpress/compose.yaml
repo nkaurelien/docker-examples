@@ -27,4 +27,6 @@ services:
 
 volumes:
   wordpress_data:
+    name: wordpress_data
   db_data:
+    name: db_data

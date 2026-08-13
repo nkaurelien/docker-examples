@@ -35,7 +35,7 @@ services:
         reservations:
           cpus: '0.5'
           memory: 512M
-  
+
   phpmyadmin:
     image: phpmyadmin
     container_name: ${COMPOSE_PROJECT_NAME:-wordpress}_phpmyadmin
@@ -129,7 +129,8 @@ services:
       - backup
     labels:
       ofelia.enabled: "true"
-      ofelia.job-run.wordpress-backup-daily.schedule: "${BACKUP_SCHEDULE:-0 2 * * *}"
+      ofelia.job-run.wordpress-backup-daily.schedule: "${BACKUP_SCHEDULE:-0 2 * *
+        *}"
       ofelia.job-run.wordpress-backup-daily.container: "${COMPOSE_PROJECT_NAME:-wordpress}_dbexport"
       ofelia.job-run.wordpress-backup-daily.no-overlap: "true"
     logging:
@@ -145,7 +146,7 @@ services:
         reservations:
           cpus: '0.1'
           memory: 64M
-        
+
   wordpress:
     image: wordpress:latest
     container_name: ${COMPOSE_PROJECT_NAME:-wordpress}_wordpress
@@ -189,6 +190,8 @@ volumes:
   db_data:
     driver: local
 
+    name: db_data
 networks:
   traefik-public:
     external: true
+    name: traefik-public

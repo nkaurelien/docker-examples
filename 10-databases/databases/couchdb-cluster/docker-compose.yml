@@ -206,10 +206,17 @@ networks:
     external: true
 
 
+    name: asone4health_network
 volumes:
   data-couch-0:
+    name: data-couch-0
   cfg-couch-0:
+    name: cfg-couch-0
   data-couch-1:
+    name: data-couch-1
   cfg-couch-1:
+    name: cfg-couch-1
   data-couch-2:
+    name: data-couch-2
   cfg-couch-2:
+    name: cfg-couch-2

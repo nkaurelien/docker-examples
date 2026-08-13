@@ -103,11 +103,15 @@ volumes:
   dokploy-data:
     driver: local
 
+    name: dokploy-data
 networks:
   dokploy-network:
     driver: bridge
+    name: dokploy-network
   docker-proxy-network:
     driver: bridge
     internal: true
+    name: docker-proxy-network
   traefik-public:
     external: true
+    name: traefik-public

@@ -1,5 +1,6 @@
 x-arcane:
-  icon: https://raw.githubusercontent.com/getarcaneapp/arcane/main/assets/icon.png
+  icon: 
+    https://raw.githubusercontent.com/getarcaneapp/arcane/main/assets/icon.png
   urls:
     - https://getarcane.app/
     - https://github.com/getarcaneapp/arcane
@@ -130,6 +131,7 @@ networks:
   traefik-public:
     external: true
 
+    name: traefik-public
 volumes:
   arcane-data:
     name: arcane-data

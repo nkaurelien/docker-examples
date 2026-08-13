@@ -111,15 +111,21 @@ services:
 volumes:
   asterisk-data:
     driver: local
+    name: asterisk-data
   freepbx-data:
     driver: local
+    name: freepbx-data
   freepbx-logs:
     driver: local
+    name: freepbx-logs
   freepbx-cdr:
     driver: local
+    name: freepbx-cdr
   freepbx-mysql:
     driver: local
 
+    name: freepbx-mysql
 networks:
   asterisk-network:
     driver: bridge
+    name: asterisk-network

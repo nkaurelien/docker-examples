@@ -27,7 +27,8 @@ services:
       APP_FULL_BASE_URL: ${APP_FULL_BASE_URL:-https://passbolt.local}
       DATASOURCES_DEFAULT_DRIVER: Cake\Database\Driver\Postgres
       DATASOURCES_DEFAULT_ENCODING: utf8
-      DATASOURCES_DEFAULT_URL: postgres://passbolt:${POSTGRES_PASSWORD:-P4ssb0lt}@db:5432/passbolt?schema=passbolt
+      DATASOURCES_DEFAULT_URL: 
+        postgres://passbolt:${POSTGRES_PASSWORD:-P4ssb0lt}@db:5432/passbolt?schema=passbolt
       EMAIL_TRANSPORT_DEFAULT_HOST: ${SMTP_HOST:-smtp.domain.tld}
       EMAIL_TRANSPORT_DEFAULT_PORT: ${SMTP_PORT:-587}
       EMAIL_TRANSPORT_DEFAULT_USERNAME: ${SMTP_USERNAME:-}
@@ -51,5 +52,8 @@ services:
 
 volumes:
   database_volume:
+    name: database_volume
   gpg_volume:
+    name: gpg_volume
   jwt_volume:
+    name: jwt_volume

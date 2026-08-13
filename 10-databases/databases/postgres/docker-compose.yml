@@ -143,5 +143,7 @@ services:
 volumes:
   postgres_data:
     driver: local
+    name: postgres_data
   pgadmin_data:
     driver: local
+    name: pgadmin_data

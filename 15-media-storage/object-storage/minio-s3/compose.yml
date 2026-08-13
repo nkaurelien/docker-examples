@@ -51,9 +51,12 @@ services:
 
 volumes:
   minio_data:
+    name: minio_data
 
 networks:
   minio_network:
     external: true
+    name: minio_network
   traefik-public:
     external: true
+    name: traefik-public
