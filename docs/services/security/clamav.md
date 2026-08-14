@@ -12,7 +12,7 @@ ClamAV est l'antivirus open-source de référence pour scanner fichiers, emails 
 ## Démarrage Rapide
 
 ```bash
-cd 11-security-identity/clamav/
+cd compose/11-security-identity/clamav/
 
 # Démarrer ClamAV
 docker compose up -d

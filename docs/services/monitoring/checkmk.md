@@ -15,7 +15,7 @@ Checkmk is a comprehensive IT infrastructure monitoring solution.
 ## Quick Start
 
 ```bash
-cd 05-monitoring-reporting/checkmk
+cd compose/05-monitoring-reporting/checkmk
 docker compose up -d
 ```
 

@@ -14,7 +14,7 @@ Uptime Kuma is a self-hosted monitoring tool, an alternative to Pingdom and Upti
 ## Quick Start
 
 ```bash
-cd 05-monitoring-reporting/uptime-kuma
+cd compose/05-monitoring-reporting/uptime-kuma
 docker compose up -d
 ```
 

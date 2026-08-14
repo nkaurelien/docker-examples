@@ -15,7 +15,7 @@ Dokploy is a self-hosted PaaS alternative to Heroku, Vercel, and Netlify.
 ## Quick Start
 
 ```bash
-cd 02-container-orchestration/dokploy
+cd compose/02-container-orchestration/dokploy
 docker compose up -d
 ```
 

@@ -6,7 +6,7 @@ This section covers IoT platforms and smart home automation solutions.
 
 | Service | Description | Directory |
 |---------|-------------|-----------|
-| [Home Assistant](home-assistant.md) | Open source home automation platform | `03-iot-smart-home/home-assistant/` |
+| [Home Assistant](home-assistant.md) | Open source home automation platform | `compose/03-iot-smart-home/home-assistant/` |
 
 ## Overview
 

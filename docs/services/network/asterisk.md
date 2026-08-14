@@ -16,7 +16,7 @@ Asterisk is a free and open source framework for building communications applica
 ## Quick Start
 
 ```bash
-cd 04-network-management/asterisk
+cd compose/04-network-management/asterisk
 docker compose up -d
 ```
 

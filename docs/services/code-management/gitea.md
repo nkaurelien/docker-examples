@@ -16,7 +16,7 @@ Gitea is a painless, self-hosted, all-in-one software development service.
 ## Quick Start
 
 ```bash
-cd 08-code-management/gitea
+cd compose/08-code-management/gitea
 docker compose up -d
 ```
 

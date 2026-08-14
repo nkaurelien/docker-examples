@@ -6,7 +6,7 @@ This section covers network infrastructure and communication services.
 
 | Service | Description | Directory |
 |---------|-------------|-----------|
-| [Asterisk](asterisk.md) | VoIP PBX server | `04-network-management/asterisk/` |
+| [Asterisk](asterisk.md) | VoIP PBX server | `compose/04-network-management/asterisk/` |
 
 ## Overview
 

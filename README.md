@@ -26,15 +26,17 @@ A comprehensive collection of production-ready Docker Compose configurations for
 ### Data Processing & Analytics
 - **[Kafka + Logstash](kafka-logstash/)** - Production-ready Kafka cluster with real-time data processing
 - **[Grafana](grafana/)** - Monitoring and observability platform
-- **[Jupyter](06-ai/jupyter/)** - Data science notebooks with Spark integration
-- **[Open WebUI](06-ai/open-webui/)** - ChatGPT-like user interface for Ollama (configured for remote GPU server)
+- **[Jupyter](compose/06-ai/jupyter/)** - Data science notebooks with Spark integration
+- **[Ollama Local](compose/06-ai/ollama-local/)** - Run LLMs locally with CPU or Nvidia GPU acceleration
+- **[Ollama SSH Tunnel](compose/06-ai/dgx-ollama-tunnel/)** - Secure containerized SSH tunnel forwarding to remote GPU clusters (e.g. DGX)
+- **[Open WebUI](compose/06-ai/open-webui/)** - ChatGPT-like user interface for Ollama (configured for remote GPU server)
 
 ### Development Tools
 - **[Jenkins](jenkins/)** - CI/CD automation server
 - **[SonarQube](sonarcube/)** - Code quality and security analysis
 - **[Docker Registry](docker-registry/)** - Private Docker image registry with UI
-- **[Portainer](02-container-orchestration/portainer/)** - Docker container management UI
-- **[Arcane](02-container-orchestration/arcane/)** - Modern self-hosted Docker dashboard (with Socket Proxy)
+- **[Portainer](compose/02-container-orchestration/portainer/)** - Docker container management UI
+- **[Arcane](compose/02-container-orchestration/arcane/)** - Modern self-hosted Docker dashboard (with Socket Proxy)
 - **[IT-Tools](it-tools/)** - Collection of handy online tools for developers (network, encoding, generators, etc.)
 
 ### Communication & Collaboration
@@ -122,7 +124,7 @@ Several services are configured for production deployment:
 
 ## 🎛️ PaaS Integration (Arcane)
 
-This repository includes a production-ready **Arcane** container management setup (under `02-container-orchestration/arcane/`). All web configurations in this repository are pre-configured with custom branding metadata (using the `x-arcane:` block and community-approved WebP icons).
+This repository includes a production-ready **Arcane** container management setup (under `compose/02-container-orchestration/arcane/`). All web configurations in this repository are pre-configured with custom branding metadata (using the `x-arcane:` block and community-approved WebP icons).
 
 You can load all 60+ configurations from this repository directly as templates in your Arcane dashboard by registering the custom template registry:
 * **Registry URL**: `https://nkaurelien.github.io/docker-examples/arcane-registry.json`

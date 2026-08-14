@@ -22,7 +22,7 @@ Home Assistant is an open-source home automation platform that puts local contro
 ## Quick Start
 
 ```bash
-cd 03-iot-smart-home/home-assistant
+cd compose/03-iot-smart-home/home-assistant
 docker compose up -d
 ```
 
@@ -30,7 +30,7 @@ Access at: `http://localhost:8123`
 
 ## Configuration
 
-See the [full documentation](https://github.com/nkaurelien/docker-examples/tree/main/03-iot-smart-home/home-assistant) for detailed setup instructions.
+See the [full documentation](https://github.com/nkaurelien/docker-examples/tree/main/compose/03-iot-smart-home/home-assistant) for detailed setup instructions.
 
 ## Resources
 

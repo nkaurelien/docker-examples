@@ -108,7 +108,7 @@ git clone https://github.com/nkaurelien/docker-examples.git
 cd docker-examples
 
 # Start a service
-cd 13-api-gateway/traefik
+cd compose/13-api-gateway/traefik
 docker compose up -d
 ```
 
@@ -121,24 +121,24 @@ docker compose up -d
 
 ```
 docker-examples/
-├── 01-infrastructure/        # DNS, réseau de base
-├── 02-container-orchestration/  # Portainer, Rancher, Coolify, K8s tools
-├── 03-iot-smart-home/        # Home Assistant, Zigbee
-├── 04-network-management/    # Asterisk VoIP
-├── 05-monitoring-reporting/  # Glances, Checkmk, Uptime Kuma
-├── 06-ai/                    # AI/ML platforms
-├── 07-automation/            # Workflow automation
-├── 08-code-management/       # Gitea, GitLab
-├── 09-app-server-management/ # CMS, ERP
-├── 10-databases/             # PostgreSQL, CouchDB
-├── 11-security-identity/     # Keycloak, Zitadel
-├── 12-document-management/   # Paperless, DMS
-├── 13-api-gateway/           # Traefik, Kong, Hasura
-├── 14-mail-services/         # Mailpit, Docker Mailserver
-├── 15-media-storage/         # MinIO, file sharing
-├── 16-development-tools/     # IT-Tools
-├── 17-data-processing/       # Kafka, Spark
-├── 18-communication/         # Chat, video
+├── compose/01-infrastructure/        # DNS, réseau de base
+├── compose/02-container-orchestration/  # Portainer, Rancher, Coolify, K8s tools
+├── compose/03-iot-smart-home/        # Home Assistant, Zigbee
+├── compose/04-network-management/    # Asterisk VoIP
+├── compose/05-monitoring-reporting/  # Glances, Checkmk, Uptime Kuma
+├── compose/06-ai/                    # AI/ML platforms
+├── compose/07-automation/            # Workflow automation
+├── compose/08-code-management/       # Gitea, GitLab
+├── compose/09-app-server-management/ # CMS, ERP
+├── compose/10-databases/             # PostgreSQL, CouchDB
+├── compose/11-security-identity/     # Keycloak, Zitadel
+├── compose/12-document-management/   # Paperless, DMS
+├── compose/13-api-gateway/           # Traefik, Kong, Hasura
+├── compose/14-mail-services/         # Mailpit, Docker Mailserver
+├── compose/15-media-storage/         # MinIO, file sharing
+├── compose/16-development-tools/     # IT-Tools
+├── compose/17-data-processing/       # Kafka, Spark
+├── compose/18-communication/         # Chat, video
 └── docs/                     # Documentation (MkDocs)
 ```
 

@@ -89,8 +89,15 @@ def generate_registry():
                 
             compose_path = os.path.join(root, compose_file)
             
+            # Strip "compose/" prefix if present to keep template IDs and tags backward compatible
+            clean_rel_dir = rel_dir
+            if rel_dir.startswith("compose" + os.sep):
+                clean_rel_dir = rel_dir[len("compose" + os.sep):]
+            elif rel_dir == "compose":
+                continue # Skip root compose folder if it matches somehow
+            
             # ID is the folder path sanitized (e.g. 02-container-orchestration/arcane -> 02-container-orchestration-arcane)
-            template_id = rel_dir.replace(os.sep, '-').lower()
+            template_id = clean_rel_dir.replace(os.sep, '-').lower()
             dir_name = os.path.basename(root)
             
             name, description = extract_metadata(root, dir_name)
@@ -106,10 +113,10 @@ def generate_registry():
                     break
             
             # Determine tags based on path hierarchy
-            tags = [p for p in rel_dir.split(os.sep) if p and not p[0].isdigit()]
+            tags = [p for p in clean_rel_dir.split(os.sep) if p and not p[0].isdigit()]
             if not tags:
                 # Fallback to category digits prefix
-                tags = [p.split('-', 1)[1] for p in rel_dir.split(os.sep) if '-' in p]
+                tags = [p.split('-', 1)[1] for p in clean_rel_dir.split(os.sep) if '-' in p]
             
             # Try to read x-arcane.icon from compose file
             icon_url = "https://nkaurelien.kamitbrains.fr/favicon.ico"

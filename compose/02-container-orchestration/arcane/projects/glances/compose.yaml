@@ -1,0 +1,29 @@
+services:
+
+  #######################################
+  # Glances: System monitoring tool
+  #######################################
+  glances:
+    image: nicolargo/glances:latest-full
+    container_name: glances
+    restart: unless-stopped
+    pid: host
+    privileged: true
+    ports:
+      - "61208:61208"    # Web UI
+      - "61209:61209"    # API
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # Mount host filesystems for full monitoring
+      - /:/rootfs:ro
+      - /etc/os-release:/etc/os-release:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      # Uncomment for Podman support
+      # - /run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock:ro
+    environment:
+      - TZ=${TZ:-Europe/Paris}
+      - GLANCES_OPT=-w --process-short-name
+      # Tell Glances where to find host proc/sys
+      - GLANCES_PROC_PATH=/host/proc
+      - GLANCES_SYS_PATH=/host/sys
