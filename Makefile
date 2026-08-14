@@ -137,7 +137,7 @@ hosts-add:
 # Start Arcane and seed its registry
 arcane-start:
 	@echo "Starting Arcane stack..."
-	docker compose -f 02-container-orchestration/arcane/compose.yml up -d
+	docker compose -f compose/02-container-orchestration/arcane/compose.yml up -d
 
 
 # Show project structure
@@ -154,19 +154,19 @@ tree:
 # Create .env for Open WebUI with host.docker.internal configuration
 open-webui-env:
 	@echo "Creating .env for Open WebUI..."
-	@if [ ! -f 06-ai/open-webui/.env ]; then \
-		cp 06-ai/open-webui/.env.example 06-ai/open-webui/.env; \
-		sed -i '' 's|OLLAMA_BASE_URL=.*|OLLAMA_BASE_URL=http://host.docker.internal:11434|' 06-ai/open-webui/.env 2>/dev/null || \
-		sed -i 's|OLLAMA_BASE_URL=.*|OLLAMA_BASE_URL=http://host.docker.internal:11434|' 06-ai/open-webui/.env; \
-		echo "Created 06-ai/open-webui/.env with OLLAMA_BASE_URL=http://host.docker.internal:11434"; \
+	@if [ ! -f compose/06-ai/open-webui/.env ]; then \
+		cp compose/06-ai/open-webui/.env.example compose/06-ai/open-webui/.env; \
+		sed -i '' 's|OLLAMA_BASE_URL=.*|OLLAMA_BASE_URL=http://host.docker.internal:11434|' compose/06-ai/open-webui/.env 2>/dev/null || \
+		sed -i 's|OLLAMA_BASE_URL=.*|OLLAMA_BASE_URL=http://host.docker.internal:11434|' compose/06-ai/open-webui/.env; \
+		echo "Created compose/06-ai/open-webui/.env with OLLAMA_BASE_URL=http://host.docker.internal:11434"; \
 	else \
-		echo "06-ai/open-webui/.env already exists."; \
+		echo "compose/06-ai/open-webui/.env already exists."; \
 	fi
 
 # Load custom configurations from Open WebUI's local git-ignored environment file if it exists
--include 06-ai/open-webui/.env
+-include compose/06-ai/open-webui/.env
 
-# SSH Tunnel Configurations (override on command line or define in 06-ai/open-webui/.env)
+# SSH Tunnel Configurations (override on command line or define in compose/06-ai/open-webui/.env)
 OLLAMA_HOST ?= $(OLLAMA_SSH_HOST)
 OLLAMA_PORT ?= $(OLLAMA_SSH_PORT)
 OLLAMA_USER ?= $(OLLAMA_SSH_USER)

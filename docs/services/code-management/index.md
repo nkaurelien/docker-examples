@@ -6,7 +6,7 @@ This section covers source code hosting and version control solutions.
 
 | Service | Description | Directory |
 |---------|-------------|-----------|
-| [Gitea](gitea.md) | Lightweight Git hosting | `08-code-management/gitea/` |
+| [Gitea](gitea.md) | Lightweight Git hosting | `compose/08-code-management/gitea/` |
 
 ## Overview
 

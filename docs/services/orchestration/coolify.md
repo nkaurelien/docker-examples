@@ -15,7 +15,7 @@ Coolify is a self-hostable alternative to Heroku, Netlify, and Vercel.
 ## Quick Start
 
 ```bash
-cd 02-container-orchestration/coolify
+cd compose/02-container-orchestration/coolify
 docker compose up -d
 ```
 

@@ -31,7 +31,7 @@ sudo sysctl -w vm.max_map_count=262144
 ## Démarrage Rapide
 
 ```bash
-cd 11-security-identity/wazuh/
+cd compose/11-security-identity/wazuh/
 
 # 1. Générer les certificats SSL
 ./generate-certs.sh

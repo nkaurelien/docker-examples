@@ -5,7 +5,7 @@ BIND 9 is the most widely used DNS server software on the Internet. It provides 
 ## Quick Start
 
 ```bash
-cd 01-infrastructure/bind9/
+cd compose/01-infrastructure/bind9/
 docker compose up -d
 ```
 

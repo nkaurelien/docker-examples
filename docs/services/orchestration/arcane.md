@@ -16,7 +16,7 @@ This configuration deploys Arcane Manager securely using a **Docker Socket Proxy
 ## Quick Start
 
 ```bash
-cd 02-container-orchestration/arcane
+cd compose/02-container-orchestration/arcane
 cp .env.example .env
 # Edit .env and set ENCRYPTION_KEY and JWT_SECRET
 docker compose up -d
@@ -29,7 +29,7 @@ Access at: `http://localhost:3552` or `http://arcane.apps.local` (via Traefik)
 Arcane supports loading custom templates by scanning the `/app/data/templates` directory. This stack mounts the host's `./templates` directory, so you can manage your templates in the workspace:
 
 ```
-02-container-orchestration/arcane/templates/
+compose/02-container-orchestration/arcane/templates/
 └── wordpress/
     ├── compose.yaml
     └── .env.example

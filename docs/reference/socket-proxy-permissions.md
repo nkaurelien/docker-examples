@@ -349,13 +349,13 @@ docker exec socket-proxy env | grep -E "^(CONTAINERS|IMAGES|POST|EXEC)="
 
 | Projet | Répertoire | Permissions |
 |--------|------------|-------------|
-| Traefik | `01-infrastructure/traefik/` | Lecture seule |
-| Portainer | `02-container-orchestration/portainer/` | Full management |
-| Coolify | `02-container-orchestration/coolify/` | PaaS |
-| Dokploy | `02-container-orchestration/dokploy/` | PaaS |
-| Arcane | `02-container-orchestration/arcane/` | Docker Manager |
-| Gitea Runner | `08-code-management/gitea/` | CI/CD |
-| Glances | `05-monitoring-reporting/observability/monitoring/glances/` | Monitoring |
+| Traefik | `compose/01-infrastructure/traefik/` | Lecture seule |
+| Portainer | `compose/02-container-orchestration/portainer/` | Full management |
+| Coolify | `compose/02-container-orchestration/coolify/` | PaaS |
+| Dokploy | `compose/02-container-orchestration/dokploy/` | PaaS |
+| Arcane | `compose/02-container-orchestration/arcane/` | Docker Manager |
+| Gitea Runner | `compose/08-code-management/gitea/` | CI/CD |
+| Glances | `compose/05-monitoring-reporting/observability/monitoring/glances/` | Monitoring |
 
 ## Références
 

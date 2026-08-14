@@ -12,14 +12,14 @@
       "description": "Arcane is an open-source, modern self-hosted dashboard for managing Docker containers and stacks. It is designed to be lightweight, secure, and easy to use, providing a clean user interface for managi...",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/arcane/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/02-container-orchestration/arcane",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/arcane/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/02-container-orchestration/arcane",
       "icon_url": "https://raw.githubusercontent.com/getarcaneapp/arcane/main/assets/icon.png",
-      "content_hash": "044844ad53208f8383d30115f34c2c87f61999f158c74a445add12a757b1a5b2",
+      "content_hash": "ae1def7518ba5cb46c98fc5bafacbfd3137fbc18b4cc5c4828e4cd78d7bd5d8f",
       "tags": [
         "arcane"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/arcane/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/arcane/.env.example"
     },
     {
       "id": "04-network-management-asterisk",
@@ -27,14 +27,14 @@
       "description": "Asterisk is a free and open source framework for building communications applications. It powers IP PBX systems, VoIP gateways, conference servers, and other custom telephony solutions. - **SIP Suppor...",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/04-network-management/asterisk/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/04-network-management/asterisk",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/04-network-management/asterisk/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/04-network-management/asterisk",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "0dc29c4b98c6e4865ebc667a4f5c6e2c933e10bd0874cf2ac96e2492a88a757e",
+      "content_hash": "97b5eb8456af90e19c3d1a1b64266f19f7c984ca286d1eafed36d4ce3fe2d342",
       "tags": [
         "asterisk"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/04-network-management/asterisk/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/04-network-management/asterisk/.env.example"
     },
     {
       "id": "01-infrastructure-bind9",
@@ -42,14 +42,14 @@
       "description": "BIND 9 provides software for Domain Name System (DNS) management including both defining domain names authoritatively for a given DNS zone, and recursively resolving domain names to their IP addresses...",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/01-infrastructure/bind9/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/01-infrastructure/bind9",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/01-infrastructure/bind9/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/01-infrastructure/bind9",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "923d3dbe36c9debc92194684f9a146b4baedfc72ab643c94059ad3bd1a57a300",
+      "content_hash": "55705c15adf44bf18415b10c8f9428e4ce4f9e2267acac92daf06917d6c94e07",
       "tags": [
         "bind9"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/01-infrastructure/bind9/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/01-infrastructure/bind9/.env.example"
     },
     {
       "id": "03-iot-smart-home-changedetection",
@@ -57,14 +57,14 @@
       "description": "Service de surveillance de pages web qui détecte les modifications de contenu et envoie des notifications. - **changedetection** : Application principale de monitoring",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/03-iot-smart-home/changedetection/docker-compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/03-iot-smart-home/changedetection",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/03-iot-smart-home/changedetection/docker-compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/03-iot-smart-home/changedetection",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/changedetection.webp",
-      "content_hash": "52c9183041b3c30ce99ebfcebee8af2a565a66a6a0344246806227f0e01ddec2",
+      "content_hash": "bdbde636244d5f31493108e3fbbcaa32d6aad5f7a56d8b6898dabbf6b774715f",
       "tags": [
         "changedetection"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/03-iot-smart-home/changedetection/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/03-iot-smart-home/changedetection/.env.example"
     },
     {
       "id": "05-monitoring-reporting-checkmk",
@@ -72,14 +72,14 @@
       "description": "Checkmk is a comprehensive IT monitoring solution that enables you to monitor your entire IT infrastructure: servers, applications, networks, cloud environments, containers, storage, databases, and mo...",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/05-monitoring-reporting/checkmk/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/05-monitoring-reporting/checkmk",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/checkmk/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/05-monitoring-reporting/checkmk",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "fd13015817ce44f1670496d4bb87668d2a684f021c0c9b729849fce0454a8b4c",
+      "content_hash": "62673b1b18b045988bc816a7566ae4214b4c65722112066149fe5027ac27e3d2",
       "tags": [
         "checkmk"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/05-monitoring-reporting/checkmk/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/checkmk/.env.example"
     },
     {
       "id": "11-security-identity-clamav",
@@ -87,14 +87,14 @@
       "description": "Antivirus open-source de référence pour scanner fichiers, emails et uploads. - **Scan de fichiers** : Détection virus, malwares, trojans",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/clamav/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/11-security-identity/clamav",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/clamav/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/11-security-identity/clamav",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "45c552941297f645421d655edbd5afb138ed69052738fb37ddf4a56d93ab6df1",
+      "content_hash": "2deae850df2f87034a48ff97c3e4efe713699ef8ed8eedfb3c881005b185c65e",
       "tags": [
         "clamav"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/clamav/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/clamav/.env.example"
     },
     {
       "id": "02-container-orchestration-coolify",
@@ -102,14 +102,14 @@
       "description": "Coolify is an open-source, self-hostable platform for deploying applications, databases, and services to your own servers. It's designed as an alternative to Vercel, Heroku, Netlify, and Railway. - **...",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/coolify/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/02-container-orchestration/coolify",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/coolify/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/02-container-orchestration/coolify",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/coolify.webp",
-      "content_hash": "c597fb43af9988b46b0112993f734d88058bc451d347aaf1fc05775667d3c787",
+      "content_hash": "f716e7d83fc5f986e98b5c9abb94d0e9f543f13358eb05e2fa0673606ac2c602",
       "tags": [
         "coolify"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/coolify/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/coolify/.env.example"
     },
     {
       "id": "10-databases-databases-couchdb-cluster",
@@ -117,15 +117,15 @@
       "description": "A complete CouchDB cluster setup with 3 nodes, automatic initialization, and a comprehensive management interface. - 🔄 **3-Node Cluster**: Automatic setup with load balancing and replication",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/10-databases/databases/couchdb-cluster/docker-compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/10-databases/databases/couchdb-cluster",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/10-databases/databases/couchdb-cluster/docker-compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/10-databases/databases/couchdb-cluster",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "b4956f74dfe0f62f1cf396686db129d39ad143441e5910f75e660fcf541cfbde",
+      "content_hash": "c6ad405ac16a7910af91d4e2770427944fcba50111f1ad6b357d2c2f78a4eb43",
       "tags": [
-        "couchdb-cluster",
-        "databases"
+        "databases",
+        "couchdb-cluster"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/10-databases/databases/couchdb-cluster/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/10-databases/databases/couchdb-cluster/.env.example"
     },
     {
       "id": "07-automation-scheduling-cronjob",
@@ -133,8 +133,8 @@
       "description": "Docker Compose configuration for Cronjob",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/07-automation/scheduling/cronjob/docker-compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/07-automation/scheduling/cronjob",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/07-automation/scheduling/cronjob/docker-compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/07-automation/scheduling/cronjob",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "aabb88f7074948c60c9312ddd52a48bd6ade0a642b35b08a135b1c56a848e947",
       "tags": [
@@ -148,10 +148,10 @@
       "description": "Docker Compose configuration for Dnsserver",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/01-infrastructure/dnsServer/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/01-infrastructure/dnsServer",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/01-infrastructure/dnsServer/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/01-infrastructure/dnsServer",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "2b8082b14f890c1bc014cf90a788758e11fe04d6dcaa52f6a5cb8b2af094aef5",
+      "content_hash": "6b8c82b6a9058c2bfadbcd3d37d76d429a778459d93d3db55037541cbe947b27",
       "tags": [
         "dnsServer"
       ]
@@ -162,14 +162,14 @@
       "description": "Dokploy is a stable, easy-to-use deployment solution designed to simplify application management. It's a free, self-hostable alternative to platforms like Heroku, Vercel, and Netlify. - **Flexible Dep...",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/dokploy/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/02-container-orchestration/dokploy",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/dokploy/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/02-container-orchestration/dokploy",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "62b90e972e4475fc2640b9848685ff5885a24cf95d7ceeea63da736c465347e7",
+      "content_hash": "668832b58c31f7de8034c5422a40ee2898e639b1c4e34c381e70c256284af4d6",
       "tags": [
         "dokploy"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/dokploy/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/dokploy/.env.example"
     },
     {
       "id": "13-api-gateway-api-gateways-kong",
@@ -177,15 +177,15 @@
       "description": "If you’re running Kong Gateway with a database (either in traditional or hybrid mode), you can enable Kong Gateway’s graphical user interface (GUI), Kong Manager. ```console",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/13-api-gateway/api-gateways/kong/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/13-api-gateway/api-gateways/kong",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/13-api-gateway/api-gateways/kong/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/13-api-gateway/api-gateways/kong",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "9f5bf263d8eb460c7fc2d425c9cf28483997c28f92bdfeb30b4d0cbf67ddf09d",
+      "content_hash": "a6f2eb7e6e2ff189767a2edbb601bf2b1aa5bafacc8fd9c7f81795a99e76d47e",
       "tags": [
         "api-gateways",
         "kong"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/13-api-gateway/api-gateways/kong/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/13-api-gateway/api-gateways/kong/.env.example"
     },
     {
       "id": "15-media-storage-file-sharing",
@@ -193,14 +193,14 @@
       "description": "Self-hosted file sharing platform built with PHP/Laravel and Vue.js. ```bash",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/15-media-storage/file-sharing/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/15-media-storage/file-sharing",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/15-media-storage/file-sharing/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/15-media-storage/file-sharing",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "b0cb9a92dd0c29e2d6bda03e078c906f2b75337e60f58bc4e55287d04b4c0116",
+      "content_hash": "5a28bd2ca294c98cdc55d9b9bc6426012a81b6400455c048989601640ebd0a0b",
       "tags": [
         "file-sharing"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/15-media-storage/file-sharing/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/15-media-storage/file-sharing/.env.example"
     },
     {
       "id": "02-container-orchestration-virtualization-fedora",
@@ -208,15 +208,15 @@
       "description": "Ce projet permet d'exécuter Fedora Workstation dans un conteneur Docker en utilisant l'image [dockurr/fedora](https://github.com/dockur/fedora). - Docker et Docker Compose installés",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/virtualization/fedora/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/02-container-orchestration/virtualization/fedora",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/virtualization/fedora/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/02-container-orchestration/virtualization/fedora",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "3be6fe679e22838de1b4916af6456f6342c314c8fa1f7ceffc930ac9dd96a2ed",
+      "content_hash": "29d100539c0f37003a381733a9d725446c99466cf799fde5e378c371f3573b61",
       "tags": [
         "fedora",
         "virtualization"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/virtualization/fedora/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/virtualization/fedora/.env.example"
     },
     {
       "id": "08-code-management-gitea",
@@ -224,14 +224,14 @@
       "description": "Gitea is a painless, self-hosted, all-in-one software development service. It includes Git hosting, code review, team collaboration, package registry, and CI/CD. Written in Go, it's lightweight, fast,...",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/08-code-management/gitea/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/08-code-management/gitea",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/08-code-management/gitea/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/08-code-management/gitea",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/gitea.webp",
-      "content_hash": "8bb26a840399e6d0c33f2c0eb4a1e1feacadf0c3d0fc0afae01fff519e257f0a",
+      "content_hash": "1aaa606eedaf341071cb8298c5e67cdc573ebf994e4c1e3a24b8055ff0ea7112",
       "tags": [
         "gitea"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/08-code-management/gitea/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/08-code-management/gitea/.env.example"
     },
     {
       "id": "05-monitoring-reporting-observability-monitoring-glances",
@@ -239,16 +239,16 @@
       "description": "Glances est un outil de monitoring système cross-platform écrit en Python. - `compose.yml` : Version standard avec accès direct au docker.sock",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/05-monitoring-reporting/observability/monitoring/glances/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/05-monitoring-reporting/observability/monitoring/glances",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/observability/monitoring/glances/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/05-monitoring-reporting/observability/monitoring/glances",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/glances.webp",
-      "content_hash": "6551d90deb54b07457ca81da474731851395c74066aa97a511043aa5cfdb602f",
+      "content_hash": "24ccef0be6ccffbb5fd34bcfd2b0c5506a3983f107a31b2bc4c16c6cbc6985d5",
       "tags": [
-        "monitoring",
         "glances",
-        "observability"
+        "observability",
+        "monitoring"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/05-monitoring-reporting/observability/monitoring/glances/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/observability/monitoring/glances/.env.example"
     },
     {
       "id": "02-container-orchestration-arcane-projects-glances",
@@ -256,16 +256,16 @@
       "description": "Docker Compose configuration for Glances",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/arcane/projects/glances/compose.yaml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/02-container-orchestration/arcane/projects/glances",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/arcane/projects/glances/compose.yaml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/02-container-orchestration/arcane/projects/glances",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "a42a14995dbf727f4e1301a0c5911f3a6a1ce798a04d0a6fa39bfaf5f6a262bc",
       "tags": [
         "arcane",
-        "glances",
-        "projects"
+        "projects",
+        "glances"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/arcane/projects/glances/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/arcane/projects/glances/.env.example"
     },
     {
       "id": "05-monitoring-reporting-observability-grafana",
@@ -273,15 +273,15 @@
       "description": "Docker Compose configuration for Grafana",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/05-monitoring-reporting/observability/grafana/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/05-monitoring-reporting/observability/grafana",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/observability/grafana/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/05-monitoring-reporting/observability/grafana",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/grafana.webp",
-      "content_hash": "fcf4c8f3ed0702579f8294fddf535f703dd080e5682b76dd3091b1ae7a5b82f4",
+      "content_hash": "275510222386c96456a62d4f54f41b2206acc198cb6b7ea0d35e188b23cfc32c",
       "tags": [
-        "grafana",
-        "observability"
+        "observability",
+        "grafana"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/05-monitoring-reporting/observability/grafana/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/observability/grafana/.env.example"
     },
     {
       "id": "03-iot-smart-home-home-assistant",
@@ -289,14 +289,14 @@
       "description": "Home Assistant is an open-source home automation platform that puts local control and privacy first. This stack includes Zigbee2MQTT for Zigbee device support and Mosquitto as the MQTT broker. | Servi...",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/03-iot-smart-home/home-assistant/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/03-iot-smart-home/home-assistant",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/03-iot-smart-home/home-assistant/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/03-iot-smart-home/home-assistant",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "6dddc8ef27c0219036f7592bcf493b69292c0125e74331c7357b8478efe3b4f6",
+      "content_hash": "d2ad31499588eaef344861ec2d57c875e99889bf6e3d1a3eeeeb6a2c49601b54",
       "tags": [
         "home-assistant"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/03-iot-smart-home/home-assistant/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/03-iot-smart-home/home-assistant/.env.example"
     },
     {
       "id": "16-development-tools-it-tools",
@@ -304,14 +304,14 @@
       "description": "IT-Tools est un projet open source créé par **Corentin Thomasset** (Lyon, France), qui contient de nombreux outils pratiques pour les développeurs et administrateurs système, organisés en plusieurs ca...",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/16-development-tools/it-tools/docker-compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/16-development-tools/it-tools",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/16-development-tools/it-tools/docker-compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/16-development-tools/it-tools",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/it-tools.webp",
       "content_hash": "79a715c18ac5f5c0c22e2e98f5a24a47a1217d69c44eb3de225b1acc90838551",
       "tags": [
         "it-tools"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/16-development-tools/it-tools/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/16-development-tools/it-tools/.env.example"
     },
     {
       "id": "09-app-server-management-content-management-drupal",
@@ -319,15 +319,15 @@
       "description": "composer install docker compose up --build",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/09-app-server-management/content-management/drupal/docker-compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/09-app-server-management/content-management/drupal",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/09-app-server-management/content-management/drupal/docker-compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/09-app-server-management/content-management/drupal",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/drupal.webp",
-      "content_hash": "d1f89775889ea853f31f60c36ef243338ca217b5c90871e4a651fc97160fabb4",
+      "content_hash": "3571ed05b761ccc7398c0c618249432a6e33c418f3ce0e74742e0970faff1dab",
       "tags": [
         "drupal",
         "content-management"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/09-app-server-management/content-management/drupal/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/09-app-server-management/content-management/drupal/.env.example"
     },
     {
       "id": "13-api-gateway-api-gateways-wso2am",
@@ -335,13 +335,13 @@
       "description": "WSO2 API Manager is a complete platform for building, integrating, and exposing your digital services as managed APIs in the cloud, on-premise, and hybrid architectures to drive your digital transform...",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/13-api-gateway/api-gateways/wso2am/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/13-api-gateway/api-gateways/wso2am",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/13-api-gateway/api-gateways/wso2am/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/13-api-gateway/api-gateways/wso2am",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "2b7026356d05c9ef5e096c01129a1e6bc93408c4311d2b073bd9371b7ee4db10",
       "tags": [
-        "api-gateways",
-        "wso2am"
+        "wso2am",
+        "api-gateways"
       ]
     },
     {
@@ -350,15 +350,15 @@
       "description": "Hoppscotch is a lightweight, web-based API development suite. It was built from the ground up with ease of use and accessibility in mind providing all the functionality needed for developers with mini...",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/13-api-gateway/api-tools/hoppscotch/docker-compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/13-api-gateway/api-tools/hoppscotch",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/13-api-gateway/api-tools/hoppscotch/docker-compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/13-api-gateway/api-tools/hoppscotch",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "c5750660cd295d8e718c01303225263dc1f670710491ac86f4ac7653874f7239",
       "tags": [
         "api-tools",
         "hoppscotch"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/13-api-gateway/api-tools/hoppscotch/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/13-api-gateway/api-tools/hoppscotch/.env.example"
     },
     {
       "id": "14-mail-services-mail-servers-docker-mailserver",
@@ -366,8 +366,8 @@
       "description": "A production-ready fullstack but simple containerized mail server (SMTP, IMAP, LDAP, Anti-spam, Anti-virus, etc.). Links:",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/14-mail-services/mail-servers/docker-mailserver/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/14-mail-services/mail-servers/docker-mailserver",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/14-mail-services/mail-servers/docker-mailserver/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/14-mail-services/mail-servers/docker-mailserver",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "4cc9e074084ddcd5a3fd6274c8b962b247671fa345b7ae1f2b069c884328f8df",
       "tags": [
@@ -381,16 +381,16 @@
       "description": "ZITADEL is an open-source identity infrastructure platform. It combines the simplicity of Auth0 with the open-source commitment of Keycloak, providing multi-tenancy, secure login, and self-service fun...",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/identity-providers/auth-managment/zitadel/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/11-security-identity/identity-providers/auth-managment/zitadel",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/identity-providers/auth-managment/zitadel/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/11-security-identity/identity-providers/auth-managment/zitadel",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "fcddf536f659a4d190c25b7f7ab539e633155e288e67f2f20e241942ebaf866f",
+      "content_hash": "13cf797aa6ed2e606396ebf9a71d7ebc462833da1cff16ee8d8e5597b28e7653",
       "tags": [
         "zitadel",
-        "identity-providers",
-        "auth-managment"
+        "auth-managment",
+        "identity-providers"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/identity-providers/auth-managment/zitadel/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/identity-providers/auth-managment/zitadel/.env.example"
     },
     {
       "id": "11-security-identity-identity-providers-auth-managment-super-token",
@@ -398,14 +398,14 @@
       "description": "Supertoken is an alternative to Auth0 / Firebase Auth / AWS Cognito, as we know Auth0 is a great product but it is very costly. I think it is best bet to self-host it and start saving a lot of $. Supe...",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/identity-providers/auth-managment/super-token/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/11-security-identity/identity-providers/auth-managment/super-token",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/identity-providers/auth-managment/super-token/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/11-security-identity/identity-providers/auth-managment/super-token",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "5c62973a58685d8cc3a972e04f741a7ff5e17bc69745c51f5f61c4dbeeaa5894",
+      "content_hash": "9adb4c75f740a5d057ca6498b4c354a2358f406a384fd08e3206ce550bbd0821",
       "tags": [
-        "identity-providers",
+        "super-token",
         "auth-managment",
-        "super-token"
+        "identity-providers"
       ]
     },
     {
@@ -414,13 +414,13 @@
       "description": "Universal data access layer for next-gen apps and AI The fastest and simplest way to build, run, govern, and evolve a high-quality API layer on all your data.",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/13-api-gateway/graphql/hasura/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/13-api-gateway/graphql/hasura",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/13-api-gateway/graphql/hasura/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/13-api-gateway/graphql/hasura",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "48696964bafa416064f83767b530d147af4f977f87ac7eb26df6a5989eba7c78",
+      "content_hash": "5b70039b29da08ffca94168673514078b2d7c04a623188202733f70572f8f200",
       "tags": [
-        "hasura",
-        "graphql"
+        "graphql",
+        "hasura"
       ]
     },
     {
@@ -429,15 +429,15 @@
       "description": "Open Source edition of JFrog Artifactory - a universal artifact repository manager. - Generic artifact repository (Maven, npm, PyPI, etc.)",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/08-code-management/jfrog-artifactory/oss/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/08-code-management/jfrog-artifactory/oss",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/08-code-management/jfrog-artifactory/oss/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/08-code-management/jfrog-artifactory/oss",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "dd10641c75ff8704acda17f450a09b072737264c7d0f76d65d09671cf8e0c8f0",
+      "content_hash": "f922cfc5c3070580b561f053f252b3b54935679f908ebd5f143109efdcc91048",
       "tags": [
-        "jfrog-artifactory",
-        "oss"
+        "oss",
+        "jfrog-artifactory"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/08-code-management/jfrog-artifactory/oss/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/08-code-management/jfrog-artifactory/oss/.env.example"
     },
     {
       "id": "08-code-management-jfrog-artifactory-ce",
@@ -445,15 +445,15 @@
       "description": "JFrog Container Registry - optimized for Docker and Helm chart management.",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/08-code-management/jfrog-artifactory/ce/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/08-code-management/jfrog-artifactory/ce",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/08-code-management/jfrog-artifactory/ce/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/08-code-management/jfrog-artifactory/ce",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "0af4385838ff5bf1de09b5c7d9a3adea98505498fb806befff01b99ee42ffe92",
+      "content_hash": "e464cd53d668b37654f264a85c3922c49c357f34582255929595164a6472b18d",
       "tags": [
         "jfrog-artifactory",
         "ce"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/08-code-management/jfrog-artifactory/ce/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/08-code-management/jfrog-artifactory/ce/.env.example"
     },
     {
       "id": "08-code-management-jfrog-artifactory-minio",
@@ -461,15 +461,15 @@
       "description": "JFrog Container Registry with MinIO available for future S3-compatible storage integration. - Docker Registry v2 compatible",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/08-code-management/jfrog-artifactory/minio/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/08-code-management/jfrog-artifactory/minio",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/08-code-management/jfrog-artifactory/minio/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/08-code-management/jfrog-artifactory/minio",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "0044b6771dcf8279a29c9731f94449bc31abf0867514fe4480483d333f75060c",
+      "content_hash": "04bec4282f68b397838ce85c8e8f9fda73fd638f1bae32cbb49a8b1defc21528",
       "tags": [
         "minio",
         "jfrog-artifactory"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/08-code-management/jfrog-artifactory/minio/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/08-code-management/jfrog-artifactory/minio/.env.example"
     },
     {
       "id": "07-automation-ci-cd-jenkins",
@@ -477,15 +477,15 @@
       "description": "Docker Compose configuration for Jenkins",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/07-automation/ci-cd/jenkins/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/07-automation/ci-cd/jenkins",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/07-automation/ci-cd/jenkins/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/07-automation/ci-cd/jenkins",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/jenkins.webp",
-      "content_hash": "9dc1c48f6d72c96967b893bf97250fe36f1e9fd57ec153cffb878e5b7a886efd",
+      "content_hash": "6aa4923f3274c90ae45db82b4ca557951f729b850e919461d90c00b27475d36d",
       "tags": [
         "jenkins",
         "ci-cd"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/07-automation/ci-cd/jenkins/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/07-automation/ci-cd/jenkins/.env.example"
     },
     {
       "id": "17-data-processing-kafka-logstash",
@@ -493,14 +493,14 @@
       "description": "Ce projet déploie une infrastructure Kafka complète avec Logstash pour le traitement en temps réel des données EmotiBit. ```",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/17-data-processing/kafka-logstash/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/17-data-processing/kafka-logstash",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/17-data-processing/kafka-logstash/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/17-data-processing/kafka-logstash",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "8963df3c78b527394e82fc0cfe4b6a4a3d75af781e328e2989ae31bc60bfa965",
       "tags": [
         "kafka-logstash"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/17-data-processing/kafka-logstash/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/17-data-processing/kafka-logstash/.env.example"
     },
     {
       "id": "11-security-identity-identity-providers-auth-managment-keycloak",
@@ -508,16 +508,16 @@
       "description": "Production-ready Keycloak (v24) with PostgreSQL, custom themes, realm auto-import, and user profile initialization. ```bash",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/identity-providers/auth-managment/keycloak/docker-compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/11-security-identity/identity-providers/auth-managment/keycloak",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/identity-providers/auth-managment/keycloak/docker-compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/11-security-identity/identity-providers/auth-managment/keycloak",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "5bc44ed2015b238b873296d6c925175bb7e975c2f2c77f7fe2b93f9ebccca52d",
+      "content_hash": "82f52f772a07cf4bae7f20c01260de5e774fb1e01c7507dcdfc988f54270e776",
       "tags": [
-        "identity-providers",
         "keycloak",
-        "auth-managment"
+        "auth-managment",
+        "identity-providers"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/identity-providers/auth-managment/keycloak/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/identity-providers/auth-managment/keycloak/.env.example"
     },
     {
       "id": "14-mail-services-mail-servers-mailcatcher",
@@ -525,13 +525,13 @@
       "description": "Docker Compose configuration for Mailcatcher",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/14-mail-services/mail-servers/mailcatcher/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/14-mail-services/mail-servers/mailcatcher",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/14-mail-services/mail-servers/mailcatcher/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/14-mail-services/mail-servers/mailcatcher",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "27a8d8fbb8dd5db78c4320f3b09e7ae0b2a34752059b572f540541be4a944072",
       "tags": [
-        "mail-servers",
-        "mailcatcher"
+        "mailcatcher",
+        "mail-servers"
       ]
     },
     {
@@ -540,15 +540,15 @@
       "description": "Mailpit is a lightweight, fast email testing tool for developers. It captures all outgoing emails and provides a modern web interface to view them. It's a modern replacement for MailHog with better pe...",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/14-mail-services/mail-servers/mailpit/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/14-mail-services/mail-servers/mailpit",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/14-mail-services/mail-servers/mailpit/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/14-mail-services/mail-servers/mailpit",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "4f30c9c3670a2ab8a7e641d91c320baecf7f281522d8a50fe6293a5996882b74",
       "tags": [
-        "mailpit",
-        "mail-servers"
+        "mail-servers",
+        "mailpit"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/14-mail-services/mail-servers/mailpit/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/14-mail-services/mail-servers/mailpit/.env.example"
     },
     {
       "id": "15-media-storage-object-storage-minio-s3",
@@ -556,15 +556,15 @@
       "description": "Docker Compose configuration for Minio S3",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/15-media-storage/object-storage/minio-s3/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/15-media-storage/object-storage/minio-s3",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/15-media-storage/object-storage/minio-s3/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/15-media-storage/object-storage/minio-s3",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/minio.webp",
-      "content_hash": "885d937a3ab71ce3c54e7d2a8a970aa20fe0c75e8e29899599837ad3b4ee6ff3",
+      "content_hash": "5f4e9583ffaf00309f69a0e03390594626902d2cdff22a8f41a14ea3b4ae8fd2",
       "tags": [
         "object-storage",
         "minio-s3"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/15-media-storage/object-storage/minio-s3/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/15-media-storage/object-storage/minio-s3/.env.example"
     },
     {
       "id": "11-security-identity-security-tools-security-neuvector",
@@ -572,16 +572,16 @@
       "description": "NeuVector is an open-source, full lifecycle container security platform. It provides runtime protection, network visibility, compliance, and vulnerability scanning for containers. ```bash",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/security-tools/security/neuvector/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/11-security-identity/security-tools/security/neuvector",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/security-tools/security/neuvector/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/11-security-identity/security-tools/security/neuvector",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "2bcd1b42c59f7bbac6539b58fc28c9a39c8639644303cda6821970ad83502733",
       "tags": [
+        "security-tools",
         "security",
-        "neuvector",
-        "security-tools"
+        "neuvector"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/security-tools/security/neuvector/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/security-tools/security/neuvector/.env.example"
     },
     {
       "id": "01-infrastructure-nginx-certbot",
@@ -589,14 +589,14 @@
       "description": "Reverse proxy Nginx avec gestion automatique des certificats SSL via Certbot/Let's Encrypt. Éditer les fichiers de configuration :",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/01-infrastructure/nginx-certbot/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/01-infrastructure/nginx-certbot",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/01-infrastructure/nginx-certbot/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/01-infrastructure/nginx-certbot",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "2ca9fc480d6b07692931f1e065522ee205aee44431d4f36960d9429a4e20b913",
+      "content_hash": "1e1376e6a55407579b6a13e27e47e80cd8ede2b292eb1657a8f82cfe3d51689d",
       "tags": [
         "nginx-certbot"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/01-infrastructure/nginx-certbot/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/01-infrastructure/nginx-certbot/.env.example"
     },
     {
       "id": "13-api-gateway-api-gateways-nginx-proxy-manager",
@@ -604,8 +604,8 @@
       "description": "When your docker container is running, connect to it on port 81 for the admin interface. Sometimes this can take a little bit because of the entropy of keys. http://127.0.0.1:81",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/13-api-gateway/api-gateways/nginx-proxy-manager/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/13-api-gateway/api-gateways/nginx-proxy-manager",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/13-api-gateway/api-gateways/nginx-proxy-manager/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/13-api-gateway/api-gateways/nginx-proxy-manager",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "ed2561fd75a0380865c132cd70ba691bb84cd8e566d35fc7ee57fcde889d529f",
       "tags": [
@@ -619,15 +619,15 @@
       "description": "Novu is a comprehensive notification infrastructure platform that provides a unified API for managing multi-channel notifications including Email, SMS, Push, Chat, and In-App notifications. - **Multi-...",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/18-communication/notification/novu/docker-compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/18-communication/notification/novu",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/18-communication/notification/novu/docker-compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/18-communication/notification/novu",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "3a4ff84c20afb86210d383d415c04755b3847150e0d22f0c21f3c831b4992bb0",
+      "content_hash": "d44fc682a52be8caa0bf2d9f6cc98f30c614f6564672a03c37e7cb84e882a0b4",
       "tags": [
-        "notification",
-        "novu"
+        "novu",
+        "notification"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/18-communication/notification/novu/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/18-communication/notification/novu/.env.example"
     },
     {
       "id": "09-app-server-management-business-apps-odoo-erp",
@@ -635,15 +635,30 @@
       "description": "Docker Compose configuration for Odoo Erp",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/09-app-server-management/business-apps/odoo-erp/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/09-app-server-management/business-apps/odoo-erp",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/09-app-server-management/business-apps/odoo-erp/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/09-app-server-management/business-apps/odoo-erp",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/odoo.webp",
-      "content_hash": "da4abf59d0b94fe38cd9d9199b08adffdc6c0cf6f5f015d87e16754764ea6ec3",
+      "content_hash": "a39c3f519e0900b8443ee06137887177131523087553ceb8a172292505c60107",
       "tags": [
         "odoo-erp",
         "business-apps"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/09-app-server-management/business-apps/odoo-erp/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/09-app-server-management/business-apps/odoo-erp/.env.example"
+    },
+    {
+      "id": "06-ai-open-webui",
+      "name": "Open WebUI",
+      "description": "Open WebUI is an extensible, feature-rich, and user-friendly self-hosted WebUI designed to operate entirely offline. It supports various LLM runners, including Ollama and OpenAI-compatible APIs. In th...",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/06-ai/open-webui/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/06-ai/open-webui",
+      "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
+      "content_hash": "5fef6f3650ea3ffbe59bc14d5c044e02691f9bddf7b038ff4e9038084240271c",
+      "tags": [
+        "open-webui"
+      ],
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/06-ai/open-webui/.env.example"
     },
     {
       "id": "12-document-management-paperless-ngx",
@@ -651,14 +666,14 @@
       "description": "Paperless-ngx is a document management system that transforms physical documents into a searchable online archive. - OCR processing for scanned documents",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/12-document-management/paperless-ngx/docker-compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/12-document-management/paperless-ngx",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/12-document-management/paperless-ngx/docker-compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/12-document-management/paperless-ngx",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/paperless-ngx.webp",
-      "content_hash": "ed0e5b1751ca7fe357aa2304412092ddd2a5b57d0da1da3575ffad0466bf721d",
+      "content_hash": "c1d5abc79412a9ca42fead6f68d6da4bbba18b4d2bcb33af1692157bbc4ebb0c",
       "tags": [
         "paperless-ngx"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/12-document-management/paperless-ngx/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/12-document-management/paperless-ngx/.env.example"
     },
     {
       "id": "11-security-identity-identity-providers-auth-managment-passbolt",
@@ -666,16 +681,16 @@
       "description": "Docker Compose configuration for Passbolt",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/identity-providers/auth-managment/passbolt/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/11-security-identity/identity-providers/auth-managment/passbolt",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/identity-providers/auth-managment/passbolt/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/11-security-identity/identity-providers/auth-managment/passbolt",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "61c222065ed70f361e52e73fa4e9eac0eb8e179427d91ffd2132c1d0b18b892d",
+      "content_hash": "0af31b69601ada10736ed45065df3cef4287085f790765f8e5693558f0a52337",
       "tags": [
-        "identity-providers",
         "passbolt",
-        "auth-managment"
+        "auth-managment",
+        "identity-providers"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/identity-providers/auth-managment/passbolt/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/identity-providers/auth-managment/passbolt/.env.example"
     },
     {
       "id": "02-container-orchestration-portainer",
@@ -683,14 +698,14 @@
       "description": "Docker Compose configuration for Portainer",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/portainer/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/02-container-orchestration/portainer",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/portainer/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/02-container-orchestration/portainer",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/portainer.webp",
-      "content_hash": "2f10cc82376ff97e9575ea5e453328aefa4db0c005e63331c157dded55538875",
+      "content_hash": "86595c1a49f90579cf93aeca4dd3b3b8428a368d4220c857733ba1806850bf11",
       "tags": [
         "portainer"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/portainer/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/portainer/.env.example"
     },
     {
       "id": "10-databases-databases-postgres",
@@ -698,15 +713,15 @@
       "description": "A production-ready PostgreSQL setup with automated backup system using Ofelia scheduler, pgAdmin web interface, and comprehensive management tools. - **PostgreSQL 16 Alpine**: Lightweight, latest stab...",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/10-databases/databases/postgres/docker-compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/10-databases/databases/postgres",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/10-databases/databases/postgres/docker-compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/10-databases/databases/postgres",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "b71faaa687bdaf965937af56352b0d1ec68255fb6f54a21cb15034423d272ae4",
+      "content_hash": "085388b95104141e496d24a7d65f40ce493097800c7c99743531f1a20c8670ab",
       "tags": [
         "databases",
         "postgres"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/10-databases/databases/postgres/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/10-databases/databases/postgres/.env.example"
     },
     {
       "id": "08-code-management-docker-registry",
@@ -714,8 +729,8 @@
       "description": "After you pull or build an image: ```console",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/08-code-management/docker-registry/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/08-code-management/docker-registry",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/08-code-management/docker-registry/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/08-code-management/docker-registry",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "ab362bed3ee737b59de11d275032dac11c742efa876671968083c59222f09608",
       "tags": [
@@ -728,15 +743,15 @@
       "description": "Docker Compose configuration for Redis",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/10-databases/databases/redis/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/10-databases/databases/redis",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/10-databases/databases/redis/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/10-databases/databases/redis",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "f5be0aa125c2956f3fb9b333d7beeb38b1b499dd22aca2a91b947537348636fc",
+      "content_hash": "22572bd2165e3d53112027cdeb9f8f196f84e378e230427cc26b9d4abd255eab",
       "tags": [
-        "redis",
-        "databases"
+        "databases",
+        "redis"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/10-databases/databases/redis/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/10-databases/databases/redis/.env.example"
     },
     {
       "id": "11-security-identity-security-tools-ssl-certificates",
@@ -744,15 +759,15 @@
       "description": "Outils Docker pour générer des certificats SSL de développement. Trois approches complémentaires : - **mkcert** : Certificats de développement approuvés localement (pas d'avertissement navigateur) — *...",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/security-tools/ssl-certificates/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/11-security-identity/security-tools/ssl-certificates",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/security-tools/ssl-certificates/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/11-security-identity/security-tools/ssl-certificates",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "b6574b3617f534d335038f8ba25ce9ef86ca857be2b9e765289f7a48c81d078a",
       "tags": [
-        "ssl-certificates",
-        "security-tools"
+        "security-tools",
+        "ssl-certificates"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/security-tools/ssl-certificates/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/security-tools/ssl-certificates/.env.example"
     },
     {
       "id": "05-monitoring-reporting-code-quality-sonarcube",
@@ -760,15 +775,15 @@
       "description": "Static code analysis with SonarQube using Docker Compose. ```bash",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/05-monitoring-reporting/code-quality/sonarcube/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/05-monitoring-reporting/code-quality/sonarcube",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/code-quality/sonarcube/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/05-monitoring-reporting/code-quality/sonarcube",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/sonarqube.webp",
-      "content_hash": "c19bb8b0a24bc92b650406ee3961e54bc0151025faae61b1e933c091dfd5e957",
+      "content_hash": "464432d1ac986bcc4f6897a350cd3b5c461a769f9da474f2f66c6c9f143db41f",
       "tags": [
         "sonarcube",
         "code-quality"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/05-monitoring-reporting/code-quality/sonarcube/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/code-quality/sonarcube/.env.example"
     },
     {
       "id": "15-media-storage-static-files-statics-files-server",
@@ -776,15 +791,15 @@
       "description": "Docker Compose configuration for Statics Files Server",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/15-media-storage/static-files/statics-files-server/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/15-media-storage/static-files/statics-files-server",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/15-media-storage/static-files/statics-files-server/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/15-media-storage/static-files/statics-files-server",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "f53a8abb742fd20fee8ec9d74b89f8e1ac7fc804c6333265ecb19db5488130c2",
+      "content_hash": "9fbab9a9e97f65fc9ad066186c1570168273f549522d776d79fc51ca3de56988",
       "tags": [
-        "statics-files-server",
-        "static-files"
+        "static-files",
+        "statics-files-server"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/15-media-storage/static-files/statics-files-server/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/15-media-storage/static-files/statics-files-server/.env.example"
     },
     {
       "id": "01-infrastructure-traefik",
@@ -792,14 +807,14 @@
       "description": "Traefik is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy. ```bash",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/01-infrastructure/traefik/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/01-infrastructure/traefik",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/01-infrastructure/traefik/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/01-infrastructure/traefik",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "ad31024fd7219d162cefaeccba78b34e8cc430dd4974a7cf3fe71f64babf73e9",
+      "content_hash": "1675154cb14e82faa5f75fe982374cad919a42b2976e568728c6cea37460fb15",
       "tags": [
         "traefik"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/01-infrastructure/traefik/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/01-infrastructure/traefik/.env.example"
     },
     {
       "id": "13-api-gateway-api-gateways-tyk",
@@ -807,13 +822,13 @@
       "description": "Docker Compose configuration for Tyk",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/13-api-gateway/api-gateways/tyk/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/13-api-gateway/api-gateways/tyk",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/13-api-gateway/api-gateways/tyk/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/13-api-gateway/api-gateways/tyk",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "22ab50651850492f78ea18d07ad031a40d95137c69f2b56176682506627bd6f2",
+      "content_hash": "6fc16d0a94e642ed9a6e4a1d3d1ee99b36eab9929abc693a03f5fff67aa7e939",
       "tags": [
-        "api-gateways",
-        "tyk"
+        "tyk",
+        "api-gateways"
       ]
     },
     {
@@ -822,15 +837,15 @@
       "description": "Ce projet permet d'exécuter Ubuntu Desktop dans un conteneur Docker en utilisant l'image [dockurr/ubuntu](https://github.com/dockur/ubuntu). - Docker et Docker Compose installés",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/virtualization/ubuntu/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/02-container-orchestration/virtualization/ubuntu",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/virtualization/ubuntu/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/02-container-orchestration/virtualization/ubuntu",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "0a496ee6e18792c7f5ce477c674612489bf7c94a51ed3947f2291698292a26a0",
+      "content_hash": "a5b97a79b59bf74304a802d3a10621d52eefb0bddd0fe2524e3d9acad96e0f88",
       "tags": [
         "ubuntu",
         "virtualization"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/virtualization/ubuntu/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/virtualization/ubuntu/.env.example"
     },
     {
       "id": "05-monitoring-reporting-uptime-kuma",
@@ -838,14 +853,14 @@
       "description": "Uptime Kuma is a fancy self-hosted monitoring tool. It's a lightweight, open-source alternative to services like Pingdom, StatusCake, and UptimeRobot. - **Multiple Monitor Types**: HTTP(S), TCP, Ping,...",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/05-monitoring-reporting/uptime-kuma/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/05-monitoring-reporting/uptime-kuma",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/uptime-kuma/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/05-monitoring-reporting/uptime-kuma",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/uptime-kuma.webp",
-      "content_hash": "2e5af3a1f06f1b307dca25492f448596b39a07a97ccc2a5552a51fed763f9241",
+      "content_hash": "00c30c819f6ed25d244aa3706b5a0747691ab5f9b5fc935dcca6a035f1661735",
       "tags": [
         "uptime-kuma"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/05-monitoring-reporting/uptime-kuma/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/uptime-kuma/.env.example"
     },
     {
       "id": "11-security-identity-wazuh",
@@ -853,14 +868,14 @@
       "description": "Plateforme de sécurité unifiée : SIEM, XDR, détection d'intrusion, conformité. | Catégorie | Description |",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/wazuh/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/11-security-identity/wazuh",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/wazuh/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/11-security-identity/wazuh",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "705c553bfa98ac3e7853ef980e21641dd26b33895ffd7f5dac1f2bb2eac8146c",
+      "content_hash": "282193171cc76590dfc1774825ced4075c4003d1781520172c86cee78bb2b11b",
       "tags": [
         "wazuh"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/11-security-identity/wazuh/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/wazuh/.env.example"
     },
     {
       "id": "02-container-orchestration-virtualization-windows-11",
@@ -868,15 +883,15 @@
       "description": "Ce projet permet d'exécuter Windows 11 dans un conteneur Docker en utilisant l'image [dockurr/windows](https://github.com/dockur/windows). - Docker et Docker Compose installés",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/virtualization/windows-11/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/02-container-orchestration/virtualization/windows-11",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/virtualization/windows-11/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/02-container-orchestration/virtualization/windows-11",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "63613d5f76d1774619767510a7329001a160648132b0a94601625895744e699c",
+      "content_hash": "055cb39f384e55d9b3fda65aafb1ce79f3540b5ea6bc3f007ed63c3505401141",
       "tags": [
         "windows-11",
         "virtualization"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/virtualization/windows-11/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/virtualization/windows-11/.env.example"
     },
     {
       "id": "09-app-server-management-content-management-mysql-wordpress",
@@ -884,15 +899,15 @@
       "description": "A complete WordPress development environment with MySQL database, PHPMyAdmin, and automated backup system using Ofelia scheduler. - **WordPress**: Latest version with persistent storage",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/09-app-server-management/content-management/mysql-wordpress/docker-compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/09-app-server-management/content-management/mysql-wordpress",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/09-app-server-management/content-management/mysql-wordpress/docker-compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/09-app-server-management/content-management/mysql-wordpress",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/wordpress.webp",
-      "content_hash": "4a51387aaee385d6f0011ebf385c2b11e3580ef02e57a0cb447000f5176ec577",
+      "content_hash": "1f16bfd1c5ad69d61e40d2319f25d5081b166d1bf6e64b5a41782ee1ef2d5931",
       "tags": [
-        "mysql-wordpress",
-        "content-management"
+        "content-management",
+        "mysql-wordpress"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/09-app-server-management/content-management/mysql-wordpress/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/09-app-server-management/content-management/mysql-wordpress/.env.example"
     },
     {
       "id": "15-media-storage-object-storage-using-s3fs-volume",
@@ -900,13 +915,13 @@
       "description": "1. Install s3fs and NFS Server: Ensure s3fs and the NFS server are installed on your host machine.",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/15-media-storage/object-storage/using-s3fs-volume/docker-compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/15-media-storage/object-storage/using-s3fs-volume",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/15-media-storage/object-storage/using-s3fs-volume/docker-compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/15-media-storage/object-storage/using-s3fs-volume",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "2e5a87d634abc87ce8317fe08e555d2866376e7a0522cacac14e38543323bed4",
+      "content_hash": "557dcafb1278ff9a164a5f70c4b83d5975bdf111cefff0460ce3bb830c047430",
       "tags": [
-        "object-storage",
-        "using-s3fs-volume"
+        "using-s3fs-volume",
+        "object-storage"
       ]
     },
     {
@@ -915,15 +930,15 @@
       "description": "Ce projet permet d'exécuter macOS dans un conteneur Docker en utilisant l'image [dockurr/macos](https://github.com/dockur/macos). - Docker et Docker Compose installés",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/virtualization/macos/compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/02-container-orchestration/virtualization/macos",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/virtualization/macos/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/02-container-orchestration/virtualization/macos",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "a2173bc71b2441f6ae7aefabb46eec1f7db8db21c1b3d13f7c38c6aca09f27f4",
+      "content_hash": "906397ecaa2090a921df62d1baec718e9ec5cb2257ff2762d6437063a16690f1",
       "tags": [
         "macos",
         "virtualization"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/02-container-orchestration/virtualization/macos/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/virtualization/macos/.env.example"
     },
     {
       "id": "07-automation-workflow-n8n",
@@ -931,15 +946,15 @@
       "description": "A production-ready n8n setup with PostgreSQL database backend, featuring automated setup, backup capabilities, and comprehensive management tools. - 🚀 **Easy Setup**: One-command deployment with sensi...",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/07-automation/workflow/n8n/docker-compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/07-automation/workflow/n8n",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/07-automation/workflow/n8n/docker-compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/07-automation/workflow/n8n",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/n8n.webp",
-      "content_hash": "6b178730aae36d0ae5a18fc732f7153c7e7f6c6c3a9de1f1d718c5baa6aea31d",
+      "content_hash": "909be77327c0dce4e4d5e657d09f3ddd304d72773a90fbb34165bd1105330f10",
       "tags": [
         "n8n",
         "workflow"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/07-automation/workflow/n8n/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/07-automation/workflow/n8n/.env.example"
     },
     {
       "id": "18-communication-notification-ntfy",
@@ -947,15 +962,15 @@
       "description": "A simple HTTP-based pub-sub notification service that allows you to send notifications to your phone or desktop via scripts from any computer. - Simple HTTP API for sending notifications",
       "version": "1.0.0",
       "author": "nkaurelien",
-      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/18-communication/notification/ntfy/docker-compose.yml",
-      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/18-communication/notification/ntfy",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/18-communication/notification/ntfy/docker-compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/18-communication/notification/ntfy",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "fa57d2552a46396158675f6092f8ca75c342f5acc3ea8a1b898bf5454b9a9830",
+      "content_hash": "050b530808919849039857a8b8a8ef8d5a3a6e57f6ffc3203cfe3f886c285888",
       "tags": [
-        "notification",
-        "ntfy"
+        "ntfy",
+        "notification"
       ],
-      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/18-communication/notification/ntfy/.env.example"
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/18-communication/notification/ntfy/.env.example"
     }
   ]
 }

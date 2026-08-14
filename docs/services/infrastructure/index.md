@@ -6,9 +6,9 @@ Core infrastructure services for networking, reverse proxy, SSL/TLS management, 
 
 | Service | Description | Path |
 |---------|-------------|------|
-| [Traefik](../api-management/traefik/index.md) | Modern reverse proxy and load balancer | `01-infrastructure/traefik/` |
-| [Bind9](bind9.md) | DNS server for local domain resolution | `01-infrastructure/bind9/` |
-| [Nginx + Certbot](../api-management/nginx-certbot.md) | Nginx with Let's Encrypt SSL | `01-infrastructure/nginx-certbot/` |
+| [Traefik](../api-management/traefik/index.md) | Modern reverse proxy and load balancer | `compose/01-infrastructure/traefik/` |
+| [Bind9](bind9.md) | DNS server for local domain resolution | `compose/01-infrastructure/bind9/` |
+| [Nginx + Certbot](../api-management/nginx-certbot.md) | Nginx with Let's Encrypt SSL | `compose/01-infrastructure/nginx-certbot/` |
 
 ## Network Architecture
 

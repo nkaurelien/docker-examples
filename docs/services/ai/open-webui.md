@@ -7,7 +7,7 @@ Open WebUI is a user-friendly, feature-rich web interface for interacting with L
 To deploy Open WebUI locally, navigate to its directory and run:
 
 ```bash
-cd 06-ai/open-webui/
+cd compose/06-ai/open-webui/
 docker compose up -d
 ```
 
@@ -39,7 +39,7 @@ If port `11434` is private, you can automate this using the provided `make` comm
    ```
    This copies the template and sets `OLLAMA_BASE_URL` to `http://host.docker.internal:11434`.
 
-2. **Configure your secrets**: Edit `06-ai/open-webui/.env` (which is git-ignored and safe) and add your server details:
+2. **Configure your secrets**: Edit `compose/06-ai/open-webui/.env` (which is git-ignored and safe) and add your server details:
    ```env
    OLLAMA_SSH_HOST=<your-remote-server-ip>
    OLLAMA_SSH_PORT=<ssh-port>
