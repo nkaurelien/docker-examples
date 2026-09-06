@@ -1,0 +1,13 @@
+---
+# Glances role defaults
+glances_version: "latest-full"
+glances_image: "nicolargo/glances:{{ glances_version }}"
+glances_port: 61208
+glances_domain: "{{ traefik_domain | default('kamitbrains.fr') }}"
+glances_hostname: "glances.{{ glances_domain }}"
+glances_timezone: "Europe/Paris"
+glances_compose_dir: "/opt/glances"
+glances_cpu_limit: "0.5"
+glances_memory_limit: "256M"
+glances_cpu_reservation: "0.1"
+glances_memory_reservation: "64M"
