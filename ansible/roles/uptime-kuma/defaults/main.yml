@@ -1,6 +1,6 @@
 ---
 # Uptime Kuma role defaults
-uptime_kuma_version: "latest"
+uptime_kuma_version: "2.5.3"
 uptime_kuma_image: "louislam/uptime-kuma:{{ uptime_kuma_version }}"
 uptime_kuma_port: 3001
 uptime_kuma_domain: "{{ traefik_domain | default('kamitbrains.fr') }}"
