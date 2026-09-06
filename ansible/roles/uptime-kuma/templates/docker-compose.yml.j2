@@ -55,26 +55,29 @@ services:
         until [ -f /app/data/kuma.db ]; do sleep 1; done
         apk add --no-cache -q sqlite
         
-        # Seed core infrastructure monitors with user_id = 1
-        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (1, 'Traefik Proxy', 1, 1, 'https://traefik.{{ traefik_domain | default('kamitbrains.fr') }}/dashboard/', 'http', 'GET', 60, 'Edge Reverse Proxy Dashboard');"
-        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (2, 'Glances Monitoring', 1, 1, 'https://glances.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, 'System & Container Resource Monitoring');"
-        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (3, 'Arcane PaaS Manager', 1, 1, 'https://arcane.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, 'Docker Container Management Dashboard');"
-        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, url, type, method, interval, description) VALUES (4, 'Uptime Kuma Status', 1, 1, 'https://status.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, 'Uptime & Service Health Monitor');"
+        # Seed core infrastructure monitors with user_id = 1 and Basic Auth credentials (auth_method = 'basic')
+        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, basic_auth_user, basic_auth_pass, auth_method, description) VALUES (1, 'Traefik Proxy', 1, 1, 'https://traefik.{{ traefik_domain | default('kamitbrains.fr') }}/dashboard/', 'http', 'GET', 60, '{{ uptime_kuma_traefik_auth_user }}', '{{ uptime_kuma_traefik_auth_pass }}', 'basic', 'Edge Reverse Proxy Dashboard');"
+        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, basic_auth_user, basic_auth_pass, auth_method, description) VALUES (2, 'Glances Monitoring', 1, 1, 'https://glances.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, '{{ uptime_kuma_glances_auth_user }}', '{{ uptime_kuma_glances_auth_pass }}', 'basic', 'System & Container Resource Monitoring');"
+        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (3, 'Arcane PaaS Manager', 1, 1, 'https://arcane.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, NULL, NULL, 'Docker Container Management Dashboard');"
+        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (4, 'Uptime Kuma Status', 1, 1, 'https://status.{{ traefik_domain | default('kamitbrains.fr') }}/dashboard', 'http', 'GET', 60, NULL, NULL, 'Uptime & Service Health Monitor');"
 
-        # Ensure user_id is set to 1 for all monitors
+        # Update basic auth credentials on existing monitors
+        sqlite3 /app/data/kuma.db "UPDATE monitor SET basic_auth_user = '{{ uptime_kuma_traefik_auth_user }}', basic_auth_pass = '{{ uptime_kuma_traefik_auth_pass }}', auth_method = 'basic', user_id = 1 WHERE id = 1;"
+        sqlite3 /app/data/kuma.db "UPDATE monitor SET basic_auth_user = '{{ uptime_kuma_glances_auth_user }}', basic_auth_pass = '{{ uptime_kuma_glances_auth_pass }}', auth_method = 'basic', user_id = 1 WHERE id = 2;"
+        sqlite3 /app/data/kuma.db "UPDATE monitor SET url = 'https://status.{{ traefik_domain | default('kamitbrains.fr') }}/dashboard' WHERE id = 4;"
         sqlite3 /app/data/kuma.db "UPDATE monitor SET user_id = 1 WHERE user_id IS NULL;"
 
         # Seed default public status page
         sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO status_page (id, slug, title, description, icon, theme, published) VALUES (1, 'default', '{{ traefik_domain | default('kamitbrains.fr') }} Infrastructure Status', 'Real-time status monitor for core services', '/icon.svg', 'auto', 1);"
         sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO \`group\` (id, name, public, active, status_page_id, weight) VALUES (1, 'Core Infrastructure', 1, 1, 1, 1);"
         
-        # Associate monitors with status page group
-        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor_group (monitor_id, group_id, weight) VALUES (1, 1, 1);"
-        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor_group (monitor_id, group_id, weight) VALUES (2, 1, 2);"
-        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor_group (monitor_id, group_id, weight) VALUES (3, 1, 3);"
-        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor_group (monitor_id, group_id, weight) VALUES (4, 1, 4);"
+        # Associate monitors with status page group (idempotent check)
+        sqlite3 /app/data/kuma.db "INSERT INTO monitor_group (monitor_id, group_id, weight) SELECT 1, 1, 1 WHERE NOT EXISTS (SELECT 1 FROM monitor_group WHERE monitor_id = 1 AND group_id = 1);"
+        sqlite3 /app/data/kuma.db "INSERT INTO monitor_group (monitor_id, group_id, weight) SELECT 2, 1, 2 WHERE NOT EXISTS (SELECT 1 FROM monitor_group WHERE monitor_id = 2 AND group_id = 1);"
+        sqlite3 /app/data/kuma.db "INSERT INTO monitor_group (monitor_id, group_id, weight) SELECT 3, 1, 3 WHERE NOT EXISTS (SELECT 1 FROM monitor_group WHERE monitor_id = 3 AND group_id = 1);"
+        sqlite3 /app/data/kuma.db "INSERT INTO monitor_group (monitor_id, group_id, weight) SELECT 4, 1, 4 WHERE NOT EXISTS (SELECT 1 FROM monitor_group WHERE monitor_id = 4 AND group_id = 1);"
 
-        echo "Uptime Kuma monitors and public status page seeded successfully!"
+        echo "Uptime Kuma monitors, Basic Auth, and public status page seeded successfully!"
     depends_on:
       - uptime-kuma
     restart: "no"
