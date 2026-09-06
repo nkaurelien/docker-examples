@@ -101,6 +101,8 @@ nav:
   - Infrastructure:
       - Overview: services/infrastructure/index.md
       - Bind9 DNS: services/infrastructure/bind9.md
+      - Ansible Automation: services/infrastructure/ansible.md
+      - Cloudflare DNS CLI: services/infrastructure/cloudflare-dns.md
 
   - Orchestration:
       - Overview: services/orchestration/index.md
