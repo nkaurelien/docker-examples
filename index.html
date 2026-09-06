@@ -5034,25 +5034,32 @@
 </ul>
 <h2 id="structure-du-repository">Structure du Repository<a class="headerlink" href="#structure-du-repository" title="Permanent link">&para;</a></h2>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker-examples/
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── compose/01-infrastructure/        # DNS, réseau de base
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>├── compose/02-container-orchestration/  # Portainer, Rancher, Coolify, K8s tools
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>├── compose/03-iot-smart-home/        # Home Assistant, Zigbee
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>├── compose/04-network-management/    # Asterisk VoIP
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>├── compose/05-monitoring-reporting/  # Glances, Checkmk, Uptime Kuma
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>├── compose/06-ai/                    # AI/ML platforms
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>├── compose/07-automation/            # Workflow automation
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>├── compose/08-code-management/       # Gitea, GitLab
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>├── compose/09-app-server-management/ # CMS, ERP
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>├── compose/10-databases/             # PostgreSQL, CouchDB
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>├── compose/11-security-identity/     # Keycloak, Zitadel
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>├── compose/12-document-management/   # Paperless, DMS
-</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>├── compose/13-api-gateway/           # Traefik, Kong, Hasura
-</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>├── compose/14-mail-services/         # Mailpit, Docker Mailserver
-</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>├── compose/15-media-storage/         # MinIO, file sharing
-</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>├── compose/16-development-tools/     # IT-Tools
-</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>├── compose/17-data-processing/       # Kafka, Spark
-</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>├── compose/18-communication/         # Chat, video
-</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>└── docs/                     # Documentation (MkDocs)
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── ansible/                          # Suite d&#39;automatisation Ansible (Traefik, Glances, Arcane, Socket Proxy, systemd, SSL)
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>├── compose/                          # Configurations Docker Compose classées par domaines
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>│   ├── 01-infrastructure/            # Bind9 DNS, Nginx Certbot, Traefik
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│   ├── 02-container-orchestration/   # Arcane PaaS Manager, Portainer, Coolify, Dokploy, K8s Cert-Manager, Longhorn
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>│   ├── 03-iot-smart-home/            # Home Assistant, ChangeDetection.io
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>│   ├── 04-network-management/        # Asterisk VoIP
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>│   ├── 05-monitoring-reporting/      # Checkmk, Uptime Kuma, Glances, Observabilité (Prometheus/Grafana), SonarQube
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>│   ├── 06-ai/                        # Ollama Local, Open WebUI, Jupyter Notebooks, DGX SSH Tunnel
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>│   ├── 07-automation/                # Automatisations de workflow, CI/CD, Cron &amp; PM2 Scheduling
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>│   ├── 08-code-management/           # Gitea, Docker Registry, JFrog Artifactory
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>│   ├── 09-app-server-management/     # Business Apps (Odoo ERP), Content Management (WordPress, Drupal)
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>│   ├── 10-databases/                 # PostgreSQL, CouchDB Cluster, CockroachDB
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>│   ├── 11-security-identity/         # Keycloak, Zitadel, SuperTokens, Wazuh SIEM, ClamAV, Socket Proxy
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>│   ├── 12-document-management/       # Paperless-ngx
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>│   ├── 13-api-gateway/               # Traefik, Kong, Tyk, WSO2 AM, Hasura GraphQL, Hoppscotch
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>│   ├── 14-mail-services/             # Mailpit, Docker Mailserver, Mailcatcher, Mailu
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>│   ├── 15-media-storage/             # MinIO S3, Erugo File Sharing, Static Files Server, S3FS Volume
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>│   ├── 16-development-tools/         # IT-Tools, Excalidraw
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>│   ├── 17-data-processing/           # Stack Kafka + Logstash (Data processing temps réel)
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>│   └── 18-communication/             # Novu (Moteur de notifications)
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>├── docs/                             # Documentation MkDocs &amp; Registre des templates Arcane
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>├── helm/                             # Charts Helm Kubernetes
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>├── kubernetes/                       # Manifestes Kubernetes natifs
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>├── packer/                           # Modèles d&#39;images VM &amp; Containers Packer
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>├── scripts/                          # Scripts CLI Cloudflare DNS &amp; Générateur de registre
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>└── terraform/                        # Templates Infrastructure as Code Terraform
 </span></code></pre></div>
 <h2 id="makefile">Makefile<a class="headerlink" href="#makefile" title="Permanent link">&para;</a></h2>
 <p>Commandes disponibles:</p>
