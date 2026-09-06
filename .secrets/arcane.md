@@ -2,6 +2,14 @@
 
 Ce dossier contient les clés de chiffrement et de signature JWT pour le gestionnaire PaaS Arcane.
 
+## 👤 Compte Admin par défaut :
+```text
+# arcane-admin — compte admin par defaut du manager Arcane
+#
+# username : arcane
+# password : arcane-admin   (DEFAUT — A CHANGER au 1er login)
+```
+
 ## 📄 Fichiers associés :
 * `arcane-jwt-secret` : Clé secrète hexadécimale de 64 caractères (32 octets) utilisée pour la signature des jetons de session JWT Arcane.
 * `arcane-encryption-key` : Clé secrète hexadécimale de 64 caractères (32 octets) utilisée pour le chiffrement des données sensibles stockées en base SQLite.
