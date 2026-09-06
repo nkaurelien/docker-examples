@@ -7,3 +7,10 @@ uptime_kuma_domain: "{{ traefik_domain | default('kamitbrains.fr') }}"
 uptime_kuma_hostname: "status.{{ uptime_kuma_domain }}"
 uptime_kuma_compose_dir: "/opt/uptime-kuma"
 uptime_kuma_timezone: "Europe/Paris"
+
+# Basic auth credentials for protected monitors
+uptime_kuma_traefik_auth_user: "admin"
+uptime_kuma_traefik_auth_pass: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/traefik-dashboard-basic-auth-password', errors='ignore') | default('traefik-dashboard-password-change-me', true) | trim }}"
+
+uptime_kuma_glances_auth_user: "admin"
+uptime_kuma_glances_auth_pass: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/glances-basic-auth-password', errors='ignore') | default('glances-password-change-me', true) | trim }}"
