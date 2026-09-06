@@ -1,49 +1,47 @@
-# ChangeDetection.io
+# ChangeDetection.io Web Surveillance
 
-Surveillance de changements sur des pages web.
+[ChangeDetection.io](https://changedetection.io/) is an open-source web page change monitoring and notification service.
 
-## Quick Start
+---
 
-```bash
-cd surveillance/changedetection
-docker compose up -d
-```
+## Service Overview
 
-## Accès
+| Attribute | Details |
+| :--- | :--- |
+| **Service Name** | `changedetection` |
+| **Public URL** | `https://changedetection.kamitbrains.fr` |
+| **Health Check** | `http://127.0.0.1:5000/` |
+| **Docker Image** | `dgtlmoon/changedetection.io:latest` |
+| **Internal Port** | `5000` |
+| **Reverse Proxy** | Traefik (`websecure` + Let's Encrypt TLS) |
+| **Security** | CrowdSec ForwardAuth Bouncer |
+| **Storage Volumes** | `changedetection-data` |
 
-- **Web UI** : http://localhost:5000
+---
 
-## Ports
+## Quick Start & Usage
 
-| Service | Port | Description |
-|---------|------|-------------|
-| Web UI | 5000 | Interface web |
+1. Open **`https://changedetection.kamitbrains.fr`**.
+2. Add a URL to watch (e.g., website price changes, API updates, or release pages).
+3. Configure notification URL (e.g., `https://ntfy.kamitbrains.fr/system-alerts`).
 
-## Configuration
+---
 
-### compose.yml
+## Architecture & Docker Compose Configuration
+
+Managed via Ansible role in `ansible/roles/changedetection/`.
 
 ```yaml
 services:
   changedetection:
-    image: ghcr.io/dgtlmoon/changedetection.io
-    ports:
-      - "5000:5000"
-    volumes:
-      - changedetection_data:/datastore
+    image: dgtlmoon/changedetection.io:latest
+    container_name: changedetection
+    restart: unless-stopped
     environment:
-      - PUID=1000
-      - PGID=1000
+      - BASE_URL=https://changedetection.kamitbrains.fr
+      - HIDE_REFERER=true
+    volumes:
+      - changedetection-data:/datastore
+    networks:
+      - traefik-public
 ```
-
-## Fonctionnalités
-
-- Notifications (email, Slack, Discord, etc.)
-- Filtres CSS/XPath
-- Comparaison visuelle
-- API REST
-
-## Liens
-
-- [Documentation officielle](https://changedetection.io/)
-- [GitHub](https://github.com/dgtlmoon/changedetection.io)

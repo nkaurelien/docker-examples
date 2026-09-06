@@ -1,0 +1,28 @@
+---
+- name: Ensure Passbolt deployment directory exists
+  ansible.builtin.file:
+    path: "{{ passbolt_compose_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Deploy Passbolt docker-compose configuration
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ passbolt_compose_dir }}/docker-compose.yml"
+    mode: '0644'
+
+- name: Start Passbolt container stack via docker compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ passbolt_compose_dir }}"
+    state: present
+    remove_orphans: true
+
+- name: Install and enable Passbolt systemd service for boot startup
+  ansible.builtin.include_role:
+    name: systemd-service
+  vars:
+    systemd_service_name: "passbolt"
+    systemd_service_description: "Passbolt Team Password Manager"
+    systemd_compose_dir: "{{ passbolt_compose_dir }}"
+    systemd_compose_files: "-f docker-compose.yml"
+    systemd_project_name: "passbolt"
