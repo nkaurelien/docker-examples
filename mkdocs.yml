@@ -200,6 +200,7 @@ nav:
       - IT-Tools: services/dev-tools/it-tools.md
 
   - Surveillance:
+      - Overview: services/surveillance/index.md
       - ChangeDetection.io: services/surveillance/changedetection.md
 
   - CI/CD:
