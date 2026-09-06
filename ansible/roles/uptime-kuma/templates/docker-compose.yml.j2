@@ -51,6 +51,9 @@ services:
       - sh
       - -c
       - |
+        if [ ! -f /app/data/db-config.json ]; then
+          echo '{"dbType":"sqlite"}' > /app/data/db-config.json
+        fi
         echo "Waiting for Uptime Kuma database..."
         until [ -f /app/data/kuma.db ]; do sleep 1; done
         apk add --no-cache -q sqlite
@@ -58,9 +61,9 @@ services:
         # Seed core infrastructure monitors with user_id = 1 and Basic Auth credentials (auth_method = 'basic')
         sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, basic_auth_user, basic_auth_pass, auth_method, description) VALUES (1, 'Traefik Proxy', 1, 1, 'https://traefik.{{ traefik_domain | default('kamitbrains.fr') }}/dashboard/', 'http', 'GET', 60, '{{ uptime_kuma_traefik_auth_user }}', '{{ uptime_kuma_traefik_auth_pass }}', 'basic', 'Edge Reverse Proxy Dashboard');"
         sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, basic_auth_user, basic_auth_pass, auth_method, description) VALUES (2, 'Glances Monitoring', 1, 1, 'https://glances.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, '{{ uptime_kuma_glances_auth_user }}', '{{ uptime_kuma_glances_auth_pass }}', 'basic', 'System & Container Resource Monitoring');"
-        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (3, 'Arcane PaaS Manager', 1, 1, 'https://arcane.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, NULL, NULL, 'Docker Container Management Dashboard');"
-        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (4, 'Uptime Kuma Status', 1, 1, 'https://status.{{ traefik_domain | default('kamitbrains.fr') }}/dashboard', 'http', 'GET', 60, NULL, NULL, 'Uptime & Service Health Monitor');"
-        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (5, 'Ntfy Push Notifications', 1, 1, 'https://ntfy.{{ traefik_domain | default('kamitbrains.fr') }}/v1/health', 'http', 'GET', 60, NULL, NULL, 'HTTP Pub-Sub Push Notification Service');"
+        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (3, 'Arcane PaaS Manager', 1, 1, 'https://arcane.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, 'Docker Container Management Dashboard');"
+        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (4, 'Uptime Kuma Status', 1, 1, 'https://status.{{ traefik_domain | default('kamitbrains.fr') }}/dashboard', 'http', 'GET', 60, 'Uptime & Service Health Monitor');"
+        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (5, 'Ntfy Push Notifications', 1, 1, 'https://ntfy.{{ traefik_domain | default('kamitbrains.fr') }}/v1/health', 'http', 'GET', 60, 'HTTP Pub-Sub Push Notification Service');"
 
         # Update basic auth credentials on existing monitors
         sqlite3 /app/data/kuma.db "UPDATE monitor SET basic_auth_user = '{{ uptime_kuma_traefik_auth_user }}', basic_auth_pass = '{{ uptime_kuma_traefik_auth_pass }}', auth_method = 'basic', user_id = 1 WHERE id = 1;"
