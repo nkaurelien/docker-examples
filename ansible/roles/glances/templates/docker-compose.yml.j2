@@ -17,6 +17,18 @@ services:
       - POST=0
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+        reservations:
+          memory: 32M
 
   glances:
     image: {{ glances_image }}
@@ -44,6 +56,11 @@ services:
       - /:/rootfs:ro
       - /etc/os-release:/etc/os-release:ro
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     deploy:
       resources:
         limits:

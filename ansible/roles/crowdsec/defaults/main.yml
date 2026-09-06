@@ -1,0 +1,6 @@
+---
+# CrowdSec role defaults
+crowdsec_version: "latest"
+crowdsec_compose_dir: "/opt/crowdsec"
+crowdsec_lapi_key: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/crowdsec-lapi-key', errors='ignore') | default('crowdsec-lapi-key-32-chars-default', true) | trim }}"
+crowdsec_collections: "crowdsecurity/traefik crowdsecurity/sshd crowdsecurity/linux"

@@ -1,0 +1,28 @@
+---
+- name: Ensure CrowdSec deployment directory exists
+  ansible.builtin.file:
+    path: "{{ crowdsec_compose_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Deploy CrowdSec docker-compose configuration
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ crowdsec_compose_dir }}/docker-compose.yml"
+    mode: '0644'
+
+- name: Start CrowdSec container stack via docker compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ crowdsec_compose_dir }}"
+    state: present
+    remove_orphans: true
+
+- name: Install and enable CrowdSec systemd service for boot startup
+  ansible.builtin.include_role:
+    name: systemd-service
+  vars:
+    systemd_service_name: "crowdsec"
+    systemd_service_description: "CrowdSec IDS/IPS Security Engine & Bouncer"
+    systemd_compose_dir: "{{ crowdsec_compose_dir }}"
+    systemd_compose_files: "-f docker-compose.yml"
+    systemd_project_name: "crowdsec"
