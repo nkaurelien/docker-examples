@@ -1,4 +1,4 @@
-# Passbolt Password Manager
+# Passbolt Password Manager (PostgreSQL Edition)
 
 [Passbolt](https://www.passbolt.com/) is an open-source, team-first password manager built with GPG end-to-end encryption.
 
@@ -11,8 +11,8 @@
 | **Service Name** | `passbolt` |
 | **Public URL** | `https://passwords.kamitbrains.fr` |
 | **Health Check** | `http://127.0.0.1/healthcheck/status.json` |
-| **Docker Image** | `passbolt/passbolt:latest-ce` |
-| **Database** | MariaDB 10.11 (`passbolt-db`) |
+| **Docker Image** | `passbolt/passbolt:latest` |
+| **Database** | PostgreSQL 16 Alpine (`postgres:16-alpine`) |
 | **Reverse Proxy** | Traefik (`websecure` + Let's Encrypt TLS) |
 | **Security** | CrowdSec ForwardAuth Bouncer |
 | **Storage Volumes** | `passbolt-gpg-keys`, `passbolt-jwt-keys`, `passbolt-db-data` |
@@ -21,16 +21,15 @@
 
 ## Quick Start & Setup
 
-### 1. Register First Administrator User
+### 1. Automated Init Container
 
-Run the following command on the server via `docker exec`:
+The stack includes a `passbolt-init` container that runs automatically on first boot, verifies whether the admin user exists, and generates the registration link if missing.
+
+To view the activation link at any time:
 
 ```bash
-docker exec -u www-data passbolt /usr/share/php/passbolt/bin/cake passbolt register_user \
-  -u admin@kamitbrains.fr -f Admin -l User -r admin
+docker logs passbolt-init
 ```
-
-The output will contain an activation link (e.g., `https://passwords.kamitbrains.fr/setup/start/...`). Click the link to set up your GPG key pair and master password in the browser extension.
 
 ### 2. Browser Extension & Mobile Apps
 
@@ -46,21 +45,22 @@ Managed via Ansible role in `ansible/roles/passbolt/`.
 ```yaml
 services:
   passbolt-db:
-    image: mariadb:10.11
+    image: postgres:16-alpine
     container_name: passbolt-db
     restart: unless-stopped
     environment:
-      - MYSQL_ROOT_PASSWORD=${PASSBOLT_DB_PASSWORD}
-      - MYSQL_DATABASE=passbolt
-      - MYSQL_USER=passbolt
-      - MYSQL_PASSWORD=${PASSBOLT_DB_PASSWORD}
+      - POSTGRES_DB=passbolt
+      - POSTGRES_USER=passbolt
+      - POSTGRES_PASSWORD=${PASSBOLT_DB_PASSWORD}
     volumes:
-      - passbolt-db-data:/var/lib/mysql
+      - passbolt-db-data:/var/lib/postgresql/data
     networks:
       - passbolt-internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U passbolt -d passbolt || exit 1"]
 
   passbolt:
-    image: passbolt/passbolt:latest-ce
+    image: passbolt/passbolt:latest
     container_name: passbolt
     restart: unless-stopped
     depends_on:
@@ -68,10 +68,13 @@ services:
         condition: service_healthy
     environment:
       - APP_FULL_BASE_URL=https://passwords.kamitbrains.fr
+      - DATASOURCES_DEFAULT_DRIVER=Cake\Database\Driver\Postgres
       - DATASOURCES_DEFAULT_HOST=passbolt-db
+      - DATASOURCES_DEFAULT_PORT=5432
       - DATASOURCES_DEFAULT_USERNAME=passbolt
       - DATASOURCES_DEFAULT_PASSWORD=${PASSBOLT_DB_PASSWORD}
       - DATASOURCES_DEFAULT_DATABASE=passbolt
+      - DATASOURCES_DEFAULT_ENCODING=utf8
     volumes:
       - passbolt-gpg-keys:/etc/passbolt/gpg
       - passbolt-jwt-keys:/etc/passbolt/jwt
