@@ -19,6 +19,8 @@
       tags: [crowdsec, security, ids]
     - role: uptime-kuma
       tags: [uptime-kuma, status, monitoring]
+    - role: ntfy
+      tags: [ntfy, notification, communication]
     - role: systemd-service
       tags: [systemd, services]
 

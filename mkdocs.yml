@@ -187,6 +187,7 @@ nav:
 
   - Communication:
       - Overview: services/communication/index.md
+      - Ntfy Push Notifications: services/communication/ntfy.md
 
   - Authentication:
       - Overview: services/auth/index.md
