@@ -13,26 +13,28 @@
       
       
       
+        <link rel="prev" href="../">
       
-        <link rel="next" href="getting-started/quick-start/">
+      
+        <link rel="next" href="../clamav/">
       
       
         
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
-        <title>Docker Examples Documentation</title>
+        <title>CrowdSec IDS/IPS - Docker Examples Documentation</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,7 +53,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -76,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#docker-examples" class="md-skip">
+        <a href="#crowdsec-security-engine-traefik-bouncer" class="md-skip">
           Skip to content
         </a>
       
@@ -92,7 +94,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Docker Examples Documentation" class="md-header__button md-logo" aria-label="Docker Examples Documentation" data-md-component="logo">
+    <a href="../../.." title="Docker Examples Documentation" class="md-header__button md-logo" aria-label="Docker Examples Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -112,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              CrowdSec IDS/IPS
             
           </span>
         </div>
@@ -222,11 +224,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="." class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
         
   
   
@@ -247,7 +247,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="getting-started/quick-start/" class="md-tabs__link">
+        <a href="../../../getting-started/quick-start/" class="md-tabs__link">
           
   
   
@@ -267,7 +267,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="services/infrastructure/" class="md-tabs__link">
+        <a href="../../infrastructure/" class="md-tabs__link">
           
   
   
@@ -287,7 +287,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="services/orchestration/" class="md-tabs__link">
+        <a href="../../orchestration/" class="md-tabs__link">
           
   
   
@@ -307,7 +307,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="services/iot/" class="md-tabs__link">
+        <a href="../../iot/" class="md-tabs__link">
           
   
   
@@ -327,7 +327,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="services/network/" class="md-tabs__link">
+        <a href="../../network/" class="md-tabs__link">
           
   
   
@@ -347,7 +347,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="services/monitoring/" class="md-tabs__link">
+        <a href="../../monitoring/" class="md-tabs__link">
           
   
   
@@ -367,7 +367,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="services/ai/" class="md-tabs__link">
+        <a href="../../ai/" class="md-tabs__link">
           
   
   
@@ -387,7 +387,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="services/automation/" class="md-tabs__link">
+        <a href="../../automation/" class="md-tabs__link">
           
   
   
@@ -407,7 +407,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="services/code-management/" class="md-tabs__link">
+        <a href="../../code-management/" class="md-tabs__link">
           
   
   
@@ -427,7 +427,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="services/app-management/" class="md-tabs__link">
+        <a href="../../app-management/" class="md-tabs__link">
           
   
   
@@ -447,7 +447,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="services/databases/" class="md-tabs__link">
+        <a href="../../databases/" class="md-tabs__link">
           
   
   
@@ -463,11 +463,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="services/security/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
   
@@ -487,7 +489,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="services/document-management/" class="md-tabs__link">
+        <a href="../../document-management/" class="md-tabs__link">
           
   
   
@@ -507,7 +509,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="services/api-management/" class="md-tabs__link">
+        <a href="../../api-management/" class="md-tabs__link">
           
   
   
@@ -527,7 +529,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="services/mail/" class="md-tabs__link">
+        <a href="../../mail/" class="md-tabs__link">
           
   
   
@@ -547,7 +549,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="services/media-storage/" class="md-tabs__link">
+        <a href="../../media-storage/" class="md-tabs__link">
           
   
   
@@ -567,7 +569,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="services/data-processing/" class="md-tabs__link">
+        <a href="../../data-processing/" class="md-tabs__link">
           
   
   
@@ -587,7 +589,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="services/communication/" class="md-tabs__link">
+        <a href="../../communication/" class="md-tabs__link">
           
   
   
@@ -607,7 +609,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="services/auth/" class="md-tabs__link">
+        <a href="../../auth/" class="md-tabs__link">
           
   
   
@@ -627,7 +629,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="services/dev-tools/" class="md-tabs__link">
+        <a href="../../dev-tools/" class="md-tabs__link">
           
   
   
@@ -647,7 +649,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="services/surveillance/changedetection/" class="md-tabs__link">
+        <a href="../../surveillance/changedetection/" class="md-tabs__link">
           
   
   
@@ -667,7 +669,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="ci-cd/" class="md-tabs__link">
+        <a href="../../../ci-cd/" class="md-tabs__link">
           
   
   
@@ -687,7 +689,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="docker/capabilities/" class="md-tabs__link">
+        <a href="../../../docker/capabilities/" class="md-tabs__link">
           
   
   
@@ -727,7 +729,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Docker Examples Documentation" class="md-nav__button md-logo" aria-label="Docker Examples Documentation" data-md-component="logo">
+    <a href="../../.." title="Docker Examples Documentation" class="md-nav__button md-logo" aria-label="Docker Examples Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -754,37 +756,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Home
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -800,307 +775,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#categories" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Categories
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Categories">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#infrastructure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Infrastructure
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#orchestration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Orchestration
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#iot-smart-home" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        IoT &amp; Smart Home
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#network-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Network Management
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#monitoring" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Monitoring
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ai-machine-learning" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        AI &amp; Machine Learning
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#automation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Automation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#code-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Code Management
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#app-server-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        App &amp; Server Management
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#databases" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Databases
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#security-identity" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Security &amp; Identity
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#document-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Document Management
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#api-gateway" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        API Gateway
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mail-servers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Mail Servers
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#media-storage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Media &amp; Storage
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#data-processing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Data Processing
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#communication" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Communication
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#authentication" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Authentication
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#development-tools" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Development Tools
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#surveillance" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Surveillance
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick Start
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Documentation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#structure-du-repository" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Structure du Repository
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#makefile" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Makefile
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1166,7 +840,7 @@
   
   
     <li class="md-nav__item">
-      <a href="getting-started/quick-start/" class="md-nav__link">
+      <a href="../../../getting-started/quick-start/" class="md-nav__link">
         
   
   
@@ -1194,7 +868,7 @@
   
   
     <li class="md-nav__item">
-      <a href="docker/essentials/" class="md-nav__link">
+      <a href="../../../docker/essentials/" class="md-nav__link">
         
   
   
@@ -1222,7 +896,7 @@
   
   
     <li class="md-nav__item">
-      <a href="docker/capabilities/" class="md-nav__link">
+      <a href="../../../docker/capabilities/" class="md-nav__link">
         
   
   
@@ -1311,7 +985,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/infrastructure/" class="md-nav__link">
+      <a href="../../infrastructure/" class="md-nav__link">
         
   
   
@@ -1339,7 +1013,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/infrastructure/bind9/" class="md-nav__link">
+      <a href="../../infrastructure/bind9/" class="md-nav__link">
         
   
   
@@ -1367,7 +1041,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/infrastructure/ansible/" class="md-nav__link">
+      <a href="../../infrastructure/ansible/" class="md-nav__link">
         
   
   
@@ -1395,7 +1069,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/infrastructure/cloudflare-dns/" class="md-nav__link">
+      <a href="../../infrastructure/cloudflare-dns/" class="md-nav__link">
         
   
   
@@ -1484,7 +1158,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/orchestration/" class="md-nav__link">
+      <a href="../../orchestration/" class="md-nav__link">
         
   
   
@@ -1512,7 +1186,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/orchestration/portainer/" class="md-nav__link">
+      <a href="../../orchestration/portainer/" class="md-nav__link">
         
   
   
@@ -1540,7 +1214,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/orchestration/rancher/" class="md-nav__link">
+      <a href="../../orchestration/rancher/" class="md-nav__link">
         
   
   
@@ -1568,7 +1242,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/orchestration/coolify/" class="md-nav__link">
+      <a href="../../orchestration/coolify/" class="md-nav__link">
         
   
   
@@ -1596,7 +1270,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/orchestration/dokploy/" class="md-nav__link">
+      <a href="../../orchestration/dokploy/" class="md-nav__link">
         
   
   
@@ -1624,7 +1298,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/orchestration/arcane/" class="md-nav__link">
+      <a href="../../orchestration/arcane/" class="md-nav__link">
         
   
   
@@ -1652,7 +1326,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/orchestration/longhorn/" class="md-nav__link">
+      <a href="../../orchestration/longhorn/" class="md-nav__link">
         
   
   
@@ -1680,7 +1354,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/orchestration/cert-manager/" class="md-nav__link">
+      <a href="../../orchestration/cert-manager/" class="md-nav__link">
         
   
   
@@ -1769,7 +1443,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/iot/" class="md-nav__link">
+      <a href="../../iot/" class="md-nav__link">
         
   
   
@@ -1797,7 +1471,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/iot/home-assistant/" class="md-nav__link">
+      <a href="../../iot/home-assistant/" class="md-nav__link">
         
   
   
@@ -1886,7 +1560,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/network/" class="md-nav__link">
+      <a href="../../network/" class="md-nav__link">
         
   
   
@@ -1914,7 +1588,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/network/asterisk/" class="md-nav__link">
+      <a href="../../network/asterisk/" class="md-nav__link">
         
   
   
@@ -2003,7 +1677,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/monitoring/" class="md-nav__link">
+      <a href="../../monitoring/" class="md-nav__link">
         
   
   
@@ -2031,7 +1705,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/monitoring/glances/" class="md-nav__link">
+      <a href="../../monitoring/glances/" class="md-nav__link">
         
   
   
@@ -2059,7 +1733,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/monitoring/checkmk/" class="md-nav__link">
+      <a href="../../monitoring/checkmk/" class="md-nav__link">
         
   
   
@@ -2087,7 +1761,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/monitoring/uptime-kuma/" class="md-nav__link">
+      <a href="../../monitoring/uptime-kuma/" class="md-nav__link">
         
   
   
@@ -2176,7 +1850,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/ai/" class="md-nav__link">
+      <a href="../../ai/" class="md-nav__link">
         
   
   
@@ -2204,7 +1878,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/ai/ollama/" class="md-nav__link">
+      <a href="../../ai/ollama/" class="md-nav__link">
         
   
   
@@ -2232,7 +1906,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/ai/open-webui/" class="md-nav__link">
+      <a href="../../ai/open-webui/" class="md-nav__link">
         
   
   
@@ -2321,7 +1995,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/automation/" class="md-nav__link">
+      <a href="../../automation/" class="md-nav__link">
         
   
   
@@ -2410,7 +2084,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/code-management/" class="md-nav__link">
+      <a href="../../code-management/" class="md-nav__link">
         
   
   
@@ -2438,7 +2112,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/code-management/gitea/" class="md-nav__link">
+      <a href="../../code-management/gitea/" class="md-nav__link">
         
   
   
@@ -2527,7 +2201,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/app-management/" class="md-nav__link">
+      <a href="../../app-management/" class="md-nav__link">
         
   
   
@@ -2616,7 +2290,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/databases/" class="md-nav__link">
+      <a href="../../databases/" class="md-nav__link">
         
   
   
@@ -2644,7 +2318,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/databases/couchdb/" class="md-nav__link">
+      <a href="../../databases/couchdb/" class="md-nav__link">
         
   
   
@@ -2672,7 +2346,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/databases/postgresql/" class="md-nav__link">
+      <a href="../../databases/postgresql/" class="md-nav__link">
         
   
   
@@ -2704,28 +2378,31 @@
       
   
   
+    
   
   
+  
     
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" checked>
         
           
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_13" >
-        
-          
-          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="">
             
   
   
@@ -2743,7 +2420,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_13">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2761,7 +2438,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/security/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -2786,10 +2463,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="services/security/crowdsec/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CrowdSec IDS/IPS
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2805,6 +2509,131 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏗️ Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment-with-ansible" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 Deployment with Ansible
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔐 Configuration &amp; Secrets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-operations-cscli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛠️ CLI Operations (cscli)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🛠️ CLI Operations (cscli)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#check-active-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check Active Metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-banned-ips-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        List Banned IPs &amp; Decisions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manually-ban-an-ip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manually Ban an IP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manually-unban-an-ip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manually Unban an IP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-installed-scenarios-collections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check Installed Scenarios &amp; Collections
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2817,7 +2646,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/security/clamav/" class="md-nav__link">
+      <a href="../clamav/" class="md-nav__link">
         
   
   
@@ -2845,7 +2674,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/security/wazuh/" class="md-nav__link">
+      <a href="../wazuh/" class="md-nav__link">
         
   
   
@@ -2873,7 +2702,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/security/neuvector/" class="md-nav__link">
+      <a href="../neuvector/" class="md-nav__link">
         
   
   
@@ -2901,7 +2730,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/security/socket-proxy/" class="md-nav__link">
+      <a href="../socket-proxy/" class="md-nav__link">
         
   
   
@@ -2990,7 +2819,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/document-management/" class="md-nav__link">
+      <a href="../../document-management/" class="md-nav__link">
         
   
   
@@ -3079,7 +2908,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/api-management/" class="md-nav__link">
+      <a href="../../api-management/" class="md-nav__link">
         
   
   
@@ -3161,7 +2990,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/api-management/traefik/" class="md-nav__link">
+      <a href="../../api-management/traefik/" class="md-nav__link">
         
   
   
@@ -3189,7 +3018,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/api-management/traefik/tinyauth/" class="md-nav__link">
+      <a href="../../api-management/traefik/tinyauth/" class="md-nav__link">
         
   
   
@@ -3217,7 +3046,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/api-management/traefik/letsencrypt/" class="md-nav__link">
+      <a href="../../api-management/traefik/letsencrypt/" class="md-nav__link">
         
   
   
@@ -3245,7 +3074,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/api-management/traefik/socket-proxy/" class="md-nav__link">
+      <a href="../../api-management/traefik/socket-proxy/" class="md-nav__link">
         
   
   
@@ -3281,7 +3110,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/api-management/kong/" class="md-nav__link">
+      <a href="../../api-management/kong/" class="md-nav__link">
         
   
   
@@ -3309,7 +3138,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/api-management/hasura/" class="md-nav__link">
+      <a href="../../api-management/hasura/" class="md-nav__link">
         
   
   
@@ -3337,7 +3166,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/api-management/nginx-certbot/" class="md-nav__link">
+      <a href="../../api-management/nginx-certbot/" class="md-nav__link">
         
   
   
@@ -3426,7 +3255,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/mail/" class="md-nav__link">
+      <a href="../../mail/" class="md-nav__link">
         
   
   
@@ -3454,7 +3283,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/mail/mailpit/" class="md-nav__link">
+      <a href="../../mail/mailpit/" class="md-nav__link">
         
   
   
@@ -3482,7 +3311,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/mail/docker-mailserver/" class="md-nav__link">
+      <a href="../../mail/docker-mailserver/" class="md-nav__link">
         
   
   
@@ -3510,7 +3339,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/mail/mailcatcher/" class="md-nav__link">
+      <a href="../../mail/mailcatcher/" class="md-nav__link">
         
   
   
@@ -3599,7 +3428,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/media-storage/" class="md-nav__link">
+      <a href="../../media-storage/" class="md-nav__link">
         
   
   
@@ -3681,7 +3510,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/file-sharing/" class="md-nav__link">
+      <a href="../../file-sharing/" class="md-nav__link">
         
   
   
@@ -3709,7 +3538,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/file-sharing/erugo/" class="md-nav__link">
+      <a href="../../file-sharing/erugo/" class="md-nav__link">
         
   
   
@@ -3806,7 +3635,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/data-processing/" class="md-nav__link">
+      <a href="../../data-processing/" class="md-nav__link">
         
   
   
@@ -3895,7 +3724,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/communication/" class="md-nav__link">
+      <a href="../../communication/" class="md-nav__link">
         
   
   
@@ -3984,7 +3813,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/auth/" class="md-nav__link">
+      <a href="../../auth/" class="md-nav__link">
         
   
   
@@ -4012,7 +3841,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/auth/keycloak/" class="md-nav__link">
+      <a href="../../auth/keycloak/" class="md-nav__link">
         
   
   
@@ -4040,7 +3869,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/auth/passbolt/" class="md-nav__link">
+      <a href="../../auth/passbolt/" class="md-nav__link">
         
   
   
@@ -4068,7 +3897,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/auth/zitadel/" class="md-nav__link">
+      <a href="../../auth/zitadel/" class="md-nav__link">
         
   
   
@@ -4157,7 +3986,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/dev-tools/" class="md-nav__link">
+      <a href="../../dev-tools/" class="md-nav__link">
         
   
   
@@ -4185,7 +4014,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/dev-tools/it-tools/" class="md-nav__link">
+      <a href="../../dev-tools/it-tools/" class="md-nav__link">
         
   
   
@@ -4274,7 +4103,7 @@
   
   
     <li class="md-nav__item">
-      <a href="services/surveillance/changedetection/" class="md-nav__link">
+      <a href="../../surveillance/changedetection/" class="md-nav__link">
         
   
   
@@ -4363,7 +4192,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ci-cd/" class="md-nav__link">
+      <a href="../../../ci-cd/" class="md-nav__link">
         
   
   
@@ -4391,7 +4220,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ci-cd/gitlab-ci/" class="md-nav__link">
+      <a href="../../../ci-cd/gitlab-ci/" class="md-nav__link">
         
   
   
@@ -4419,7 +4248,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ci-cd/github-actions/" class="md-nav__link">
+      <a href="../../../ci-cd/github-actions/" class="md-nav__link">
         
   
   
@@ -4447,7 +4276,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ci-cd/security-scanning/" class="md-nav__link">
+      <a href="../../../ci-cd/security-scanning/" class="md-nav__link">
         
   
   
@@ -4536,7 +4365,7 @@
   
   
     <li class="md-nav__item">
-      <a href="docker/capabilities/" class="md-nav__link">
+      <a href="../../../docker/capabilities/" class="md-nav__link">
         
   
   
@@ -4564,7 +4393,7 @@
   
   
     <li class="md-nav__item">
-      <a href="docker/essentials/" class="md-nav__link">
+      <a href="../../../docker/essentials/" class="md-nav__link">
         
   
   
@@ -4592,7 +4421,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/socket-proxy-permissions/" class="md-nav__link">
+      <a href="../../../reference/socket-proxy-permissions/" class="md-nav__link">
         
   
   
@@ -4647,22 +4476,55 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#categories" class="md-nav__link">
+  <a href="#architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Categories
+        🏗️ Architecture
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Categories">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment-with-ansible" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 Deployment with Ansible
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔐 Configuration &amp; Secrets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-operations-cscli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛠️ CLI Operations (cscli)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🛠️ CLI Operations (cscli)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#infrastructure" class="md-nav__link">
+  <a href="#check-active-metrics" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Infrastructure
+        Check Active Metrics
       
     </span>
   </a>
@@ -4670,10 +4532,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#orchestration" class="md-nav__link">
+  <a href="#list-banned-ips-decisions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Orchestration
+        List Banned IPs &amp; Decisions
       
     </span>
   </a>
@@ -4681,10 +4543,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#iot-smart-home" class="md-nav__link">
+  <a href="#manually-ban-an-ip" class="md-nav__link">
     <span class="md-ellipsis">
       
-        IoT &amp; Smart Home
+        Manually Ban an IP
       
     </span>
   </a>
@@ -4692,10 +4554,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#network-management" class="md-nav__link">
+  <a href="#manually-unban-an-ip" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Network Management
+        Manually Unban an IP
       
     </span>
   </a>
@@ -4703,175 +4565,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#monitoring" class="md-nav__link">
+  <a href="#check-installed-scenarios-collections" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Monitoring
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ai-machine-learning" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        AI &amp; Machine Learning
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#automation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Automation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#code-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Code Management
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#app-server-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        App &amp; Server Management
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#databases" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Databases
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#security-identity" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Security &amp; Identity
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#document-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Document Management
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#api-gateway" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        API Gateway
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mail-servers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Mail Servers
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#media-storage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Media &amp; Storage
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#data-processing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Data Processing
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#communication" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Communication
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#authentication" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Authentication
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#development-tools" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Development Tools
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#surveillance" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Surveillance
+        Check Installed Scenarios &amp; Collections
       
     </span>
   </a>
@@ -4880,50 +4577,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick Start
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Documentation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#structure-du-repository" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Structure du Repository
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#makefile" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Makefile
-      
-    </span>
-  </a>
   
 </li>
       
@@ -4947,155 +4600,52 @@
   
 
 
-<h1 id="docker-examples">Docker Examples<a class="headerlink" href="#docker-examples" title="Permanent link">&para;</a></h1>
-<p>Collection de configurations Docker Compose prêtes à l'emploi pour services self-hosted.</p>
-<h2 id="categories">Categories<a class="headerlink" href="#categories" title="Permanent link">&para;</a></h2>
-<h3 id="infrastructure">Infrastructure<a class="headerlink" href="#infrastructure" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong><a href="services/infrastructure/bind9/">Bind9 DNS</a></strong> - Serveur DNS local</li>
-</ul>
-<h3 id="orchestration">Orchestration<a class="headerlink" href="#orchestration" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong><a href="services/orchestration/portainer/">Portainer</a></strong> - Docker/Kubernetes UI</li>
-<li><strong><a href="services/orchestration/rancher/">Rancher</a></strong> - Kubernetes management</li>
-<li><strong><a href="services/orchestration/coolify/">Coolify</a></strong> - PaaS self-hosted (alt. Heroku/Vercel)</li>
-<li><strong><a href="services/orchestration/dokploy/">Dokploy</a></strong> - PaaS self-hosted (alt. Netlify)</li>
-<li><strong><a href="services/orchestration/arcane/">Arcane</a></strong> - Docker Manager</li>
-<li><strong><a href="services/orchestration/longhorn/">Longhorn</a></strong> - Stockage distribué Kubernetes</li>
-<li><strong><a href="services/orchestration/cert-manager/">cert-manager</a></strong> - Gestion certificats TLS Kubernetes</li>
-</ul>
-<h3 id="iot-smart-home">IoT &amp; Smart Home<a class="headerlink" href="#iot-smart-home" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong><a href="services/iot/home-assistant/">Home Assistant</a></strong> - Plateforme domotique avec Zigbee2MQTT</li>
-</ul>
-<h3 id="network-management">Network Management<a class="headerlink" href="#network-management" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong><a href="services/network/asterisk/">Asterisk</a></strong> - Serveur VoIP PBX</li>
-</ul>
-<h3 id="monitoring">Monitoring<a class="headerlink" href="#monitoring" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong><a href="services/monitoring/glances/">Glances</a></strong> - System monitoring</li>
-<li><strong><a href="services/monitoring/checkmk/">Checkmk</a></strong> - IT infrastructure monitoring</li>
-<li><strong><a href="services/monitoring/uptime-kuma/">Uptime Kuma</a></strong> - Uptime monitoring (alt. Pingdom)</li>
-</ul>
-<h3 id="ai-machine-learning">AI &amp; Machine Learning<a class="headerlink" href="#ai-machine-learning" title="Permanent link">&para;</a></h3>
-<ul>
-<li><em>À venir</em> - Ollama, LocalAI, Stable Diffusion</li>
-</ul>
-<h3 id="automation">Automation<a class="headerlink" href="#automation" title="Permanent link">&para;</a></h3>
-<ul>
-<li><em>À venir</em> - n8n, Airflow, Temporal</li>
-</ul>
-<h3 id="code-management">Code Management<a class="headerlink" href="#code-management" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong><a href="services/code-management/gitea/">Gitea</a></strong> - Git hosting (alt. GitHub/GitLab)</li>
-</ul>
-<h3 id="app-server-management">App &amp; Server Management<a class="headerlink" href="#app-server-management" title="Permanent link">&para;</a></h3>
-<ul>
-<li><em>À venir</em> - WordPress, Drupal, Odoo</li>
-</ul>
-<h3 id="databases">Databases<a class="headerlink" href="#databases" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong><a href="services/databases/couchdb/">CouchDB Cluster</a></strong> - NoSQL cluster</li>
-<li><strong><a href="services/databases/postgresql/">PostgreSQL</a></strong> - SQL database</li>
-</ul>
-<h3 id="security-identity">Security &amp; Identity<a class="headerlink" href="#security-identity" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong><a href="services/security/neuvector/">NeuVector</a></strong> - Container security platform</li>
-<li><strong><a href="services/security/socket-proxy/">Socket Proxy</a></strong> - Secure Docker API access</li>
-</ul>
-<h3 id="document-management">Document Management<a class="headerlink" href="#document-management" title="Permanent link">&para;</a></h3>
-<ul>
-<li><em>À venir</em> - Paperless-ngx, Nextcloud</li>
-</ul>
-<h3 id="api-gateway">API Gateway<a class="headerlink" href="#api-gateway" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong><a href="services/api-management/traefik/">Traefik</a></strong> - Reverse proxy avec auto-discovery</li>
-<li><strong><a href="services/api-management/kong/">Kong</a></strong> - API Gateway</li>
-<li><strong><a href="services/api-management/hasura/">Hasura</a></strong> - GraphQL Engine</li>
-</ul>
-<h3 id="mail-servers">Mail Servers<a class="headerlink" href="#mail-servers" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong><a href="services/mail/mailpit/">Mailpit</a></strong> - Email testing (dev)</li>
-<li><strong><a href="services/mail/docker-mailserver/">Docker Mailserver</a></strong> - Production mail server</li>
-</ul>
-<h3 id="media-storage">Media &amp; Storage<a class="headerlink" href="#media-storage" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong><a href="services/file-sharing/erugo/">Erugo</a></strong> - File sharing</li>
-<li><em>À venir</em> - MinIO, PhotoPrism, Jellyfin</li>
-</ul>
-<h3 id="data-processing">Data Processing<a class="headerlink" href="#data-processing" title="Permanent link">&para;</a></h3>
-<ul>
-<li><em>À venir</em> - Kafka, Spark, Logstash</li>
-</ul>
-<h3 id="communication">Communication<a class="headerlink" href="#communication" title="Permanent link">&para;</a></h3>
-<ul>
-<li><em>À venir</em> - Mattermost, Rocket.Chat, Matrix</li>
-</ul>
-<h3 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong><a href="services/auth/keycloak/">Keycloak</a></strong> - Identity management</li>
-<li><strong><a href="services/auth/passbolt/">Passbolt</a></strong> - Password manager</li>
-<li><strong><a href="services/auth/zitadel/">Zitadel</a></strong> - Cloud-native IAM</li>
-</ul>
-<h3 id="development-tools">Development Tools<a class="headerlink" href="#development-tools" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong><a href="services/dev-tools/it-tools/">IT-Tools</a></strong> - Outils développeur en ligne</li>
-</ul>
-<h3 id="surveillance">Surveillance<a class="headerlink" href="#surveillance" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong><a href="services/surveillance/changedetection/">ChangeDetection.io</a></strong> - Website change monitoring</li>
-</ul>
-<h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Clone the repository</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/nkaurelien/docker-examples.git
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">cd</span><span class="w"> </span>docker-examples
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># Start a service</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nb">cd</span><span class="w"> </span>compose/13-api-gateway/traefik
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+<h1 id="crowdsec-security-engine-traefik-bouncer">CrowdSec Security Engine &amp; Traefik Bouncer<a class="headerlink" href="#crowdsec-security-engine-traefik-bouncer" title="Permanent link">&para;</a></h1>
+<p><a href="https://www.crowdsec.net/">CrowdSec</a> is an open-source, collaborative Intrusion Detection System (IDS) and Intrusion Prevention System (IPS). It analyzes logs from Linux system services, SSH, and Traefik to detect malicious behavior and block bad IP addresses across your infrastructure in real time.</p>
+<h2 id="architecture">🏗️ Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>                                  ┌─────────────────────────────┐
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                                  │   CrowdSec Cloud Console    │
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                                  │  (Community Threat Intelligence)│
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                                  └──────────────▲──────────────┘
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                                                 │
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>┌─────────────────────────────┐   ┌──────────────┴──────────────┐
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│       Traefik Proxy         │   │      CrowdSec Engine        │
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│   (Access Logs &amp; Bouncer)   ├──►│   (Analyzes Traefik/SSH)    │
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>└─────────────────────────────┘   └─────────────────────────────┘
 </span></code></pre></div>
-<h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="docker/essentials/">Docker Essentials</a> - Concepts de base Docker Compose</li>
-<li><a href="docker/capabilities/">Docker Capabilities</a> - Linux capabilities et sécurité</li>
+<li><strong>CrowdSec Engine</strong>: Container running <code>crowdsecurity/crowdsec</code> parsing log files for attack patterns (SSH brute-force, HTTP probing, path traversal, scanner bots).</li>
+<li><strong>Traefik Bouncer</strong>: Intercepts requests and queries CrowdSec Local API (LAPI) to block malicious IPs dynamically.</li>
 </ul>
-<h2 id="structure-du-repository">Structure du Repository<a class="headerlink" href="#structure-du-repository" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker-examples/
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── ansible/                          # Suite d&#39;automatisation Ansible (Traefik, Glances, Arcane, Socket Proxy, systemd, SSL)
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>├── compose/                          # Configurations Docker Compose classées par domaines
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>│   ├── 01-infrastructure/            # Bind9 DNS, Nginx Certbot, Traefik
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│   ├── 02-container-orchestration/   # Arcane PaaS Manager, Portainer, Coolify, Dokploy, K8s Cert-Manager, Longhorn
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>│   ├── 03-iot-smart-home/            # Home Assistant, ChangeDetection.io
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>│   ├── 04-network-management/        # Asterisk VoIP
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>│   ├── 05-monitoring-reporting/      # Checkmk, Uptime Kuma, Glances, Observabilité (Prometheus/Grafana), SonarQube
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>│   ├── 06-ai/                        # Ollama Local, Open WebUI, Jupyter Notebooks, DGX SSH Tunnel
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>│   ├── 07-automation/                # Automatisations de workflow, CI/CD, Cron &amp; PM2 Scheduling
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>│   ├── 08-code-management/           # Gitea, Docker Registry, JFrog Artifactory
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>│   ├── 09-app-server-management/     # Business Apps (Odoo ERP), Content Management (WordPress, Drupal)
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>│   ├── 10-databases/                 # PostgreSQL, CouchDB Cluster, CockroachDB
-</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>│   ├── 11-security-identity/         # Keycloak, Zitadel, SuperTokens, Wazuh SIEM, ClamAV, Socket Proxy
-</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>│   ├── 12-document-management/       # Paperless-ngx
-</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>│   ├── 13-api-gateway/               # Traefik, Kong, Tyk, WSO2 AM, Hasura GraphQL, Hoppscotch
-</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>│   ├── 14-mail-services/             # Mailpit, Docker Mailserver, Mailcatcher, Mailu
-</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>│   ├── 15-media-storage/             # MinIO S3, Erugo File Sharing, Static Files Server, S3FS Volume
-</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>│   ├── 16-development-tools/         # IT-Tools, Excalidraw
-</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>│   ├── 17-data-processing/           # Stack Kafka + Logstash (Data processing temps réel)
-</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>│   └── 18-communication/             # Novu (Moteur de notifications)
-</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>├── docs/                             # Documentation MkDocs &amp; Registre des templates Arcane
-</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>├── helm/                             # Charts Helm Kubernetes
-</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>├── kubernetes/                       # Manifestes Kubernetes natifs
-</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>├── packer/                           # Modèles d&#39;images VM &amp; Containers Packer
-</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>├── scripts/                          # Scripts CLI Cloudflare DNS &amp; Générateur de registre
-</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>└── terraform/                        # Templates Infrastructure as Code Terraform
+<hr />
+<h2 id="deployment-with-ansible">🚀 Deployment with Ansible<a class="headerlink" href="#deployment-with-ansible" title="Permanent link">&para;</a></h2>
+<p>The stack is automated using the Ansible role <a href="https://github.com/nkaurelien/docker-examples/tree/main/ansible/roles/crowdsec"><code>ansible/roles/crowdsec</code></a>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>make<span class="w"> </span>ansible-deploy<span class="w"> </span><span class="nv">TAGS</span><span class="o">=</span>crowdsec
 </span></code></pre></div>
-<h2 id="makefile">Makefile<a class="headerlink" href="#makefile" title="Permanent link">&para;</a></h2>
-<p>Commandes disponibles:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>make<span class="w"> </span>docs<span class="w">          </span><span class="c1"># Installer deps + servir la doc</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>make<span class="w"> </span>docs-deploy<span class="w">   </span><span class="c1"># Déployer sur GitHub Pages</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>make<span class="w"> </span>docker-clean<span class="w">  </span><span class="c1"># Nettoyer ressources Docker</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>make<span class="w"> </span>lint<span class="w">          </span><span class="c1"># Linter les Dockerfiles</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>make<span class="w"> </span><span class="nb">help</span><span class="w">          </span><span class="c1"># Voir toutes les commandes</span>
+<hr />
+<h2 id="configuration-secrets">🔐 Configuration &amp; Secrets<a class="headerlink" href="#configuration-secrets" title="Permanent link">&para;</a></h2>
+<p>All keys are managed in <code>.secrets/</code>:</p>
+<ul>
+<li><code>.secrets/crowdsec.md</code> - Documentation for CrowdSec keys.</li>
+<li><code>.secrets/crowdsec-lapi-key</code> - Secret Local API key shared between CrowdSec engine and Traefik bouncer.</li>
+</ul>
+<hr />
+<h2 id="cli-operations-cscli">🛠️ CLI Operations (<code>cscli</code>)<a class="headerlink" href="#cli-operations-cscli" title="Permanent link">&para;</a></h2>
+<p>Run administrative commands inside the <code>crowdsec</code> container:</p>
+<h3 id="check-active-metrics">Check Active Metrics<a class="headerlink" href="#check-active-metrics" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>crowdsec<span class="w"> </span>cscli<span class="w"> </span>metrics
+</span></code></pre></div>
+<h3 id="list-banned-ips-decisions">List Banned IPs &amp; Decisions<a class="headerlink" href="#list-banned-ips-decisions" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>crowdsec<span class="w"> </span>cscli<span class="w"> </span>decisions<span class="w"> </span>list
+</span></code></pre></div>
+<h3 id="manually-ban-an-ip">Manually Ban an IP<a class="headerlink" href="#manually-ban-an-ip" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>crowdsec<span class="w"> </span>cscli<span class="w"> </span>decisions<span class="w"> </span>add<span class="w"> </span>--ip<span class="w"> </span><span class="m">192</span>.0.2.1<span class="w"> </span>--reason<span class="w"> </span><span class="s2">&quot;Manual ban&quot;</span><span class="w"> </span>--duration<span class="w"> </span>24h
+</span></code></pre></div>
+<h3 id="manually-unban-an-ip">Manually Unban an IP<a class="headerlink" href="#manually-unban-an-ip" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>crowdsec<span class="w"> </span>cscli<span class="w"> </span>decisions<span class="w"> </span>delete<span class="w"> </span>--ip<span class="w"> </span><span class="m">192</span>.0.2.1
+</span></code></pre></div>
+<h3 id="check-installed-scenarios-collections">Check Installed Scenarios &amp; Collections<a class="headerlink" href="#check-installed-scenarios-collections" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>crowdsec<span class="w"> </span>cscli<span class="w"> </span>collections<span class="w"> </span>list
 </span></code></pre></div>
 
 
@@ -5131,15 +4681,31 @@
       
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Overview
+              </div>
+            </div>
+          </a>
+        
         
           
-          <a href="getting-started/quick-start/" class="md-footer__link md-footer__link--next" aria-label="Next: Quick Start">
+          <a href="../clamav/" class="md-footer__link md-footer__link--next" aria-label="Next: ClamAV">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Quick Start
+                ClamAV
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -5192,10 +4758,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
