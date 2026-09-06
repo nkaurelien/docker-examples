@@ -1,6 +1,6 @@
-# Guide d'Installation et d'Utilisation - Ansible Workspace
+# Guide d'Installation et d'Utilisation - Ansible & Cloudflare Automation
 
-Ce dossier contient la suite de déploiement et de gestion d'infrastructure Ansible pour nos serveurs (dont le serveur Contabo FR).
+Ce dossier contient la suite de déploiement Ansible et les outils d'automatisation Cloudflare pour nos infrastructures (dont le serveur Contabo FR).
 
 ---
 
@@ -17,10 +17,12 @@ Ce dossier contient la suite de déploiement et de gestion d'infrastructure Ansi
    ```
 
 2. **Fichiers de Secrets (`.secrets/`)** :
-   Les informations sensibles (IP, utilisateur, mot de passe) sont stockées dans le dossier `.secrets/` à la racine du projet et lues dynamiquement par Ansible :
+   Les informations sensibles sont stockées dans le dossier `.secrets/` à la racine du projet et lues dynamiquement par Ansible et par le SDK Cloudflare :
    * `.secrets/ssh-contabo-server-ip` : Adresse IP du serveur.
    * `.secrets/ssh-contabo-server-user-login` : Nom d'utilisateur SSH (ex: `nkaurelien`).
    * `.secrets/ssh-contabo-server-password` : Mot de passe SSH.
+   * `.secrets/cloudflare-account-id` : ID du compte Cloudflare.
+   * `.secrets/cloudflare-api-key` : Jeton d'API Bearer Cloudflare.
 
 ---
 
@@ -43,6 +45,9 @@ ansible/
     ├── ssl-certs/         # Déploiement et distribution des certificats SSL/TLS
     ├── systemd-service/   # Gestion des stacks via services systemd
     └── traefik/           # Reverse Proxy Traefik v3 avec découverte Docker
+
+scripts/
+└── cloudflare_dns.py      # CLI d'administration DNS Cloudflare via SDK officiel
 ```
 
 ---
@@ -67,7 +72,27 @@ make ansible-deploy
 
 ---
 
-## 🎯 Commandes ciblées (Tags)
+## ☁️ Gestion du DNS Cloudflare (SDK Officiel)
+
+Le script [`scripts/cloudflare_dns.py`](../scripts/cloudflare_dns.py) utilise le SDK Python officiel `cloudflare` pour gérer automatiquement les enregistrements DNS :
+
+```bash
+# Lister les zones Cloudflare enregistrées
+.venv/bin/python3 scripts/cloudflare_dns.py
+
+# Lister les enregistrements DNS d'un domaine
+.venv/bin/python3 scripts/cloudflare_dns.py list kamitbrains.fr
+
+# Ajouter un enregistrement DNS (ex. monapp -> IP Contabo)
+.venv/bin/python3 scripts/cloudflare_dns.py add kamitbrains.fr A monapp 161.97.89.185
+
+# Ajouter un enregistrement DNS proxifié Cloudflare (CDN/WAF)
+.venv/bin/python3 scripts/cloudflare_dns.py add kamitbrains.fr A monapp 161.97.89.185 --proxied
+```
+
+---
+
+## 🎯 Commandes ciblées Ansible (Tags)
 
 Si vous souhaitez exécuter un rôle spécifique (ex. Traefik) :
 
@@ -98,7 +123,7 @@ services:
       - traefik-public
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.mon-service.rule=Host(`mon-service.apps.local`)"
+      - "traefik.http.routers.mon-service.rule=Host(`mon-service.kamitbrains.fr`)"
       - "traefik.http.routers.mon-service.entrypoints=web"
       - "traefik.http.services.mon-service.loadbalancer.server.port=80"
 
