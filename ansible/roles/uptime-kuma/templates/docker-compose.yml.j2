@@ -79,7 +79,17 @@ services:
         sqlite3 /app/data/kuma.db "INSERT INTO monitor_group (monitor_id, group_id, weight) SELECT 4, 1, 4 WHERE NOT EXISTS (SELECT 1 FROM monitor_group WHERE monitor_id = 4 AND group_id = 1);"
         sqlite3 /app/data/kuma.db "INSERT INTO monitor_group (monitor_id, group_id, weight) SELECT 5, 1, 5 WHERE NOT EXISTS (SELECT 1 FROM monitor_group WHERE monitor_id = 5 AND group_id = 1);"
 
-        echo "Uptime Kuma monitors, Basic Auth, and public status page seeded successfully!"
+        # Seed Ntfy Push Notification Channel (id = 1, default = 1)
+        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO notification (id, name, active, user_id, is_default, config) VALUES (1, 'Ntfy Push Alerts', 1, 1, 1, '{\"type\":\"ntfy\",\"name\":\"Ntfy Push Alerts\",\"ntfyserverurl\":\"https://ntfy.{{ traefik_domain | default('kamitbrains.fr') }}\",\"ntfytopic\":\"alerts\",\"ntfyPriority\":4,\"ntfyAuthenticationMethod\":\"none\",\"is_default\":true}');"
+
+        # Link all monitors to Ntfy Notification Channel
+        sqlite3 /app/data/kuma.db "INSERT INTO monitor_notification (monitor_id, notification_id) SELECT 1, 1 WHERE NOT EXISTS (SELECT 1 FROM monitor_notification WHERE monitor_id = 1 AND notification_id = 1);"
+        sqlite3 /app/data/kuma.db "INSERT INTO monitor_notification (monitor_id, notification_id) SELECT 2, 1 WHERE NOT EXISTS (SELECT 1 FROM monitor_notification WHERE monitor_id = 2 AND notification_id = 1);"
+        sqlite3 /app/data/kuma.db "INSERT INTO monitor_notification (monitor_id, notification_id) SELECT 3, 1 WHERE NOT EXISTS (SELECT 1 FROM monitor_notification WHERE monitor_id = 3 AND notification_id = 1);"
+        sqlite3 /app/data/kuma.db "INSERT INTO monitor_notification (monitor_id, notification_id) SELECT 4, 1 WHERE NOT EXISTS (SELECT 1 FROM monitor_notification WHERE monitor_id = 4 AND notification_id = 1);"
+        sqlite3 /app/data/kuma.db "INSERT INTO monitor_notification (monitor_id, notification_id) SELECT 5, 1 WHERE NOT EXISTS (SELECT 1 FROM monitor_notification WHERE monitor_id = 5 AND notification_id = 1);"
+
+        echo "Uptime Kuma monitors, Basic Auth, public status page, and Ntfy notifications seeded successfully!"
     depends_on:
       - uptime-kuma
     restart: "no"
