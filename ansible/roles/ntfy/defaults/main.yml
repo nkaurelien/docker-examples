@@ -1,0 +1,11 @@
+---
+# ntfy role defaults
+ntfy_version: "v2.11.0"
+ntfy_image: "binwiederhier/ntfy:{{ ntfy_version }}"
+ntfy_domain: "kamitbrains.fr"
+ntfy_hostname: "ntfy.{{ traefik_domain | default(ntfy_domain) }}"
+ntfy_port: 80
+ntfy_compose_dir: "/opt/ntfy"
+
+# Admin password lookup
+ntfy_admin_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ntfy-admin-password', errors='ignore') | default('ntfy-admin-password-change-me', true) | trim }}"
