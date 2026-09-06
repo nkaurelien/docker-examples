@@ -1,0 +1,75 @@
+x-arcane:
+  icon: https://raw.githubusercontent.com/crowdsecurity/crowdsec/master/docs/assets/crowdsec_logo.png
+  urls:
+    - https://www.crowdsec.net/
+    - https://github.com/crowdsecurity/crowdsec
+
+services:
+  crowdsec:
+    image: crowdsecurity/crowdsec:latest
+    container_name: crowdsec
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Paris
+      - COLLECTIONS=crowdsecurity/traefik crowdsecurity/sshd crowdsecurity/linux
+      - LAPI_KEY_TRAEFIK=${CROWDSEC_LAPI_KEY:-change-me-crowdsec-lapi-key}
+    volumes:
+      - /var/log/traefik:/var/log/traefik:ro
+      - /var/log/auth.log:/var/log/auth.log:ro
+      - /var/log/syslog:/var/log/syslog:ro
+      - crowdsec-config:/etc/crowdsec
+      - crowdsec-data:/var/lib/crowdsec/data
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - crowdsec-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 512M
+        reservations:
+          memory: 128M
+
+  crowdsec-traefik-bouncer:
+    image: fbonalair/traefik-crowdsec-bouncer:latest
+    container_name: crowdsec-traefik-bouncer
+    restart: unless-stopped
+    environment:
+      - CROWDSEC_AGENT_HOST=crowdsec:8080
+      - CROWDSEC_BOUNCER_API_KEY=${CROWDSEC_LAPI_KEY:-change-me-crowdsec-lapi-key}
+      - CROWDSEC_BOUNCER_LOG_LEVEL=1
+    networks:
+      - crowdsec-net
+      - traefik-public
+    depends_on:
+      - crowdsec
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 256M
+        reservations:
+          memory: 64M
+
+volumes:
+  crowdsec-config:
+    name: crowdsec-config
+  crowdsec-data:
+    name: crowdsec-data
+
+networks:
+  crowdsec-net:
+    name: crowdsec-net
+  traefik-public:
+    external: true

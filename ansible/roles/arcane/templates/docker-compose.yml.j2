@@ -30,6 +30,18 @@ services:
       - no-new-privileges:true
     cap_drop:
       - ALL
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+        reservations:
+          memory: 32M
 
   arcane:
     image: {{ arcane_image }}
@@ -61,6 +73,18 @@ services:
       - "traefik.http.routers.arcane.entrypoints=websecure"
       - "traefik.http.routers.arcane.tls.certresolver=letsencrypt"
       - "traefik.http.services.arcane.loadbalancer.server.port=3552"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.00"
+          memory: 1024M
+        reservations:
+          memory: 256M
 
   arcane-db-seeder:
     image: alpine:latest
@@ -81,6 +105,16 @@ services:
     depends_on:
       - arcane
     restart: "no"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "2"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
 
 networks:
   arcane-internal:
