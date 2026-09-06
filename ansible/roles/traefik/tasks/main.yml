@@ -20,10 +20,17 @@
     mode: '0644'
   notify: Restart Traefik service
 
+- name: Remove legacy conflicting socket-proxy container if present
+  ansible.builtin.command:
+    cmd: "docker rm -f traefik-socket-proxy"
+  failed_when: false
+  changed_when: false
+
 - name: Start Traefik container stack via docker compose
   community.docker.docker_compose_v2:
     project_src: "{{ traefik_compose_dir }}"
     state: present
+    remove_orphans: true
 
 - name: Install and enable Traefik systemd service for automatic reboot start
   ansible.builtin.include_role:
