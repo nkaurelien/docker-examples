@@ -5,60 +5,45 @@ A comprehensive collection of production-ready Docker Compose configurations for
 
 ## 🏗️ Repository Structure
 
-### API Management
-- **[Hasura](api-managment/hasura/)** - GraphQL API with real-time subscriptions
-- **[Hoppscotch](api-managment/hoppscotch/)** - Open-source API development ecosystem
-- **[Kong](api-managment/kong/)** - Cloud-native API gateway with admin UI
-- **[Tyk](api-managment/tyk/)** - Open-source API gateway and management platform
-- **[WSO2 API Manager](api-managment/wso2am/)** - Full lifecycle API management
+```text
+docker-examples/
+├── ansible/                          # Automated Ansible deployment suite (Traefik, Glances, Arcane, Socket Proxy, systemd, SSL)
+├── compose/                          # Production Docker Compose stacks organized into 18 categories
+│   ├── 01-infrastructure/            # Bind9 DNS, Nginx Certbot, Traefik
+│   ├── 02-container-orchestration/   # Arcane PaaS Manager, Portainer, Coolify, Dokploy, K8s Cert-Manager, Longhorn
+│   ├── 03-iot-smart-home/            # Home Assistant, ChangeDetection.io
+│   ├── 04-network-management/        # Asterisk VoIP
+│   ├── 05-monitoring-reporting/      # Checkmk, Uptime Kuma, Glances, Observability (Prometheus/Grafana), SonarQube
+│   ├── 06-ai/                        # Ollama Local, Open WebUI, Jupyter Notebooks, DGX SSH Tunnel
+│   ├── 07-automation/                # Workflow automation, CI/CD, Cron & PM2 Scheduling
+│   ├── 08-code-management/           # Gitea, Docker Registry, JFrog Artifactory
+│   ├── 09-app-server-management/     # Business Apps (Odoo ERP), Content Management (WordPress, Drupal)
+│   ├── 10-databases/                 # PostgreSQL, CouchDB Cluster, CockroachDB
+│   ├── 11-security-identity/         # Keycloak, Zitadel, SuperTokens, Wazuh SIEM, ClamAV, Socket Proxy
+│   ├── 12-document-management/       # Paperless-ngx
+│   ├── 13-api-gateway/               # Traefik, Kong, Tyk, WSO2 AM, Hasura GraphQL, Hoppscotch
+│   ├── 14-mail-services/             # Mailpit, Docker Mailserver, Mailcatcher, Mailu
+│   ├── 15-media-storage/             # MinIO S3, Erugo File Sharing, Static Files Server, S3FS Volume
+│   ├── 16-development-tools/         # IT-Tools, Excalidraw
+│   ├── 17-data-processing/           # Kafka + Logstash real-time processing stack
+│   └── 18-communication/             # Novu notification engine
+├── docs/                             # MkDocs source documentation & Arcane templates registry
+├── helm/                             # Kubernetes Helm charts
+├── kubernetes/                       # Native Kubernetes manifests
+├── packer/                           # VM & Container image builder templates
+├── scripts/                          # Cloudflare DNS CLI & Registry generator scripts
+└── terraform/                        # Infrastructure as Code templates
+```
 
-### Authentication & Authorization
-- **[Keycloak](auth-managment/keycloak/)** - Identity and access management
-- **[Kratos](auth-managment/kratos/)** - Cloud native identity management
-- **[SuperTokens](auth-managment/super-token/)** - Open-source authentication solution
-- **[Zitadel](auth-managment/zitadel/)** - Identity infrastructure platform
+### Key Service Categories
 
-### Databases
-- **[CockroachDB](databases/cockroach/)** - Distributed SQL database
-- **[CouchDB Cluster](databases/couchdb-cluster/)** - Multi-node CouchDB setup with HAProxy
-- **[PostgreSQL](databases/postgres/)** - PostgreSQL with backup/restore utilities
-
-### Data Processing & Analytics
-- **[Kafka + Logstash](kafka-logstash/)** - Production-ready Kafka cluster with real-time data processing
-- **[Grafana](grafana/)** - Monitoring and observability platform
-- **[Jupyter](compose/06-ai/jupyter/)** - Data science notebooks with Spark integration
-- **[Ollama Local](compose/06-ai/ollama-local/)** - Run LLMs locally with CPU or Nvidia GPU acceleration
-- **[Ollama SSH Tunnel](compose/06-ai/dgx-ollama-tunnel/)** - Secure containerized SSH tunnel forwarding to remote GPU clusters (e.g. DGX)
-- **[Open WebUI](compose/06-ai/open-webui/)** - ChatGPT-like user interface for Ollama (configured for remote GPU server)
-
-### Development Tools
-- **[Jenkins](jenkins/)** - CI/CD automation server
-- **[SonarQube](sonarcube/)** - Code quality and security analysis
-- **[Docker Registry](docker-registry/)** - Private Docker image registry with UI
-- **[Portainer](compose/02-container-orchestration/portainer/)** - Docker container management UI
-- **[Arcane](compose/02-container-orchestration/arcane/)** - Modern self-hosted Docker dashboard (with Socket Proxy)
-- **[IT-Tools](it-tools/)** - Collection of handy online tools for developers (network, encoding, generators, etc.)
-
-### Communication & Collaboration
-- **[Mail Servers](mail-servers/)** - Complete email solutions (Docker Mailserver, Mailcatcher, Mailu)
-- **[Excalidraw](excalidraw/)** - Collaborative drawing tool (on-premises alternative to draw.io)
-
-### Storage & File Management
-- **[MinIO S3](minio-s3/)** - S3-compatible object storage
-- **[Static Files Server](statics-files-server/)** - Multi-backend static file serving
-- **[S3FS Volume](using-s3fs-volume/)** - Mount S3 buckets as local volumes
-
-### Business Applications
-- **[Odoo ERP](odoo-erp/)** - Complete business management suite
-- **[Drupal](drupal/)** - Content management system
-- **[WordPress](mysql-wordpress/)** - WordPress with MySQL
-
-### Infrastructure Services
-- **[Ansible Infrastructure](ansible/)** - Automated deployment suite (Traefik, Docker daemon, systemd, SSL)
-- **[Cloudflare DNS CLI](scripts/cloudflare_dns.py)** - Automated DNS management script powered by the official Cloudflare Python SDK
-- **[DNS Server](dnsServer/)** - Local DNS management
-- **[Nginx Proxy Manager](nginx-proxy-manager/)** - Reverse proxy with SSL management
-- **[Cron Jobs](cronjob/)** - Scheduled task management with PM2 and multiple queue systems
+- **[Ansible Automation](ansible/)** - Production playbook suite for Traefik, Glances, Arcane PaaS, Docker Socket Proxy, and Let's Encrypt SSL.
+- **[Container Orchestration](compose/02-container-orchestration/)** - [Arcane](compose/02-container-orchestration/arcane/), [Portainer](compose/02-container-orchestration/portainer/), [Coolify](compose/02-container-orchestration/coolify/), [Dokploy](compose/02-container-orchestration/dokploy/).
+- **[AI & LLM Platforms](compose/06-ai/)** - [Ollama Local](compose/06-ai/ollama-local/), [Open WebUI](compose/06-ai/open-webui/), [Jupyter Notebooks](compose/06-ai/jupyter/), [DGX SSH Tunnel](compose/06-ai/dgx-ollama-tunnel/).
+- **[API Management & Gateways](compose/13-api-gateway/)** - [Traefik](compose/13-api-gateway/api-gateways/), [Kong](compose/13-api-gateway/api-gateways/), [Hasura](compose/13-api-gateway/graphql/).
+- **[Security & Identity](compose/11-security-identity/)** - [Keycloak](compose/11-security-identity/identity-providers/), [Zitadel](compose/11-security-identity/identity-providers/), [Wazuh SIEM](compose/11-security-identity/wazuh/), [Docker Socket Proxy](compose/11-security-identity/security-tools/).
+- **[Data Processing & Analytics](compose/17-data-processing/)** - [Kafka + Logstash Stack](compose/17-data-processing/kafka-logstash/).
+- **[Cloudflare DNS CLI](scripts/cloudflare_dns.py)** - Automated DNS management powered by official Cloudflare Python SDK v5.
 
 ## 🚀 Quick Start
 
