@@ -34,6 +34,12 @@
     dest: "/opt/traefik/config/dynamic/dashboard-router.yml"
     mode: '0644'
 
+- name: Deploy Traefik CrowdSec ForwardAuth middleware configuration
+  ansible.builtin.template:
+    src: traefik-crowdsec-middleware.yml.j2
+    dest: "/opt/traefik/config/dynamic/crowdsec-bouncer.yml"
+    mode: '0644'
+
 - name: Deploy Traefik docker-compose configuration
   ansible.builtin.template:
     src: docker-compose.yml.j2
