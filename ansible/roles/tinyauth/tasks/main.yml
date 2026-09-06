@@ -5,11 +5,27 @@
     state: directory
     mode: '0755'
 
+- name: Generate bcrypt user entry for email user
+  ansible.builtin.shell:
+    cmd: >
+      docker run --rm {{ tinyauth_image }} user create --username "{{ tinyauth_admin_user }}" --password "{{ tinyauth_admin_password }}" --docker 2>&1 | grep -o 'user=.*' | cut -d= -f2 | sed -E 's/\x1B\[[0-9;]*[a-zA-Z]//g'
+  register: _tinyauth_user_email_res
+  changed_when: false
+
+- name: Generate bcrypt user entry for admin user
+  ansible.builtin.shell:
+    cmd: >
+      docker run --rm {{ tinyauth_image }} user create --username "admin" --password "{{ tinyauth_admin_password }}" --docker 2>&1 | grep -o 'user=.*' | cut -d= -f2 | sed -E 's/\x1B\[[0-9;]*[a-zA-Z]//g'
+  register: _tinyauth_user_admin_res
+  changed_when: false
+
 - name: Deploy TinyAuth docker-compose configuration
   ansible.builtin.template:
     src: docker-compose.yml.j2
     dest: "{{ tinyauth_compose_dir }}/docker-compose.yml"
     mode: '0644'
+  vars:
+    tinyauth_users_string: "{{ _tinyauth_user_email_res.stdout }},{{ _tinyauth_user_admin_res.stdout }}"
 
 - name: Start TinyAuth container stack via docker compose
   community.docker.docker_compose_v2:
