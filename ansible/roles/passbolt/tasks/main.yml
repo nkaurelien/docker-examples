@@ -26,3 +26,28 @@
     systemd_compose_dir: "{{ passbolt_compose_dir }}"
     systemd_compose_files: "-f docker-compose.yml"
     systemd_project_name: "passbolt"
+
+- name: Retrieve Passbolt init container logs
+  ansible.builtin.command:
+    cmd: docker logs passbolt-init
+  register: passbolt_init_logs
+  changed_when: false
+  ignore_errors: true
+
+- name: Extract activation link from logs
+  ansible.builtin.set_fact:
+    passbolt_activation_url: "{{ passbolt_init_logs.stdout | regex_search('https://[a-zA-Z0-9.-]+/setup/start/[a-zA-Z0-9-]+/[a-zA-Z0-9-]+') }}"
+
+- name: Display extracted Passbolt activation link
+  ansible.builtin.debug:
+    msg: "Passbolt Activation Link: {{ passbolt_activation_url }}"
+  when: passbolt_activation_url is defined and passbolt_activation_url
+
+- name: Save activation link to local .secrets/passbolt.md
+  ansible.builtin.template:
+    src: passbolt_secrets.md.j2
+    dest: "{{ playbook_dir }}/../.secrets/passbolt.md"
+    mode: '0600'
+  delegate_to: localhost
+  become: false
+  when: passbolt_activation_url is defined and passbolt_activation_url
