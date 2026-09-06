@@ -1,0 +1,10 @@
+---
+# Arcane Docker Manager role defaults
+arcane_version: "latest"
+arcane_image: "ghcr.io/getarcaneapp/manager:{{ arcane_version }}"
+arcane_port: 3552
+arcane_domain: "{{ traefik_domain | default('kamitbrains.fr') }}"
+arcane_hostname: "arcane.{{ arcane_domain }}"
+arcane_compose_dir: "/opt/arcane"
+arcane_jwt_secret: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/arcane-jwt-secret', errors='ignore') | default('arcane-jwt-secret-key-32-chars-long!!', true) }}"
+arcane_encryption_key: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/arcane-encryption-key', errors='ignore') | default('arcane-encryption-key-32-chars!!', true) }}"
