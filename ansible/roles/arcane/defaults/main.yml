@@ -8,3 +8,5 @@ arcane_hostname: "arcane.{{ arcane_domain }}"
 arcane_compose_dir: "/opt/arcane"
 arcane_jwt_secret: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/arcane-jwt-secret', errors='ignore') | default('arcane-jwt-secret-key-32-chars-long!!', true) }}"
 arcane_encryption_key: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/arcane-encryption-key', errors='ignore') | default('arcane-encryption-key-32-chars!!', true) }}"
+arcane_admin_email: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/arcane-admin-email', errors='ignore') | default('admin@kamitbrains.fr', true) | trim }}"
+
