@@ -92,7 +92,11 @@ services:
         sqlite3 /app/data/kuma.db "INSERT INTO monitor_notification (monitor_id, notification_id) SELECT 4, 1 WHERE NOT EXISTS (SELECT 1 FROM monitor_notification WHERE monitor_id = 4 AND notification_id = 1);"
         sqlite3 /app/data/kuma.db "INSERT INTO monitor_notification (monitor_id, notification_id) SELECT 5, 1 WHERE NOT EXISTS (SELECT 1 FROM monitor_notification WHERE monitor_id = 5 AND notification_id = 1);"
 
-        echo "Uptime Kuma monitors, Basic Auth, public status page, and Ntfy notifications seeded successfully!"
+        # Enable Trust Proxy (Proxy de confiance = Oui) and set Primary Base URL
+        sqlite3 /app/data/kuma.db "INSERT OR REPLACE INTO setting (key, value, type) VALUES ('trustProxy', 'true', 'general');"
+        sqlite3 /app/data/kuma.db "INSERT OR REPLACE INTO setting (key, value, type) VALUES ('primaryBaseURL', '\"https://status.{{ traefik_domain | default('kamitbrains.fr') }}\"', 'general');"
+
+        echo "Uptime Kuma monitors, Basic Auth, public status page, trustProxy, and Ntfy notifications seeded successfully!"
     depends_on:
       - uptime-kuma
     restart: "no"
