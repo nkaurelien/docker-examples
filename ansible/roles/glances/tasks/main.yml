@@ -16,6 +16,13 @@
     project_src: "{{ glances_compose_dir }}"
     state: present
 
+- name: Configure Traefik dynamic router for Glances
+  ansible.builtin.template:
+    src: traefik-glances.yml.j2
+    dest: "/opt/traefik/config/dynamic/glances.yml"
+    mode: '0644'
+  failed_when: false
+
 - name: Install and enable Glances systemd service for boot startup
   ansible.builtin.include_role:
     name: systemd-service
