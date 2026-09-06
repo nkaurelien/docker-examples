@@ -1,0 +1,48 @@
+# RustFS — POC stockage objet S3 (candidat drop-in MinIO, écrit en Rust)
+# Workspace d'expérimentation, hors repo asone4health.
+#
+#   cp .env.example .env && docker compose up -d
+#   ./test-s3.sh
+#   docker compose down -v
+#
+# ⚠️ Ports 9000/9001 = les MÊMES que MinIO → NE PAS lancer minio-s3 en parallèle.
+#
+# Endpoints (localhost) :
+#   S3 API  : http://localhost:9000    (creds RUSTFS_ACCESS_KEY / RUSTFS_SECRET_KEY)
+#   Console : http://localhost:9001    (mêmes identifiants)
+
+name: rustfs-poc
+
+services:
+  rustfs:
+    image: ${RUSTFS_IMAGE:-rustfs/rustfs:latest}
+    container_name: rustfs
+    ports:
+      - "9000:9000"     # S3 API
+      - "9001:9001"     # Console web
+    environment:
+      RUSTFS_ACCESS_KEY: ${RUSTFS_ACCESS_KEY:-asone_poc_access}
+      RUSTFS_SECRET_KEY: ${RUSTFS_SECRET_KEY:-asone_poc_secret_change_me}
+      # Single-node POC : un seul volume. Pour l'erasure coding (durabilité HDS),
+      # RustFS attend plusieurs chemins (ex: /data/rustfs{0,1,2,3}) — à tester.
+      RUSTFS_VOLUMES: /data
+      RUSTFS_ADDRESS: ":9000"
+      RUSTFS_CONSOLE_ENABLE: "true"
+      RUSTFS_CONSOLE_ADDRESS: ":9001"
+    volumes:
+      - rustfs-data:/data
+    networks: [rustfs]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+networks:
+  rustfs:
+    driver: bridge
+
+volumes:
+  rustfs-data:

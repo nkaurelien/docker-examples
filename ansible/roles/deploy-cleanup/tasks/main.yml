@@ -1,0 +1,49 @@
+---
+# =============================================================================
+# Pre-deployment cleanup + Set permissions
+# =============================================================================
+# Optional variables:
+#   target_dir  — root directory to chmod 775 (default: deploy_dir)
+#   env_files   — list of env file paths to restrict to 0600 (default: [])
+# =============================================================================
+
+# --- Set permissions ---
+
+- name: Set permissions on deployment directory
+  command: chmod 775 -R {{ target_dir }}
+  when: target_dir is defined
+
+# Filtrage prealable : le module `file` plante si le path n'existe pas, ce qui
+# casse les deploiements cibles (ex. `--tags keycloak,nginx` ne cree pas
+# env.ntfy / env.consul / env.admin-console). On stat d'abord, puis on
+# applique le chmod uniquement aux fichiers presents.
+- name: Stat env files
+  ansible.builtin.stat:
+    path: "{{ item }}"
+  register: env_files_stat
+  with_items: "{{ env_files | default([]) }}"
+  when: env_files is defined and env_files | length > 0
+
+- name: Ensure env files are restricted (secrets)
+  ansible.builtin.file:
+    path: "{{ item.item }}"
+    mode: '0600'
+  loop: "{{ env_files_stat.results | default([]) }}"
+  when: item.stat.exists | default(false)
+  loop_control:
+    label: "{{ item.item }}"
+
+# --- Pre-deployment cleanup ---
+
+- name: Check disk usage before deployment
+  shell: df / | grep -v Filesystem | awk '{print $5}' | sed 's/%//'
+  register: disk_usage
+  changed_when: false
+
+- name: Display disk usage
+  debug:
+    msg: "Current disk usage: {{ disk_usage.stdout }}%"
+
+- name: Cleanup old Docker images if disk > 70%
+  shell: docker image prune -a -f --filter 'until=720h'
+  when: disk_usage.stdout | int > 70

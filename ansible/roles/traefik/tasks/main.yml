@@ -1,0 +1,26 @@
+---
+- name: Ensure Traefik public network exists
+  community.docker.docker_network:
+    name: "{{ traefik_public_network }}"
+    state: present
+
+- name: Ensure Traefik deployment directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ traefik_compose_dir }}"
+    - "{{ traefik_compose_dir }}/config/dynamic"
+
+- name: Deploy Traefik docker-compose configuration
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ traefik_compose_dir }}/docker-compose.yml"
+    mode: '0644'
+  notify: Restart Traefik service
+
+- name: Start Traefik container stack via docker compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ traefik_compose_dir }}"
+    state: present

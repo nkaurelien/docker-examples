@@ -1,0 +1,64 @@
+---
+# =============================================================================
+# SSL Certificate Deployment — defaults
+# =============================================================================
+# Deploie les certificats Namecheap/Sectigo (wildcard) depuis .ssl-certs/ du
+# repo local vers /etc/ssl/{{ app_domain }}/ sur le serveur distant.
+# Les fichiers locaux sont git-ignores (.ssl-certs/ dans .gitignore).
+#
+# PREREQUIS (action manuelle du dev):
+#   1. Telecharger le cert Namecheap -> dezipper dans .ssl-certs/asone4health_{tld}/
+#   2. Dezipper le "CSR wilcard.zip" Namecheap dans le meme dossier
+#      (fournit PRIVATE + CSR + CERTIFICATE sans extension)
+#
+# Reference: https://www.namecheap.com/support/knowledgebase/article.aspx/9419/33/installing-an-ssl-certificate-on-nginx/
+# =============================================================================
+
+# --- Source locale (poste dev / CI) ---------------------------------------
+# Base dir (racine repo, resolue via local_project_dir de group_vars/all.yml)
+ssl_certs_local_base_dir: "{{ local_project_dir }}/.ssl-certs"
+
+# Convention Namecheap: dossier avec underscore (asone4health_fr, pas .fr)
+ssl_certs_local_dir_name: "{{ app_domain | replace('.', '_') }}"
+ssl_certs_local_dir: "{{ ssl_certs_local_base_dir }}/{{ ssl_certs_local_dir_name }}"
+
+# Noms de fichiers locaux — convention actuelle Namecheap
+# (prefixe __ pour wildcard, pas d'extension pour les fichiers extraits du zip CSR)
+ssl_certs_local_cert_file: "__{{ ssl_certs_local_dir_name }}.crt"
+ssl_certs_local_ca_bundle_file: "__{{ ssl_certs_local_dir_name }}.ca-bundle"
+ssl_certs_local_p7b_file: "__{{ ssl_certs_local_dir_name }}.p7b"
+ssl_certs_local_key_file: "PRIVATE"   # extrait du zip CSR Namecheap
+ssl_certs_local_csr_file: "CSR"       # extrait du zip CSR Namecheap
+
+# --- Destination distante -------------------------------------------------
+# Convention nginx existante (referencee dans vars/nginx/nginx_vhosts.yml)
+# Aligne avec l'etat actuel du serveur FR (assemble manuellement) pour garantir
+# l'idempotence — les noms des fichiers bruts conservent le prefixe Namecheap.
+ssl_certs_remote_dir: "/etc/ssl/{{ app_domain }}"
+
+# nginx_bundle.crt + private.key = chemins referencees par les vhosts nginx.
+# DOIVENT rester alignes avec ssl_cert_file/ssl_key_file de group_vars/all.yml.
+ssl_certs_remote_nginx_bundle_file: "{{ ssl_cert_file }}"   # nginx_bundle.crt
+ssl_certs_remote_key_file: "{{ ssl_key_file }}"             # private.key
+
+# Fichiers bruts Namecheap (conservent les noms d'origine — alignes avec le serveur)
+ssl_certs_remote_cert_file: "__{{ ssl_certs_local_dir_name }}.crt"            # __asone4health_fr.crt
+ssl_certs_remote_ca_bundle_file: "__{{ ssl_certs_local_dir_name }}.ca-bundle" # __asone4health_fr.ca-bundle
+ssl_certs_remote_p7b_file: "__{{ ssl_certs_local_dir_name }}.p7b"             # __asone4health_fr.p7b
+
+# Alias / bundles generes
+ssl_certs_remote_apache_cert_file: "apache_bundle.crt"      # alias cert seul pour Apache
+ssl_certs_remote_csr_file: "{{ app_domain }}.csr"
+
+# --- Permissions ----------------------------------------------------------
+ssl_certs_dir_mode: "0755"    # /etc/ssl/{domain}/ — nginx doit pouvoir lire
+ssl_certs_cert_mode: "0644"   # certificats publics
+ssl_certs_key_mode: "0600"    # private key: root uniquement
+ssl_certs_owner: "root"
+ssl_certs_group: "root"
+
+# --- Comportement ---------------------------------------------------------
+ssl_certs_backup_on_replace: true    # backup=yes sur les copy (rollback manuel possible)
+ssl_certs_validate_key_match: true   # verifier modulus cert == modulus key
+ssl_certs_archive_csr: true          # copier la CSR sur le serveur (archive)
+ssl_certs_archive_p7b: true          # copier le p7b sur le serveur (archive)

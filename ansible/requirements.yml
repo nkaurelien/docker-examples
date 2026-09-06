@@ -1,0 +1,13 @@
+---
+roles:
+  - name: geerlingguy.docker
+    version: 7.4.7
+  - name: geerlingguy.nginx
+    version: 3.2.0
+  - name: geerlingguy.certbot
+    version: 5.4.0
+  - name: darkwizard242.hostctl
+    version: 1.4.0
+
+collections:
+  - name: community.docker

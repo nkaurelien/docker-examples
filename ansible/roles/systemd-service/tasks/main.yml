@@ -1,0 +1,23 @@
+---
+# =============================================================================
+# Install and enable a systemd service for a Docker Compose stack
+# =============================================================================
+# Required variables:
+#   systemd_service_name        — e.g. "asone-central"
+#   systemd_service_description — e.g. "AsOne4Health Central - Keycloak + PostgreSQL"
+#   systemd_compose_dir         — working directory for docker compose
+#   systemd_compose_files       — e.g. "-f compose.yml" or "-f compose.keycloak.yml --env-file .env"
+#   systemd_project_name        — docker compose -p name
+# =============================================================================
+
+- name: "Install systemd service: {{ systemd_service_name }}"
+  template:
+    src: systemd-docker-compose.service.j2
+    dest: "/etc/systemd/system/{{ systemd_service_name }}.service"
+    mode: '0644'
+
+- name: "Enable {{ systemd_service_name }} on boot"
+  systemd:
+    name: "{{ systemd_service_name }}"
+    enabled: yes
+    daemon_reload: yes

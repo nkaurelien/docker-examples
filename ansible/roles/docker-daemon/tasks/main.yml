@@ -1,0 +1,49 @@
+---
+# Gère /etc/docker/daemon.json avec la rotation des logs par défaut.
+# Merge-safe (préserve les autres clés existantes), JSON valide par construction
+# (to_nice_json), n'active PAS le changement (pas de restart auto).
+
+- name: Ensure /etc/docker exists
+  file:
+    path: /etc/docker
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Read existing daemon.json (if any)
+  slurp:
+    src: /etc/docker/daemon.json
+  register: _docker_daemon_raw
+  failed_when: false
+
+- name: Compute merged daemon config
+  set_fact:
+    _docker_daemon_cfg: >-
+      {{ _existing | combine({
+           'log-driver': docker_daemon_log_driver,
+           'log-opts': {'max-size': docker_daemon_log_max_size, 'max-file': docker_daemon_log_max_file | string}
+         }) }}
+  vars:
+    _existing: "{{ (_docker_daemon_raw.content | b64decode | from_json) if (_docker_daemon_raw.content is defined) else {} }}"
+
+- name: Write /etc/docker/daemon.json (rotation logs)
+  copy:
+    content: "{{ _docker_daemon_cfg | to_nice_json }}\n"
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: '0644'
+    backup: true
+  register: _docker_daemon_write
+  notify: restart docker
+
+- name: Warn — daemon.json changé, restart requis pour activer
+  debug:
+    msg: >-
+      ⚠️ /etc/docker/daemon.json modifié. Inerte tant que Docker n'est pas
+      redémarré (DISRUPTIF : coupe tous les conteneurs, l'existant ne prend la
+      limite qu'à sa recréation). Passer docker_daemon_restart=true pour l'automatiser.
+  when:
+    - _docker_daemon_write is changed
+    - not (docker_daemon_restart | default(false) | bool)

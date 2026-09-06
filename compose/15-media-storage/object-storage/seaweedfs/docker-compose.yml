@@ -1,0 +1,116 @@
+# SeaweedFS — POC stockage objet S3 (évaluation remplacement MinIO CE)
+# Workspace d'expérimentation, hors repo asone4health.
+#
+#   docker compose up -d                       # cluster + S3 + admin
+#   docker compose --profile monitoring up -d  # + Prometheus
+#   docker compose down -v                     # arrêt + purge des volumes
+#
+# Endpoints (localhost) :
+#   Master UI  : http://localhost:9333
+#   Filer      : http://localhost:8888
+#   S3 API     : http://localhost:8333    (creds dans config/s3.json)
+#   Admin UI   : http://localhost:23646   (admin / $ADMIN_PASSWORD)
+#   Volume     : http://localhost:8080
+#   Prometheus : http://localhost:9091    (profile monitoring)
+
+name: seaweedfs-poc
+
+x-image: &sw_image ${SEAWEEDFS_IMAGE:-chrislusf/seaweedfs:latest}
+
+services:
+  master:
+    image: *sw_image
+    container_name: seaweedfs-master
+    command: >-
+      master -ip=master -ip.bind=0.0.0.0 -mdir=/data
+      -volumeSizeLimitMB=1024 -metricsPort=9324
+    ports:
+      - "9333:9333"     # HTTP API / UI
+      - "19333:19333"   # gRPC
+    volumes:
+      - master-data:/data
+    networks: [seaweedfs]
+    restart: unless-stopped
+
+  volume:
+    image: *sw_image
+    container_name: seaweedfs-volume
+    command: >-
+      volume -mserver=master:9333 -ip=volume -ip.bind=0.0.0.0
+      -dir=/data -max=0 -metricsPort=9325
+    ports:
+      - "8080:8080"
+      - "18080:18080"
+    volumes:
+      - volume-data:/data
+    depends_on: [master]
+    networks: [seaweedfs]
+    restart: unless-stopped
+
+  filer:
+    image: *sw_image
+    container_name: seaweedfs-filer
+    command: >-
+      filer -master=master:9333 -ip=filer -ip.bind=0.0.0.0 -metricsPort=9326
+    ports:
+      - "8888:8888"
+      - "18888:18888"
+    volumes:
+      - filer-data:/data
+    depends_on: [master, volume]
+    networks: [seaweedfs]
+    restart: unless-stopped
+
+  # Passerelle S3 — c'est CE service qui compte pour remplacer MinIO.
+  # Identities/credentials/ACL par bucket dans config/s3.json.
+  s3:
+    image: *sw_image
+    container_name: seaweedfs-s3
+    command: >-
+      s3 -filer=filer:8888 -ip.bind=0.0.0.0
+      -config=/etc/seaweedfs/s3.json -metricsPort=9327
+    ports:
+      - "8333:8333"     # endpoint S3
+    volumes:
+      - ./config/s3.json:/etc/seaweedfs/s3.json:ro
+    depends_on: [filer]
+    networks: [seaweedfs]
+    restart: unless-stopped
+
+  # Admin UI (weed admin) — https://github.com/seaweedfs/seaweedfs/wiki/Admin-UI
+  # Reverse proxy sous-répertoire : ajouter -urlPrefix=/seaweedfs à la command.
+  admin:
+    image: *sw_image
+    container_name: seaweedfs-admin
+    command: >-
+      admin -masters=master:9333 -port=23646
+      -adminUser=${ADMIN_USER:-admin}
+      -adminPassword=${ADMIN_PASSWORD:-Admin.poc.2026}
+    ports:
+      - "23646:23646"
+    depends_on: [master, filer]
+    networks: [seaweedfs]
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: seaweedfs-prometheus
+    profiles: [monitoring]
+    ports:
+      - "9091:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    depends_on: [master]
+    networks: [seaweedfs]
+    restart: unless-stopped
+
+networks:
+  seaweedfs:
+    driver: bridge
+
+volumes:
+  master-data:
+  volume-data:
+  filer-data:
+  prometheus-data:

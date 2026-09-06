@@ -1,0 +1,31 @@
+---
+# Global variables for Ansible infrastructure roles
+
+# Common role vars
+common_packages:
+  - curl
+  - wget
+  - git
+  - htop
+  - ca-certificates
+  - gnupg
+
+# Docker daemon configuration
+docker_daemon_config:
+  log-driver: "json-file"
+  log-opts:
+    max-size: "10m"
+    max-file: "3"
+  storage-driver: "overlay2"
+
+# SSL configuration
+ssl_certs_dir: "/etc/ssl/custom"
+ssl_generate_self_signed: true
+ssl_domain: "localhost"
+
+# Systemd services configuration
+systemd_services: []
+
+# Deploy cleanup configuration
+cleanup_docker_prune: true
+cleanup_keep_days: 7

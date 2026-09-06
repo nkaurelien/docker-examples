@@ -1,0 +1,24 @@
+---
+- name: Setup Infrastructure & Docker Environment
+  hosts: docker_hosts
+  become: true
+  roles:
+    - role: common
+      tags: [common, system]
+    - role: docker-daemon
+      tags: [docker, daemon]
+    - role: ssl-certs
+      tags: [ssl, security]
+    - role: traefik
+      tags: [traefik, proxy, reverse-proxy]
+    - role: systemd-service
+      tags: [systemd, services]
+
+- name: Maintenance and Cleanup Tasks
+  hosts: docker_hosts
+  become: true
+  tasks:
+    - name: Run deploy cleanup
+      ansible.builtin.include_role:
+        name: deploy-cleanup
+      tags: [cleanup, maintenance]

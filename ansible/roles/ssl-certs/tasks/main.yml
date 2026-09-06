@@ -1,0 +1,36 @@
+---
+# =============================================================================
+# ssl-certs role — main orchestration
+# =============================================================================
+# Skip sur env local (le role `ssl` existant gere le self-signed via mkcert).
+# Assert files locaux -> upload distant -> assemble nginx_bundle -> notify reload.
+# =============================================================================
+
+- name: Skip SSL certs deployment on local environment
+  meta: end_host
+  when: app_domain_tld == "local"
+  tags: [ssl, certs]
+
+- name: Assert required local files exist
+  stat:
+    path: "{{ ssl_certs_local_dir }}/{{ item }}"
+  register: local_files
+  failed_when: not local_files.stat.exists
+  delegate_to: localhost
+  run_once: true
+  become: no
+  loop:
+    - "{{ ssl_certs_local_cert_file }}"
+    - "{{ ssl_certs_local_ca_bundle_file }}"
+    - "{{ ssl_certs_local_key_file }}"
+  loop_control:
+    label: "{{ item }}"
+  tags: [ssl, certs]
+
+- name: Upload cert files to remote server
+  include_tasks: upload.yml
+  tags: [ssl, certs]
+
+- name: Assemble nginx bundle on remote server
+  include_tasks: assemble.yml
+  tags: [ssl, certs]

@@ -1,0 +1,12 @@
+---
+# Traefik role defaults
+traefik_version: "v3.6"
+traefik_domain: "apps.local"
+traefik_public_network: "traefik-public"
+traefik_acme_email: "admin@example.com"
+traefik_enable_letsencrypt: false
+traefik_dashboard_host: "traefik.{{ traefik_domain }}"
+traefik_http_port: 80
+traefik_https_port: 443
+traefik_dashboard_port: 8088
+traefik_compose_dir: "/opt/traefik"

@@ -1,0 +1,13 @@
+---
+# =============================================================================
+# Common - Docker network setup
+# =============================================================================
+
+- name: Install and start Docker
+  ansible.builtin.include_tasks:
+    file: "{{ playbook_dir }}/install_docker.yml"
+    apply:
+      tags:
+        - install
+        - docker
+  tags: [install, docker]

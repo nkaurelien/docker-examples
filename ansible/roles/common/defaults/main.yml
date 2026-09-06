@@ -1,0 +1,9 @@
+---
+# =============================================================================
+# Common role defaults
+# =============================================================================
+# Base system packages, users, and Docker network setup.
+# Most variables come from group_vars/all.yml.
+# =============================================================================
+
+rsync_host_install_required: true

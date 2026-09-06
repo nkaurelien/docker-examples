@@ -1,0 +1,12 @@
+---
+- name: Install system packages
+  include_tasks: packages.yml
+  tags: [setup, packages]
+
+- name: Configure users and groups
+  include_tasks: users.yml
+  tags: [setup, users]
+
+- name: Setup Docker network
+  include_tasks: docker-network.yml
+  tags: [setup, docker]
