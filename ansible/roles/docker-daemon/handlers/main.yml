@@ -1,0 +1,9 @@
+---
+# Restart Docker uniquement si explicitement demandé (docker_daemon_restart=true).
+# DISRUPTIF : coupe tous les conteneurs ; l'existant ne prend la nouvelle limite
+# qu'à sa recréation (docker compose up -d --force-recreate).
+- name: restart docker
+  systemd:
+    name: docker
+    state: restarted
+  when: docker_daemon_restart | default(false) | bool

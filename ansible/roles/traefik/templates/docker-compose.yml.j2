@@ -1,0 +1,50 @@
+services:
+  traefik:
+    image: traefik:{{ traefik_version }}
+    container_name: traefik
+    restart: unless-stopped
+    networks:
+      - {{ traefik_public_network }}
+    ports:
+      - "{{ traefik_http_port }}:80"
+      - "{{ traefik_https_port }}:443"
+      - "{{ traefik_dashboard_port }}:8080"
+    command:
+      - "--api.insecure=true"
+      - "--api.dashboard=true"
+      - "--log.level=INFO"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network={{ traefik_public_network }}"
+      - "--providers.file.directory=/etc/traefik/dynamic"
+      - "--providers.file.watch=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+{% if traefik_enable_letsencrypt %}
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.letsencrypt.acme.email={{ traefik_acme_email }}"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+{% endif %}
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./config/dynamic:/etc/traefik/dynamic:ro"
+      - "traefik_letsencrypt:/letsencrypt"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dashboard.rule=Host(`{{ traefik_dashboard_host }}`)"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.entrypoints=web"
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  traefik_letsencrypt:
+    name: traefik_letsencrypt
+
+networks:
+  {{ traefik_public_network }}:
+    external: true

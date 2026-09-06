@@ -1,0 +1,127 @@
+---
+# =============================================================================
+# Common - Users and groups setup
+# =============================================================================
+
+- name: Create user group "{{ server_user }}"
+  group:
+    name: "{{ server_user }}"
+    state: present
+
+- name: Create user group "{{ app_user_group }}"
+  group:
+    name: "{{ app_user_group }}"
+    state: present
+
+- name: Generate sha512 hash for '{{ server_user }}' password (via openssl on controller)
+  ansible.builtin.set_fact:
+    # On utilise openssl (universel) plutot que le filtre Jinja2 `password_hash`
+    # qui exige la lib Python `passlib` cote controleur ansible.
+    # Salt fixe base sur le username -> hash deterministe, idempotent entre runs.
+    # NB : en prod, on s'appuie sur les cles SSH ; le password sert au POC Vagrant
+    # pour pouvoir taper `su - asone4health` ou login console.
+    server_user_password_hash: "{{ lookup('pipe', 'openssl passwd -6 -salt ' + server_user + ' ' + server_user) }}"
+  delegate_to: localhost
+  become: false
+  run_once: true
+  no_log: true
+
+- name: Create user '{{ server_user }}'
+  user:
+    name: "{{ server_user }}"
+    password: "{{ server_user_password_hash }}"
+    state: present
+    group: "{{ server_user }}"
+    home: "/home/{{ server_user }}"
+    shell: /bin/bash
+    update_password: "on_create"
+    createhome: yes
+    generate_ssh_key: yes
+    ssh_key_file: .ssh/id_rsa
+
+- name: Check if vagrant SSH keys exist
+  stat:
+    path: /home/vagrant/.ssh/authorized_keys
+  register: vagrant_ssh_keys
+
+- name: Copy SSH keys from vagrant to {{ server_user }}
+  copy:
+    src: /home/vagrant/.ssh/
+    dest: /home/{{ server_user }}/.ssh/
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+    mode: '0600'
+    directory_mode: '0700'
+    remote_src: yes
+  when: vagrant_ssh_keys.stat.exists and server_user != 'vagrant'
+
+# Sanity check : le module `copy` ci-dessus a `directory_mode: '0700'` mais
+# ce mode n'est applique qu'aux SOUS-dirs nouvellement crees. Le dir
+# /home/{{ server_user }}/.ssh existe deja (cree par `user: generate_ssh_key`
+# avec un default umask plus restrictif). Du coup le bit `x` du proprietaire
+# manque et SSH refuse de lire authorized_keys -> "Permission denied".
+# On force explicitement le bon mode ici. Idempotent.
+- name: Ensure correct mode on /home/{{ server_user }}/.ssh (0700, drwx------)
+  file:
+    path: "/home/{{ server_user }}/.ssh"
+    state: directory
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+    mode: '0700'
+  when: server_user != 'vagrant'
+
+- name: Allow {{ server_user }} to run sudo without password
+  lineinfile:
+    path: /etc/sudoers.d/{{ server_user }}
+    state: present
+    create: yes
+    line: "{{ server_user }} ALL=(ALL) NOPASSWD: ALL"
+    validate: 'visudo -cf %s'
+    mode: '0440'
+
+- name: Appending groups to {{ ansible_user }}
+  user:
+    name: "{{ ansible_user }}"
+    shell: /bin/bash
+    groups: "docker"
+    append: yes
+
+- name: Appending groups to {{ server_user }}
+  user:
+    name: "{{ server_user }}"
+    shell: /bin/bash
+    groups: "www-data,docker"
+    append: yes
+
+- name: Appending groups to {{ app_user_group }}
+  user:
+    name: "{{ app_user_group }}"
+    shell: /bin/bash
+    groups: "www-data,docker"
+    append: yes
+  failed_when: false
+
+- name: List groups for user "{{ ansible_user }}"
+  command: "id -Gn {{ ansible_user }}"
+  register: ansible_user_groups
+
+- name: Display the groups for "{{ ansible_user }}"
+  debug:
+    msg: "User {{ ansible_user }} belongs to the following groups: {{ ansible_user_groups.stdout }}"
+
+- name: List groups for user "{{ server_user }}"
+  command: "id -Gn {{ server_user }}"
+  register: user_groups
+
+- name: Display the groups for "{{ server_user }}"
+  debug:
+    msg: "User {{ server_user }} belongs to the following groups: {{ user_groups.stdout }}"
+
+- name: Ensure passwordless sudo for rsync (ansible_user)
+  copy:
+    dest: /etc/sudoers.d/rsync
+    content: |
+      {{ ansible_user }} ALL=(ALL) NOPASSWD: /usr/bin/rsync
+      {{ server_user }} ALL=(ALL) NOPASSWD: /usr/bin/rsync
+    mode: '0440'
+    validate: 'visudo -cf %s'

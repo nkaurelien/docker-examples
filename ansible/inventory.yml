@@ -1,0 +1,14 @@
+---
+all:
+  children:
+    webservers_fr:
+      hosts:
+        contabo_server_fr:
+          ansible_host: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ssh-contabo-server-ip') | trim }}"
+          ansible_user: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ssh-contabo-server-user-login') | trim }}"
+          ansible_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ssh-contabo-server-password') | trim }}"
+    docker_hosts:
+      children:
+        webservers_fr:
+  vars:
+    ansible_python_interpreter: /usr/bin/python3

@@ -1,0 +1,11 @@
+---
+# Rotation des logs Docker par défaut (couvre TOUS les conteneurs, y compris
+# hors IaC — cause racine de l'incident disque apps-fr 31/07). json-file REQUIS
+# par Alloy (loki.source.docker) — ne pas mettre loki/none.
+docker_daemon_log_driver: "json-file"
+docker_daemon_log_max_size: "50m"
+docker_daemon_log_max_file: "3"
+
+# Redémarrage Docker = DISRUPTIF (coupe tous les conteneurs) + recréation requise
+# pour que l'existant prenne la limite. OFF par défaut → à planifier explicitement.
+docker_daemon_restart: false

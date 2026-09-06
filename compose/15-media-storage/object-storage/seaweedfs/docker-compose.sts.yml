@@ -1,0 +1,28 @@
+# Override STS/OIDC Keycloak — à combiner avec le compose de base :
+#   docker compose -f docker-compose.yml -f docker-compose.sts.yml up -d
+#
+# Prérequis (cf. STS-KEYCLOAK.md) :
+#   - client Keycloak `seaweedfs-s3` dans le realm asone4health (KC local)
+#   - KEYCLOAK_HOST_IP = IP LAN de kamitbrains (défaut 192.168.0.195)
+#   - MKCERT_CA = chemin du rootCA.pem mkcert (`mkcert -CAROOT`/rootCA.pem),
+#     ou copier ce fichier dans ./config/rootCA.pem
+
+services:
+  s3:
+    # active l'IAM/STS (AssumeRoleWithWebIdentity) en plus des creds statiques s3.json
+    command: >-
+      s3 -filer=filer:8888 -ip.bind=0.0.0.0
+      -config=/etc/seaweedfs/s3.json
+      -iam.config=/etc/seaweedfs/iam.json
+      -metricsPort=9327
+    volumes:
+      - ./config/s3.json:/etc/seaweedfs/s3.json:ro
+      - ./config/iam.json:/etc/seaweedfs/iam.json:ro
+      - ${MKCERT_CA:-./config/rootCA.pem}:/etc/ssl/certs/mkcert-rootCA.pem:ro
+    environment:
+      # Go valide le JWKS Keycloak (HTTPS mkcert) via ce CA.
+      # POC : remplace le trust store ; le seul TLS sortant de s3 est le KC local.
+      SSL_CERT_FILE: /etc/ssl/certs/mkcert-rootCA.pem
+    extra_hosts:
+      # le conteneur doit résoudre le Keycloak local (LAN kamitbrains)
+      - "connect.asone4health.kamitbrains.local:${KEYCLOAK_HOST_IP:-192.168.0.195}"

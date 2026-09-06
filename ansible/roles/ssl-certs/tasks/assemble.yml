@@ -1,0 +1,53 @@
+---
+# =============================================================================
+# ssl-certs — assemble nginx bundle on remote server
+# =============================================================================
+# Nginx requiert cert + chaine CA dans un seul fichier, cert EN PREMIER.
+# Le module Ansible `assemble` trie alphabetiquement (ca-bundle.crt < cert.crt),
+# ordre inverse de celui attendu par nginx -> on utilise un shell `cat` explicite
+# avec `cmp -s` pour garantir l'idempotence.
+# =============================================================================
+
+- name: Assemble nginx bundle (cert FIRST, then ca-bundle)
+  shell: |
+    set -euo pipefail
+    # Equivalent de la commande officielle Namecheap pour les certs telecharges
+    # depuis le compte (https://www.namecheap.com/support/knowledgebase/article.aspx/9419/):
+    #   cat cert > bundle ; echo >> bundle ; cat ca-bundle >> bundle
+    # Le newline intermediaire est indispensable: certains .crt Namecheap ne
+    # terminent pas par \n, ce qui collerait -----END----- et -----BEGIN-----
+    # sur la meme ligne et casserait le parsing PEM (error:04800066:bad end line).
+    {
+      cat "{{ ssl_certs_remote_dir }}/{{ ssl_certs_remote_cert_file }}"
+      printf '\n'
+      cat "{{ ssl_certs_remote_dir }}/{{ ssl_certs_remote_ca_bundle_file }}"
+    } > "{{ ssl_certs_remote_dir }}/{{ ssl_certs_remote_nginx_bundle_file }}.new"
+    if [ -f "{{ ssl_certs_remote_dir }}/{{ ssl_certs_remote_nginx_bundle_file }}" ] \
+       && cmp -s "{{ ssl_certs_remote_dir }}/{{ ssl_certs_remote_nginx_bundle_file }}.new" \
+                 "{{ ssl_certs_remote_dir }}/{{ ssl_certs_remote_nginx_bundle_file }}"; then
+      rm -f "{{ ssl_certs_remote_dir }}/{{ ssl_certs_remote_nginx_bundle_file }}.new"
+      echo "UNCHANGED"
+    else
+      mv "{{ ssl_certs_remote_dir }}/{{ ssl_certs_remote_nginx_bundle_file }}.new" \
+         "{{ ssl_certs_remote_dir }}/{{ ssl_certs_remote_nginx_bundle_file }}"
+      chmod {{ ssl_certs_cert_mode }} "{{ ssl_certs_remote_dir }}/{{ ssl_certs_remote_nginx_bundle_file }}"
+      chown {{ ssl_certs_owner }}:{{ ssl_certs_group }} "{{ ssl_certs_remote_dir }}/{{ ssl_certs_remote_nginx_bundle_file }}"
+      echo "CHANGED"
+    fi
+  args:
+    executable: /bin/bash   # Ubuntu /bin/sh est dash et ne supporte pas pipefail
+  register: assemble_result
+  changed_when: "'CHANGED' in assemble_result.stdout"
+  notify: [validate nginx configuration, reload nginx]
+
+- name: Validate cert/key modulus match (prevent mismatched key/cert)
+  when: ssl_certs_validate_key_match | bool
+  shell: |
+    set -euo pipefail
+    cert_mod=$(openssl x509 -noout -modulus -in "{{ ssl_certs_remote_dir }}/{{ ssl_certs_remote_cert_file }}" | openssl md5)
+    key_mod=$(openssl rsa  -noout -modulus -in "{{ ssl_certs_remote_dir }}/{{ ssl_certs_remote_key_file }}"  | openssl md5)
+    [ "$cert_mod" = "$key_mod" ] || { echo "MISMATCH"; exit 1; }
+  args:
+    executable: /bin/bash
+  changed_when: false
+  no_log: true

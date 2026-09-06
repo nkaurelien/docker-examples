@@ -1,0 +1,23 @@
+{
+  "identities": [
+    {
+      "name": "asone-poc-admin",
+      "credentials": [
+        { "accessKey": "asone_poc_access", "secretKey": "asone_poc_secret_change_me" }
+      ],
+      "actions": ["Admin", "Read", "Write", "List", "Tagging"]
+    },
+    {
+      "name": "asone-app",
+      "credentials": [
+        { "accessKey": "asone_app_access", "secretKey": "asone_app_secret_change_me" }
+      ],
+      "actions": [
+        "Read:asone-attachments",
+        "Write:asone-attachments",
+        "List:asone-attachments",
+        "Tagging:asone-attachments"
+      ]
+    }
+  ]
+}

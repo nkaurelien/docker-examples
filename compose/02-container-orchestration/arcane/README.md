@@ -61,12 +61,28 @@ Access the Arcane dashboard at:
 |----------|---------|-------------|
 | `ARCANE_PORT` | `3552` | Port on the host to access Arcane UI |
 | `PROJECTS_DIR` | `./projects` | Directory on the host where project stacks are stored |
+| `TEMPLATES_DIR` | `./templates` | Directory on the host where custom template definitions are stored |
+| `BUILDS_DIR` | `./builds` | Build Workspace directory for Dockerfiles and build contexts |
+| `BACKUPS_DIR` | `./backups` | Directory to store exported volume backups |
 | `ENCRYPTION_KEY` | - | 32-byte hex key for database encryption (required) |
 | `JWT_SECRET` | - | Secret key for JWT token signatures (required) |
 | `PUID` | `1000` | User ID for container file permissions |
 | `PGID` | `1000` | Group ID for container file permissions |
 | `TZ` | `Europe/Paris` | Container timezone |
 | `DOMAIN` | `apps.local` | Base domain for Traefik routing |
+
+### Storage & User Permissions
+
+- **User Permissions (`PUID` / `PGID`)**:
+  The official Arcane container images start as root for initial startup preparation, then drop to a non-root runtime user by default. Setting `PUID` and `PGID` ensures that Arcane-created files on host volumes use your specific host user/group IDs. If omitted, Arcane defaults to its built-in non-root user (`65532:65532`).
+
+- **Folder Architecture**:
+  - `arcane-data` (`/app/data`): Primary volume storing Arcane's SQLite database (`arcane.db`) and application data.
+  - `/app/data/projects` (`${PROJECTS_DIR:-./projects}`): Directory where project stacks are saved.
+  - `/app/data/templates` (`${TEMPLATES_DIR:-./templates}`): Directory for custom local Compose templates.
+  - `/builds` (`${BUILDS_DIR:-./builds}`): Dedicated folder used by the **Build Workspace** for Dockerfiles and build contexts.
+  - `/backups` (`${BACKUPS_DIR:-./backups}`): Dedicated folder for storing exported volume backups.
+  - `/var/run/docker.sock`: Safe access provided via `docker-socket-proxy` (`tcp://docker-socket-proxy:2375`).
 
 ---
 
@@ -80,7 +96,8 @@ To secure this, this stack uses `tecnativa/docker-socket-proxy`. The proxy filte
 - `EVENTS=1`, `PING=1`, `VERSION=1`, `INFO=1` (Get system events & status)
 - `POST=1` (Allow container creation/deletion/updates)
 - `EXEC=1` (Allow executing commands inside containers)
-- **Disabled**: Swarm, Secrets, Configs, Plugins, Nodes, and build systems are completely blocked for security.
+- `BUILD=1` (Allow image builds for the Build Workspace `/builds`)
+- **Disabled**: Swarm, Secrets, Configs, Plugins, Nodes are completely blocked for security.
 
 In addition, the socket proxy container runs:
 - With `read_only: true` filesystem

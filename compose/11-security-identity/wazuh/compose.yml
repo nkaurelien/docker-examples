@@ -3,7 +3,7 @@
 
 services:
   wazuh.indexer:
-    image: wazuh/wazuh-indexer:${WAZUH_VERSION:-5.1.0}
+    image: wazuh/wazuh-indexer:${WAZUH_VERSION:-4.14.7}
     hostname: wazuh.indexer
     container_name: wazuh-indexer
     restart: always
@@ -42,7 +42,7 @@ services:
       - wazuh-network
 
   wazuh.manager:
-    image: wazuh/wazuh-manager:${WAZUH_VERSION:-5.1.0}
+    image: wazuh/wazuh-manager:${WAZUH_VERSION:-4.14.7}
     hostname: wazuh.manager
     container_name: wazuh-manager
     restart: always
@@ -87,7 +87,7 @@ services:
       - wazuh-network
 
   wazuh.dashboard:
-    image: wazuh/wazuh-dashboard:${WAZUH_VERSION:-5.1.0}
+    image: wazuh/wazuh-dashboard:${WAZUH_VERSION:-4.14.7}
     hostname: wazuh.dashboard
     container_name: wazuh-dashboard
     restart: always

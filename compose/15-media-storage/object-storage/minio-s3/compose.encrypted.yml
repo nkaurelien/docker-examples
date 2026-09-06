@@ -1,0 +1,118 @@
+# MinIO avec chiffrement au repos (SSE-KMS)
+#
+# Variante de compose.yml : memes services, mais chaque objet est chiffre sur
+# disque. Deux mecanismes complementaires :
+#   MINIO_KMS_SECRET_KEY      cle maitre. MinIO derive une data key par objet
+#                             (chiffrement par enveloppe) ; la cle maitre ne
+#                             quitte jamais le process.
+#   MINIO_KMS_AUTO_ENCRYPTION chiffre AUSSI les uploads qui n'envoient aucun
+#                             header SSE — sans ca, un client peut ecrire en clair.
+#
+# Le service `mc-init` applique en plus une regle SSE-KMS par defaut sur le
+# bucket : c'est ce que `mc encrypt info` rend verifiable.
+#
+# ATTENTION : perdre MINIO_KMS_KEY rend les objets ET la configuration IAM
+# definitivement illisibles. Changer la cle sur une instance existante a le
+# meme effet — MinIO ne re-chiffre pas retroactivement.
+#
+#   ./generate-kms-key.sh          # cree .env avec une cle valide
+#   docker compose -f compose.encrypted.yml up -d
+#   docker compose -f compose.encrypted.yml logs mc-init
+
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/minio.webp
+  urls:
+    - https://min.io/
+    - https://github.com/minio/minio
+    - https://github.com/minio/minio/blob/master/docs/kms/IAM.md
+
+services:
+  minio:
+    image: quay.io/minio/minio:${MINIO_VERSION:-RELEASE.2025-09-07T16-13-09Z}
+    container_name: minio-s3-encrypted
+    restart: unless-stopped
+    ports:
+      - "${MINIO_API_PORT:-9000}:9000"     # API S3
+      - "${MINIO_CONSOLE_PORT:-9001}:9001" # Console web
+    environment:
+      MINIO_ROOT_USER: "${MINIO_ROOT_USER:-minioadmin}"
+      MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD:?MINIO_ROOT_PASSWORD manquant — voir .env.example}"
+      # Format impose par MinIO : <nom-de-cle>:<32 octets en base64>
+      MINIO_KMS_SECRET_KEY: "${MINIO_KMS_KEY_NAME:-demo-key}:${MINIO_KMS_KEY:?MINIO_KMS_KEY manquant — lancer ./generate-kms-key.sh}"
+      MINIO_KMS_AUTO_ENCRYPTION: "${MINIO_KMS_AUTO_ENCRYPTION:-on}"
+    volumes:
+      - minio_encrypted_data:/data
+    networks:
+      - minio_network
+      - traefik-public
+    command: server /data --console-address ":9001"
+    labels:
+      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/minio.webp"
+      - "traefik.enable=true"
+      - "traefik.http.routers.minio-encrypted.rule=Host(`minio-encrypted.${DOMAIN:-apps.local}`)"
+      - "traefik.http.routers.minio-encrypted.entrypoints=web"
+      - "traefik.http.services.minio-encrypted.loadbalancer.server.port=9001"
+    healthcheck:
+      # `mc` est embarque dans l'image et `local` est un alias predefini.
+      # Pas de curl : il n'est plus present dans les images MinIO recentes.
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  # Job one-shot : cree le bucket, y pose la regle SSE-KMS par defaut, puis
+  # affiche la preuve. S'arrete apres (restart: "no").
+  mc-init:
+    image: quay.io/minio/mc:latest
+    container_name: minio-s3-encrypted-init
+    depends_on:
+      minio:
+        condition: service_healthy
+    environment:
+      MINIO_ROOT_USER: "${MINIO_ROOT_USER:-minioadmin}"
+      MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD}"
+      MINIO_KMS_KEY_NAME: "${MINIO_KMS_KEY_NAME:-demo-key}"
+      MINIO_DEFAULT_BUCKET: "${MINIO_DEFAULT_BUCKET:-demo-bucket}"
+    entrypoint: ["/bin/sh", "-c"]
+    # `$$` : echappement compose, c'est le shell du conteneur qui resout.
+    command:
+      - |
+        set -e
+        mc alias set local http://minio:9000 "$$MINIO_ROOT_USER" "$$MINIO_ROOT_PASSWORD"
+        mc mb --ignore-existing "local/$$MINIO_DEFAULT_BUCKET"
+        mc encrypt set sse-kms "$$MINIO_KMS_KEY_NAME" "local/$$MINIO_DEFAULT_BUCKET"
+        echo "--- regle de chiffrement du bucket ---"
+        mc encrypt info "local/$$MINIO_DEFAULT_BUCKET"
+        echo "--- preuve : un objet ecrit SANS header SSE ---"
+        echo "contenu de demonstration" | mc pipe "local/$$MINIO_DEFAULT_BUCKET/_probe.txt"
+        mc stat "local/$$MINIO_DEFAULT_BUCKET/_probe.txt"
+        mc rm "local/$$MINIO_DEFAULT_BUCKET/_probe.txt"
+    networks:
+      - minio_network
+    restart: "no"
+
+volumes:
+  minio_encrypted_data:
+    name: minio_encrypted_data
+
+networks:
+  minio_network:
+    external: true
+    name: minio_network
+  traefik-public:
+    external: true
+    name: traefik-public

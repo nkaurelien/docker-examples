@@ -1,0 +1,78 @@
+---
+# =============================================================================
+# Common - System packages installation
+# =============================================================================
+
+- name: Update apt cache (Debian-based systems)
+  apt:
+    update_cache: yes
+  when: ansible_os_family == 'Debian'
+
+- name: Install necessary system packages
+  apt:
+    name:
+      - sudo
+      - bash
+      - supervisor
+      - curl
+      - nano
+    state: present
+
+- name: Install Python 3 and related tools
+  apt:
+    name:
+      - fish
+      - python3
+      - python3-pip
+      - python-is-python3
+      - python3-virtualenv
+    state: present
+
+# PEP 668 : depuis Debian 12 / Ubuntu 24.04, Python marque son install system
+# comme "externally-managed" (fichier EXTERNALLY-MANAGED) → `pip install` en
+# system-wide fail sans `--break-system-packages`. On detecte la presence du
+# marker et on injecte le flag conditionnellement (flag existe depuis pip 23.0
+# — Debian 12 / Ubuntu 24.04 embarquent pip >= 23, donc safe).
+- name: Detect PEP 668 externally-managed marker (Debian 12+ / Ubuntu 24.04+)
+  find:
+    paths:
+      - "/usr/lib/python{{ ansible_python.version.major }}.{{ ansible_python.version.minor }}"
+      - "/usr/lib/python3"
+    patterns: EXTERNALLY-MANAGED
+    file_type: file
+  register: pep668_marker
+  # find peut retourner rc != 0 si un des paths n'existe pas → tolerant.
+  failed_when: false
+
+- name: Install Python packages (Docker SDK and UV)
+  pip:
+    name: "{{ item }}"
+    state: present
+    executable: /usr/bin/pip3
+    extra_args: "{{ '--break-system-packages' if pep668_marker.matched | default(0) | int > 0 else omit }}"
+  loop:
+    - docker
+    - uv
+  become: yes
+
+- name: Install Glances monitoring tool with uv
+  shell: uv tool install glances[all]
+  args:
+    creates: /root/.local/bin/glances
+  become: yes
+  tags: [monitoring]
+
+- name: Install sshpass for synchronize
+  apt:
+    name: sshpass
+    state: present
+  when: ansible_os_family == 'Debian'
+
+- name: Install rsync on the local Ansible controller
+  become: yes
+  become_user: root
+  connection: local
+  package:
+    name: rsync
+    state: present
+  when: rsync_host_install_required | default(true) | bool

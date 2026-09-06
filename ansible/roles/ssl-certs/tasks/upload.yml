@@ -1,0 +1,84 @@
+---
+# =============================================================================
+# ssl-certs — upload local files to remote /etc/ssl/{{ app_domain }}/
+# =============================================================================
+# Utilise `copy` (pas `synchronize` — incompatible avec inventaire Vagrant).
+# no_log: true sur la private key pour eviter les fuites en mode -v/-vv.
+# =============================================================================
+
+- name: Create SSL directory on remote server
+  file:
+    path: "{{ ssl_certs_remote_dir }}"
+    state: directory
+    owner: "{{ ssl_certs_owner }}"
+    group: "{{ ssl_certs_group }}"
+    mode: "{{ ssl_certs_dir_mode }}"
+
+- name: Upload server certificate (cert seul)
+  copy:
+    src: "{{ ssl_certs_local_dir }}/{{ ssl_certs_local_cert_file }}"
+    dest: "{{ ssl_certs_remote_dir }}/{{ ssl_certs_remote_cert_file }}"
+    owner: "{{ ssl_certs_owner }}"
+    group: "{{ ssl_certs_group }}"
+    mode: "{{ ssl_certs_cert_mode }}"
+    backup: "{{ ssl_certs_backup_on_replace }}"
+  notify: [validate nginx configuration, reload nginx]
+
+- name: Upload CA bundle (chaine intermediaire)
+  copy:
+    src: "{{ ssl_certs_local_dir }}/{{ ssl_certs_local_ca_bundle_file }}"
+    dest: "{{ ssl_certs_remote_dir }}/{{ ssl_certs_remote_ca_bundle_file }}"
+    owner: "{{ ssl_certs_owner }}"
+    group: "{{ ssl_certs_group }}"
+    mode: "{{ ssl_certs_cert_mode }}"
+    backup: "{{ ssl_certs_backup_on_replace }}"
+  notify: [validate nginx configuration, reload nginx]
+
+- name: Upload private key (restricted perms)
+  copy:
+    src: "{{ ssl_certs_local_dir }}/{{ ssl_certs_local_key_file }}"
+    dest: "{{ ssl_certs_remote_dir }}/{{ ssl_certs_remote_key_file }}"
+    owner: "{{ ssl_certs_owner }}"
+    group: "{{ ssl_certs_group }}"
+    mode: "{{ ssl_certs_key_mode }}"
+    backup: "{{ ssl_certs_backup_on_replace }}"
+  no_log: true
+  notify: [validate nginx configuration, reload nginx]
+
+- name: Upload Apache bundle (cert only, alias for Apache deployments)
+  copy:
+    src: "{{ ssl_certs_local_dir }}/{{ ssl_certs_local_cert_file }}"
+    dest: "{{ ssl_certs_remote_dir }}/{{ ssl_certs_remote_apache_cert_file }}"
+    owner: "{{ ssl_certs_owner }}"
+    group: "{{ ssl_certs_group }}"
+    mode: "{{ ssl_certs_cert_mode }}"
+
+- name: Upload CSR (archive)
+  when: ssl_certs_archive_csr | bool
+  copy:
+    src: "{{ ssl_certs_local_dir }}/{{ ssl_certs_local_csr_file }}"
+    dest: "{{ ssl_certs_remote_dir }}/{{ ssl_certs_remote_csr_file }}"
+    owner: "{{ ssl_certs_owner }}"
+    group: "{{ ssl_certs_group }}"
+    mode: "0644"
+
+# Le .p7b n'est pas toujours fourni par Namecheap (present uniquement dans le
+# zip telecharge depuis le site, pas toujours dans celui envoye par mail).
+- name: Check if PKCS#7 bundle exists locally
+  stat:
+    path: "{{ ssl_certs_local_dir }}/{{ ssl_certs_local_p7b_file }}"
+  register: local_p7b_stat
+  delegate_to: localhost
+  run_once: true
+  become: no
+
+- name: Upload PKCS#7 bundle (archive, optionnel)
+  when:
+    - ssl_certs_archive_p7b | bool
+    - local_p7b_stat.stat.exists
+  copy:
+    src: "{{ ssl_certs_local_dir }}/{{ ssl_certs_local_p7b_file }}"
+    dest: "{{ ssl_certs_remote_dir }}/{{ ssl_certs_remote_p7b_file }}"
+    owner: "{{ ssl_certs_owner }}"
+    group: "{{ ssl_certs_group }}"
+    mode: "0644"

@@ -1,7 +1,10 @@
 # Docker Examples - Makefile
 # Usage: make <target>
 
-.PHONY: help docs docs-serve docs-build docs-deploy clean docker-clean install registry arcane-start open-webui-env open-webui-tunnel open-webui-clean-port
+.PHONY: help docs docs-serve docs-build docs-deploy clean docker-clean install registry arcane-start open-webui-env open-webui-tunnel open-webui-clean-port ansible-ping ansible-syntax ansible-deploy ansible-inventory
+
+# Include Ansible module
+-include ansible/ansible.mk
 
 # Default target
 help:
@@ -13,6 +16,12 @@ help:
 	@echo "  make docs-build    - Build documentation site"
 	@echo "  make docs-deploy   - Deploy documentation to GitHub Pages"
 	@echo "  make install       - Install documentation dependencies"
+	@echo ""
+	@echo "Ansible:"
+	@echo "  make ansible-ping      - Test SSH connection to inventory hosts"
+	@echo "  make ansible-syntax    - Verify playbook syntax"
+	@echo "  make ansible-inventory - Display inventory details"
+	@echo "  make ansible-deploy    - Execute main Ansible playbook"
 	@echo ""
 	@echo "Docker:"
 	@echo "  make docker-clean  - Remove unused Docker resources"

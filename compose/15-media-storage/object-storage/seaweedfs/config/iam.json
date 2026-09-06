@@ -1,0 +1,72 @@
+{
+  "sts": {
+    "tokenDuration": "1h",
+    "maxSessionLength": "12h",
+    "issuer": "seaweedfs-sts",
+    "signingKey": "cG9jLXNlYXdlZWRmcy1zdHMtc2lnbmluZy1rZXktMzJi"
+  },
+  "providers": [
+    {
+      "name": "keycloak-local",
+      "type": "oidc",
+      "enabled": true,
+      "config": {
+        "issuer": "https://connect.asone4health.kamitbrains.local/realms/asone4health",
+        "clientId": "seaweedfs-s3",
+        "jwksUri": "https://connect.asone4health.kamitbrains.local/realms/asone4health/protocol/openid-connect/certs",
+        "userInfoUri": "https://connect.asone4health.kamitbrains.local/realms/asone4health/protocol/openid-connect/userinfo",
+        "scopes": ["openid", "profile", "email", "roles"],
+        "roleMapping": {
+          "rules": [
+            {
+              "claim": "realm_access.roles",
+              "value": "doctor",
+              "role": "arn:aws:iam::role/S3AttachmentsWriteRole"
+            }
+          ],
+          "defaultRole": "arn:aws:iam::role/S3AttachmentsWriteRole"
+        }
+      }
+    }
+  ],
+  "policies": [
+    {
+      "name": "S3AttachmentsWritePolicy",
+      "document": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": ["s3:List*", "s3:Get*", "s3:Put*", "s3:DeleteObject"],
+            "Resource": [
+              "arn:aws:s3:::asone-attachments",
+              "arn:aws:s3:::asone-attachments/*"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "roles": [
+    {
+      "roleName": "S3AttachmentsWriteRole",
+      "roleArn": "arn:aws:iam::role/S3AttachmentsWriteRole",
+      "attachedPolicies": ["S3AttachmentsWritePolicy"],
+      "trustPolicy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": { "Federated": "*" },
+            "Action": ["sts:AssumeRoleWithWebIdentity"],
+            "Condition": {
+              "StringEquals": {
+                "oidc:iss": "https://connect.asone4health.kamitbrains.local/realms/asone4health"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -31,7 +31,7 @@ services:
       - AUTH=0
       - SECRETS=0
       # Not needed for Arcane (disabled)
-      - BUILD=0
+      - BUILD=1
       - COMMIT=0
       - CONFIGS=0
       - DISTRIBUTION=0
@@ -71,6 +71,10 @@ services:
       - ${PROJECTS_DIR:-./projects}:/app/data/projects:z
       # Path to local templates directory
       - ${TEMPLATES_DIR:-./templates}:/app/data/templates:z
+      # Path to build workspace for Dockerfiles and contexts
+      - ${BUILDS_DIR:-./builds}:/builds:z
+      # Path to exported volume backups
+      - ${BACKUPS_DIR:-./backups}:/backups:z
     environment:
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
