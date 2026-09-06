@@ -1,0 +1,8 @@
+---
+# BentoPDF role defaults
+bentopdf_image: "bentopdfteam/bentopdf:latest"
+bentopdf_domain: "kamitbrains.fr"
+bentopdf_hostname: "pdf.{{ traefik_domain | default(bentopdf_domain) }}"
+bentopdf_alias_hostname: "bento.{{ traefik_domain | default(bentopdf_domain) }}"
+bentopdf_compose_dir: "/opt/bentopdf"
+bentopdf_container_port: 8080

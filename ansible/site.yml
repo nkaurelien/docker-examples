@@ -27,6 +27,8 @@
       tags: [changedetection, surveillance, monitoring]
     - role: it-tools
       tags: [it-tools, tools, dev]
+    - role: bentopdf
+      tags: [bentopdf, pdf, tools, dev]
     - role: tinyauth
       tags: [tinyauth, sso, auth, security]
     - role: homepage
