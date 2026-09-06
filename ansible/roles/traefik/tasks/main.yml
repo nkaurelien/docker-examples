@@ -24,3 +24,13 @@
   community.docker.docker_compose_v2:
     project_src: "{{ traefik_compose_dir }}"
     state: present
+
+- name: Install and enable Traefik systemd service for automatic reboot start
+  ansible.builtin.include_role:
+    name: systemd-service
+  vars:
+    systemd_service_name: "traefik"
+    systemd_service_description: "Traefik v3 Reverse Proxy Edge Router"
+    systemd_compose_dir: "{{ traefik_compose_dir }}"
+    systemd_compose_files: "-f docker-compose.yml"
+    systemd_project_name: "traefik"
