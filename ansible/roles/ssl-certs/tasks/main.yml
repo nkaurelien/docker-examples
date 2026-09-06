@@ -6,10 +6,11 @@
 # Assert files locaux -> upload distant -> assemble nginx_bundle -> notify reload.
 # =============================================================================
 
-- name: Skip SSL certs deployment on local environment
+- name: Skip SSL certs deployment if disabled or Let's Encrypt used
   meta: end_host
-  when: app_domain_tld == "local"
+  when: not (ssl_certs_enabled | default(false) | bool) or app_domain_tld == "local"
   tags: [ssl, certs]
+
 
 - name: Assert required local files exist
   stat:

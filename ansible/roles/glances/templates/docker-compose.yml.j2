@@ -50,7 +50,7 @@ services:
       - "traefik.http.routers.glances.rule=Host(`{{ glances_hostname }}`)"
       - "traefik.http.routers.glances.entrypoints=websecure"
       - "traefik.http.routers.glances.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.glances.middlewares=glances-auth@file"
+      - "traefik.http.routers.glances.middlewares=crowdsec-bouncer@file,tinyauth-auth@docker"
       - "traefik.http.services.glances.loadbalancer.server.port=61208"
     volumes:
       - /:/rootfs:ro

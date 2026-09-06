@@ -3,11 +3,9 @@
 # Common - Docker network setup
 # =============================================================================
 
-- name: Install and start Docker
-  ansible.builtin.include_tasks:
-    file: "{{ playbook_dir }}/install_docker.yml"
-    apply:
-      tags:
-        - install
-        - docker
-  tags: [install, docker]
+- name: Ensure Traefik public Docker network exists
+  community.docker.docker_network:
+    name: "{{ traefik_public_network | default('traefik-public') }}"
+    state: present
+  tags: [docker, network]
+
