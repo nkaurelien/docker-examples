@@ -54,6 +54,8 @@ A comprehensive collection of production-ready Docker Compose configurations for
 - **[WordPress](mysql-wordpress/)** - WordPress with MySQL
 
 ### Infrastructure Services
+- **[Ansible Infrastructure](ansible/)** - Automated deployment suite (Traefik, Docker daemon, systemd, SSL)
+- **[Cloudflare DNS CLI](scripts/cloudflare_dns.py)** - Automated DNS management script powered by the official Cloudflare Python SDK
 - **[DNS Server](dnsServer/)** - Local DNS management
 - **[Nginx Proxy Manager](nginx-proxy-manager/)** - Reverse proxy with SSL management
 - **[Cron Jobs](cronjob/)** - Scheduled task management with PM2 and multiple queue systems
