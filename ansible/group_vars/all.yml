@@ -1,5 +1,18 @@
 ---
 # Global variables for Ansible infrastructure roles
+traefik_domain: "kamitbrains.fr"
+traefik_public_network: "traefik-public"
+rsync_host_install_required: false
+server_user: "asone4health"
+app_user_group: "asone4health"
+app_domain: "asone4health.fr"
+local_project_dir: "{{ playbook_dir }}/.."
+ssl_cert_file: "nginx_bundle.crt"
+ssl_key_file: "private.key"
+
+
+
+
 
 # Common role vars
 common_packages:

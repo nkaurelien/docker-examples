@@ -13,7 +13,7 @@ services:
       - "traefik.http.routers.it-tools.rule=Host(`{{ it_tools_hostname }}`)"
       - "traefik.http.routers.it-tools.entrypoints=websecure"
       - "traefik.http.routers.it-tools.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.it-tools.middlewares=crowdsec-bouncer@file"
+      - "traefik.http.routers.it-tools.middlewares=crowdsec-bouncer@file,tinyauth-auth@docker"
       - "traefik.http.services.it-tools.loadbalancer.server.port=80"
     healthcheck:
       test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:80/ || exit 1"]

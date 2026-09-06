@@ -6,6 +6,8 @@ services:
     image: {{ homepage_image }}
     container_name: homepage
     restart: unless-stopped
+    environment:
+      - HOMEPAGE_ALLOWED_HOSTS={{ homepage_primary_hostname }},{{ homepage_alias_hostname }},localhost
     volumes:
       - ./config:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro
