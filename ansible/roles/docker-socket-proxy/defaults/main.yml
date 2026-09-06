@@ -1,0 +1,13 @@
+---
+# Docker Socket Proxy role defaults
+socket_proxy_image: "tecnativa/docker-socket-proxy:latest"
+socket_proxy_port: 2375
+socket_proxy_compose_dir: "/opt/socket-proxy"
+socket_proxy_containers: "1"
+socket_proxy_events: "1"
+socket_proxy_info: "1"
+socket_proxy_networks: "1"
+socket_proxy_services: "1"
+socket_proxy_version: "1"
+socket_proxy_volumes: "1"
+socket_proxy_post: "0"
