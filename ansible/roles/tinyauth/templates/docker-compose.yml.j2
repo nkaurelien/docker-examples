@@ -8,9 +8,10 @@ services:
     restart: unless-stopped
     environment:
       - SECRET={{ tinyauth_secret }}
-      - USERS={{ tinyauth_admin_user }}:{{ tinyauth_admin_password }}
+      - USERS={{ tinyauth_users_string | default(tinyauth_admin_user + ':' + tinyauth_admin_password) }}
       - APP_URL=https://{{ tinyauth_hostname }}
       - COOKIE_SECURE=true
+      - COOKIE_DOMAIN={{ traefik_domain | default('kamitbrains.fr') }}
     networks:
       - {{ traefik_public_network | default('traefik-public') }}
     labels:
