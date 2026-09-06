@@ -64,6 +64,9 @@ services:
         sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (3, 'Arcane PaaS Manager', 1, 1, 'https://arcane.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, 'Docker Container Management Dashboard');"
         sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (4, 'Uptime Kuma Status', 1, 1, 'https://status.{{ traefik_domain | default('kamitbrains.fr') }}/dashboard', 'http', 'GET', 60, 'Uptime & Service Health Monitor');"
         sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (5, 'Ntfy Push Notifications', 1, 1, 'https://ntfy.{{ traefik_domain | default('kamitbrains.fr') }}/v1/health', 'http', 'GET', 60, 'HTTP Pub-Sub Push Notification Service');"
+        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (6, 'Passbolt Password Manager', 1, 1, 'https://passwords.{{ traefik_domain | default('kamitbrains.fr') }}/healthcheck/status.json', 'http', 'GET', 60, 'OpenPGP Team Password Manager');"
+        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (7, 'ChangeDetection.io', 1, 1, 'https://changedetection.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, 'Web & API Surveillance Monitor');"
+        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (8, 'IT-Tools Collection', 1, 1, 'https://tools.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, 'Web Developer Tools Collection');"
 
         # Update basic auth credentials on existing monitors
         sqlite3 /app/data/kuma.db "UPDATE monitor SET basic_auth_user = '{{ uptime_kuma_traefik_auth_user }}', basic_auth_pass = '{{ uptime_kuma_traefik_auth_pass }}', auth_method = 'basic', user_id = 1 WHERE id = 1;"
@@ -81,6 +84,9 @@ services:
         sqlite3 /app/data/kuma.db "INSERT INTO monitor_group (monitor_id, group_id, weight) SELECT 3, 1, 3 WHERE NOT EXISTS (SELECT 1 FROM monitor_group WHERE monitor_id = 3 AND group_id = 1);"
         sqlite3 /app/data/kuma.db "INSERT INTO monitor_group (monitor_id, group_id, weight) SELECT 4, 1, 4 WHERE NOT EXISTS (SELECT 1 FROM monitor_group WHERE monitor_id = 4 AND group_id = 1);"
         sqlite3 /app/data/kuma.db "INSERT INTO monitor_group (monitor_id, group_id, weight) SELECT 5, 1, 5 WHERE NOT EXISTS (SELECT 1 FROM monitor_group WHERE monitor_id = 5 AND group_id = 1);"
+        sqlite3 /app/data/kuma.db "INSERT INTO monitor_group (monitor_id, group_id, weight) SELECT 6, 1, 6 WHERE NOT EXISTS (SELECT 1 FROM monitor_group WHERE monitor_id = 6 AND group_id = 1);"
+        sqlite3 /app/data/kuma.db "INSERT INTO monitor_group (monitor_id, group_id, weight) SELECT 7, 1, 7 WHERE NOT EXISTS (SELECT 1 FROM monitor_group WHERE monitor_id = 7 AND group_id = 1);"
+        sqlite3 /app/data/kuma.db "INSERT INTO monitor_group (monitor_id, group_id, weight) SELECT 8, 1, 8 WHERE NOT EXISTS (SELECT 1 FROM monitor_group WHERE monitor_id = 8 AND group_id = 1);"
 
         # Seed Ntfy Push Notification Channel (id = 1, default = 1)
         sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO notification (id, name, active, user_id, is_default, config) VALUES (1, 'Ntfy Push Alerts', 1, 1, 1, '{\"type\":\"ntfy\",\"name\":\"Ntfy Push Alerts\",\"ntfyserverurl\":\"https://ntfy.{{ traefik_domain | default('kamitbrains.fr') }}\",\"ntfytopic\":\"alerts\",\"ntfyPriority\":4,\"ntfyAuthenticationMethod\":\"none\",\"is_default\":true}');"
@@ -91,6 +97,9 @@ services:
         sqlite3 /app/data/kuma.db "INSERT INTO monitor_notification (monitor_id, notification_id) SELECT 3, 1 WHERE NOT EXISTS (SELECT 1 FROM monitor_notification WHERE monitor_id = 3 AND notification_id = 1);"
         sqlite3 /app/data/kuma.db "INSERT INTO monitor_notification (monitor_id, notification_id) SELECT 4, 1 WHERE NOT EXISTS (SELECT 1 FROM monitor_notification WHERE monitor_id = 4 AND notification_id = 1);"
         sqlite3 /app/data/kuma.db "INSERT INTO monitor_notification (monitor_id, notification_id) SELECT 5, 1 WHERE NOT EXISTS (SELECT 1 FROM monitor_notification WHERE monitor_id = 5 AND notification_id = 1);"
+        sqlite3 /app/data/kuma.db "INSERT INTO monitor_notification (monitor_id, notification_id) SELECT 6, 1 WHERE NOT EXISTS (SELECT 1 FROM monitor_notification WHERE monitor_id = 6 AND notification_id = 1);"
+        sqlite3 /app/data/kuma.db "INSERT INTO monitor_notification (monitor_id, notification_id) SELECT 7, 1 WHERE NOT EXISTS (SELECT 1 FROM monitor_notification WHERE monitor_id = 7 AND notification_id = 1);"
+        sqlite3 /app/data/kuma.db "INSERT INTO monitor_notification (monitor_id, notification_id) SELECT 8, 1 WHERE NOT EXISTS (SELECT 1 FROM monitor_notification WHERE monitor_id = 8 AND notification_id = 1);"
 
         # Enable Trust Proxy (Proxy de confiance = Oui) and set Primary Base URL
         sqlite3 /app/data/kuma.db "INSERT OR REPLACE INTO setting (key, value, type) VALUES ('trustProxy', 'true', 'general');"

@@ -1,0 +1,8 @@
+---
+# IT-Tools role defaults
+it_tools_version: "latest"
+it_tools_image: "corentinth/it-tools:{{ it_tools_version }}"
+it_tools_domain: "kamitbrains.fr"
+it_tools_hostname: "tools.{{ traefik_domain | default(it_tools_domain) }}"
+it_tools_port: 80
+it_tools_compose_dir: "/opt/it-tools"

@@ -21,6 +21,12 @@
       tags: [uptime-kuma, status, monitoring]
     - role: ntfy
       tags: [ntfy, notification, communication]
+    - role: passbolt
+      tags: [passbolt, passwords, auth, security]
+    - role: changedetection
+      tags: [changedetection, surveillance, monitoring]
+    - role: it-tools
+      tags: [it-tools, tools, dev]
     - role: systemd-service
       tags: [systemd, services]
 

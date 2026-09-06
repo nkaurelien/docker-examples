@@ -1,0 +1,16 @@
+---
+# Passbolt role defaults
+passbolt_version: "ce"
+passbolt_image: "passbolt/passbolt:latest"
+passbolt_mariadb_version: "10.11"
+passbolt_mariadb_image: "mariadb:{{ passbolt_mariadb_version }}"
+passbolt_domain: "kamitbrains.fr"
+passbolt_hostname: "passwords.{{ traefik_domain | default(passbolt_domain) }}"
+passbolt_port: 80
+passbolt_compose_dir: "/opt/passbolt"
+
+# Database secrets lookup
+passbolt_db_name: "passbolt"
+passbolt_db_user: "passbolt"
+passbolt_db_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/passbolt-db-password', errors='ignore') | default('passbolt-db-pass-change-me', true) | trim }}"
+passbolt_admin_email: "nkaurelien@gmail.com"

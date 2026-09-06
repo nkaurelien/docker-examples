@@ -1,0 +1,8 @@
+---
+# ChangeDetection.io role defaults
+changedetection_version: "latest"
+changedetection_image: "dgtlmoon/changedetection.io:{{ changedetection_version }}"
+changedetection_domain: "kamitbrains.fr"
+changedetection_hostname: "changedetection.{{ traefik_domain | default(changedetection_domain) }}"
+changedetection_port: 5000
+changedetection_compose_dir: "/opt/changedetection"

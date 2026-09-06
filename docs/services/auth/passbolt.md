@@ -1,92 +1,81 @@
-# Passbolt
+# Passbolt Password Manager
 
-Gestionnaire de mots de passe open-source pour équipes.
+[Passbolt](https://www.passbolt.com/) is an open-source, team-first password manager built with GPG end-to-end encryption.
 
-## Quick Start
+---
 
-```bash
-cd auth-managment/passbolt
-docker compose up -d
-```
+## Service Overview
 
-## Accès
+| Attribute | Details |
+| :--- | :--- |
+| **Service Name** | `passbolt` |
+| **Public URL** | `https://passwords.kamitbrains.fr` |
+| **Health Check** | `http://127.0.0.1/healthcheck/status.json` |
+| **Docker Image** | `passbolt/passbolt:latest-ce` |
+| **Database** | MariaDB 10.11 (`passbolt-db`) |
+| **Reverse Proxy** | Traefik (`websecure` + Let's Encrypt TLS) |
+| **Security** | CrowdSec ForwardAuth Bouncer |
+| **Storage Volumes** | `passbolt-gpg-keys`, `passbolt-jwt-keys`, `passbolt-db-data` |
 
-- **URL** : https://passbolt.local (configurer DNS local)
-- **Premier accès** : Créer un admin via CLI
+---
 
-```bash
-docker exec -it passbolt su -m -c \
-  "/usr/share/php/passbolt/bin/cake passbolt register_user \
-  -u admin@example.com -f Admin -l User -r admin" -s /bin/sh www-data
-```
+## Quick Start & Setup
 
-## Ports
+### 1. Register First Administrator User
 
-| Service | Port | Description |
-|---------|------|-------------|
-| HTTP | 80 | Redirection HTTPS |
-| HTTPS | 443 | Interface web |
-
-## Configuration
-
-### Variables d'environnement
+Run the following command on the server via `docker exec`:
 
 ```bash
-# URL de l'application
-APP_FULL_BASE_URL=https://passbolt.local
-
-# Base de données PostgreSQL
-DATASOURCES_DEFAULT_DRIVER=Cake\Database\Driver\Postgres
-DATASOURCES_DEFAULT_URL=postgres://passbolt:P4ssb0lt@db:5432/passbolt?schema=passbolt
-
-# Email (SMTP)
-EMAIL_TRANSPORT_DEFAULT_HOST=smtp.domain.tld
-EMAIL_TRANSPORT_DEFAULT_PORT=587
-EMAIL_TRANSPORT_DEFAULT_USERNAME=
-EMAIL_TRANSPORT_DEFAULT_PASSWORD=
-EMAIL_TRANSPORT_DEFAULT_TLS=true
+docker exec -u www-data passbolt /usr/share/php/passbolt/bin/cake passbolt register_user \
+  -u admin@kamitbrains.fr -f Admin -l User -r admin
 ```
 
-### Volumes
+The output will contain an activation link (e.g., `https://passwords.kamitbrains.fr/setup/start/...`). Click the link to set up your GPG key pair and master password in the browser extension.
 
-| Volume | Description |
-|--------|-------------|
-| `gpg_volume` | Clés GPG du serveur |
-| `jwt_volume` | Tokens JWT |
-| `database_volume` | Données PostgreSQL |
+### 2. Browser Extension & Mobile Apps
 
-## Fonctionnalités
+- **Browser Extensions**: Install Passbolt extension for Firefox, Chrome, Edge, or Brave.
+- **Mobile Apps**: Passbolt apps available on iOS (App Store) and Android (Google Play).
 
-- Stockage sécurisé des mots de passe (chiffrement GPG)
-- Partage d'identifiants en équipe
-- Extension navigateur (Firefox, Chrome)
-- Application mobile
-- API REST
-- Import/Export (CSV, KeePass, LastPass)
-- Authentification MFA
+---
 
-## SSL/TLS
+## Architecture & Docker Compose Configuration
 
-Pour un certificat personnalisé, décommenter les volumes :
+Managed via Ansible role in `ansible/roles/passbolt/`.
 
 ```yaml
-volumes:
-  - ./cert.pem:/etc/ssl/certs/certificate.crt:ro
-  - ./key.pem:/etc/ssl/certs/certificate.key:ro
+services:
+  passbolt-db:
+    image: mariadb:10.11
+    container_name: passbolt-db
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=${PASSBOLT_DB_PASSWORD}
+      - MYSQL_DATABASE=passbolt
+      - MYSQL_USER=passbolt
+      - MYSQL_PASSWORD=${PASSBOLT_DB_PASSWORD}
+    volumes:
+      - passbolt-db-data:/var/lib/mysql
+    networks:
+      - passbolt-internal
+
+  passbolt:
+    image: passbolt/passbolt:latest-ce
+    container_name: passbolt
+    restart: unless-stopped
+    depends_on:
+      passbolt-db:
+        condition: service_healthy
+    environment:
+      - APP_FULL_BASE_URL=https://passwords.kamitbrains.fr
+      - DATASOURCES_DEFAULT_HOST=passbolt-db
+      - DATASOURCES_DEFAULT_USERNAME=passbolt
+      - DATASOURCES_DEFAULT_PASSWORD=${PASSBOLT_DB_PASSWORD}
+      - DATASOURCES_DEFAULT_DATABASE=passbolt
+    volumes:
+      - passbolt-gpg-keys:/etc/passbolt/gpg
+      - passbolt-jwt-keys:/etc/passbolt/jwt
+    networks:
+      - traefik-public
+      - passbolt-internal
 ```
-
-## Image Non-Root
-
-Pour plus de sécurité, utiliser l'image non-root :
-
-```yaml
-image: passbolt/passbolt:latest-ce-non-root
-ports:
-  - "80:8080"
-  - "443:4433"
-```
-
-## Liens
-
-- [Documentation officielle](https://help.passbolt.com/)
-- [GitHub](https://github.com/passbolt/passbolt_docker)
