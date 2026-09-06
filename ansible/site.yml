@@ -27,6 +27,10 @@
       tags: [changedetection, surveillance, monitoring]
     - role: it-tools
       tags: [it-tools, tools, dev]
+    - role: tinyauth
+      tags: [tinyauth, sso, auth, security]
+    - role: homepage
+      tags: [homepage, dashboard, portal, home, apps]
     - role: systemd-service
       tags: [systemd, services]
 
