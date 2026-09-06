@@ -3,14 +3,33 @@
 
 http:
   routers:
-    dashboard:
-      rule: "Host(`{{ traefik_dashboard_host }}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+    dashboard-redirect:
+      rule: "Host(`{{ traefik_dashboard_host }}`) && Path(`/dashboard`)"
       service: api@internal
       entryPoints:
         - websecure
       middlewares:
-        - dashboard-auth
+        - dashboard-redirect@file
 {% if traefik_enable_letsencrypt %}
       tls:
         certResolver: letsencrypt
 {% endif %}
+
+    dashboard:
+      rule: "Host(`{{ traefik_dashboard_host }}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard/`))"
+      service: api@internal
+      entryPoints:
+        - websecure
+      middlewares:
+        - dashboard-auth@file
+{% if traefik_enable_letsencrypt %}
+      tls:
+        certResolver: letsencrypt
+{% endif %}
+
+  middlewares:
+    dashboard-redirect:
+      redirectRegex:
+        regex: "^https://([^/]+)/dashboard$"
+        replacement: "https://${1}/dashboard/"
+        permanent: true
