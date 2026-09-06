@@ -11,3 +11,7 @@ glances_cpu_limit: "0.5"
 glances_memory_limit: "256M"
 glances_cpu_reservation: "0.1"
 glances_memory_reservation: "64M"
+
+# Basic authentication defaults
+glances_basic_auth_user: "admin"
+glances_basic_auth_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/glances-basic-auth-password', errors='ignore') | default('glances-default-auth-password-change-me', true) | trim }}"
