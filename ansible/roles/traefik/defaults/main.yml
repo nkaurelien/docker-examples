@@ -10,3 +10,7 @@ traefik_http_port: 80
 traefik_https_port: 443
 traefik_dashboard_port: 8088
 traefik_compose_dir: "/opt/traefik"
+
+# Dashboard authentication defaults
+traefik_dashboard_basic_auth_user: "admin"
+traefik_dashboard_basic_auth_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/traefik-dashboard-basic-auth-password', errors='ignore') | default('traefik-dashboard-password-change-me', true) | trim }}"
