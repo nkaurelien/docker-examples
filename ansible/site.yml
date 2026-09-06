@@ -17,6 +17,8 @@
       tags: [arcane, manager, paas]
     - role: crowdsec
       tags: [crowdsec, security, ids]
+    - role: uptime-kuma
+      tags: [uptime-kuma, status, monitoring]
     - role: systemd-service
       tags: [systemd, services]
 

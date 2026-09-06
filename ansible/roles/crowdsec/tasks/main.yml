@@ -17,6 +17,17 @@
     state: present
     remove_orphans: true
 
+- name: Ensure Traefik bouncer is registered in CrowdSec engine
+  ansible.builtin.shell:
+    cmd: >
+      docker exec crowdsec cscli bouncers inspect traefik-bouncer >/dev/null 2>&1 || docker exec crowdsec cscli bouncers add traefik-bouncer -k "{{ crowdsec_lapi_key }}"
+  changed_when: false
+
+- name: Restart CrowdSec Traefik bouncer container to ensure LAPI sync
+  ansible.builtin.command:
+    cmd: "docker restart crowdsec-traefik-bouncer"
+  changed_when: false
+
 - name: Install and enable CrowdSec systemd service for boot startup
   ansible.builtin.include_role:
     name: systemd-service
