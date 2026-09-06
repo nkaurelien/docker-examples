@@ -30,7 +30,7 @@ services:
       - "{{ traefik_https_port }}:443"
       - "{{ traefik_dashboard_port }}:8080"
     command:
-      - "--api.insecure=true"
+      - "--api=true"
       - "--api.dashboard=true"
       - "--log.level=INFO"
       - "--providers.docker=true"
@@ -52,14 +52,6 @@ services:
     volumes:
       - "./config/dynamic:/etc/traefik/dynamic:ro"
       - "traefik_letsencrypt:/letsencrypt"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.dashboard.rule=Host(`{{ traefik_dashboard_host }}`)"
-      - "traefik.http.routers.dashboard.service=api@internal"
-      - "traefik.http.routers.dashboard.entrypoints=websecure"
-{% if traefik_enable_letsencrypt %}
-      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt"
-{% endif %}
     healthcheck:
       test: ["CMD", "traefik", "healthcheck", "--ping"]
       interval: 10s

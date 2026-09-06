@@ -13,6 +13,27 @@
     - "{{ traefik_compose_dir }}"
     - "{{ traefik_compose_dir }}/config/dynamic"
 
+- name: Compute htpasswd SHA1 entry for Traefik Dashboard Basic Auth
+  ansible.builtin.shell:
+    cmd: >
+      python3 -c "import base64, hashlib; pwd = '''{{ traefik_dashboard_basic_auth_password }}'''; print('{{ traefik_dashboard_basic_auth_user | default('admin') }}:{SHA}' + base64.b64encode(hashlib.sha1(pwd.encode()).digest()).decode())"
+  register: _traefik_dashboard_htpasswd_res
+  changed_when: false
+
+- name: Deploy Traefik Basic Auth middleware for Dashboard
+  ansible.builtin.template:
+    src: traefik-dashboard-auth.yml.j2
+    dest: "/opt/traefik/config/dynamic/dashboard-auth.yml"
+    mode: '0644'
+  vars:
+    traefik_dashboard_htpasswd_user_entry: "{{ _traefik_dashboard_htpasswd_res.stdout }}"
+
+- name: Deploy Traefik Dashboard router configuration
+  ansible.builtin.template:
+    src: traefik-dashboard-router.yml.j2
+    dest: "/opt/traefik/config/dynamic/dashboard-router.yml"
+    mode: '0644'
+
 - name: Deploy Traefik docker-compose configuration
   ansible.builtin.template:
     src: docker-compose.yml.j2
