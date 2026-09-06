@@ -119,27 +119,34 @@ docker compose up -d
 
 ## Structure du Repository
 
-```
+```text
 docker-examples/
-├── compose/01-infrastructure/        # DNS, réseau de base
-├── compose/02-container-orchestration/  # Portainer, Rancher, Coolify, K8s tools
-├── compose/03-iot-smart-home/        # Home Assistant, Zigbee
-├── compose/04-network-management/    # Asterisk VoIP
-├── compose/05-monitoring-reporting/  # Glances, Checkmk, Uptime Kuma
-├── compose/06-ai/                    # AI/ML platforms
-├── compose/07-automation/            # Workflow automation
-├── compose/08-code-management/       # Gitea, GitLab
-├── compose/09-app-server-management/ # CMS, ERP
-├── compose/10-databases/             # PostgreSQL, CouchDB
-├── compose/11-security-identity/     # Keycloak, Zitadel
-├── compose/12-document-management/   # Paperless, DMS
-├── compose/13-api-gateway/           # Traefik, Kong, Hasura
-├── compose/14-mail-services/         # Mailpit, Docker Mailserver
-├── compose/15-media-storage/         # MinIO, file sharing
-├── compose/16-development-tools/     # IT-Tools
-├── compose/17-data-processing/       # Kafka, Spark
-├── compose/18-communication/         # Chat, video
-└── docs/                     # Documentation (MkDocs)
+├── ansible/                          # Suite d'automatisation Ansible (Traefik, Glances, Arcane, Socket Proxy, systemd, SSL)
+├── compose/                          # Configurations Docker Compose classées par domaines
+│   ├── 01-infrastructure/            # Bind9 DNS, Nginx Certbot, Traefik
+│   ├── 02-container-orchestration/   # Arcane PaaS Manager, Portainer, Coolify, Dokploy, K8s Cert-Manager, Longhorn
+│   ├── 03-iot-smart-home/            # Home Assistant, ChangeDetection.io
+│   ├── 04-network-management/        # Asterisk VoIP
+│   ├── 05-monitoring-reporting/      # Checkmk, Uptime Kuma, Glances, Observabilité (Prometheus/Grafana), SonarQube
+│   ├── 06-ai/                        # Ollama Local, Open WebUI, Jupyter Notebooks, DGX SSH Tunnel
+│   ├── 07-automation/                # Automatisations de workflow, CI/CD, Cron & PM2 Scheduling
+│   ├── 08-code-management/           # Gitea, Docker Registry, JFrog Artifactory
+│   ├── 09-app-server-management/     # Business Apps (Odoo ERP), Content Management (WordPress, Drupal)
+│   ├── 10-databases/                 # PostgreSQL, CouchDB Cluster, CockroachDB
+│   ├── 11-security-identity/         # Keycloak, Zitadel, SuperTokens, Wazuh SIEM, ClamAV, Socket Proxy
+│   ├── 12-document-management/       # Paperless-ngx
+│   ├── 13-api-gateway/               # Traefik, Kong, Tyk, WSO2 AM, Hasura GraphQL, Hoppscotch
+│   ├── 14-mail-services/             # Mailpit, Docker Mailserver, Mailcatcher, Mailu
+│   ├── 15-media-storage/             # MinIO S3, Erugo File Sharing, Static Files Server, S3FS Volume
+│   ├── 16-development-tools/         # IT-Tools, Excalidraw
+│   ├── 17-data-processing/           # Stack Kafka + Logstash (Data processing temps réel)
+│   └── 18-communication/             # Novu (Moteur de notifications)
+├── docs/                             # Documentation MkDocs & Registre des templates Arcane
+├── helm/                             # Charts Helm Kubernetes
+├── kubernetes/                       # Manifestes Kubernetes natifs
+├── packer/                           # Modèles d'images VM & Containers Packer
+├── scripts/                          # Scripts CLI Cloudflare DNS & Générateur de registre
+└── terraform/                        # Templates Infrastructure as Code Terraform
 ```
 
 ## Makefile
