@@ -55,11 +55,14 @@ services:
         until [ -f /app/data/kuma.db ]; do sleep 1; done
         apk add --no-cache -q sqlite
         
-        # Seed core infrastructure monitors
-        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, url, type, method, interval, description) VALUES (1, 'Traefik Proxy', 1, 'https://traefik.{{ traefik_domain | default('kamitbrains.fr') }}/dashboard/', 'http', 'GET', 60, 'Edge Reverse Proxy Dashboard');"
-        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, url, type, method, interval, description) VALUES (2, 'Glances Monitoring', 1, 'https://glances.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, 'System & Container Resource Monitoring');"
-        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, url, type, method, interval, description) VALUES (3, 'Arcane PaaS Manager', 1, 'https://arcane.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, 'Docker Container Management Dashboard');"
-        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, url, type, method, interval, description) VALUES (4, 'Uptime Kuma Status', 1, 'https://status.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, 'Uptime & Service Health Monitor');"
+        # Seed core infrastructure monitors with user_id = 1
+        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (1, 'Traefik Proxy', 1, 1, 'https://traefik.{{ traefik_domain | default('kamitbrains.fr') }}/dashboard/', 'http', 'GET', 60, 'Edge Reverse Proxy Dashboard');"
+        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (2, 'Glances Monitoring', 1, 1, 'https://glances.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, 'System & Container Resource Monitoring');"
+        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (3, 'Arcane PaaS Manager', 1, 1, 'https://arcane.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, 'Docker Container Management Dashboard');"
+        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, url, type, method, interval, description) VALUES (4, 'Uptime Kuma Status', 1, 1, 'https://status.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, 'Uptime & Service Health Monitor');"
+
+        # Ensure user_id is set to 1 for all monitors
+        sqlite3 /app/data/kuma.db "UPDATE monitor SET user_id = 1 WHERE user_id IS NULL;"
 
         # Seed default public status page
         sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO status_page (id, slug, title, description, icon, theme, published) VALUES (1, 'default', '{{ traefik_domain | default('kamitbrains.fr') }} Infrastructure Status', 'Real-time status monitor for core services', '/icon.svg', 'auto', 1);"
