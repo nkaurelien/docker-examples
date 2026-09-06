@@ -1,0 +1,27 @@
+---
+- name: Ensure Glances deployment directory exists
+  ansible.builtin.file:
+    path: "{{ glances_compose_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Deploy Glances docker-compose configuration
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ glances_compose_dir }}/docker-compose.yml"
+    mode: '0644'
+
+- name: Start Glances container stack via docker compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ glances_compose_dir }}"
+    state: present
+
+- name: Install and enable Glances systemd service for boot startup
+  ansible.builtin.include_role:
+    name: systemd-service
+  vars:
+    systemd_service_name: "glances"
+    systemd_service_description: "Glances System & Container Monitoring"
+    systemd_compose_dir: "{{ glances_compose_dir }}"
+    systemd_compose_files: "-f docker-compose.yml"
+    systemd_project_name: "glances"

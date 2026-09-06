@@ -11,6 +11,8 @@
       tags: [ssl, security]
     - role: traefik
       tags: [traefik, proxy, reverse-proxy]
+    - role: glances
+      tags: [glances, monitoring]
     - role: systemd-service
       tags: [systemd, services]
 
