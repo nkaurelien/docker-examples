@@ -1,10 +1,10 @@
 services:
-  socket-proxy:
+  traefik-socket-proxy:
     image: tecnativa/docker-socket-proxy:latest
     container_name: traefik-socket-proxy
     restart: unless-stopped
     networks:
-      - socket-proxy
+      - traefik-internal
     environment:
       - CONTAINERS=1
       - EVENTS=1
@@ -12,7 +12,6 @@ services:
       - NETWORKS=1
       - SERVICES=1
       - VERSION=1
-      - VOLUMES=1
       - POST=0
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
@@ -22,10 +21,10 @@ services:
     container_name: traefik
     restart: unless-stopped
     depends_on:
-      - socket-proxy
+      - traefik-socket-proxy
     networks:
       - {{ traefik_public_network }}
-      - socket-proxy
+      - traefik-internal
     ports:
       - "{{ traefik_http_port }}:80"
       - "{{ traefik_https_port }}:443"
@@ -35,7 +34,7 @@ services:
       - "--api.dashboard=true"
       - "--log.level=INFO"
       - "--providers.docker=true"
-      - "--providers.docker.endpoint=tcp://socket-proxy:2375"
+      - "--providers.docker.endpoint=tcp://traefik-socket-proxy:2375"
       - "--providers.docker.exposedbydefault=false"
       - "--providers.docker.network={{ traefik_public_network }}"
       - "--providers.file.directory=/etc/traefik/dynamic"
@@ -43,6 +42,8 @@ services:
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
 {% if traefik_enable_letsencrypt %}
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
       - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
       - "--certificatesresolvers.letsencrypt.acme.email={{ traefik_acme_email }}"
@@ -55,7 +56,10 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.dashboard.rule=Host(`{{ traefik_dashboard_host }}`)"
       - "traefik.http.routers.dashboard.service=api@internal"
-      - "traefik.http.routers.dashboard.entrypoints=web"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+{% if traefik_enable_letsencrypt %}
+      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt"
+{% endif %}
     healthcheck:
       test: ["CMD", "traefik", "healthcheck", "--ping"]
       interval: 10s
@@ -69,6 +73,5 @@ volumes:
 networks:
   {{ traefik_public_network }}:
     external: true
-  socket-proxy:
-    name: traefik-socket-proxy
+  traefik-internal:
     internal: true

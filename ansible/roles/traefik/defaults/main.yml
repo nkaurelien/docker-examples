@@ -4,7 +4,7 @@ traefik_version: "v3.6"
 traefik_domain: "kamitbrains.fr"
 traefik_public_network: "traefik-public"
 traefik_acme_email: "nkaurelien@gmail.com"
-traefik_enable_letsencrypt: false
+traefik_enable_letsencrypt: true
 traefik_dashboard_host: "traefik.{{ traefik_domain }}"
 traefik_http_port: 80
 traefik_https_port: 443

@@ -7,8 +7,6 @@
       tags: [common, system]
     - role: docker-daemon
       tags: [docker, daemon]
-    - role: docker-socket-proxy
-      tags: [socket-proxy, security]
     - role: ssl-certs
       tags: [ssl, security]
     - role: traefik
