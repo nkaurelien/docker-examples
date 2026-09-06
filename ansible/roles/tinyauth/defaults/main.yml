@@ -1,0 +1,9 @@
+---
+# TinyAuth role defaults
+tinyauth_image: "ghcr.io/steveiliop56/tinyauth:v4"
+tinyauth_domain: "kamitbrains.fr"
+tinyauth_hostname: "auth.{{ traefik_domain | default(tinyauth_domain) }}"
+tinyauth_compose_dir: "/opt/tinyauth"
+tinyauth_admin_user: "admin@kamitbrains.fr"
+tinyauth_admin_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/tinyauth-admin-password', errors='ignore') | default('T!nyAuth2026S3cur3P@ssword', true) | trim }}"
+tinyauth_secret: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/tinyauth-secret', errors='ignore') | default('t3ny4uth-s3cr3t-k3y-k4m1tbr41ns-2026-x9pro', true) | trim }}"

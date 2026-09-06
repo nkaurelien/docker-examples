@@ -142,6 +142,7 @@ nav:
 
   - App & Server Management:
       - Overview: services/app-management/index.md
+      - Homepage Portal: services/app-management/homepage.md
 
   - Databases:
       - Overview: services/databases/index.md

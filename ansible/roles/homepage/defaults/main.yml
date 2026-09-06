@@ -1,0 +1,8 @@
+---
+# Homepage role defaults
+homepage_image: "ghcr.io/gethomepage/homepage:latest"
+homepage_domain: "kamitbrains.fr"
+homepage_primary_hostname: "home.{{ traefik_domain | default(homepage_domain) }}"
+homepage_alias_hostname: "apps.{{ traefik_domain | default(homepage_domain) }}"
+homepage_compose_dir: "/opt/homepage"
+homepage_config_dir: "/opt/homepage/config"

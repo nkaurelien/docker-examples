@@ -1,34 +1,59 @@
-# TinyAuth Integration
+# TinyAuth ForwardAuth SSO Middleware
 
-TinyAuth est un middleware d'authentification léger pour Traefik.
+[TinyAuth](https://github.com/steveiliop56/tinyauth) is a lightweight authentication ForwardAuth middleware for Traefik edge reverse proxies.
 
-## Configuration
+---
 
-### Labels Traefik
+## Service Overview
 
-```yaml
-labels:
-  - "traefik.http.middlewares.auth.forwardauth.address=http://tinyauth:3000/auth"
-  - "traefik.http.middlewares.auth.forwardauth.trustForwardHeader=true"
-```
+| Attribute | Details |
+| :--- | :--- |
+| **Service Name** | `tinyauth` |
+| **Public URL** | `https://auth.kamitbrains.fr` |
+| **Health Check** | `http://127.0.0.1:3000/api/health` |
+| **Docker Image** | `ghcr.io/steveiliop56/tinyauth:v4` |
+| **Traefik Middleware** | `tinyauth-auth@docker` |
+| **ForwardAuth Address** | `http://tinyauth:3000/api/auth/traefik` |
 
-### Variables d'environnement TinyAuth
+---
 
-```bash
-APP_URL=http://tinyauth:3000
-SECRET=your-secret-key
-USERS=admin:$2y$...  # bcrypt hash
-```
+## Traefik Integration
 
-## Utilisation
-
-Appliquer le middleware à un service :
+To protect any service with TinyAuth ForwardAuth SSO, add the middleware label:
 
 ```yaml
 labels:
-  - "traefik.http.routers.myservice.middlewares=auth"
+  - "traefik.enable=true"
+  - "traefik.http.routers.myservice.rule=Host(`myservice.kamitbrains.fr`)"
+  - "traefik.http.routers.myservice.middlewares=tinyauth-auth@docker"
 ```
 
-## Liens
+---
 
-- [TinyAuth GitHub](https://github.com/steveiliop56/tinyauth)
+## Architecture & Docker Compose Configuration
+
+Managed via Ansible role in `ansible/roles/tinyauth/`.
+
+```yaml
+services:
+  tinyauth:
+    image: ghcr.io/steveiliop56/tinyauth:v4
+    container_name: tinyauth
+    restart: unless-stopped
+    environment:
+      - SECRET=${TINYAUTH_SECRET}
+      - USERS=admin@kamitbrains.fr:${TINYAUTH_ADMIN_PASSWORD}
+      - APP_URL=https://auth.kamitbrains.fr
+      - COOKIE_SECURE=true
+    networks:
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.tinyauth.rule=Host(`auth.kamitbrains.fr`)"
+      - "traefik.http.routers.tinyauth.entrypoints=websecure"
+      - "traefik.http.routers.tinyauth.tls.certresolver=letsencrypt"
+      - "traefik.http.services.tinyauth.loadbalancer.server.port=3000"
+      - "traefik.http.middlewares.tinyauth-auth.forwardauth.address=http://tinyauth:3000/api/auth/traefik"
+      - "traefik.http.middlewares.tinyauth-auth.forwardauth.trustForwardHeader=true"
+      - "traefik.http.middlewares.tinyauth-auth.forwardauth.authResponseHeaders=X-Auth-User"
+```
