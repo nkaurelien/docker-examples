@@ -1,0 +1,40 @@
+---
+- name: Ensure Arcane deployment directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ arcane_compose_dir }}"
+    - "{{ arcane_compose_dir }}/projects"
+    - "{{ arcane_compose_dir }}/templates"
+    - "{{ arcane_compose_dir }}/builds"
+    - "{{ arcane_compose_dir }}/backups"
+
+- name: Deploy Arcane docker-compose configuration
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ arcane_compose_dir }}/docker-compose.yml"
+    mode: '0644'
+
+- name: Remove legacy conflicting arcane containers if present
+  ansible.builtin.command:
+    cmd: "docker rm -f arcane-docker-proxy arcane arcane-db-seeder"
+  failed_when: false
+  changed_when: false
+
+- name: Start Arcane container stack via docker compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ arcane_compose_dir }}"
+    state: present
+    remove_orphans: true
+
+- name: Install and enable Arcane systemd service for boot startup
+  ansible.builtin.include_role:
+    name: systemd-service
+  vars:
+    systemd_service_name: "arcane"
+    systemd_service_description: "Arcane Docker Manager PaaS"
+    systemd_compose_dir: "{{ arcane_compose_dir }}"
+    systemd_compose_files: "-f docker-compose.yml"
+    systemd_project_name: "arcane"

@@ -13,6 +13,8 @@
       tags: [traefik, proxy, reverse-proxy]
     - role: glances
       tags: [glances, monitoring]
+    - role: arcane
+      tags: [arcane, manager, paas]
     - role: systemd-service
       tags: [systemd, services]
 
