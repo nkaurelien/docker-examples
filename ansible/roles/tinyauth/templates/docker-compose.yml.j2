@@ -10,19 +10,24 @@ services:
       - SECRET={{ tinyauth_secret }}
       - USERS={{ tinyauth_users_string }}
       - APP_URL=https://{{ tinyauth_hostname }}
+      - TINYAUTH_APPURL=https://{{ tinyauth_hostname }}
       - COOKIE_SECURE=true
       - COOKIE_DOMAIN={{ traefik_domain | default('kamitbrains.fr') }}
-      - RESOURCES_DIR=/data/resources
-      - TINYAUTH_RESOURCES_DIR=/data/resources
-      - BACKGROUND_IMAGE=/background.jpg
-      - TINYAUTH_BACKGROUND_IMAGE=/background.jpg
-      - TINYAUTH_UI_BACKGROUNDIMAGE=/background.jpg
+      - TINYAUTH_RESOURCES_ENABLED=true
+      - TINYAUTH_RESOURCES_PATH=/resources
+      - RESOURCES_DIR=/resources
+      - TINYAUTH_UI_BACKGROUNDIMAGE=/resources/bg-red.jpg
+      - BACKGROUND_IMAGE=/resources/bg-red.jpg
       - TINYAUTH_UI_TITLE=KamitBrains Auth
 
     volumes:
-      - ./background.jpg:/data/resources/background.jpg:ro
-      - ./background.jpg:/resources/background.jpg:ro
-      - ./background.jpg:/background.jpg:ro
+      - ./background.jpg:/resources/bg-red.jpg:ro
+
+
+
+
+
+
 
 
     networks:
