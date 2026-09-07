@@ -33,10 +33,18 @@
       tags: [stirling-pdf, stirling, pdf, tools, dev]
     - role: tinyauth
       tags: [tinyauth, sso, auth, security]
+    - role: pingvin-share
+      tags: [pingvin-share, share, files, tools]
+    - role: pairdrop
+      tags: [pairdrop, drop, p2p, files, tools]
+    - role: hedgedoc
+      tags: [hedgedoc, pad, markdown, docs, tools]
+    - role: excalidraw
+      tags: [excalidraw, draw, whiteboard, diagrams, tools]
+    - role: dozzle
+      tags: [dozzle, logs, docker, monitoring, tools]
     - role: homepage
       tags: [homepage, dashboard, portal, home, apps]
-    - role: systemd-service
-      tags: [systemd, services]
 
 - name: Maintenance and Cleanup Tasks
   hosts: docker_hosts

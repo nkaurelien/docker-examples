@@ -1,0 +1,32 @@
+---
+- name: Ensure Pingvin Share deployment and data directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ pingvin_share_compose_dir }}"
+    - "{{ pingvin_share_compose_dir }}/data"
+    - "{{ pingvin_share_compose_dir }}/data/images"
+
+- name: Deploy Pingvin Share docker-compose configuration
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ pingvin_share_compose_dir }}/docker-compose.yml"
+    mode: '0644'
+
+- name: Start Pingvin Share container stack via docker compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ pingvin_share_compose_dir }}"
+    state: present
+    remove_orphans: true
+
+- name: Install and enable Pingvin Share systemd service for boot startup
+  ansible.builtin.include_role:
+    name: systemd-service
+  vars:
+    systemd_service_name: "pingvin-share"
+    systemd_service_description: "Pingvin Share File Sharing Service"
+    systemd_compose_dir: "{{ pingvin_share_compose_dir }}"
+    systemd_compose_files: "-f docker-compose.yml"
+    systemd_project_name: "pingvin-share"

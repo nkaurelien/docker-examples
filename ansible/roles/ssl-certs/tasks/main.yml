@@ -6,32 +6,27 @@
 # Assert files locaux -> upload distant -> assemble nginx_bundle -> notify reload.
 # =============================================================================
 
-- name: Skip SSL certs deployment if disabled or Let's Encrypt used
-  meta: end_host
-  when: not (ssl_certs_enabled | default(false) | bool) or app_domain_tld == "local"
-  tags: [ssl, certs]
+- name: Deploy custom SSL certificates if enabled
+  block:
+    - name: Assert required local files exist
+      stat:
+        path: "{{ ssl_certs_local_dir }}/{{ item }}"
+      register: local_files
+      failed_when: not local_files.stat.exists
+      delegate_to: localhost
+      run_once: true
+      become: no
+      loop:
+        - "{{ ssl_certs_local_cert_file }}"
+        - "{{ ssl_certs_local_ca_bundle_file }}"
+        - "{{ ssl_certs_local_key_file }}"
+      loop_control:
+        label: "{{ item }}"
 
+    - name: Upload cert files to remote server
+      include_tasks: upload.yml
 
-- name: Assert required local files exist
-  stat:
-    path: "{{ ssl_certs_local_dir }}/{{ item }}"
-  register: local_files
-  failed_when: not local_files.stat.exists
-  delegate_to: localhost
-  run_once: true
-  become: no
-  loop:
-    - "{{ ssl_certs_local_cert_file }}"
-    - "{{ ssl_certs_local_ca_bundle_file }}"
-    - "{{ ssl_certs_local_key_file }}"
-  loop_control:
-    label: "{{ item }}"
-  tags: [ssl, certs]
-
-- name: Upload cert files to remote server
-  include_tasks: upload.yml
-  tags: [ssl, certs]
-
-- name: Assemble nginx bundle on remote server
-  include_tasks: assemble.yml
+    - name: Assemble nginx bundle on remote server
+      include_tasks: assemble.yml
+  when: (ssl_certs_enabled | default(false) | bool) and app_domain_tld != "local"
   tags: [ssl, certs]

@@ -1,0 +1,7 @@
+---
+# Dozzle role defaults
+dozzle_image: "amir20/dozzle:latest"
+dozzle_domain: "kamitbrains.fr"
+dozzle_hostname: "logs.{{ traefik_domain | default(dozzle_domain) }}"
+dozzle_compose_dir: "/opt/dozzle"
+dozzle_container_port: 8080

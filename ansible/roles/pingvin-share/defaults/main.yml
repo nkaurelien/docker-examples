@@ -1,0 +1,7 @@
+---
+# Pingvin Share role defaults
+pingvin_share_image: "smp46/pingvin-share-x:latest"
+pingvin_share_domain: "kamitbrains.fr"
+pingvin_share_hostname: "share.{{ traefik_domain | default(pingvin_share_domain) }}"
+pingvin_share_compose_dir: "/opt/pingvin-share"
+pingvin_share_container_port: 3000
