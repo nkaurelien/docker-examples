@@ -24,9 +24,10 @@ services:
       resources:
         limits:
           cpus: "0.25"
-          memory: 128M
+          memory: 64M
         reservations:
-          memory: 32M
+          memory: 16M
+
 
   traefik:
     image: traefik:{{ traefik_version }}
@@ -81,9 +82,10 @@ services:
       resources:
         limits:
           cpus: "1.00"
-          memory: 512M
+          memory: 256M
         reservations:
-          memory: 128M
+          memory: 64M
+
 
 volumes:
   traefik_letsencrypt:

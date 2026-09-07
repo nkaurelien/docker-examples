@@ -37,10 +37,11 @@ services:
       resources:
         limits:
           cpus: "0.50"
-          memory: 512M
+          memory: 384M
         reservations:
           cpus: "0.10"
-          memory: 128M
+          memory: 64M
+
 
   uptime-kuma-db-seeder:
     image: alpine:latest

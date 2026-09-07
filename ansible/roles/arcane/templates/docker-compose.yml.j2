@@ -39,9 +39,10 @@ services:
       resources:
         limits:
           cpus: "0.25"
-          memory: 128M
+          memory: 64M
         reservations:
-          memory: 32M
+          memory: 16M
+
 
   arcane:
     image: {{ arcane_image }}
@@ -82,9 +83,10 @@ services:
       resources:
         limits:
           cpus: "1.00"
-          memory: 1024M
-        reservations:
           memory: 256M
+        reservations:
+          memory: 64M
+
 
   arcane-db-seeder:
     image: alpine:latest
