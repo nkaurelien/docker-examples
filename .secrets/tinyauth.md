@@ -1,9 +1,18 @@
-# TinyAuth Secrets & Details
+# TinyAuth SSO Documentation & Secrets
 
 - **Public URL**: `https://auth.kamitbrains.fr`
-- **Admin Username**: `admin@kamitbrains.fr` / `admin`
-- **Admin Password**: `T!nyAuth2026S3cur3P@ssword`
-- **User Admin**: `nkaurelien@gmail.com` (Password: `NkAur3l!en#2026!P@ssword`)
-- **User PDF**: `etombe_ndedi@hotmail.fr` (Password: `Et0mb3#2026!P@ssword`)
 - **Traefik Middleware**: `tinyauth-auth@docker`
+
+## Accounts & Secret Files
+
+All passwords are path-referenced in gitignored files under `.secrets/`:
+
+| Account / Username | Secret File Path |
+| :--- | :--- |
+| `admin@kamitbrains.fr` | `.secrets/tinyauth-admin-password` |
+| `admin` | `.secrets/tinyauth-admin-password` |
+| `nkaurelien@gmail.com` | `.secrets/tinyauth-user-nkaurelien-password` |
+| `etombe_ndedi@hotmail.fr` | `.secrets/tinyauth-user-etombe-password` |
+| `Secret Token` | `.secrets/tinyauth-secret` |
+
 

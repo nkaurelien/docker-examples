@@ -4,15 +4,16 @@ tinyauth_image: "ghcr.io/steveiliop56/tinyauth:v4"
 tinyauth_domain: "kamitbrains.fr"
 tinyauth_hostname: "auth.{{ traefik_domain | default(tinyauth_domain) }}"
 tinyauth_compose_dir: "/opt/tinyauth"
-tinyauth_secret: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-secret', errors='ignore') | default('t3ny4uth-s3cr3t-k3y-k4m1tbr41ns-2026-x9pro', true) | trim }}"
+tinyauth_secret: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-secret', errors='ignore') | default('change-me-tinyauth-secret-key', true) | trim }}"
 
 # List of authorized SSO users & credentials
 tinyauth_users:
   - username: "admin@kamitbrains.fr"
-    password: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-admin-password', errors='ignore') | default('T!nyAuth2026S3cur3P@ssword', true) | trim }}"
+    password: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-admin-password', errors='ignore') | default('change-me-tinyauth-admin-password', true) | trim }}"
   - username: "admin"
-    password: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-admin-password', errors='ignore') | default('T!nyAuth2026S3cur3P@ssword', true) | trim }}"
+    password: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-admin-password', errors='ignore') | default('change-me-tinyauth-admin-password', true) | trim }}"
   - username: "nkaurelien@gmail.com"
-    password: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-user-nkaurelien-password', errors='ignore') | default('NkAur3l!en#2026!P@ssword', true) | trim }}"
+    password: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-user-nkaurelien-password', errors='ignore') | default('change-me-tinyauth-nkaurelien-password', true) | trim }}"
   - username: "etombe_ndedi@hotmail.fr"
-    password: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-user-etombe-password', errors='ignore') | default('Et0mb3#2026!P@ssword', true) | trim }}"
+    password: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-user-etombe-password', errors='ignore') | default('change-me-tinyauth-etombe-password', true) | trim }}"
+
