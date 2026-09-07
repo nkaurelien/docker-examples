@@ -30,10 +30,11 @@ services:
       resources:
         limits:
           cpus: "0.50"
-          memory: 256M
+          memory: 64M
         reservations:
           cpus: "0.05"
-          memory: 64M
+          memory: 16M
+
 
 networks:
   {{ traefik_public_network | default('traefik-public') }}:

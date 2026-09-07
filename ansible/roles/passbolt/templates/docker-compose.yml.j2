@@ -77,9 +77,10 @@ services:
       resources:
         limits:
           cpus: "0.75"
-          memory: 512M
+          memory: 256M
         reservations:
-          memory: 128M
+          memory: 64M
+
 
   passbolt-init:
     image: {{ passbolt_image }}
