@@ -9,10 +9,15 @@ services:
     environment:
       - SECRET={{ tinyauth_secret }}
       - USERS={{ tinyauth_users_string }}
-
       - APP_URL=https://{{ tinyauth_hostname }}
       - COOKIE_SECURE=true
       - COOKIE_DOMAIN={{ traefik_domain | default('kamitbrains.fr') }}
+      - RESOURCES_DIR=/resources
+      - BACKGROUND_IMAGE=/background.jpg
+
+    volumes:
+      - ./background.jpg:/resources/background.jpg:ro
+
     networks:
       - {{ traefik_public_network | default('traefik-public') }}
     labels:
