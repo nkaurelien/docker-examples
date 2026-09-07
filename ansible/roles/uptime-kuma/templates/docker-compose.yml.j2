@@ -17,7 +17,8 @@ services:
       - {{ traefik_public_network | default('traefik-public') }}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.uptime-kuma.rule=Host(`{{ uptime_kuma_hostname }}`)"
+      - "traefik.http.routers.uptime-kuma.rule=Host(`{{ uptime_kuma_hostname }}`) || Host(`{{ uptime_kuma_alias_hostname }}`)"
+
       - "traefik.http.routers.uptime-kuma.entrypoints=websecure"
       - "traefik.http.routers.uptime-kuma.tls.certresolver=letsencrypt"
       - "traefik.http.routers.uptime-kuma.middlewares=crowdsec-bouncer@file,tinyauth-auth@docker"
