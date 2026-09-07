@@ -12,6 +12,8 @@ services:
       - CMD_PROTOCOL_USERRAG=true
       - CMD_DB_URL=sqlite:///hedgedoc/data/hedgedoc.sqlite
       - CMD_ALLOW_FREEURL=true
+      - CMD_ALLOW_ANONYMOUS=true
+      - CMD_ALLOW_EMAIL_REGISTER=false
     volumes:
       - ./uploads:/hedgedoc/public/uploads
       - ./data:/hedgedoc/data
