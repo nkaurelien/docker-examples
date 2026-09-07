@@ -70,6 +70,7 @@ services:
         sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (9, 'TinyAuth SSO', 1, 1, 'https://auth.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, 'ForwardAuth SSO Middleware');"
         sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (10, 'Homepage Portal', 1, 1, 'https://home.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, 'Central Infrastructure Dashboard (home/apps)');"
         sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (11, 'BentoPDF Toolkit', 1, 1, 'https://pdf.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, 'Privacy-First Client-Side PDF Toolkit');"
+        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO monitor (id, name, active, user_id, url, type, method, interval, description) VALUES (12, 'Stirling-PDF Suite', 1, 1, 'https://stirling.{{ traefik_domain | default('kamitbrains.fr') }}/', 'http', 'GET', 60, 'Full-Featured Server-Side PDF Suite & OCR');"
 
         # Update basic auth credentials on existing monitors
         sqlite3 /app/data/kuma.db "UPDATE monitor SET basic_auth_user = '{{ uptime_kuma_traefik_auth_user }}', basic_auth_pass = '{{ uptime_kuma_traefik_auth_pass }}', auth_method = 'basic', user_id = 1 WHERE id = 1;"
@@ -93,6 +94,7 @@ services:
         sqlite3 /app/data/kuma.db "INSERT INTO monitor_group (monitor_id, group_id, weight) SELECT 9, 1, 9 WHERE NOT EXISTS (SELECT 1 FROM monitor_group WHERE monitor_id = 9 AND group_id = 1);"
         sqlite3 /app/data/kuma.db "INSERT INTO monitor_group (monitor_id, group_id, weight) SELECT 10, 1, 10 WHERE NOT EXISTS (SELECT 1 FROM monitor_group WHERE monitor_id = 10 AND group_id = 1);"
         sqlite3 /app/data/kuma.db "INSERT INTO monitor_group (monitor_id, group_id, weight) SELECT 11, 1, 11 WHERE NOT EXISTS (SELECT 1 FROM monitor_group WHERE monitor_id = 11 AND group_id = 1);"
+        sqlite3 /app/data/kuma.db "INSERT INTO monitor_group (monitor_id, group_id, weight) SELECT 12, 1, 12 WHERE NOT EXISTS (SELECT 1 FROM monitor_group WHERE monitor_id = 12 AND group_id = 1);"
 
         # Seed Ntfy Push Notification Channel (id = 1, default = 1)
         sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO notification (id, name, active, user_id, is_default, config) VALUES (1, 'Ntfy Push Alerts', 1, 1, 1, '{\"type\":\"ntfy\",\"name\":\"Ntfy Push Alerts\",\"ntfyserverurl\":\"https://ntfy.{{ traefik_domain | default('kamitbrains.fr') }}\",\"ntfytopic\":\"alerts\",\"ntfyPriority\":4,\"ntfyAuthenticationMethod\":\"none\",\"is_default\":true}');"
@@ -109,6 +111,7 @@ services:
         sqlite3 /app/data/kuma.db "INSERT INTO monitor_notification (monitor_id, notification_id) SELECT 9, 1 WHERE NOT EXISTS (SELECT 1 FROM monitor_notification WHERE monitor_id = 9 AND notification_id = 1);"
         sqlite3 /app/data/kuma.db "INSERT INTO monitor_notification (monitor_id, notification_id) SELECT 10, 1 WHERE NOT EXISTS (SELECT 1 FROM monitor_notification WHERE monitor_id = 10 AND notification_id = 1);"
         sqlite3 /app/data/kuma.db "INSERT INTO monitor_notification (monitor_id, notification_id) SELECT 11, 1 WHERE NOT EXISTS (SELECT 1 FROM monitor_notification WHERE monitor_id = 11 AND notification_id = 1);"
+        sqlite3 /app/data/kuma.db "INSERT INTO monitor_notification (monitor_id, notification_id) SELECT 12, 1 WHERE NOT EXISTS (SELECT 1 FROM monitor_notification WHERE monitor_id = 12 AND notification_id = 1);"
 
         # Enable Trust Proxy (Proxy de confiance = Oui) and set Primary Base URL
         sqlite3 /app/data/kuma.db "INSERT OR REPLACE INTO setting (key, value, type) VALUES ('trustProxy', 'true', 'general');"
