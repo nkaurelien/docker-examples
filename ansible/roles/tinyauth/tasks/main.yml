@@ -26,13 +26,21 @@
   register: _tinyauth_user_etombe_res
   changed_when: false
 
+- name: Generate bcrypt user entry for nkaurelien user
+  ansible.builtin.shell:
+    cmd: >
+      docker run --rm {{ tinyauth_image }} user create --username "{{ tinyauth_nkaurelien_user }}" --password "{{ tinyauth_nkaurelien_password }}" --docker 2>&1 | grep -o 'user=.*' | cut -d= -f2 | sed -E 's/\x1B\[[0-9;]*[a-zA-Z]//g'
+  register: _tinyauth_user_nkaurelien_res
+  changed_when: false
+
 - name: Deploy TinyAuth docker-compose configuration
   ansible.builtin.template:
     src: docker-compose.yml.j2
     dest: "{{ tinyauth_compose_dir }}/docker-compose.yml"
     mode: '0644'
   vars:
-    tinyauth_users_string: "{{ _tinyauth_user_email_res.stdout }},{{ _tinyauth_user_admin_res.stdout }},{{ _tinyauth_user_etombe_res.stdout }}"
+    tinyauth_users_string: "{{ _tinyauth_user_email_res.stdout }},{{ _tinyauth_user_admin_res.stdout }},{{ _tinyauth_user_etombe_res.stdout }},{{ _tinyauth_user_nkaurelien_res.stdout }}"
+
 
 - name: Start TinyAuth container stack via docker compose
   community.docker.docker_compose_v2:
