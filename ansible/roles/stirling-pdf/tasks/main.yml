@@ -1,0 +1,34 @@
+---
+- name: Ensure Stirling-PDF deployment and data directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ stirling_pdf_compose_dir }}"
+    - "{{ stirling_pdf_compose_dir }}/trainingData"
+    - "{{ stirling_pdf_compose_dir }}/configs"
+    - "{{ stirling_pdf_compose_dir }}/logs"
+    - "{{ stirling_pdf_compose_dir }}/customFiles"
+
+- name: Deploy Stirling-PDF docker-compose configuration
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ stirling_pdf_compose_dir }}/docker-compose.yml"
+    mode: '0644'
+
+- name: Start Stirling-PDF container stack via docker compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ stirling_pdf_compose_dir }}"
+    state: present
+    remove_orphans: true
+
+- name: Install and enable Stirling-PDF systemd service for boot startup
+  ansible.builtin.include_role:
+    name: systemd-service
+  vars:
+    systemd_service_name: "stirling-pdf"
+    systemd_service_description: "Stirling-PDF Full-Featured PDF Suite Service"
+    systemd_compose_dir: "{{ stirling_pdf_compose_dir }}"
+    systemd_compose_files: "-f docker-compose.yml"
+    systemd_project_name: "stirling-pdf"
