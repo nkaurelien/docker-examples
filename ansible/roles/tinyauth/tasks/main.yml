@@ -5,6 +5,13 @@
     state: directory
     mode: '0755'
 
+- name: Ensure TinyAuth custom background image is deployed
+  ansible.builtin.copy:
+    src: background.jpg
+    dest: "{{ tinyauth_compose_dir }}/background.jpg"
+    mode: '0644'
+
+
 - name: Generate bcrypt user entries for TinyAuth
   ansible.builtin.shell:
     cmd: >
