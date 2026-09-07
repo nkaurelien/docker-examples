@@ -1,0 +1,7 @@
+---
+# HedgeDoc role defaults
+hedgedoc_image: "quay.io/hedgedoc/hedgedoc:latest"
+hedgedoc_domain: "kamitbrains.fr"
+hedgedoc_hostname: "pad.{{ traefik_domain | default(hedgedoc_domain) }}"
+hedgedoc_compose_dir: "/opt/hedgedoc"
+hedgedoc_container_port: 3000

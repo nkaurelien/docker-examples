@@ -1,0 +1,7 @@
+---
+# PairDrop role defaults
+pairdrop_image: "lscr.io/linuxserver/pairdrop:latest"
+pairdrop_domain: "kamitbrains.fr"
+pairdrop_hostname: "drop.{{ traefik_domain | default(pairdrop_domain) }}"
+pairdrop_compose_dir: "/opt/pairdrop"
+pairdrop_container_port: 3000

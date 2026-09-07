@@ -1,0 +1,7 @@
+---
+# Excalidraw role defaults
+excalidraw_image: "excalidraw/excalidraw:latest"
+excalidraw_domain: "kamitbrains.fr"
+excalidraw_hostname: "draw.{{ traefik_domain | default(excalidraw_domain) }}"
+excalidraw_compose_dir: "/opt/excalidraw"
+excalidraw_container_port: 80
