@@ -12,11 +12,18 @@ services:
       - APP_URL=https://{{ tinyauth_hostname }}
       - COOKIE_SECURE=true
       - COOKIE_DOMAIN={{ traefik_domain | default('kamitbrains.fr') }}
-      - RESOURCES_DIR=/resources
+      - RESOURCES_DIR=/data/resources
+      - TINYAUTH_RESOURCES_DIR=/data/resources
       - BACKGROUND_IMAGE=/background.jpg
+      - TINYAUTH_BACKGROUND_IMAGE=/background.jpg
+      - TINYAUTH_UI_BACKGROUNDIMAGE=/background.jpg
+      - TINYAUTH_UI_TITLE=KamitBrains Auth
 
     volumes:
+      - ./background.jpg:/data/resources/background.jpg:ro
       - ./background.jpg:/resources/background.jpg:ro
+      - ./background.jpg:/background.jpg:ro
+
 
     networks:
       - {{ traefik_public_network | default('traefik-public') }}
@@ -46,9 +53,10 @@ services:
       resources:
         limits:
           cpus: "0.25"
-          memory: 128M
+          memory: 64M
         reservations:
-          memory: 32M
+          memory: 16M
+
 
 networks:
   {{ traefik_public_network | default('traefik-public') }}:
