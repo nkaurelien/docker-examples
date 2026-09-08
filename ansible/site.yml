@@ -33,8 +33,8 @@
       tags: [stirling-pdf, stirling, pdf, tools, dev]
     - role: tinyauth
       tags: [tinyauth, sso, auth, security]
-    - role: pingvin-share
-      tags: [pingvin-share, share, files, tools]
+    - role: erugo
+      tags: [erugo, share, files, tools]
     - role: pairdrop
       tags: [pairdrop, drop, p2p, files, tools]
     - role: hedgedoc
