@@ -7,12 +7,22 @@
   loop:
     - "{{ homepage_compose_dir }}"
     - "{{ homepage_config_dir }}"
+    - "{{ homepage_compose_dir }}/images"
 
 - name: Deploy Homepage docker-compose configuration
   ansible.builtin.template:
     src: docker-compose.yml.j2
     dest: "{{ homepage_compose_dir }}/docker-compose.yml"
     mode: '0644'
+
+- name: Deploy Homepage custom logo SVG file
+  ansible.builtin.copy:
+    src: logo.svg
+    dest: "{{ item }}"
+    mode: '0644'
+  loop:
+    - "{{ homepage_config_dir }}/logo.svg"
+    - "{{ homepage_compose_dir }}/images/logo.svg"
 
 - name: Deploy Homepage configuration files
   ansible.builtin.template:
