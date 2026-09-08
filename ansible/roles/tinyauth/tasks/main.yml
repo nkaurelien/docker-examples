@@ -6,6 +6,7 @@
     mode: '0755'
   loop:
     - "{{ tinyauth_compose_dir }}"
+    - "{{ tinyauth_compose_dir }}/data"
     - "{{ tinyauth_compose_dir }}/resources"
 
 - name: Deploy TinyAuth custom background image and logo SVG file
