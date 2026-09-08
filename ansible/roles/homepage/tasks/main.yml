@@ -15,14 +15,14 @@
     dest: "{{ homepage_compose_dir }}/docker-compose.yml"
     mode: '0644'
 
-- name: Deploy Homepage custom logo SVG file
+- name: Deploy Homepage custom logo PNG file
   ansible.builtin.copy:
-    src: logo.svg
+    src: logo.png
     dest: "{{ item }}"
     mode: '0644'
   loop:
-    - "{{ homepage_config_dir }}/logo.svg"
-    - "{{ homepage_compose_dir }}/images/logo.svg"
+    - "{{ homepage_config_dir }}/logo.png"
+    - "{{ homepage_compose_dir }}/images/logo.png"
 
 - name: Deploy Homepage configuration files
   ansible.builtin.template:
