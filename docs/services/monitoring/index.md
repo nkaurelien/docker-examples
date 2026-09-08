@@ -1,3 +1,7 @@
+---
+tags: monitoring
+---
+
 # Monitoring
 
 Solutions de monitoring pour surveiller vos services et infrastructure.

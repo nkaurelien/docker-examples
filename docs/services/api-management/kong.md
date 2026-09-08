@@ -1,3 +1,7 @@
+---
+tags: api-gateway, kong
+---
+
 # Kong
 
 Kong est un API Gateway cloud-native performant et extensible.

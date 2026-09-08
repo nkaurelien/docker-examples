@@ -1,3 +1,7 @@
+---
+tags: communication, notification, ntfy, push, push-notifications
+---
+
 # Ntfy Push Notification Service
 
 [ntfy](https://ntfy.sh/) is a simple HTTP-based pub-sub notification service that allows you to send push notifications to your phone or desktop via scripts, cURL, or webhooks.

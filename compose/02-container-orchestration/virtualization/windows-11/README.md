@@ -1,3 +1,7 @@
+---
+tags: ai, docker, docker-compose, orchestration, windows
+---
+
 # Windows 11 avec Docker
 
 Ce projet permet d'exécuter Windows 11 dans un conteneur Docker en utilisant l'image [dockurr/windows](https://github.com/dockur/windows).

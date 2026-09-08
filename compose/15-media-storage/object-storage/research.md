@@ -1,3 +1,7 @@
+---
+tags: attachments, backend, docker-compose, hds, research, self-hosted
+---
+
 # Research — Backend S3 self-hosted pour les attachments HDS
 
 Format décisionnel (Décision / Justification / Alternatives). Complète [`COMPARATIF-S3.md`](COMPARATIF-S3.md) (état/tableaux) et [`PROMPT.md`](PROMPT.md) (reprise). Statut : évaluation, POC en cours (2026-09-03).

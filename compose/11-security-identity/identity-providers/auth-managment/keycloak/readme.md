@@ -1,3 +1,7 @@
+---
+tags: docker, docker-compose, iam, keycloak, security, setup
+---
+
 # Keycloak Docker Setup
 
 Production-ready Keycloak (v24) with PostgreSQL, custom themes, realm auto-import, and user profile initialization.

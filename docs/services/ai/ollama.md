@@ -1,3 +1,7 @@
+---
+tags: ai, llm, local-ai, ollama, setups, ssh
+---
+
 # Ollama & SSH Tunnel setups
 
 Ce guide détaille le déploiement d'Ollama et l'accès à distance sécurisé via un tunnel SSH conteneurisé.

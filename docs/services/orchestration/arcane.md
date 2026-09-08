@@ -1,3 +1,7 @@
+---
+tags: arcane, docker-manager, orchestration
+---
+
 # Arcane
 
 Arcane is an open-source, modern self-hosted dashboard for managing Docker containers and stacks. It is designed to be lightweight, secure, and easy to use, providing a clean user interface for managing your self-hosted infrastructure.

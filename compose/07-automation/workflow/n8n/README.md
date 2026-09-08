@@ -1,3 +1,7 @@
+---
+tags: automation, docker-compose, n8n, workflow, workflow-automation
+---
+
 # n8n Workflow Automation
 
 A production-ready n8n setup with PostgreSQL database backend, featuring automated setup, backup capabilities, and comprehensive management tools.

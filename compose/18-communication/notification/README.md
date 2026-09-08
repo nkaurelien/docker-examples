@@ -1,3 +1,7 @@
+---
+tags: communication, docker-compose, notification
+---
+
 # Notification Services
 
 This directory contains self-hosted notification solutions for different use cases.

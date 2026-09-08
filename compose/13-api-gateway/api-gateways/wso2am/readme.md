@@ -1,3 +1,7 @@
+---
+tags: api-gateway, docker-compose, intro
+---
+
 # Intro
 
  WSO2 API Manager is a complete platform for building, integrating, and exposing your digital services as managed APIs in the cloud, on-premise, and hybrid architectures to drive your digital transformation strategy.

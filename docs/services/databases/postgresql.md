@@ -1,3 +1,7 @@
+---
+tags: databases, postgresql, sql-database
+---
+
 # PostgreSQL
 
 Base de données relationnelle open-source.

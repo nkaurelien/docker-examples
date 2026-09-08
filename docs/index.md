@@ -1,3 +1,7 @@
+---
+tags: ai, docker-compose, dokploy, heroku, orchestration, paas
+---
+
 # Docker Examples
 
 Collection de configurations Docker Compose prêtes à l'emploi pour services self-hosted.

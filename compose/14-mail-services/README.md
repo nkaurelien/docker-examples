@@ -1,3 +1,7 @@
+---
+tags: ai, docker-compose, mail
+---
+
 # Mail Services
 
 Email servers, testing tools, and mail-related services.

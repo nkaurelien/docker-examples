@@ -1,3 +1,7 @@
+---
+tags: ai, conteneuris, docker-compose, llm, local-ai, ollama
+---
+
 # Tunnel SSH conteneurisé pour Ollama
 
 Ce projet fournit une solution clé en main pour encapsuler un tunnel SSH persistant et automatique à l'intérieur d'un conteneur léger Alpine. 

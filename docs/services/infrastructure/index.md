@@ -1,3 +1,7 @@
+---
+tags: infrastructure
+---
+
 # Infrastructure
 
 Core infrastructure services for networking, reverse proxy, SSL/TLS management, and DNS.

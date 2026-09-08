@@ -1,3 +1,7 @@
+---
+tags: kubernetes, orchestration, rancher
+---
+
 # Rancher
 
 Plateforme de gestion Kubernetes multi-cluster.

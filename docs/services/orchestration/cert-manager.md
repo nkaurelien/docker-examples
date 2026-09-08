@@ -1,3 +1,7 @@
+---
+tags: cert-manager, orchestration, tls-certificates
+---
+
 # cert-manager
 
 cert-manager is a Kubernetes certificate controller for automated TLS certificate management.

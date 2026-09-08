@@ -1,3 +1,7 @@
+---
+tags: edition, manager, passbolt, password, password-manager, postgresql
+---
+
 # Passbolt Password Manager (PostgreSQL Edition)
 
 [Passbolt](https://www.passbolt.com/) is an open-source, team-first password manager built with GPG end-to-end encryption.

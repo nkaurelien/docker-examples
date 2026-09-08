@@ -1,3 +1,7 @@
+---
+tags: automation, docker-compose
+---
+
 # Automation
 
 Workflow automation, CI/CD pipelines, and scheduled task management.

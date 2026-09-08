@@ -1,3 +1,7 @@
+---
+tags: cluster, couchdb, databases, docker-compose, nosql, troubleshooting
+---
+
 # CouchDB Cluster Troubleshooting Guide
 
 Ce guide documente les problèmes courants du cluster CouchDB et leurs solutions.

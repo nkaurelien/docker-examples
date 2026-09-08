@@ -1,3 +1,7 @@
+---
+tags: ai, docker, docker-compose, macos, orchestration
+---
+
 # macOS avec Docker
 
 Ce projet permet d'exécuter macOS dans un conteneur Docker en utilisant l'image [dockurr/macos](https://github.com/dockur/macos).

@@ -1,0 +1,24 @@
+services:
+  hedgedoc:
+    image: quay.io/hedgedoc/hedgedoc:latest
+    container_name: hedgedoc
+    restart: unless-stopped
+    environment:
+      - CMD_DOMAIN=${HEDGEDOC_DOMAIN:-pad.apps.local}
+      - CMD_URL_ADAPTER=http
+      - CMD_PROTOCOL_USERRAG=true
+      - CMD_DB_URL=sqlite:///hedgedoc/data/hedgedoc.sqlite
+      - CMD_ALLOW_FREEURL=true
+      - CMD_ALLOW_ANONYMOUS=true
+      - CMD_ALLOW_EMAIL_REGISTER=true
+    volumes:
+      - ./uploads:/hedgedoc/public/uploads
+      - ./data:/hedgedoc/data
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:3000/status', (r) => process.exit(r.statusCode === 200 ? 0 : 1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 15s

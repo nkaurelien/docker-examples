@@ -1,3 +1,7 @@
+---
+tags: ai, disponibles, docker-compose, environnement, orchestration, variables
+---
+
 # Variables d'environnement disponibles
 
 Ce document liste toutes les variables d'environnement disponibles pour configurer le conteneur Windows Docker.

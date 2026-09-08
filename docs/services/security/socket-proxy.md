@@ -1,3 +1,7 @@
+---
+tags: docker, docker-security, proxy, security, socket, socket-proxy
+---
+
 # Docker Socket Proxy
 
 Le Docker Socket Proxy (tecnativa/docker-socket-proxy) permet un accès sécurisé et granulaire à l'API Docker.

@@ -1,3 +1,7 @@
+---
+tags: cision, comparatif, docker-compose, objet, self-hosted, stockage
+---
+
 # Stockage objet S3 self-hosted — Comparatif & décision
 
 > Doc de référence pour le remplacement de MinIO comme backend S3 des **attachments médicaux (HDS)** d'AsOne4Health.

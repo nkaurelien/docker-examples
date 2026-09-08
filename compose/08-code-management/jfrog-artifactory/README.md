@@ -1,3 +1,7 @@
+---
+tags: artifactory, code-management, docker-compose, jfrog
+---
+
 # JFrog Artifactory
 
 Docker Compose configurations for JFrog Artifactory.

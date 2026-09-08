@@ -1,3 +1,7 @@
+---
+tags: app-management, dashboard, homepage, infrastructure
+---
+
 # Homepage Infrastructure Dashboard
 
 [Homepage](https://gethomepage.dev/) is a modern, highly customizable application dashboard that centralizes shortcuts, status widgets, and docker container status across your infrastructure.

@@ -1,3 +1,7 @@
+---
+tags: app-management, management, server
+---
+
 # App & Server Management
 
 This section covers content management systems and business applications.

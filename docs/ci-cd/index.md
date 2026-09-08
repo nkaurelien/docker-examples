@@ -1,3 +1,7 @@
+---
+tags: ci-cd, continue, docker, gration, int
+---
+
 # Intégration Continue Docker
 
 Guide pour intégrer Docker dans vos pipelines CI/CD.

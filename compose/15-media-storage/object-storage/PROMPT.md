@@ -1,3 +1,7 @@
+---
+tags: docker-compose, minio, objet, prompt, remplacement, stockage
+---
+
 # PROMPT — Évaluation stockage objet S3 (remplacement MinIO)
 
 Brief de reprise pour continuer le dev/éval depuis une autre machine ou session.

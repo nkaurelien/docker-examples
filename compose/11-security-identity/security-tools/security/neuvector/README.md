@@ -1,3 +1,7 @@
+---
+tags: container-security, docker-compose, neuvector, security
+---
+
 # NeuVector
 
 NeuVector is an open-source, full lifecycle container security platform. It provides runtime protection, network visibility, compliance, and vulnerability scanning for containers.

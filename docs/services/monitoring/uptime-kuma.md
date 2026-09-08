@@ -1,3 +1,7 @@
+---
+tags: kuma, monitoring, uptime, uptime-kuma, uptime-monitoring
+---
+
 # Uptime Kuma
 
 Uptime Kuma is a self-hosted monitoring tool, an alternative to Pingdom and UptimeRobot.

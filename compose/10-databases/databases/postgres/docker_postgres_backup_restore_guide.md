@@ -1,3 +1,6 @@
+---
+tags: backup, databases, docker, docker-compose, examples, postgres
+---
 
 # Docker Postgres Backup/Restore Guide (with Examples)
 

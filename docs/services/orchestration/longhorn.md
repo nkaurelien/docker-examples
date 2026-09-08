@@ -1,3 +1,7 @@
+---
+tags: distributed-storage, longhorn, orchestration
+---
+
 # Longhorn
 
 Longhorn is a lightweight, reliable distributed block storage system for Kubernetes.

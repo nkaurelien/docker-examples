@@ -1,3 +1,7 @@
+---
+tags: dokploy, orchestration, paas
+---
+
 # Dokploy
 
 Dokploy is a self-hosted PaaS alternative to Heroku, Vercel, and Netlify.

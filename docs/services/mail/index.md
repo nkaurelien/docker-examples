@@ -1,3 +1,7 @@
+---
+tags: ai, mail, servers
+---
+
 # Mail Servers
 
 Solutions de serveurs mail pour développement et production.

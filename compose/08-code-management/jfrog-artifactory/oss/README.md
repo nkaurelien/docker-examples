@@ -1,3 +1,7 @@
+---
+tags: artifactory, code-management, docker-compose, jfrog, oss
+---
+
 # JFrog Artifactory OSS
 
 Open Source edition of JFrog Artifactory - a universal artifact repository manager.

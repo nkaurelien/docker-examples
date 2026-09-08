@@ -1,3 +1,7 @@
+---
+tags: media, storage
+---
+
 # Media & Storage
 
 This section covers object storage and media management solutions.

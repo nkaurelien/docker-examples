@@ -1,3 +1,7 @@
+---
+tags: ansible, role, ssl-certs
+---
+
 # Role `ssl-certs`
 
 Deploie les certificats SSL Namecheap/Sectigo (wildcard) depuis le poste local

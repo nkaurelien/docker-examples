@@ -1,3 +1,7 @@
+---
+tags: ansible, automation, infrastructure
+---
+
 # Ansible Infrastructure Automation
 
 This repository includes a complete Ansible deployment suite under `ansible/` designed to automate server preparation, Docker daemon configuration, SSL certificate management, Traefik reverse proxy deployment, and systemd service management.

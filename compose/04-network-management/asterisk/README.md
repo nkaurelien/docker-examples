@@ -1,3 +1,7 @@
+---
+tags: asterisk, docker-compose, networking, open, pbx, source
+---
+
 # Asterisk - Open Source VoIP PBX
 
 Asterisk is a free and open source framework for building communications applications. It powers IP PBX systems, VoIP gateways, conference servers, and other custom telephony solutions.

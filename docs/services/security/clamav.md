@@ -1,3 +1,7 @@
+---
+tags: antivirus, clamav, open, security, source
+---
+
 # ClamAV - Antivirus Open Source
 
 ClamAV est l'antivirus open-source de référence pour scanner fichiers, emails et uploads utilisateurs.

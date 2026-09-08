@@ -1,3 +1,7 @@
+---
+tags: open, security, siem, source, wazuh, xdr
+---
+
 # Wazuh - SIEM/XDR Open Source
 
 Wazuh est une plateforme de sécurité unifiée offrant SIEM, XDR, détection d'intrusion et conformité.

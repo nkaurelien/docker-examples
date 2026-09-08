@@ -1,3 +1,7 @@
+---
+tags: code-management, git, gitea
+---
+
 # Gitea
 
 Gitea is a painless, self-hosted, all-in-one software development service.

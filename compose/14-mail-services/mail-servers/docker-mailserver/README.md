@@ -1,3 +1,7 @@
+---
+tags: ai, docker-compose, docker-mailserver, intro, mail, mail-server
+---
+
 # Intro
 
 A production-ready fullstack but simple containerized mail server (SMTP, IMAP, LDAP, Anti-spam, Anti-virus, etc.).

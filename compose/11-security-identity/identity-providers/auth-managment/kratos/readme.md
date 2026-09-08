@@ -1,3 +1,7 @@
+---
+tags: docker-compose, identity, intro, kratos, security
+---
+
 # INTRO
 
 Ory Kratos is the developer-friendly, security-hardened and battle-tested Identity, User Management and Authentication system for the Cloud. Finally, it is no longer necessary to implement User Login for the umpteenth time!

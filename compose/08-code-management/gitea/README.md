@@ -1,3 +1,7 @@
+---
+tags: code-management, docker-compose, git, gitea, self-hosted
+---
+
 # Gitea - Self-Hosted Git Service
 
 Gitea is a painless, self-hosted, all-in-one software development service. It includes Git hosting, code review, team collaboration, package registry, and CI/CD. Written in Go, it's lightweight, fast, and runs on any platform.

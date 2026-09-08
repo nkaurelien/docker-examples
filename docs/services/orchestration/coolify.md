@@ -1,3 +1,7 @@
+---
+tags: coolify, orchestration, paas
+---
+
 # Coolify
 
 Coolify is a self-hostable alternative to Heroku, Netlify, and Vercel.

@@ -1,3 +1,7 @@
+---
+tags: automation, cli, cloudflare, dns, infrastructure
+---
+
 # Cloudflare DNS CLI Automation
 
 Automated DNS management CLI tool powered by the official Cloudflare Python SDK (`cloudflare`).

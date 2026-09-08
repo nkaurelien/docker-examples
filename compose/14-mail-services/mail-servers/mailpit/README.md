@@ -1,3 +1,7 @@
+---
+tags: ai, docker-compose, email-testing, mail, mailpit
+---
+
 # Mailpit
 
 Mailpit is a lightweight, fast email testing tool for developers. It captures all outgoing emails and provides a modern web interface to view them. It's a modern replacement for MailHog with better performance and more features.

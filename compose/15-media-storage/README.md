@@ -1,3 +1,7 @@
+---
+tags: docker-compose, media, storage
+---
+
 # Media & Storage
 
 Object storage, file sharing, and media management solutions.

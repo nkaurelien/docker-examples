@@ -1,3 +1,7 @@
+---
+tags: asterisk, networking, pbx, voip
+---
+
 # Asterisk VoIP PBX
 
 Asterisk is a free and open source framework for building communications applications.

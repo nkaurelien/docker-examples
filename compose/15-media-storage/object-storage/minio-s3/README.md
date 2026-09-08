@@ -1,3 +1,7 @@
+---
+tags: docker-compose, minio, object-storage, s3, storage
+---
+
 # MinIO S3
 
 Stockage objet compatible S3.

@@ -1,3 +1,7 @@
+---
+tags: docker-security, permissions, proxy, reference, socket, socket-proxy
+---
+
 # Socket Proxy Permissions Reference
 
 Guide complet des permissions docker-socket-proxy pour sécuriser l'accès à l'API Docker.

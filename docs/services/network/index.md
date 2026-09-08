@@ -1,3 +1,7 @@
+---
+tags: management, network, networking
+---
+
 # Network Management
 
 This section covers network infrastructure and communication services.

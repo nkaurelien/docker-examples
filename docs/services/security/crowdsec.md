@@ -1,3 +1,7 @@
+---
+tags: bouncer, crowdsec, engine, security, security-ids, traefik
+---
+
 # CrowdSec Security Engine & Traefik Bouncer
 
 [CrowdSec](https://www.crowdsec.net/) is an open-source, collaborative Intrusion Detection System (IDS) and Intrusion Prevention System (IPS). It analyzes logs from Linux system services, SSH, and Traefik to detect malicious behavior and block bad IP addresses across your infrastructure in real time.

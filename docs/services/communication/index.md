@@ -1,3 +1,7 @@
+---
+tags: communication
+---
+
 # Communication
 
 This section covers team communication and collaboration platforms.

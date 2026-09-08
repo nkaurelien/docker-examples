@@ -1,3 +1,7 @@
+---
+tags: ai, docker-compose, dokploy, heroku, orchestration, paas
+---
+
 # Dokploy - Self-Hosted PaaS (Vercel/Heroku Alternative)
 
 Dokploy is a stable, easy-to-use deployment solution designed to simplify application management. It's a free, self-hostable alternative to platforms like Heroku, Vercel, and Netlify.

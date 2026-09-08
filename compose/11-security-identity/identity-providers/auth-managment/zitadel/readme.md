@@ -1,3 +1,7 @@
+---
+tags: docker-compose, identity-management, intro, security, zitadel
+---
+
 # Intro
 
 ZITADEL is an open-source identity infrastructure platform. It combines the simplicity of Auth0 with the open-source commitment of Keycloak, providing multi-tenancy, secure login, and self-service functionalities. It supports various protocols such as OpenID Connect, OAuth2.x, and SAML2.

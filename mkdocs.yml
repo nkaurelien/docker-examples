@@ -4,6 +4,9 @@ site_author: nkaurelien
 repo_url: https://github.com/nkaurelien/docker-examples
 repo_name: docker-examples
 
+hooks:
+  - hooks.py
+
 theme:
   name: material
   language: en
@@ -159,6 +162,7 @@ nav:
 
   - Document Management:
       - Overview: services/document-management/index.md
+      - HedgeDoc: services/document-management/hedgedoc.md
 
   - API Gateway:
       - Overview: services/api-management/index.md
@@ -199,6 +203,8 @@ nav:
   - Development Tools:
       - Overview: services/dev-tools/index.md
       - IT-Tools: services/dev-tools/it-tools.md
+      - BentoPDF: services/dev-tools/bentopdf.md
+      - Stirling-PDF: services/dev-tools/stirling-pdf.md
 
   - Surveillance:
       - Overview: services/surveillance/index.md

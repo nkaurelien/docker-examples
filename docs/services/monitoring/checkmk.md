@@ -1,3 +1,7 @@
+---
+tags: checkmk, infrastructure-monitoring, monitoring
+---
+
 # Checkmk
 
 Checkmk is a comprehensive IT infrastructure monitoring solution.

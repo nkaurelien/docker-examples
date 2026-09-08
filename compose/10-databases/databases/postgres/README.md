@@ -1,3 +1,7 @@
+---
+tags: automated, backups, databases, docker-compose, postgresql, sql-database
+---
+
 # PostgreSQL with Automated Backups
 
 A production-ready PostgreSQL setup with automated backup system using Ofelia scheduler, pgAdmin web interface, and comprehensive management tools.

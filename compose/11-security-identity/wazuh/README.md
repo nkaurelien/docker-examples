@@ -1,3 +1,7 @@
+---
+tags: docker-compose, open, platform, security, siem, source
+---
+
 # Wazuh - Open Source SIEM/XDR Platform
 
 Plateforme de sécurité unifiée : SIEM, XDR, détection d'intrusion, conformité.

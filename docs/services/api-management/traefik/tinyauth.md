@@ -1,3 +1,7 @@
+---
+tags: api-gateway, forwardauth, ingress, middleware, reverse-proxy, sso
+---
+
 # TinyAuth ForwardAuth SSO Middleware
 
 [TinyAuth](https://github.com/steveiliop56/tinyauth) is a lightweight authentication ForwardAuth middleware for Traefik edge reverse proxies.

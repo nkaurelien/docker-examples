@@ -1,3 +1,7 @@
+---
+tags: code-quality, compose, docker, docker-compose, monitoring, sonarqube
+---
+
 # SonarQube Docker Compose
 
 Static code analysis with SonarQube using Docker Compose.

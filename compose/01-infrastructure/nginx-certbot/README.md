@@ -1,3 +1,7 @@
+---
+tags: certbot, docker-compose, encrypt, infrastructure, letsencrypt, nginx
+---
+
 # Nginx + Certbot (Let's Encrypt)
 
 Reverse proxy Nginx avec gestion automatique des certificats SSL via Certbot/Let's Encrypt.

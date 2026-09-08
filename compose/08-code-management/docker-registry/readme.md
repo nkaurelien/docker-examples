@@ -1,3 +1,7 @@
+---
+tags: code-management, docker-compose, pushing, registry, this
+---
+
 # Pushing to this Registry
 
 

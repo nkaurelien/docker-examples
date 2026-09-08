@@ -1,3 +1,7 @@
+---
+tags: cluster, couchdb, databases, nosql
+---
+
 # CouchDB Cluster
 
 Base de données NoSQL documentaire avec support cluster.

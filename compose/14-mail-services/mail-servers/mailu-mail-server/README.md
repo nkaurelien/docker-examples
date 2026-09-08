@@ -1,3 +1,7 @@
+---
+tags: ai, docker-compose, intro, mail
+---
+
 # Intro
 
 Mailu is a simple yet full-featured mail server as a set of Docker images. It is free software (both as in free beer and as in free speech), open to suggestions and external contributions. The project aims at providing people with an easily setup, easily maintained and full-featured mail server while not shipping proprietary software nor unrelated features often found in popular groupware.

@@ -1,3 +1,7 @@
+---
+tags: file-sharing, sharing
+---
+
 # File Sharing
 
 Solutions de partage de fichiers self-hosted.

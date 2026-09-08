@@ -1,3 +1,7 @@
+---
+tags: ai, learning, machine
+---
+
 # AI & Machine Learning
 
 This section covers AI and machine learning platforms.

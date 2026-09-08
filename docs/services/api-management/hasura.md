@@ -1,3 +1,7 @@
+---
+tags: api-gateway, graphql, hasura
+---
+
 # Hasura
 
 Hasura fournit des APIs GraphQL instantanées sur vos bases de données.

@@ -1,3 +1,7 @@
+---
+tags: document, document-management, management
+---
+
 # Document Management
 
 This section covers document management and collaboration platforms.
@@ -15,6 +19,7 @@ Document management services include:
 
 Platforms to consider:
 
+- **HedgeDoc** - [Collaborative Markdown Editor](hedgedoc.md)
 - **Paperless-ngx** - Document management with OCR
 - **Nextcloud** - File sharing and collaboration
 - **OnlyOffice** - Office document editing

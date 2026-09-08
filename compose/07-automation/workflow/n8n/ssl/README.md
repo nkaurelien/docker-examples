@@ -1,3 +1,7 @@
+---
+tags: automation, certificates, docker-compose, n8n, ssl, tls
+---
+
 # SSL/TLS Certificates for n8n
 
 This directory should contain your SSL/TLS certificates for HTTPS access to n8n.

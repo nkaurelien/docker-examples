@@ -1,3 +1,7 @@
+---
+tags: bind9, dns, docker-compose, infrastructure, server
+---
+
 # Bind9 DNS Server
 
 BIND 9 provides software for Domain Name System (DNS) management including both defining domain names authoritatively for a given DNS zone, and recursively resolving domain names to their IP addresses.

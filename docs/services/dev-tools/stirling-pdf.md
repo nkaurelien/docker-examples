@@ -1,3 +1,7 @@
+---
+tags: dev-tools, ocr, pdf, pdf-suite, stirling-pdf
+---
+
 # Stirling-PDF — Full-Featured Server-Side PDF Suite & OCR
 
 **Stirling-PDF** est une suite logicielle serveur complète, open-source et auto-hébergée pour la manipulation de fichiers PDF (fusion, découpage, OCR Tesseract, conversion Office/Images ➔ PDF, filigranes, chiffrement/déchiffrement, signature).

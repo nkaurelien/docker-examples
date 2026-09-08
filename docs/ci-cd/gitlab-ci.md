@@ -1,3 +1,7 @@
+---
+tags: ci-cd, docker, gitlab
+---
+
 # GitLab CI/CD pour Docker
 
 Configuration complète de pipelines GitLab CI pour build, test et déploiement d'images Docker.

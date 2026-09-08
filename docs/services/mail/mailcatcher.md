@@ -1,3 +1,7 @@
+---
+tags: ai, email-testing, mail, mailcatcher
+---
+
 # Mailcatcher
 
 Capture les emails en développement sans les envoyer réellement.

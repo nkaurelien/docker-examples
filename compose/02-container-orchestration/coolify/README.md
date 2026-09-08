@@ -1,3 +1,7 @@
+---
+tags: ai, coolify, docker-compose, heroku, netlify, orchestration
+---
+
 # Coolify - Self-Hostable Heroku/Netlify/Vercel Alternative
 
 Coolify is an open-source, self-hostable platform for deploying applications, databases, and services to your own servers. It's designed as an alternative to Vercel, Heroku, Netlify, and Railway.

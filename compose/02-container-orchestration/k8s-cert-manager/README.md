@@ -1,3 +1,7 @@
+---
+tags: ai, cert-manager, certificate, docker-compose, kubernetes, management
+---
+
 # cert-manager - Kubernetes Certificate Management
 
 cert-manager is a powerful and extensible X.509 certificate controller for Kubernetes. It automates the management and issuance of TLS certificates from various sources, including Let's Encrypt, HashiCorp Vault, Venafi, and private PKI.
