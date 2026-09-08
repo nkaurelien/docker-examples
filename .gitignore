@@ -36,3 +36,4 @@ site/
 
 .secrets/*
 !.secrets/*.md
+*.csv
