@@ -35,6 +35,12 @@
     - Kamitbrains-logo-internat-picsvg_com.svg
     - Kamitbrains-logo-sharp-picsvg_com.svg
 
+- name: Deploy Homepage custom red background image
+  ansible.builtin.copy:
+    src: bg-red.jpg
+    dest: "{{ homepage_compose_dir }}/images/bg-red.jpg"
+    mode: '0644'
+
 - name: Deploy Homepage configuration files
   ansible.builtin.template:
     src: "{{ item }}.j2"
