@@ -1,6 +1,12 @@
 title: Kamitbrains Infrastructure Portal
 theme: dark
 color: slate
+
+{% if homepage_finnhub_api_key is defined and homepage_finnhub_api_key %}
+providers:
+  finnhub: {{ homepage_finnhub_api_key }}
+{% endif %}
+
 layout:
   Core Services:
     style: grid
