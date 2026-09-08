@@ -32,6 +32,8 @@
     dest: "{{ item.dest }}"
     mode: '0644'
   loop:
+    - { src: 'logo_white.png', dest: '{{ homepage_compose_dir }}/icons/logo_white.png' }
+    - { src: 'logo_black.png', dest: '{{ homepage_compose_dir }}/icons/logo_black.png' }
     - { src: 'Kamitbrains-logo-sharp.png', dest: '{{ homepage_compose_dir }}/icons/Kamitbrains-logo-sharp.png' }
     - { src: 'Kamitbrains-logo-egde4-picsvg_com.svg', dest: '{{ homepage_compose_dir }}/icons/Kamitbrains-logo-egde4-picsvg_com.svg' }
     - { src: 'Kamitbrains-logo-internal1-picsvg_com.svg', dest: '{{ homepage_compose_dir }}/icons/Kamitbrains-logo-internal1-picsvg_com.svg' }
