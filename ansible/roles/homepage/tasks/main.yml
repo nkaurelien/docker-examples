@@ -34,6 +34,10 @@
     - Kamitbrains-logo-internal1-picsvg_com.svg
     - Kamitbrains-logo-internat-picsvg_com.svg
     - Kamitbrains-logo-sharp-picsvg_com.svg
+    - Kamitbrains-logo-sharp.png
+    - Kamitbrains-logo-egde4.png
+    - Kamitbrains-logo-internal1.png
+    - Kamitbrains-logo-internat.png
 
 - name: Deploy Homepage custom red background image
   ansible.builtin.copy:
