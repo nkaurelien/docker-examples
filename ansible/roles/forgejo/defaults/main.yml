@@ -1,0 +1,10 @@
+---
+# Default variables for Forgejo role
+forgejo_domain: "kamitbrains.fr"
+forgejo_hostname: "git.{{ traefik_domain | default(forgejo_domain) }}"
+forgejo_image: "codeberg.org/forgejo/forgejo:9"
+forgejo_deploy_dir: "/opt/forgejo"
+forgejo_ssh_port: 2222
+forgejo_admin_username: "kamitbrains_admin"
+forgejo_admin_email: "admin@kamitbrains.fr"
+forgejo_admin_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/forgejo-admin-password') | trim }}"

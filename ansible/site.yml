@@ -43,6 +43,8 @@
       tags: [excalidraw, draw, whiteboard, diagrams, tools]
     - role: dozzle
       tags: [dozzle, logs, docker, monitoring, tools]
+    - role: forgejo
+      tags: [forgejo, git, code, dev, tools]
     - role: homepage
       tags: [homepage, dashboard, portal, home, apps]
 

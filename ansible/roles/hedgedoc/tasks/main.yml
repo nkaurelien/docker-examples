@@ -16,6 +16,13 @@
     mode: '0644'
 
 - name: Start HedgeDoc container stack via docker compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ hedgedoc_compose_dir }}"
+    state: present
+    recreate: always
+    remove_orphans: true
+
+- name: Initialize HedgeDoc admin user account via bin/manage_users
   community.docker.docker_container_exec:
     container: hedgedoc
     command: "bin/manage_users --pass '{{ hedgedoc_admin_password }}' --add '{{ hedgedoc_admin_email }}'"
