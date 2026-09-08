@@ -1,15 +1,21 @@
 ---
-- name: Ensure TinyAuth deployment directory exists
+- name: Ensure TinyAuth deployment and resources directories exist
   ansible.builtin.file:
-    path: "{{ tinyauth_compose_dir }}"
+    path: "{{ item }}"
     state: directory
     mode: '0755'
+  loop:
+    - "{{ tinyauth_compose_dir }}"
+    - "{{ tinyauth_compose_dir }}/resources"
 
-- name: Ensure TinyAuth custom background image is deployed
+- name: Deploy TinyAuth custom background image and logo SVG file
   ansible.builtin.copy:
-    src: background.jpg
-    dest: "{{ tinyauth_compose_dir }}/background.jpg"
+    src: "{{ item.src }}"
+    dest: "{{ tinyauth_compose_dir }}/resources/{{ item.dest }}"
     mode: '0644'
+  loop:
+    - { src: 'background.jpg', dest: 'bg-red.jpg' }
+    - { src: 'logo.svg', dest: 'logo.svg' }
 
 
 - name: Generate bcrypt user entries for TinyAuth
