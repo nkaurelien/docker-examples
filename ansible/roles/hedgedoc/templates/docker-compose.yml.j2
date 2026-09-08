@@ -8,8 +8,8 @@ services:
     restart: unless-stopped
     environment:
       - CMD_DOMAIN={{ hedgedoc_hostname }}
-      - CMD_URL_ADAPTER=https
-      - CMD_PROTOCOL_USERRAG=true
+      - CMD_PROTOCOL_USESSL=true
+      - CMD_URL_SCHEME=https
       - CMD_DB_URL=sqlite:///hedgedoc/data/hedgedoc.sqlite
       - CMD_ALLOW_FREEURL=true
       - CMD_ALLOW_ANONYMOUS=true
