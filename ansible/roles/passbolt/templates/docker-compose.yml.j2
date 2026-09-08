@@ -49,6 +49,8 @@ services:
       - DATASOURCES_DEFAULT_PASSWORD={{ passbolt_db_password }}
       - DATASOURCES_DEFAULT_DATABASE={{ passbolt_db_name }}
       - DATASOURCES_DEFAULT_ENCODING=utf8
+      - PASSBOLT_PLUGINS_EXPORT_POLICIES_ALLOW_CSV_FORMAT=true
+      - PASSBOLT_PLUGINS_EXPORTPOLICIES_ALLOWCSVFORMAT=true
     volumes:
       - passbolt-gpg-keys:/etc/passbolt/gpg
       - passbolt-jwt-keys:/etc/passbolt/jwt
