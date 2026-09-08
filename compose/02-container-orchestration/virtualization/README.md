@@ -1,3 +1,7 @@
+---
+tags: ai, docker, docker-compose, orchestration, virtualisation
+---
+
 # Virtualisation avec Docker
 
 Ce dossier contient des exemples de virtualisation de différents systèmes d'exploitation avec Docker, utilisant les images de [Dockur](https://github.com/dockur).

@@ -1,3 +1,7 @@
+---
+tags: assistant, docker-compose, home, home-assistant, iot, open
+---
+
 # Home Assistant - Open Source Smart Home Platform
 
 Home Assistant is an open-source home automation platform that puts local control and privacy first. This stack includes Zigbee2MQTT for Zigbee device support and Mosquitto as the MQTT broker.

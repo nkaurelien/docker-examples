@@ -1,3 +1,7 @@
+---
+tags: api-gateway, certbot, letsencrypt, nginx, reverse-proxy
+---
+
 # Nginx + Certbot
 
 Reverse proxy Nginx avec certificats SSL Let's Encrypt automatiques.

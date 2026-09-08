@@ -1,3 +1,7 @@
+---
+tags: actions, ci-cd, docker, github
+---
+
 # GitHub Actions pour Docker
 
 Configuration de workflows GitHub Actions pour Docker.

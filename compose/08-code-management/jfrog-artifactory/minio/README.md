@@ -1,3 +1,7 @@
+---
+tags: artifactory, code-management, container, docker-compose, jfrog, minio
+---
+
 # JFrog Container Registry with MinIO
 
 JFrog Container Registry with MinIO available for future S3-compatible storage integration.

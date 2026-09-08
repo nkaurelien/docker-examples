@@ -1,3 +1,7 @@
+---
+tags: automation
+---
+
 # Automation
 
 This section covers workflow automation and scheduling services.

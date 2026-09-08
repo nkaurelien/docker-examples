@@ -1,3 +1,7 @@
+---
+tags: getting-started
+---
+
 # Quick Start
 
 Guide rapide pour démarrer avec les exemples Docker.

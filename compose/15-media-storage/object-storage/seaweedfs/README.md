@@ -1,3 +1,7 @@
+---
+tags: distributed-storage, docker-compose, objet, poc, seaweedfs, stockage
+---
+
 # SeaweedFS — POC stockage objet S3
 
 Expérimentation en vue de remplacer **MinIO Community Edition** (console retirée / bascule AIStor payant) par une alternative S3-compatible pour les **attachments médicaux** d'AsOne4Health.

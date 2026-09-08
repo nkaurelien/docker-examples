@@ -1,3 +1,7 @@
+---
+tags: ai, desktop, docker, docker-compose, orchestration, ubuntu
+---
+
 # Ubuntu Desktop avec Docker
 
 Ce projet permet d'exécuter Ubuntu Desktop dans un conteneur Docker en utilisant l'image [dockurr/ubuntu](https://github.com/dockur/ubuntu).

@@ -1,3 +1,7 @@
+---
+tags: couchdb, databases, docker-compose, manager, nosql
+---
+
 # CouchDB Manager Service
 
 ## Overview

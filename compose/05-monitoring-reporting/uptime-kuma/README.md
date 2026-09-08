@@ -1,3 +1,7 @@
+---
+tags: docker-compose, kuma, monitoring, self-hosted, uptime, uptime-kuma
+---
+
 # Uptime Kuma - Self-Hosted Uptime Monitoring
 
 Uptime Kuma is a fancy self-hosted monitoring tool. It's a lightweight, open-source alternative to services like Pingdom, StatusCake, and UptimeRobot.

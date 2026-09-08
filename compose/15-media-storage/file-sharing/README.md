@@ -1,3 +1,7 @@
+---
+tags: docker-compose, erugo, file-sharing, storage
+---
+
 # Erugo
 
 Self-hosted file sharing platform built with PHP/Laravel and Vue.js.

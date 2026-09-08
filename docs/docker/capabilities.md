@@ -1,3 +1,7 @@
+---
+tags: capabilities, docker, security
+---
+
 # Docker Capabilities & Security
 
 Guide des capabilities Linux et options de sécurité Docker pour les conteneurs nécessitant des privilèges élevés.

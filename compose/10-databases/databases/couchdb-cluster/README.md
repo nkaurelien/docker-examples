@@ -1,3 +1,7 @@
+---
+tags: cluster, couchdb, databases, docker-compose, example, management
+---
+
 # CouchDB Cluster Example with Management UI
 
 A complete CouchDB cluster setup with 3 nodes, automatic initialization, and a comprehensive management interface.

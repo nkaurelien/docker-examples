@@ -1,3 +1,7 @@
+---
+tags: app-management, automated, backups, cms, docker-compose, mysql
+---
+
 # WordPress with MySQL and Automated Backups
 
 A complete WordPress development environment with MySQL database, PHPMyAdmin, and automated backup system using Ofelia scheduler.

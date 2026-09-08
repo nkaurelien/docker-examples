@@ -1,3 +1,7 @@
+---
+tags: checkmk, docker-compose, infrastructure, infrastructure-monitoring, monitoring
+---
+
 # Checkmk - IT Infrastructure Monitoring
 
 Checkmk is a comprehensive IT monitoring solution that enables you to monitor your entire IT infrastructure: servers, applications, networks, cloud environments, containers, storage, databases, and more.

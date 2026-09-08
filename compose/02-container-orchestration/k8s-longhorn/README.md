@@ -1,3 +1,7 @@
+---
+tags: ai, cloud, distributed, distributed-storage, docker-compose, kubernetes
+---
+
 # Longhorn - Cloud Native Distributed Storage for Kubernetes
 
 Longhorn is a lightweight, reliable, and powerful distributed block storage system for Kubernetes. It implements distributed block storage using containers and microservices.

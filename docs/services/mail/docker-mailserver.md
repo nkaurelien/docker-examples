@@ -1,3 +1,7 @@
+---
+tags: ai, docker, docker-mailserver, mail, mail-server, mailserver
+---
+
 # Docker Mailserver
 
 Serveur mail complet (SMTP, IMAP, anti-spam) pour la production.

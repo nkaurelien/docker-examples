@@ -1,3 +1,7 @@
+---
+tags: cloud, docker-compose, infrastructure, ingress, reverse-proxy, router
+---
+
 # Traefik - Cloud Native Edge Router
 
 Traefik is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy.

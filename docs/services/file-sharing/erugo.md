@@ -1,3 +1,7 @@
+---
+tags: erugo, file-sharing
+---
+
 # Erugo
 
 Plateforme de partage de fichiers self-hosted avec interface Vue.js.

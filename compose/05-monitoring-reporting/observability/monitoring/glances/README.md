@@ -1,3 +1,7 @@
+---
+tags: docker-compose, glances, monitoring, system-monitoring
+---
+
 # Glances
 
 Glances est un outil de monitoring système cross-platform écrit en Python.

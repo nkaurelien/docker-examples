@@ -1,3 +1,7 @@
+---
+tags: docker-compose, object-storage, objet, poc, rustfs, stockage
+---
+
 # RustFS — POC stockage objet S3
 
 Candidat **drop-in MinIO** écrit en Rust (Apache 2.0), API S3 sur les mêmes ports que MinIO.
