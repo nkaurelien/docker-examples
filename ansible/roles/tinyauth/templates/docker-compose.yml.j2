@@ -13,6 +13,8 @@ services:
       - TINYAUTH_APPURL=https://{{ tinyauth_hostname }}
       - COOKIE_SECURE=true
       - COOKIE_DOMAIN={{ traefik_domain | default('kamitbrains.fr') }}
+      - TINYAUTH_DATABASE_DRIVER=sqlite
+      - TINYAUTH_DATABASE_PATH=/data/tinyauth.db
       - TINYAUTH_RESOURCES_ENABLED=true
       - TINYAUTH_RESOURCES_PATH=/resources
       - RESOURCES_DIR=/resources
@@ -21,6 +23,7 @@ services:
       - TINYAUTH_UI_TITLE=KamitBrains Auth
 
     volumes:
+      - ./data:/data
       - ./resources:/resources:ro
 
 
