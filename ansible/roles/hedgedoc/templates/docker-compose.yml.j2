@@ -13,7 +13,7 @@ services:
       - CMD_DB_URL=sqlite:///hedgedoc/data/hedgedoc.sqlite
       - CMD_ALLOW_FREEURL=true
       - CMD_ALLOW_ANONYMOUS=true
-      - CMD_ALLOW_EMAIL_REGISTER=false
+      - CMD_ALLOW_EMAIL_REGISTER=true
     volumes:
       - ./uploads:/hedgedoc/public/uploads
       - ./data:/hedgedoc/data
