@@ -1,5 +1,8 @@
 ---
-tags: docker, examples
+title: "Docker Examples — Collection de Stacks Docker Compose & Ansible"
+description: "Collection complète de configurations Docker Compose et rôles Ansible pour services auto-hébergés par Aurélien NKUMBE"
+tags: docker, compose, ansible, self-hosted, devops
+lang: fr
 ---
 
 # Docker Examples Collection

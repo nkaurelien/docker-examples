@@ -1,5 +1,8 @@
 ---
-tags: ai, docker-compose, dokploy, heroku, orchestration, paas
+title: "Docker Examples Documentation — Guide des Services Self-Hosted"
+description: "Documentation complète et exemples d'architecture Docker Compose et Ansible pour infrastructure self-hosted"
+tags: documentation, docker, compose, ansible, guide
+lang: fr
 ---
 
 # Docker Examples
