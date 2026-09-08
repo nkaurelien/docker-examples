@@ -24,6 +24,17 @@
     - "{{ homepage_config_dir }}/logo.png"
     - "{{ homepage_compose_dir }}/images/logo.png"
 
+- name: Deploy Homepage SVG logo variants
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ homepage_compose_dir }}/images/{{ item }}"
+    mode: '0644'
+  loop:
+    - Kamitbrains-logo-egde4-picsvg_com.svg
+    - Kamitbrains-logo-internal1-picsvg_com.svg
+    - Kamitbrains-logo-internat-picsvg_com.svg
+    - Kamitbrains-logo-sharp-picsvg_com.svg
+
 - name: Deploy Homepage configuration files
   ansible.builtin.template:
     src: "{{ item }}.j2"
