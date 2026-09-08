@@ -6,3 +6,4 @@ homepage_primary_hostname: "home.{{ traefik_domain | default(homepage_domain) }}
 homepage_alias_hostname: "apps.{{ traefik_domain | default(homepage_domain) }}"
 homepage_compose_dir: "/opt/homepage"
 homepage_config_dir: "/opt/homepage/config"
+homepage_finnhub_api_key: "dafr1vhr01quvmmh40s0dafr1vhr01quvmmh40sg"
