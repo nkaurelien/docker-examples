@@ -1,0 +1,37 @@
+---
+- name: Ensure Pingvin Share stack is stopped if present
+  community.docker.docker_compose_v2:
+    project_src: "/opt/pingvin-share"
+    state: stopped
+  ignore_errors: true
+
+- name: Ensure Erugo deployment and storage directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0777'
+  loop:
+    - "{{ erugo_deploy_dir }}"
+    - "{{ erugo_storage_dir }}"
+
+- name: Deploy Erugo docker-compose configuration
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ erugo_deploy_dir }}/docker-compose.yml"
+    mode: '0644'
+
+- name: Manage Erugo container stack state via docker compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ erugo_deploy_dir }}"
+    state: present
+    remove_orphans: true
+
+- name: Install and enable Erugo systemd service for boot startup
+  ansible.builtin.include_role:
+    name: systemd-service
+  vars:
+    systemd_service_name: "erugo"
+    systemd_service_description: "Erugo WeTransfer-like File Transfer Service"
+    systemd_compose_dir: "{{ erugo_deploy_dir }}"
+    systemd_compose_files: "-f docker-compose.yml"
+    systemd_project_name: "erugo"
