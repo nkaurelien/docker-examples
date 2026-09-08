@@ -16,10 +16,10 @@
     mode: '0644'
 
 - name: Start HedgeDoc container stack via docker compose
-  community.docker.docker_compose_v2:
-    project_src: "{{ hedgedoc_compose_dir }}"
-    state: present
-    remove_orphans: true
+  community.docker.docker_container_exec:
+    container: hedgedoc
+    command: "bin/manage_users --pass '{{ hedgedoc_admin_password }}' --add '{{ hedgedoc_admin_email }}'"
+  ignore_errors: true
 
 - name: Install and enable HedgeDoc systemd service for boot startup
   ansible.builtin.include_role:

@@ -5,3 +5,5 @@ hedgedoc_domain: "kamitbrains.fr"
 hedgedoc_hostname: "pad.{{ traefik_domain | default(hedgedoc_domain) }}"
 hedgedoc_compose_dir: "/opt/hedgedoc"
 hedgedoc_container_port: 3000
+hedgedoc_admin_email: "admin@kamitbrains.fr"
+hedgedoc_admin_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/hedgedoc-admin-password') | trim }}"
