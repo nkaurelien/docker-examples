@@ -1,3 +1,6 @@
+---
+tags: api-gateway, docker-compose, enable, kong, manager
+---
 
 # Enable Kong Manager
 

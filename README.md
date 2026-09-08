@@ -1,3 +1,6 @@
+---
+tags: docker, examples
+---
 
 # Docker Examples Collection
 

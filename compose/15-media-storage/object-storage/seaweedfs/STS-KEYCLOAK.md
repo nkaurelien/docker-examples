@@ -1,3 +1,7 @@
+---
+tags: distributed-storage, docker-compose, iam, kamitbrains, keycloak, local
+---
+
 # POC STS/OIDC SeaweedFS ↔ Keycloak (local kamitbrains)
 
 Valide le flux : **JWT Keycloak → `AssumeRoleWithWebIdentity` → credentials S3 temporaires + droits par préfixe**, contre le Keycloak local `https://connect.asone4health.kamitbrains.local`.

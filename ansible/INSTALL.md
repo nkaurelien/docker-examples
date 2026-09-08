@@ -1,3 +1,7 @@
+---
+tags: ansible, automation, cloudflare, installation, utilisation
+---
+
 # Guide d'Installation et d'Utilisation - Ansible & Cloudflare Automation
 
 Ce dossier contient la suite de déploiement Ansible et les outils d'automatisation Cloudflare pour nos infrastructures (dont le serveur Contabo FR).

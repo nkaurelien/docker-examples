@@ -1,3 +1,7 @@
+---
+tags: ci-cd, docker, scanning, security
+---
+
 # Security Scanning Docker
 
 Guide complet pour sécuriser vos pipelines Docker avec des scans automatisés.

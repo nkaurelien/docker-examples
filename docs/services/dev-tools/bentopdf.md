@@ -1,3 +1,7 @@
+---
+tags: bentopdf, client-side, dev-tools, pdf, pdf-tools, privacy-first
+---
+
 # BentoPDF — Privacy-First Client-Side PDF Toolkit
 
 **BentoPDF** est un outil de manipulation de fichiers PDF (fusion, division, compression, extraction, conversion) 100% côté client (Browser Client-Side), garantissant la confidentialité absolue de vos documents.

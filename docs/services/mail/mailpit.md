@@ -1,3 +1,7 @@
+---
+tags: ai, email-testing, mail, mailpit
+---
+
 # Mailpit
 
 Mailpit est un outil de test email léger et rapide pour les développeurs. Il capture tous les emails sortants et fournit une interface web moderne.

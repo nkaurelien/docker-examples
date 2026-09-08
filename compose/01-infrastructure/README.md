@@ -1,3 +1,7 @@
+---
+tags: docker-compose, environment, infrastructure
+---
+
 # Infrastructure Environment
 
 Core infrastructure services for networking, reverse proxy, SSL/TLS management, and DNS.

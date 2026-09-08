@@ -1,3 +1,7 @@
+---
+tags: dev-tools, developer, developer-utilities, it-tools, web
+---
+
 # IT-Tools Web Developer Tools Collection
 
 [IT-Tools](https://it-tools.tech/) is an open-source collection of handy online tools for developers and system administrators.

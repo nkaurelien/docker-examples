@@ -1,3 +1,7 @@
+---
+tags: home, iot, smart
+---
+
 # IoT & Smart Home
 
 This section covers IoT platforms and smart home automation solutions.

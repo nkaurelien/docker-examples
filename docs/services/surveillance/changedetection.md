@@ -1,3 +1,7 @@
+---
+tags: changedetection, surveillance, web, website-monitoring
+---
+
 # ChangeDetection.io Web Surveillance
 
 [ChangeDetection.io](https://changedetection.io/) is an open-source web page change monitoring and notification service.

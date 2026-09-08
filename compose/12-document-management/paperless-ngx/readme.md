@@ -1,3 +1,7 @@
+---
+tags: dms, docker-compose, document-management, ocr, paperless-ngx
+---
+
 # Paperless-ngx
 
 Paperless-ngx is a document management system that transforms physical documents into a searchable online archive.

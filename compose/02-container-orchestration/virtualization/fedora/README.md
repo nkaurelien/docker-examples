@@ -1,3 +1,7 @@
+---
+tags: ai, docker, docker-compose, fedora, orchestration, workstation
+---
+
 # Fedora Workstation avec Docker
 
 Ce projet permet d'exécuter Fedora Workstation dans un conteneur Docker en utilisant l'image [dockurr/fedora](https://github.com/dockur/fedora).

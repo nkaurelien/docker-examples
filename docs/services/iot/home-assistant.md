@@ -1,3 +1,7 @@
+---
+tags: assistant, home, home-assistant, iot, smart-home
+---
+
 # Home Assistant
 
 Home Assistant is an open-source home automation platform that puts local control and privacy first.

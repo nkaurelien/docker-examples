@@ -1,3 +1,7 @@
+---
+tags: changedetection, docker-compose, iot, website-monitoring
+---
+
 # ChangeDetection.io
 
 Service de surveillance de pages web qui détecte les modifications de contenu et envoie des notifications.

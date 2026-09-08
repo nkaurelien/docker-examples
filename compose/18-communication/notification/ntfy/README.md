@@ -1,3 +1,7 @@
+---
+tags: communication, docker-compose, notification, ntfy, push-notifications, simple
+---
+
 # ntfy - Simple Notification Service
 
 A simple HTTP-based pub-sub notification service that allows you to send notifications to your phone or desktop via scripts from any computer.

@@ -1,3 +1,7 @@
+---
+tags: api-gateway, encrypt, ingress, reverse-proxy, ssl, traefik
+---
+
 # Let's Encrypt SSL
 
 Configuration SSL automatique avec Let's Encrypt pour Traefik.

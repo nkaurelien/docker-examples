@@ -1,3 +1,7 @@
+---
+tags: docker-compose, intro, security
+---
+
 # Intro
 
 Supertoken is an alternative to Auth0 / Firebase Auth / AWS Cognito, as we know Auth0 is a great product but it is very costly. I think it is best bet to self-host it and start saving a lot of $.

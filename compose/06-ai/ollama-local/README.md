@@ -1,3 +1,7 @@
+---
+tags: ai, docker-compose, llm, local, local-ai, ollama
+---
+
 # Ollama Local
 
 Déploiement d'une instance **Ollama** s'exécutant localement sur votre machine sous forme de conteneur Docker.

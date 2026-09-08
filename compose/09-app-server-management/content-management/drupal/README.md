@@ -1,3 +1,7 @@
+---
+tags: app-management, cms, docker-compose, drupal, install
+---
+
 # Install
 
 composer install

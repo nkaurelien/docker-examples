@@ -1,3 +1,7 @@
+---
+tags: docker-compose, monitoring, reporting
+---
+
 # Monitoring and Reporting
 
 Observability stack: metrics, logs, dashboards, and code quality analysis.

@@ -1,3 +1,7 @@
+---
+tags: api-gateway, docker, docker-security, ingress, proxy, reverse-proxy
+---
+
 # Docker Socket Proxy
 
 Sécurise l'accès au socket Docker pour Traefik.

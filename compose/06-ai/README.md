@@ -1,3 +1,7 @@
+---
+tags: ai, docker-compose, ollama, setups, ssh, tunnel
+---
+
 # Ollama & SSH Tunnel setups
 
 Ce répertoire contient des configurations Docker Compose pour faire tourner **Ollama** (moteur d'exécution de LLM en local) ou pour exploiter un **Tunnel SSH conteneurisé** permettant de se connecter de façon transparente à une instance Ollama distante (par exemple hébergée sur un serveur équipé de GPU puissant comme un NVIDIA DGX), sans exposer publiquement de ports sensibles.

@@ -1,3 +1,7 @@
+---
+tags: docker-compose, home, iot, smart
+---
+
 # IoT and Smart Home
 
 Services for home automation, IoT device management, and website monitoring.

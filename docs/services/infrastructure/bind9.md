@@ -1,3 +1,7 @@
+---
+tags: bind9, dns, infrastructure, server
+---
+
 # Bind9 DNS Server
 
 BIND 9 is the most widely used DNS server software on the Internet. It provides authoritative DNS for local domains and recursive resolution with forwarding.

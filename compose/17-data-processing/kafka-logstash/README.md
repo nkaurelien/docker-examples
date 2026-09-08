@@ -1,3 +1,7 @@
+---
+tags: docker-compose, kafka, logstash, production, ready
+---
+
 # Kafka Stack with Logstash - Production Ready
 
 Ce projet déploie une infrastructure Kafka complète avec Logstash pour le traitement en temps réel des données EmotiBit.

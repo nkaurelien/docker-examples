@@ -1,3 +1,7 @@
+---
+tags: monitoring, surveillance, web
+---
+
 # Web Surveillance & Monitoring
 
 Solutions for web page monitoring, change detection, and website surveillance.

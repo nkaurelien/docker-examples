@@ -1,3 +1,7 @@
+---
+tags: docker-compose, docker-with-s3fs-volume, s3-mount, s3fs, storage
+---
+
 # docker-with-s3fs-volume
 1. Install s3fs and NFS Server:
 

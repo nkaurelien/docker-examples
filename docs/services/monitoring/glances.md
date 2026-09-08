@@ -1,3 +1,7 @@
+---
+tags: glances, monitoring, system-monitoring
+---
+
 # Glances
 
 Outil de monitoring système cross-platform en temps réel.

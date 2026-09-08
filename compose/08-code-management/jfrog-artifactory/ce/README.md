@@ -1,3 +1,7 @@
+---
+tags: artifactory, code-management, container, docker-compose, jcr, jfrog
+---
+
 # JFrog Container Registry (JCR)
 
 JFrog Container Registry - optimized for Docker and Helm chart

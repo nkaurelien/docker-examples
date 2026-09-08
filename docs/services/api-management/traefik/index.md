@@ -1,3 +1,7 @@
+---
+tags: api-gateway, ingress, reverse-proxy, traefik
+---
+
 # Traefik
 
 Traefik est un reverse proxy et load balancer moderne avec auto-discovery Docker.

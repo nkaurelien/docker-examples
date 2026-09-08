@@ -1,3 +1,7 @@
+---
+tags: ai, ai-ui, open, open-webui, webui
+---
+
 # Open WebUI
 
 Open WebUI is a user-friendly, feature-rich web interface for interacting with Large Language Models (LLMs). It integrates seamlessly with Ollama, providing a ChatGPT-like user experience.

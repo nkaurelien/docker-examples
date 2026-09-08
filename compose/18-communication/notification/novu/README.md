@@ -1,3 +1,7 @@
+---
+tags: communication, docker-compose, infrastructure, notification, notifications, novu
+---
+
 # Novu - Open-Source Notification Infrastructure
 
 Novu is a comprehensive notification infrastructure platform that provides a unified API for managing multi-channel notifications including Email, SMS, Push, Chat, and In-App notifications.
