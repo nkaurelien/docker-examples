@@ -11,6 +11,7 @@ services:
     volumes:
       - ./config:/app/config
       - ./images:/app/public/images:ro
+      - ./icons:/app/public/icons:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - {{ traefik_public_network | default('traefik-public') }}
