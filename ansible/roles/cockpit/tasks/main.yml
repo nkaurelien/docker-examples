@@ -1,0 +1,38 @@
+---
+- name: Ensure Cockpit system package is installed
+  ansible.builtin.apt:
+    name:
+      - cockpit
+    state: present
+    update_cache: yes
+
+- name: Ensure Cockpit configuration directory exists
+  ansible.builtin.file:
+    path: /etc/cockpit
+    state: directory
+    mode: '0755'
+
+- name: Deploy Cockpit configuration file
+  ansible.builtin.template:
+    src: cockpit.conf.j2
+    dest: /etc/cockpit/cockpit.conf
+    mode: '0644'
+  notify: Restart Cockpit service
+
+- name: Ensure Traefik dynamic config directory exists
+  ansible.builtin.file:
+    path: "/opt/traefik/config/dynamic"
+    state: directory
+    mode: '0755'
+
+- name: Deploy Traefik dynamic router configuration for Cockpit
+  ansible.builtin.template:
+    src: traefik-cockpit.yml.j2
+    dest: "/opt/traefik/config/dynamic/cockpit.yml"
+    mode: '0644'
+
+- name: Enable and start Cockpit socket service
+  ansible.builtin.systemd:
+    name: cockpit.socket
+    enabled: true
+    state: started

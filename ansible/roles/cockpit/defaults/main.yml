@@ -1,0 +1,5 @@
+---
+# Cockpit role defaults
+cockpit_port: 9090
+cockpit_domain: "{{ traefik_domain | default('kamitbrains.fr') }}"
+cockpit_hostname: "cockpit.{{ cockpit_domain }}"

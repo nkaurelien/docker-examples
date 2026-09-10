@@ -45,6 +45,8 @@
       tags: [dozzle, logs, docker, monitoring, tools]
     - role: forgejo
       tags: [forgejo, git, code, dev, tools]
+    - role: cockpit
+      tags: [cockpit, admin, system, monitoring, tools]
     - role: homepage
       tags: [homepage, dashboard, portal, home, apps]
 
