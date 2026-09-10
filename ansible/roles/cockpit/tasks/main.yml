@@ -3,6 +3,7 @@
   ansible.builtin.apt:
     name:
       - cockpit
+      - packagekit
     state: present
     update_cache: yes
 
@@ -18,6 +19,21 @@
     dest: /etc/cockpit/cockpit.conf
     mode: '0644'
   notify: Restart Cockpit service
+
+- name: Ensure NetworkManager config directory exists
+  ansible.builtin.file:
+    path: /etc/NetworkManager/conf.d
+    state: directory
+    mode: '0755'
+
+- name: Configure NetworkManager to manage all devices (PackageKit offline fix)
+  ansible.builtin.copy:
+    dest: /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
+    content: |
+      [keyfile]
+      unmanaged-devices=none
+    mode: '0644'
+  notify: Restart NetworkManager service
 
 - name: Ensure Traefik dynamic config directory exists
   ansible.builtin.file:
