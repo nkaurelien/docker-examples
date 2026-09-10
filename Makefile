@@ -143,6 +143,32 @@ hosts-add:
 		echo "hostctl not found. Install from: https://guumaster.github.io/hostctl/"; \
 	fi
 
+# Add kamitbrains.local homelab domains to /etc/hosts pointing to 192.168.0.210 (requires sudo)
+hosts-homelab-add:
+	@echo "Adding kamitbrains.local homelab domains to /etc/hosts via hostctl (requires sudo)..."
+	@if command -v hostctl >/dev/null 2>&1; then \
+		sudo hostctl add domains kamitbrains 192.168.0.210 \
+			kamitbrains.local \
+			traefik.kamitbrains.local \
+			arcane.kamitbrains.local \
+			auth.kamitbrains.local \
+			passwords.kamitbrains.local \
+			git.kamitbrains.local \
+			share.kamitbrains.local \
+			pad.kamitbrains.local \
+			tools.kamitbrains.local \
+			pdf.kamitbrains.local \
+			draw.kamitbrains.local \
+			logs.kamitbrains.local \
+			status.kamitbrains.local \
+			ntfy.kamitbrains.local \
+			glances.kamitbrains.local \
+			changedetection.kamitbrains.local; \
+	else \
+		echo "hostctl not found. Install from: https://guumaster.github.io/hostctl/"; \
+	fi
+
+
 # Start Arcane and seed its registry
 arcane-start:
 	@echo "Starting Arcane stack..."

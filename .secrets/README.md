@@ -11,6 +11,7 @@ Le dossier `.secrets/` contient l'ensemble des jetons d'API, mots de passe et cl
 | Composant | Fichiers de secrets | Fichier de documentation |
 |---|---|---|
 | **Serveur Contabo SSH** | `ssh-contabo-server-ip`<br>`ssh-contabo-server-user-login`<br>`ssh-contabo-server-password` | [**`ssh-contabo.md`**](./ssh-contabo.md) |
+| **Serveur Homelab SSH** | `ssh-kamitbrains-homelab-fqdn`<br>`ssh-kamitbrains-homelab-ip`<br>`ssh-kamitbrains-homelab-mac`<br>`ssh-kamitbrains-homelab-user-login`<br>`ssh-kamitbrains-homelab-password` | [**`ssh-kamitbrains-homelab.md`**](./ssh-kamitbrains-homelab.md) |
 | **API Cloudflare** | `cloudflare-account-id`<br>`cloudflare-api-key` | [**`cloudflare.md`**](./cloudflare.md) |
 | **Arcane PaaS Manager** | `arcane-jwt-secret`<br>`arcane-encryption-key` | [**`arcane.md`**](./arcane.md) |
 | **Glances Monitoring** | `glances-basic-auth-password` | [**`glances.md`**](./glances.md) |
