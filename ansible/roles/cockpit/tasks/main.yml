@@ -1,9 +1,10 @@
 ---
-- name: Ensure Cockpit system package is installed
+- name: Ensure Cockpit and PackageKit system packages are installed
   ansible.builtin.apt:
     name:
       - cockpit
       - packagekit
+      - network-manager
     state: present
     update_cache: yes
 
@@ -34,6 +35,41 @@
       unmanaged-devices=none
     mode: '0644'
   notify: Restart NetworkManager service
+
+- name: Disable NetworkManager online connectivity check URL restriction
+  ansible.builtin.copy:
+    dest: /etc/NetworkManager/conf.d/20-connectivity.conf
+    content: |
+      [connectivity]
+      enabled=false
+    mode: '0644'
+  notify: Restart NetworkManager service
+
+- name: Ensure dummy network interface exists for NetworkManager gateway status
+  ansible.builtin.command:
+    cmd: nmcli con add type dummy con-name fake ifname fake0 ip4 192.0.2.2/24 gw4 192.0.2.1
+  register: _dummy_if_result
+  failed_when: false
+  changed_when: _dummy_if_result.rc == 0
+
+- name: Ensure Polkit rules directory exists
+  ansible.builtin.file:
+    path: /etc/polkit-1/rules.d
+    state: directory
+    mode: '0755'
+
+- name: Deploy Polkit admin authorization rule for Cockpit and PackageKit
+  ansible.builtin.copy:
+    dest: /etc/polkit-1/rules.d/50-cockpit-admin.rules
+    content: |
+      /* Allow users in sudo group full admin access in Cockpit & PackageKit */
+      polkit.addRule(function(action, subject) {
+          if (subject.isInGroup("sudo")) {
+              return polkit.Result.YES;
+          }
+      });
+    mode: '0644'
+  notify: Restart Polkit service
 
 - name: Ensure Traefik dynamic config directory exists
   ansible.builtin.file:
