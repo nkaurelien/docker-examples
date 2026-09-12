@@ -15,6 +15,8 @@ Le dossier `.secrets/` contient l'ensemble des jetons d'API, mots de passe et cl
 | **API Cloudflare** | `cloudflare-account-id`<br>`cloudflare-api-key` | [**`cloudflare.md`**](./cloudflare.md) |
 | **Arcane PaaS Manager** | `arcane-jwt-secret`<br>`arcane-encryption-key` | [**`arcane.md`**](./arcane.md) |
 | **Glances Monitoring** | `glances-basic-auth-password` | [**`glances.md`**](./glances.md) |
+| **Ntfy Notification Service** | `ntfy-admin-password`<br>`ntfy-topic` | [**`ntfy.md`**](./ntfy.md) |
+
 
 ---
 

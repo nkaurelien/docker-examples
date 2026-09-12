@@ -1,0 +1,19 @@
+---
+# GlitchTip role defaults
+glitchtip_version: "6"
+glitchtip_image: "glitchtip/glitchtip:{{ glitchtip_version }}"
+glitchtip_postgres_image: "postgres:17"
+glitchtip_valkey_image: "valkey/valkey:9"
+
+glitchtip_domain: "kamitbrains.fr"
+glitchtip_hostname: "glitchtip.{{ traefik_domain | default(glitchtip_domain) }}"
+glitchtip_compose_dir: "/opt/glitchtip"
+glitchtip_container_port: 8000
+
+glitchtip_db_name: "glitchtip"
+glitchtip_db_user: "glitchtip"
+glitchtip_db_password: "{{ lookup('file', playbook_dir + '/../.secrets/glitchtip-db-password') | trim }}"
+glitchtip_secret_key: "{{ lookup('file', playbook_dir + '/../.secrets/glitchtip-secret-key') | trim }}"
+
+glitchtip_admin_email: "admin@kamitbrains.fr"
+glitchtip_admin_password: "{{ lookup('file', playbook_dir + '/../.secrets/glitchtip-admin-password') | trim }}"
