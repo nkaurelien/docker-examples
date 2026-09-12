@@ -47,6 +47,8 @@
       tags: [forgejo, git, code, dev, tools]
     - role: cockpit
       tags: [cockpit, admin, system, monitoring, tools]
+    - role: glitchtip
+      tags: [glitchtip, apm, errors, monitoring, dev, tools]
     - role: homepage
       tags: [homepage, dashboard, portal, home, apps]
 
