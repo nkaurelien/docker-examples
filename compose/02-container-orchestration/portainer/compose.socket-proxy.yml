@@ -86,9 +86,11 @@ services:
 
 volumes:
   portainer_data:
+    name: portainer_data
 
 networks:
   socket-proxy:
+    name: socket-proxy
     name: portainer-socket-proxy
     driver: bridge
     internal: true

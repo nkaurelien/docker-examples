@@ -19,3 +19,4 @@ services:
 
 volumes:
   redis_stack_data:
+    name: redis_stack_data

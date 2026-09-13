@@ -70,3 +70,4 @@ services:
 
 volumes:
   couchdb_data:
+    name: couchdb_data
