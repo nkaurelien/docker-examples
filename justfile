@@ -64,6 +64,7 @@ ansible-ping:
 ansible-inventory:
     cd ansible && ansible-inventory -i inventory.yml --list
 
-# 🚀 Execute Ansible deployment playbook on homelab
-ansible-deploy-homelab:
-    cd ansible && ansible-playbook site.yml -l homelab
+# 🚀 Execute Ansible deployment playbook on homelab (optionally targeting tags: just ansible-deploy-homelab TAGS="homepage")
+ansible-deploy-homelab TAGS="":
+    cd ansible && ansible-playbook site.yml -l homelab {{ if TAGS != "" { "--tags " + TAGS } else { "" } }}
+
