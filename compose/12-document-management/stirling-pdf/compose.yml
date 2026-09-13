@@ -1,0 +1,56 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/stirling-pdf.webp
+  urls:
+    - https://github.com/Stirling-Tools/Stirling-PDF
+
+services:
+  stirling-pdf:
+    image: frooodle/s-pdf:latest
+    container_name: stirling-pdf
+    restart: unless-stopped
+    ports:
+      - "8089:8080"
+    environment:
+      - DOCKER_ENABLE_SECURITY=false
+      - SECURITY_ENABLE_LOGIN=false
+      - UI_APPNAME=Stirling-PDF
+      - LANGS=fr_FR,en_US
+      - JAVA_TOOL_OPTIONS=-XX:MaxMetaspaceSize=384m -XX:MaxRAMPercentage=65
+    volumes:
+      - ./trainingData:/usr/share/tessdata
+      - ./configs:/configs
+      - ./logs:/logs
+      - ./customFiles:/customFiles
+    networks:
+      - default
+      - traefik-public
+    labels:
+      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/stirling-pdf.webp"
+      - "traefik.enable=true"
+      - "traefik.http.routers.stirling-pdf.rule=Host(`stirling.${DOMAIN:-apps.local}`) || Host(`stirling-pdf.${DOMAIN:-apps.local}`)"
+      - "traefik.http.routers.stirling-pdf.entrypoints=web"
+      - "traefik.http.services.stirling-pdf.loadbalancer.server.port=8080"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8080/ | grep -qE '^(200|302|401)' || exit 1"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 45s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.00"
+          memory: 1280M
+        reservations:
+          cpus: "0.10"
+          memory: 256M
+
+networks:
+  traefik-public:
+    external: true
+    name: traefik-public

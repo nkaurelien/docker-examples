@@ -1,5 +1,6 @@
 x-arcane:
-  icon: https://raw.githubusercontent.com/crowdsecurity/crowdsec/master/docs/assets/crowdsec_logo.png
+  icon: 
+    https://raw.githubusercontent.com/crowdsecurity/crowdsec/master/docs/assets/crowdsec_logo.png
   urls:
     - https://www.crowdsec.net/
     - https://github.com/crowdsecurity/crowdsec
@@ -73,3 +74,4 @@ networks:
     name: crowdsec-net
   traefik-public:
     external: true
+    name: traefik-public

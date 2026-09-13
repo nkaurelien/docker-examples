@@ -1,0 +1,128 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/glitchtip.webp
+  urls:
+    - https://glitchtip.com/
+    - https://gitlab.com/glitchtip/glitchtip
+
+services:
+  glitchtip-db:
+    image: postgres:16-alpine
+    container_name: glitchtip-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=glitchtip
+      - POSTGRES_USER=glitchtip
+      - POSTGRES_PASSWORD=glitchtip_secure_pass
+    volumes:
+      - glitchtip-db-data:/var/lib/postgresql/data
+    networks:
+      - glitchtip-internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U glitchtip -d glitchtip || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 256M
+        reservations:
+          memory: 64M
+
+  glitchtip-valkey:
+    image: valkey/valkey:8-alpine
+    container_name: glitchtip-valkey
+    restart: unless-stopped
+    networks:
+      - glitchtip-internal
+    healthcheck:
+      test: ["CMD-SHELL", "valkey-cli ping | grep PONG || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+        reservations:
+          memory: 32M
+
+  glitchtip:
+    image: glitchtip/glitchtip:v4.1.2
+    container_name: glitchtip
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    depends_on:
+      glitchtip-db:
+        condition: service_healthy
+      glitchtip-valkey:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgres://glitchtip:glitchtip_secure_pass@glitchtip-db:5432/glitchtip
+      - VALKEY_URL=redis://glitchtip-valkey:6379
+      - SECRET_KEY=glitchtip_secret_key_change_me
+      - GLITCHTIP_DOMAIN=http://glitchtip.${DOMAIN:-apps.local}
+      - DEFAULT_FROM_EMAIL=admin@${DOMAIN:-apps.local}
+      - EMAIL_URL=consolemail://
+      - ENABLE_ADMIN=True
+      - ENABLE_OPENAPI=False
+      - SERVER_ROLE=all_in_one
+      - PORT=8000
+    volumes:
+      - glitchtip-uploads:/code/uploads
+    networks:
+      - default
+      - traefik-public
+      - glitchtip-internal
+    labels:
+      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/glitchtip.webp"
+      - "traefik.enable=true"
+      - "traefik.http.routers.glitchtip.rule=Host(`glitchtip.${DOMAIN:-apps.local}`)"
+      - "traefik.http.routers.glitchtip.entrypoints=web"
+      - "traefik.http.services.glitchtip.loadbalancer.server.port=8000"
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/_health/')"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.00"
+          memory: 512M
+        reservations:
+          memory: 128M
+
+volumes:
+  glitchtip-db-data:
+    name: glitchtip-db-data
+  glitchtip-uploads:
+    name: glitchtip-uploads
+
+networks:
+  traefik-public:
+    external: true
+    name: traefik-public
+  glitchtip-internal:
+    internal: true
+    name: glitchtip-internal

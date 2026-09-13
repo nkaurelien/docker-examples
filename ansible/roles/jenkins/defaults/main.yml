@@ -1,0 +1,9 @@
+---
+# Jenkins role defaults
+jenkins_image: "jenkins/jenkins:lts"
+jenkins_domain: "kamitbrains.fr"
+jenkins_hostname: "jenkins.{{ traefik_domain | default(jenkins_domain) }}"
+jenkins_compose_dir: "/opt/jenkins"
+jenkins_container_port: 8080
+jenkins_agent_port: 50000
+jenkins_java_opts: "-Djenkins.install.runSetupWizard=false"
