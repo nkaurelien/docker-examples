@@ -1,0 +1,32 @@
+services:
+  valkey:
+    container_name: "asone-valkey"
+    image: valkey/valkey:9-alpine
+    ports:
+      - "6379:6379"
+    command: valkey-server --appendonly yes --requirepass ${VALKEY_PASSWORD:-valkey123}
+    volumes:
+      - valkey_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "valkey-cli -a ${VALKEY_PASSWORD:-valkey123} ping | grep PONG || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 256M
+        reservations:
+          memory: 64M
+
+volumes:
+  valkey_data:
+    name: valkey_data

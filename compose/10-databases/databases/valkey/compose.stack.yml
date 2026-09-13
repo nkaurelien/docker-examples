@@ -1,0 +1,29 @@
+services:
+  valkey:
+    container_name: "valkey"
+    image: valkey/valkey:9-alpine
+    command: valkey-server --appendonly yes --requirepass ${VALKEY_PASSWORD:-valkey123}
+    volumes:
+      - valkey_data:/data
+    networks:
+      - traefik-public
+    healthcheck:
+      test: ["CMD-SHELL", "valkey-cli -a ${VALKEY_PASSWORD:-valkey123} ping | grep PONG || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  valkey_data:
+    name: valkey_data
+
+networks:
+  traefik-public:
+    external: true
