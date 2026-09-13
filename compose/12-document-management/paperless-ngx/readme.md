@@ -1,53 +1,23 @@
----
-tags: dms, docker-compose, document-management, ocr, paperless-ngx
----
+# Paperless-ngx Document Management Stack
 
-# Paperless-ngx
+[Paperless-ngx](https://docs.paperless-ngx.com/) is an open-source document management system that transforms physical documents into a searchable online archive.
 
-Paperless-ngx is a document management system that transforms physical documents into a searchable online archive.
+## Hostnames & Access
+
+- Main URL: `https://paperless.kamitbrains.fr`
+- Alias URL: `https://docs.kamitbrains.fr`
+- Default Admin Login: `admin`
 
 ## Features
 
-- OCR processing for scanned documents
-- Full-text search
-- Automatic document classification with tags, correspondents, and document types
-- Email integration for document ingestion
-- REST API
+- **Automated OCR**: Multi-language Optical Character Recognition (fra + eng).
+- **Full-Text Search**: Search inside PDF documents, images, and scanned receipts.
+- **Auto-Tagging**: Machine learning document classification based on content.
+- **PostgreSQL 16 & Valkey 8**: Fast, scalable database and task queue backend.
+- **Reverse Proxy Protection**: Traefik TLS certificate termination & CrowdSec bouncer protection.
 
-## Quick Start
+## Deployment with Ansible
 
-1. Configure `docker-compose.env` with your settings (especially `USERMAP_UID` and `USERMAP_GID`)
-
-2. Start the services:
 ```bash
-docker compose up -d
+ansible-playbook -i ansible/inventory.yml ansible/site.yml --tags paperless
 ```
-
-3. Create a superuser:
-```bash
-docker compose exec webserver python manage.py createsuperuser
-```
-
-4. Access the web interface at http://localhost:8000
-
-## Traefik Access
-
-With Traefik configured, access via: `http://paperless.apps.local` (or your configured domain)
-
-## Document Consumption
-
-Place documents in the `./consume` folder - they will be automatically imported and processed.
-
-## Volumes
-
-- `data`: Application data
-- `media`: Processed documents
-- `pgdata`: PostgreSQL database
-- `redisdata`: Redis data
-- `./consume`: Drop folder for new documents
-- `./export`: Export destination
-
-## Documentation
-
-- [Official Documentation](https://docs.paperless-ngx.com/)
-- [GitHub Repository](https://github.com/paperless-ngx/paperless-ngx)

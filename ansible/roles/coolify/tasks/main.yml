@@ -40,6 +40,9 @@
       $user->save();
       "
   register: coolify_admin_init
+  until: coolify_admin_init.rc is defined and coolify_admin_init.rc == 0
+  retries: 12
+  delay: 5
   changed_when: true
 
 - name: Install and enable Coolify systemd service for boot startup

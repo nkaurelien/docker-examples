@@ -1,0 +1,18 @@
+---
+# Paperless-ngx role defaults
+paperless_version: "latest"
+paperless_image: "ghcr.io/paperless-ngx/paperless-ngx:{{ paperless_version }}"
+paperless_container_port: 8000
+
+paperless_domain: "{{ traefik_domain | default('kamitbrains.fr') }}"
+paperless_hostname: "paperless.{{ paperless_domain }}"
+paperless_alias_hostname: "docs.{{ paperless_domain }}"
+paperless_deploy_dir: "/opt/paperless"
+
+paperless_db_name: "paperless"
+paperless_db_user: "paperless"
+paperless_db_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/paperless-db-password') | trim }}"
+paperless_secret_key: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/paperless-secret-key') | trim }}"
+
+paperless_admin_user: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/paperless-admin-login') | trim }}"
+paperless_admin_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/paperless-admin-password') | trim }}"
