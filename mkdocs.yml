@@ -165,6 +165,7 @@ nav:
   - Document Management:
       - Overview: services/document-management/index.md
       - HedgeDoc: services/document-management/hedgedoc.md
+      - Paperless-ngx: services/document-management/paperless-ngx.md
 
   - API Gateway:
       - Overview: services/api-management/index.md

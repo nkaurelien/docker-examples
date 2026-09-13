@@ -53,6 +53,8 @@
       tags: [glitchtip, apm, errors, monitoring, dev, tools]
     - role: umami
       tags: [umami, analytics, monitoring, tools]
+    - role: paperless
+      tags: [paperless, document, dms, tools]
     - role: homepage
       tags: [homepage, dashboard, portal, home, apps]
     - role: open-webui
