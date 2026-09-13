@@ -21,9 +21,9 @@ This repository includes a complete Ansible deployment suite under `ansible/` de
 
 ---
 
-## 🚀 Quick Commands via Makefile
-
-You can run Ansible operations directly from the root workspace using the `make` commands:
+## 🚀 Quick Commands via Makefile & Just
+ 
+You can run Ansible operations directly from the root workspace using `make` or `just` commands:
 
 ```bash
 # Test SSH connectivity to inventory hosts
@@ -35,8 +35,19 @@ make ansible-syntax
 # Display inventory structure and resolved variables
 make ansible-inventory
 
-# Execute the main playbook across all hosts
+# Execute the main playbook across all hosts (full stack)
 make ansible-deploy
+just ansible-deploy-homelab
+
+# Targeted fast deployment (deploy only specific service/tags)
+make ansible-deploy TAGS="homepage"
+just ansible-deploy-homelab TAGS="homepage"
+
+# Deploy multiple services
+make ansible-deploy TAGS="open-webui,jenkins"
+
+# Skip slow system preparation (apt update)
+make ansible-deploy SKIP_TAGS="common"
 
 # Install Galaxy roles and collections
 make ansible-galaxy-install

@@ -47,6 +47,20 @@ docker-compose down -v
 docker-compose down && docker-compose up -d --build
 ```
 
+### Ansible Infrastructure Deployment
+```bash
+# Full deployment
+make ansible-deploy
+just ansible-deploy-homelab
+
+# Targeted fast deployment by service tag
+make ansible-deploy TAGS="homepage"
+just ansible-deploy-homelab TAGS="homepage"
+
+# Targeted multi-service deployment
+make ansible-deploy TAGS="open-webui,jenkins"
+```
+
 ### Service-Specific Commands
 
 #### Kafka-Logstash Stack
