@@ -60,6 +60,7 @@
     - services.yaml
     - widgets.yaml
     - bookmarks.yaml
+    - docker.yaml
 
 - name: Start Homepage container stack via docker compose
   community.docker.docker_compose_v2:

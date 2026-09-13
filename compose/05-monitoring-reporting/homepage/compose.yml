@@ -5,10 +5,48 @@ x-arcane:
     - https://github.com/gethomepage/homepage
 
 services:
+  homepage-socket-proxy:
+    image: tecnativa/docker-socket-proxy:latest
+    container_name: homepage-socket-proxy
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - LOG_LEVEL=info
+      - CONTAINERS=1
+      - IMAGES=1
+      - NETWORKS=1
+      - VOLUMES=1
+      - SERVICES=1
+      - TASKS=1
+      - INFO=1
+      - EVENTS=1
+      - VERSION=1
+      - PING=1
+      - POST=0
+    networks:
+      - homepage-internal
+    read_only: true
+    tmpfs:
+      - /run
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:2375/version"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
     restart: unless-stopped
+    depends_on:
+      homepage-socket-proxy:
+        condition: service_healthy
     ports:
       - "3000:3000"
     environment:
@@ -17,9 +55,9 @@ services:
       - ./config:/app/config
       - ./images:/app/public/images:ro
       - ./icons:/app/public/icons:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - default
+      - homepage-internal
       - traefik-public
     labels:
       - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/homepage.webp"
@@ -47,6 +85,9 @@ services:
           memory: 64M
 
 networks:
+  homepage-internal:
+    internal: true
   traefik-public:
     external: true
     name: traefik-public
+
