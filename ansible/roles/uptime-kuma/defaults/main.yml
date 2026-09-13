@@ -16,3 +16,9 @@ uptime_kuma_traefik_auth_pass: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nk
 
 uptime_kuma_glances_auth_user: "admin"
 uptime_kuma_glances_auth_pass: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/glances-basic-auth-password', errors='ignore') | default('glances-password-change-me', true) | trim }}"
+
+# Ntfy push topic for alert notifications
+uptime_kuma_ntfy_topic: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ntfy-topic', errors='ignore') | default('alerts-kobavado-7890', true) | trim }}"
+
+
+

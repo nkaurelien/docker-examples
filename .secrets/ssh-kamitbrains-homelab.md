@@ -7,7 +7,8 @@ Ce dossier contient les fichiers de secret pour la connexion SSH et la configura
 * `ssh-kamitbrains-homelab-ip` : Adresse IP locale du serveur (`192.168.0.210`).
 * `ssh-kamitbrains-homelab-mac` : Adresse MAC de l'interface réseau (`68-1D-EF-64-8E-85`).
 * `ssh-kamitbrains-homelab-user-login` : Nom d'utilisateur SSH (`kamitbrains`).
-* `ssh-kamitbrains-homelab-password` : Mot de passe SSH de l'utilisateur (`kamit`).
+* `ssh-kamitbrains-homelab-password` : Mot de passe SSH de l'utilisateur (voir le passfile `.secrets/ssh-kamitbrains-homelab-password`).
+
 
 ## 🌐 Déploiement des sous-domaines :
 Le domaine racine `kamitbrains.local` (IP `192.168.0.210`) sert de cible pour le déploiement des sous-domaines de l'homelab (ex: `*.kamitbrains.local`, `traefik.kamitbrains.local`, `portainer.kamitbrains.local`, etc.).

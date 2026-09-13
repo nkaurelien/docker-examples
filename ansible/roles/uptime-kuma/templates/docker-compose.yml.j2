@@ -109,7 +109,8 @@ services:
         sqlite3 /app/data/kuma.db "INSERT INTO monitor_group (monitor_id, group_id, weight) SELECT 17, 1, 17 WHERE NOT EXISTS (SELECT 1 FROM monitor_group WHERE monitor_id = 17 AND group_id = 1);"
 
         # Seed Ntfy Push Notification Channel (id = 1, default = 1)
-        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO notification (id, name, active, user_id, is_default, config) VALUES (1, 'Ntfy Push Alerts', 1, 1, 1, '{\"type\":\"ntfy\",\"name\":\"Ntfy Push Alerts\",\"ntfyserverurl\":\"https://ntfy.{{ traefik_domain | default('kamitbrains.fr') }}\",\"ntfytopic\":\"alerts\",\"ntfyPriority\":4,\"ntfyAuthenticationMethod\":\"none\",\"is_default\":true}');"
+        sqlite3 /app/data/kuma.db "INSERT OR IGNORE INTO notification (id, name, active, user_id, is_default, config) VALUES (1, 'Ntfy Push Alerts', 1, 1, 1, '{\"type\":\"ntfy\",\"name\":\"Ntfy Push Alerts\",\"ntfyserverurl\":\"https://ntfy.{{ traefik_domain | default('kamitbrains.fr') }}\",\"ntfytopic\":\"{{ uptime_kuma_ntfy_topic }}\",\"ntfyPriority\":4,\"ntfyAuthenticationMethod\":\"none\",\"is_default\":true}');"
+
 
         # Link all monitors to Ntfy Notification Channel
         sqlite3 /app/data/kuma.db "INSERT INTO monitor_notification (monitor_id, notification_id) SELECT 1, 1 WHERE NOT EXISTS (SELECT 1 FROM monitor_notification WHERE monitor_id = 1 AND notification_id = 1);"
