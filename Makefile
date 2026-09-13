@@ -169,6 +169,11 @@ hosts-homelab-add:
 	fi
 
 
+# Generate Arcane secret key using Arcane Manager image
+arcane-generate-secret:
+	@echo "Generating secret with Arcane Manager image..."
+	docker run --rm ghcr.io/getarcaneapp/manager:latest /app/arcane generate secret
+
 # Start Arcane and seed its registry
 arcane-start:
 	@echo "Starting Arcane stack..."

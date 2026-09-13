@@ -28,14 +28,15 @@ cp .env.example .env
 
 ### 2. Generate Secrets
 
-Arcane requires an encryption key and a JWT secret. Generate them using the following commands:
+Arcane requires an encryption key and a JWT secret. You can generate them natively using the Arcane Manager Docker image:
 
 ```bash
-# Generate encryption key (32-byte hex)
-openssl rand -hex 32
+# Generate secret key using Arcane's native generator
+docker run --rm ghcr.io/getarcaneapp/manager:latest /app/arcane generate secret
 
-# Generate JWT secret
+# Alternatively, using openssl or Makefile:
 openssl rand -hex 32
+make arcane-generate-secret
 ```
 
 Edit your `.env` file and insert the generated secrets:
