@@ -90,11 +90,14 @@ services:
 
 networks:
   agent_network:
+    name: agent_network
     driver: overlay
     attachable: true
   socket-proxy:
+    name: socket-proxy
     driver: overlay
     internal: true
 
 volumes:
   portainer_data:
+    name: portainer_data

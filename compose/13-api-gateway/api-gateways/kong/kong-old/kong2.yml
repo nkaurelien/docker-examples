@@ -78,8 +78,10 @@ services:
 
 
 volumes:
-  kong_data: {}
+  kong_data:
+    name: kong_data
   
 networks:
- kong-net:
+  kong-net:
+    name: kong-net
 

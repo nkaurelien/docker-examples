@@ -12,4 +12,5 @@ services:
 
 networks:
   asone4health_network:
+    name: asone4health_network
     external: true

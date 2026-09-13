@@ -88,10 +88,13 @@ services:
 
 volumes:
   couchdb_data:
+    name: couchdb_data
 
 networks:
   my-network:
+    name: my-network
     driver: bridge
 
   traefik-public:
     external: true
+    name: traefik-public
