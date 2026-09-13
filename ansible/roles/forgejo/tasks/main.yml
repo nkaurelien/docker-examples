@@ -41,6 +41,13 @@
     command: "forgejo admin user create --admin --username {{ forgejo_admin_username }} --password '{{ forgejo_admin_password }}' --email '{{ forgejo_admin_email }}'"
   ignore_errors: true
 
+- name: Initialize Forgejo nkaurelien user account via CLI
+  community.docker.docker_container_exec:
+    container: forgejo
+    user: "1000"
+    command: "forgejo admin user create --admin --username {{ forgejo_user_username }} --password '{{ forgejo_user_password }}' --email '{{ forgejo_user_email }}'"
+  ignore_errors: true
+
 - name: Install and enable Forgejo systemd service for boot startup
   ansible.builtin.include_role:
     name: systemd-service
