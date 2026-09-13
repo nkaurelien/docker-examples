@@ -1,0 +1,50 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/pairdrop.webp
+  urls:
+    - https://pairdrop.net/
+    - https://github.com/schollz/pairdrop
+
+services:
+  pairdrop:
+    image: lscr.io/linuxserver/pairdrop:latest
+    container_name: pairdrop
+    restart: unless-stopped
+    ports:
+      - "3002:3000"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+      - WS_FALLBACK=true
+    networks:
+      - default
+      - traefik-public
+    labels:
+      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/pairdrop.webp"
+      - "traefik.enable=true"
+      - "traefik.http.routers.pairdrop.rule=Host(`pairdrop.${DOMAIN:-apps.local}`) || Host(`drop.${DOMAIN:-apps.local}`)"
+      - "traefik.http.routers.pairdrop.entrypoints=web"
+      - "traefik.http.services.pairdrop.loadbalancer.server.port=3000"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://127.0.0.1:3000/ || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "2"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 64M
+        reservations:
+          memory: 16M
+
+networks:
+  traefik-public:
+    external: true
+    name: traefik-public

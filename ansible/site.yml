@@ -51,6 +51,10 @@
       tags: [glitchtip, apm, errors, monitoring, dev, tools]
     - role: homepage
       tags: [homepage, dashboard, portal, home, apps]
+    - role: open-webui
+      tags: [open-webui, ai, llm]
+    - role: jenkins
+      tags: [jenkins, cicd, devops]
 
 - name: Maintenance and Cleanup Tasks
   hosts: docker_hosts

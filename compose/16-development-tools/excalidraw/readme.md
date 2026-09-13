@@ -1,20 +1,9 @@
----
-tags: dev-tools, docker-compose, excalidraw, whiteboard
----
+# Excalidraw
 
-# Guide
+Excalidraw is a virtual collaborative whiteboard tool that lets you easily sketch diagrams that have a hand-drawn feel.
 
-https://docs.excalidraw.com/docs/introduction/development
+## Usage
 
-# Quick install
-
-1. Clone repo
-
-git clone https://github.com/excalidraw/excalidraw.git
-
-
-2. Run Docker compose
-
-```console
-docker-compose up --build -d
+```bash
+docker compose up -d
 ```

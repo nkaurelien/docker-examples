@@ -44,5 +44,7 @@ networks:
   rustfs:
     driver: bridge
 
+    name: rustfs
 volumes:
   rustfs-data:
+    name: rustfs-data

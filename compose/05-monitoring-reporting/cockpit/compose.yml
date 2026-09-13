@@ -1,0 +1,42 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/cockpit.webp
+  urls:
+    - https://cockpit-project.org/
+    - https://github.com/cockpit-project/cockpit
+
+services:
+  cockpit:
+    image: quay.io/cockpit/ws:latest
+    container_name: cockpit
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - /:/host:ro
+      - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket:ro
+    networks:
+      - default
+      - traefik-public
+    labels:
+      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/cockpit.webp"
+      - "traefik.enable=true"
+      - "traefik.http.routers.cockpit.rule=Host(`cockpit.${DOMAIN:-apps.local}`)"
+      - "traefik.http.routers.cockpit.entrypoints=web"
+      - "traefik.http.services.cockpit.loadbalancer.server.port=9090"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 256M
+        reservations:
+          memory: 64M
+
+networks:
+  traefik-public:
+    external: true
+    name: traefik-public

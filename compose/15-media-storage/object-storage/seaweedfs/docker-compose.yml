@@ -109,8 +109,13 @@ networks:
   seaweedfs:
     driver: bridge
 
+    name: seaweedfs
 volumes:
   master-data:
+    name: master-data
   volume-data:
+    name: volume-data
   filer-data:
+    name: filer-data
   prometheus-data:
+    name: prometheus-data

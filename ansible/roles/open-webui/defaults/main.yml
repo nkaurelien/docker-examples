@@ -1,0 +1,10 @@
+---
+# Open WebUI role defaults
+open_webui_image: "ghcr.io/open-webui/open-webui:main"
+open_webui_domain: "kamitbrains.fr"
+open_webui_hostname: "ai.{{ traefik_domain | default(open_webui_domain) }}"
+open_webui_alias_hostname: "chat.{{ traefik_domain | default(open_webui_domain) }}"
+open_webui_compose_dir: "/opt/open-webui"
+open_webui_container_port: 8080
+ollama_base_url: "http://host.docker.internal:11434"
+webui_auth: "False"
