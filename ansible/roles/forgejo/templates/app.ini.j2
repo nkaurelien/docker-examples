@@ -24,9 +24,9 @@ SECRET_KEY = {{ lookup('password', '/tmp/forgejo_secret_key length=32 chars=hexd
 INTERNAL_TOKEN = {{ lookup('password', '/tmp/forgejo_internal_token length=32 chars=hexdigits') }}
 
 [service]
-DISABLE_REGISTRATION = false
+DISABLE_REGISTRATION = true
 ALLOW_ONLY_EXTERNAL_REGISTRATION = false
-SHOW_REGISTRATION_BUTTON = true
+SHOW_REGISTRATION_BUTTON = false
 REQUIRE_SIGNIN_VIEW = false
 
 [openid]
