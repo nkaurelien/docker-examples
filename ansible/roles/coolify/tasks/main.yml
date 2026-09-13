@@ -26,6 +26,22 @@
     state: present
     remove_orphans: true
 
+- name: Automate Coolify Root Admin user creation via PHP Artisan Tinker
+  community.docker.docker_container_exec:
+    container: coolify
+    command: >
+      php artisan tinker --execute="
+      $user = App\Models\User::find(0) ?? new App\Models\User();
+      $user->id = 0;
+      $user->name = 'Admin';
+      $user->email = '{{ coolify_admin_email }}';
+      $user->password = Hash::make('{{ coolify_admin_password }}');
+      $user->email_verified_at = now();
+      $user->save();
+      "
+  register: coolify_admin_init
+  changed_when: true
+
 - name: Install and enable Coolify systemd service for boot startup
   ansible.builtin.include_role:
     name: systemd-service
