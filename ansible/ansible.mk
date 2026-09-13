@@ -31,10 +31,10 @@ ansible-inventory:
 	@echo "Listing Ansible inventory..."
 	@cd $(ANSIBLE_DIR) && ansible-inventory -i $(ANSIBLE_INVENTORY) --list
 
-# Run main playbook
+# Run main playbook (supports TAGS="homepage" or SKIP_TAGS="common")
 ansible-deploy:
-	@echo "Executing main Ansible playbook..."
-	@cd $(ANSIBLE_DIR) && ansible-playbook $(ANSIBLE_PLAYBOOK)
+	@echo "Executing Ansible playbook..."
+	@cd $(ANSIBLE_DIR) && ansible-playbook $(ANSIBLE_PLAYBOOK) $(if $(TAGS),--tags "$(TAGS)",) $(if $(SKIP_TAGS),--skip-tags "$(SKIP_TAGS)",)
 
 # Install requirements from Galaxy
 ansible-galaxy-install:
