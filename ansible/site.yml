@@ -51,6 +51,8 @@
       tags: [cockpit, admin, system, monitoring, tools]
     - role: glitchtip
       tags: [glitchtip, apm, errors, monitoring, dev, tools]
+    - role: umami
+      tags: [umami, analytics, monitoring, tools]
     - role: homepage
       tags: [homepage, dashboard, portal, home, apps]
     - role: open-webui
