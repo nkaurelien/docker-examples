@@ -1,0 +1,15 @@
+---
+# Umami Web Analytics role defaults
+umami_version: "postgresql-latest"
+umami_image: "ghcr.io/umami-software/umami:{{ umami_version }}"
+umami_container_port: 3000
+
+umami_domain: "{{ traefik_domain | default('kamitbrains.fr') }}"
+umami_hostname: "umami.{{ umami_domain }}"
+umami_alias_hostname: "analytics.{{ umami_domain }}"
+umami_deploy_dir: "/opt/umami"
+
+umami_db_name: "umami"
+umami_db_user: "umami"
+umami_db_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/umami-db-password') | trim }}"
+umami_app_secret: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/umami-app-secret') | trim }}"

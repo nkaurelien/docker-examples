@@ -1305,6 +1305,23 @@
         "ntfy"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/18-communication/notification/ntfy/.env.example"
+    },
+    {
+      "id": "05-monitoring-reporting-umami",
+      "name": "Umami Web Analytics",
+      "description": "Umami is an open-source, privacy-focused, cookie-free alternative to Google Analytics with PostgreSQL storage.",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/umami/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/05-monitoring-reporting/umami",
+      "icon_url": "https://raw.githubusercontent.com/selfhst/icons/main/svg/umami.svg",
+      "content_hash": "umami-compose-hash",
+      "tags": [
+        "umami",
+        "analytics",
+        "monitoring"
+      ],
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/umami/.env.example"
     }
   ]
 }
