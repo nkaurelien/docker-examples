@@ -5,14 +5,11 @@
 
 ## Accounts & Secret Files
 
-All passwords are path-referenced in gitignored files under `.secrets/`:
+All logins and passwords are path-referenced in gitignored files under `.secrets/`:
 
-| Account / Username | Secret File Path |
-| :--- | :--- |
-| `.secrets/admin-login` | `.secrets/tinyauth-admin-password` |
-| `admin` | `.secrets/tinyauth-admin-password` |
-| `.secrets/user-nkaurelien-login` | `.secrets/tinyauth-user-nkaurelien-password` |
-| `.secrets/user-etombe-login` | `.secrets/tinyauth-user-etombe-password` |
-| `Secret Token` | `.secrets/tinyauth-secret` |
-
-
+| Account Description | Login File Path | Secret File Path |
+| :--- | :--- | :--- |
+| Admin SSO Account | `.secrets/tinyauth-admin-login` | `.secrets/tinyauth-admin-password` |
+| User Account (nkaurelien) | `.secrets/tinyauth-user-nkaurelien-login` | `.secrets/tinyauth-user-nkaurelien-password` |
+| User Account (etombe) | `.secrets/tinyauth-user-etombe-login` | `.secrets/tinyauth-user-etombe-password` |
+| Secret Token | N/A | `.secrets/tinyauth-secret` |

@@ -2,7 +2,10 @@
 
 - **Public URL**: `https://passwords.kamitbrains.fr`
 - **Database Engine**: PostgreSQL 16 Alpine (`postgres:16-alpine`)
-- **Admin Email**: `.secrets/admin-login`
+- **Admin Login File**: `.secrets/passbolt-admin-login`
+- **Admin Password File**: `.secrets/passbolt-admin-password`
+- **DB Password File**: `.secrets/passbolt-db-password`
+- **GPG Passphrase File**: `.secrets/passbolt-passphrase`
 
 ## Activation Link & Logs
 
