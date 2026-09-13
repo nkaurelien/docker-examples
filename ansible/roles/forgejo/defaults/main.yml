@@ -8,3 +8,6 @@ forgejo_ssh_port: 2222
 forgejo_admin_username: "kamitbrains_admin"
 forgejo_admin_email: "admin@kamitbrains.fr"
 forgejo_admin_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/forgejo-admin-password') | trim }}"
+forgejo_user_username: "nkaurelien"
+forgejo_user_email: "nkaurelien@gmail.com"
+forgejo_user_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/forgejo-user-nkaurelien-password') | trim }}"
