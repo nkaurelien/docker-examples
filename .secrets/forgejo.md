@@ -3,7 +3,8 @@
 - **Service**: Forgejo Self-Hosted Git Platform
 - **URL**: https://git.kamitbrains.fr
 - **Admin Email**: .secrets/admin-login
-- **Admin Username**: admin
+- **Admin Username**: .secrets/forgejo-admin-login
+- **Admin Login File**: `.secrets/forgejo-admin-login`
 - **Admin Password File**: `.secrets/forgejo-admin-password`
 - **SSH Git URL**: git@git.kamitbrains.fr:2222/username/repo.git
 - **Protection**: Traefik TLS + CrowdSec Bouncer + Native Forgejo Auth
