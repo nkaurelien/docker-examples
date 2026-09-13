@@ -12,7 +12,9 @@ ansible-help:
 	@echo "  make ansible-ping           - Test SSH connectivity to inventory hosts"
 	@echo "  make ansible-syntax         - Verify syntax of Ansible playbooks"
 	@echo "  make ansible-inventory      - Display parsed Ansible inventory JSON"
-	@echo "  make ansible-deploy         - Execute main site.yml playbook"
+	@echo "  make ansible-deploy         - Execute Ansible playbook (all roles)"
+	@echo "  make ansible-deploy TAGS=\"homepage\" - Execute playbook targeting specific tags"
+	@echo "  make ansible-deploy SKIP_TAGS=\"common\" - Execute playbook skipping specified tags"
 	@echo "  make ansible-galaxy-install - Install external Galaxy roles from requirements.yml"
 	@echo ""
 

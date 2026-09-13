@@ -56,61 +56,50 @@ scripts/
 
 ---
 
-## 🚀 Utilisation via `make`
+## 🚀 Utilisation via `make` et `just`
 
-Vous pouvez utiliser les commandes `make` définies à la racine du projet :
+Vous pouvez utiliser les commandes `make` ou `just` définies à la racine du projet pour orchestrer les déploiements :
 
+### Déploiement global (Tous les rôles)
 ```bash
-# Tester la connectivité SSH avec tous les serveurs de l'inventaire
-make ansible-ping
-
-# Vérifier la syntaxe du playbook site.yml
-make ansible-syntax
-
-# Afficher la structure et les variables de l'inventaire
-make ansible-inventory
-
-# Exécuter le playbook principal sur l'ensemble de l'infrastructure
+# Via make
 make ansible-deploy
+
+# Via just
+just ansible-deploy-homelab
 ```
 
----
-
-## ☁️ Gestion du DNS Cloudflare (SDK Officiel)
-
-Le script [`scripts/cloudflare_dns.py`](../scripts/cloudflare_dns.py) utilise le SDK Python officiel `cloudflare` pour gérer automatiquement les enregistrements DNS :
-
+### Déploiement ciblé rapide (Tags)
 ```bash
-# Lister les zones Cloudflare enregistrées
-.venv/bin/python3 scripts/cloudflare_dns.py
+# Déployer uniquement un service spécifique (ex. Homepage)
+make ansible-deploy TAGS="homepage"
+just ansible-deploy-homelab TAGS="homepage"
 
-# Lister les enregistrements DNS d'un domaine
-.venv/bin/python3 scripts/cloudflare_dns.py list kamitbrains.fr
+# Déployer plusieurs services ciblés
+make ansible-deploy TAGS="open-webui,jenkins"
 
-# Ajouter un enregistrement DNS (ex. monapp -> IP Contabo)
-.venv/bin/python3 scripts/cloudflare_dns.py add kamitbrains.fr A monapp 161.97.89.185
-
-# Ajouter un enregistrement DNS proxifié Cloudflare (CDN/WAF)
-.venv/bin/python3 scripts/cloudflare_dns.py add kamitbrains.fr A monapp 161.97.89.185 --proxied
+# Déployer toutes les applications en sautant la préparation système lente (apt update)
+make ansible-deploy TAGS="apps"
+make ansible-deploy SKIP_TAGS="common"
 ```
 
 ---
 
-## 🎯 Commandes ciblées Ansible (Tags)
+## 🎯 Commandes ciblées Ansible directes
 
-Si vous souhaitez exécuter un rôle spécifique (ex. Traefik) :
+Vous pouvez également passer par la CLI `ansible-playbook` directement dans le dossier `ansible/` :
 
 ```bash
 cd ansible
 
 # Déployer uniquement Traefik
-ansible-playbook site.yml --tags traefik
+ansible-playbook site.yml -l homelab --tags traefik
 
 # Déployer la préparation système et Docker
-ansible-playbook site.yml --tags "common,docker"
+ansible-playbook site.yml -l homelab --tags "common,docker"
 
 # Exécuter les tâches de nettoyage
-ansible-playbook site.yml --tags cleanup
+ansible-playbook site.yml -l homelab --tags cleanup
 ```
 
 ---
