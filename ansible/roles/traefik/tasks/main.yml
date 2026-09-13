@@ -13,6 +13,13 @@
     - "{{ traefik_compose_dir }}"
     - "{{ traefik_compose_dir }}/config/dynamic"
 
+- name: Ensure conflicting host Nginx service is stopped and disabled
+  ansible.builtin.systemd:
+    name: nginx
+    state: stopped
+    enabled: false
+  failed_when: false
+
 - name: Compute htpasswd SHA1 entry for Traefik Dashboard Basic Auth
   ansible.builtin.shell:
     cmd: >
