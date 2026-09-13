@@ -160,6 +160,7 @@ nav:
       - Wazuh SIEM: services/security/wazuh.md
       - NeuVector: services/security/neuvector.md
       - Docker Socket Proxy: services/security/socket-proxy.md
+      - Purging Git Secrets: services/security/purging-git-secrets.md
 
   - Document Management:
       - Overview: services/document-management/index.md
