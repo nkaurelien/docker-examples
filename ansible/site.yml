@@ -53,6 +53,8 @@
       tags: [homepage, dashboard, portal, home, apps]
     - role: open-webui
       tags: [open-webui, ai, llm]
+    - role: jupyter
+      tags: [jupyter, ai, notebook, lab, dev]
     - role: jenkins
       tags: [jenkins, cicd, devops]
 
