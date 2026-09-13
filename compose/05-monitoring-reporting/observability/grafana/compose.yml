@@ -1,5 +1,5 @@
 x-arcane:
-  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/grafana.webp
+  icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/grafana.svg
   urls:
     - https://grafana.com/
     - https://github.com/grafana/grafana
@@ -21,7 +21,7 @@ services:
       - ./grafana-config:/etc/grafana
       - 'grafana_storage:/var/lib/grafana'
     labels:
-      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/grafana.webp"
+      - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/grafana.svg"
       - "traefik.enable=true"
       - "traefik.http.routers.grafana.rule=Host(`grafana.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.grafana.entrypoints=web"

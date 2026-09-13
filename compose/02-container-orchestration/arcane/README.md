@@ -128,7 +128,7 @@ python3 scripts/generate_registry.py
 You can define custom icons and documentation links for each service directly in its `compose.yml` using the `x-arcane` extension block and service labels:
 ```yaml
 x-arcane:
-  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/app_name.webp
+  icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/app_name.svg
   urls:
     - https://homepage.url
     - https://github.com/repo
@@ -137,7 +137,7 @@ services:
   app:
     # ...
     labels:
-      com.getarcaneapp.arcane.icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/app_name.webp
+      com.getarcaneapp.arcane.icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/app_name.svg
 ```
 The generator script parses this block automatically to seed `icon_url` and `documentation_url` into the registry schema.
 

@@ -1,5 +1,5 @@
 x-arcane:
-  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/n8n.webp
+  icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/n8n.svg
   urls:
     - https://n8n.io/
     - https://github.com/n8n-io/n8n

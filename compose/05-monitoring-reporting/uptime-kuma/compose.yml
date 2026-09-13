@@ -1,5 +1,5 @@
 x-arcane:
-  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/uptime-kuma.webp
+  icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/uptime-kuma.svg
   urls:
     - https://github.com/louislam/uptime-kuma
     - https://github.com/louislam/uptime-kuma
@@ -23,7 +23,7 @@ services:
       - uptime-kuma-network
       - traefik-public
     labels:
-      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/uptime-kuma.webp"
+      - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/uptime-kuma.svg"
       - "traefik.enable=true"
       - "traefik.http.routers.uptime-kuma.rule=Host(`status.kamitbrains.fr`)"
       - "traefik.http.routers.uptime-kuma.entrypoints=websecure"

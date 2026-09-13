@@ -1,5 +1,5 @@
 x-arcane:
-  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/cockpit.webp
+  icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/cockpit.svg
   urls:
     - https://cockpit-project.org/
     - https://github.com/cockpit-project/cockpit
@@ -18,7 +18,7 @@ services:
       - default
       - traefik-public
     labels:
-      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/cockpit.webp"
+      - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/cockpit.svg"
       - "traefik.enable=true"
       - "traefik.http.routers.cockpit.rule=Host(`cockpit.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.cockpit.entrypoints=web"

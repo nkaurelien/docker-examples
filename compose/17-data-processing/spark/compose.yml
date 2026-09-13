@@ -1,5 +1,5 @@
 x-arcane:
-  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/apache-spark.webp
+  icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/apache-spark.svg
   urls:
     - https://spark.apache.org/
     - https://github.com/apache/spark
@@ -22,7 +22,7 @@ services:
       - default
       - traefik-public
     labels:
-      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/apache-spark.webp"
+      - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/apache-spark.svg"
       - "traefik.enable=true"
       - "traefik.http.routers.spark-master.rule=Host(`spark.${DOMAIN:-apps.local}`) || Host(`spark-master.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.spark-master.entrypoints=web"
@@ -92,7 +92,7 @@ services:
       - default
       - traefik-public
     labels:
-      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/jupyter.webp"
+      - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/jupyter.svg"
       - "traefik.enable=true"
       - "traefik.http.routers.jupyter-spark.rule=Host(`jupyter.${DOMAIN:-apps.local}`) || Host(`notebook.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.jupyter-spark.entrypoints=web"
