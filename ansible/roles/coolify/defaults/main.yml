@@ -7,3 +7,5 @@ coolify_deploy_dir: "/opt/coolify"
 coolify_container_port: 8080
 coolify_db_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/coolify-db-password') | trim }}"
 coolify_app_key: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/coolify-app-key') | trim }}"
+coolify_admin_email: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/coolify-admin-email') | trim }}"
+coolify_admin_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/coolify-admin-password') | trim }}"
