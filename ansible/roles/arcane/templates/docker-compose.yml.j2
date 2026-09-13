@@ -53,6 +53,7 @@ services:
 
   arcane:
     image: {{ arcane_image }}
+    pull_policy: always
     container_name: arcane
     ports:
       - "{{ arcane_port }}:3552"
