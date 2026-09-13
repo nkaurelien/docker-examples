@@ -2713,6 +2713,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../document-management/hedgedoc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HedgeDoc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -3770,6 +3798,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#secret-topic-rotation-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secret Topic Rotation Procedure
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4056,6 +4095,62 @@
     
   
     IT-Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dev-tools/bentopdf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BentoPDF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dev-tools/stirling-pdf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Stirling-PDF
   
 
     
@@ -4620,6 +4715,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#secret-topic-rotation-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secret Topic Rotation Procedure
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4634,6 +4740,45 @@
               <article class="md-content__inner md-typeset">
                 
                   
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">communication</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">notification</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">ntfy</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">push</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">push-notifications</span>
+      
+    
+  </nav>
 
 
   
@@ -4688,8 +4833,11 @@
 </table>
 <hr />
 <h2 id="quick-start-sending-push-notifications">Quick Start: Sending Push Notifications<a class="headerlink" href="#quick-start-sending-push-notifications" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>🔒 <strong>Topic Security</strong>: Since ntfy topic authorization without login permits public subscription, topics used for system alerts are protected by appending a high-entropy random string (stored in <code>.secrets/ntfy-topic</code>).</p>
+</blockquote>
 <h3 id="1-publish-a-message-via-curl">1. Publish a Message via cURL<a class="headerlink" href="#1-publish-a-message-via-curl" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;Disk usage alert on Contabo server&quot;</span><span class="w"> </span>https://ntfy.kamitbrains.fr/system-alerts
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;Disk usage alert on Contabo server&quot;</span><span class="w"> </span>https://ntfy.kamitbrains.fr/<span class="k">$(</span>cat<span class="w"> </span>.secrets/ntfy-topic<span class="k">)</span>
 </span></code></pre></div>
 <h3 id="2-publish-with-title-tags-and-priority">2. Publish with Title, Tags, and Priority<a class="headerlink" href="#2-publish-with-title-tags-and-priority" title="Permanent link">&para;</a></h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>curl<span class="w"> </span><span class="se">\</span>
@@ -4697,12 +4845,16 @@
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Tags: white_check_mark,database&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Priority: high&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;Database backup completed successfully in 45 seconds.&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span>https://ntfy.kamitbrains.fr/backups
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span>https://ntfy.kamitbrains.fr/<span class="k">$(</span>cat<span class="w"> </span>.secrets/ntfy-topic<span class="k">)</span>
 </span></code></pre></div>
 <h3 id="3-subscribe-to-a-topic">3. Subscribe to a Topic<a class="headerlink" href="#3-subscribe-to-a-topic" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Android / iOS App</strong>: Open the official <strong>ntfy</strong> mobile application, add custom server <code>https://ntfy.kamitbrains.fr</code>, and subscribe to topic <code>system-alerts</code>.</li>
-<li><strong>Web Interface</strong>: Open <code>https://ntfy.kamitbrains.fr</code> in any browser to view live topics.</li>
+<li>
+<p><strong>Android / iOS App</strong>: Open the official <strong>ntfy</strong> mobile application, add custom server <code>https://ntfy.kamitbrains.fr</code>, and subscribe to the secret topic configured in <code>.secrets/ntfy-topic</code>.</p>
+</li>
+<li>
+<p><strong>Web Interface</strong>: Open <code>https://ntfy.kamitbrains.fr</code> in any browser to view live topics.</p>
+</li>
 </ul>
 <hr />
 <h2 id="architecture-docker-compose-configuration">Architecture &amp; Docker Compose Configuration<a class="headerlink" href="#architecture-docker-compose-configuration" title="Permanent link">&para;</a></h2>
@@ -4737,12 +4889,28 @@
 <li><strong>Uptime Kuma</strong>: Automatically monitored at <code>https://ntfy.kamitbrains.fr/v1/health</code>.</li>
 <li><strong>Systemd Service</strong>: Managed via <code>ntfy.service</code> for automatic boot startup.</li>
 </ul>
+<hr />
+<h2 id="secret-topic-rotation-procedure">Secret Topic Rotation Procedure<a class="headerlink" href="#secret-topic-rotation-procedure" title="Permanent link">&para;</a></h2>
+<p>To rotate the secret alert topic name:</p>
+<ol>
+<li>Update the secret file <code>.secrets/ntfy-topic</code> with a new pronounceable code:
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;alerts-&lt;new-pronounceable-code&gt;&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>.secrets/ntfy-topic
+</span></code></pre></div></li>
+<li>Update the CSV entry <code>Ntfy Push Secret Topic</code> in <code>.secrets/passbolt_import_secrets.csv</code>.</li>
+<li>Re-run Ansible deployment to seed the new notification topic into Uptime Kuma:
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>ansible/inventory.yml<span class="w"> </span>ansible/site.yml<span class="w"> </span>--tags<span class="w"> </span><span class="s2">&quot;ntfy,uptime-kuma&quot;</span>
+</span></code></pre></div></li>
+<li>Resubscribe the Ntfy mobile app or subscribers to the new topic name.</li>
+</ol>
 
 
 
 
 
 
+
+  
+  
 
 
 

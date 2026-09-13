@@ -7,6 +7,20 @@
   "version": "1.0.0",
   "templates": [
     {
+      "id": "17-data-processing-spark",
+      "name": "Apache Spark & JupyterLab Big Data Stack",
+      "description": "This stack provides a complete, distributed Apache Spark cluster (Master + Worker) paired with a JupyterLab environment preconfigured with PySpark. - **Spark Master**: Manages resource allocation and ...",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/17-data-processing/spark/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/17-data-processing/spark",
+      "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/apache-spark.webp",
+      "content_hash": "14f5b9f57ac611e4cf1650b35fcdb07c16b84ab5c93a7fffb7d83f6f41df6e5f",
+      "tags": [
+        "spark"
+      ]
+    },
+    {
       "id": "02-container-orchestration-arcane",
       "name": "Arcane - Modern Self-Hosted Docker Dashboard",
       "description": "Arcane is an open-source, modern self-hosted dashboard for managing Docker containers and stacks. It is designed to be lightweight, secure, and easy to use, providing a clean user interface for managi...",
@@ -35,6 +49,20 @@
         "asterisk"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/04-network-management/asterisk/.env.example"
+    },
+    {
+      "id": "12-document-management-bentopdf",
+      "name": "BentoPDF",
+      "description": "BentoPDF is a privacy-first, client-side PDF toolkit designed to run entirely in your web browser. - **Privacy First**: All PDF operations happen locally in your browser without uploading sensitive do...",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/12-document-management/bentopdf/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/12-document-management/bentopdf",
+      "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/bentopdf.webp",
+      "content_hash": "385cf95f5f37c643a93942c2e0a4877c8cfdf8072f15c9e713123a98f5d37a32",
+      "tags": [
+        "bentopdf"
+      ]
     },
     {
       "id": "01-infrastructure-bind9",
@@ -97,6 +125,34 @@
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/clamav/.env.example"
     },
     {
+      "id": "05-monitoring-reporting-cockpit",
+      "name": "Cockpit",
+      "description": "Cockpit is a web-based server administration tool for managing storage, networking, firewall, user accounts, and system health. ```bash",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/cockpit/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/05-monitoring-reporting/cockpit",
+      "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/cockpit.webp",
+      "content_hash": "266e7c6767b59a7d42a768c5e521f709c1904b17362892ca1b8e629824ef3b35",
+      "tags": [
+        "cockpit"
+      ]
+    },
+    {
+      "id": "16-development-tools-code-server",
+      "name": "Code-Server (VS Code Web)",
+      "description": "Code-Server runs Visual Studio Code on any machine and lets you access it directly through the browser. - Code from any device (tablet, laptop, browser).",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/16-development-tools/code-server/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/16-development-tools/code-server",
+      "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/vscode.webp",
+      "content_hash": "5974ea769f9905ad83c217b2339b7d562ba649e2e4d70e20bae68ff31b8a94f9",
+      "tags": [
+        "code-server"
+      ]
+    },
+    {
       "id": "02-container-orchestration-coolify",
       "name": "Coolify - Self-Hostable Heroku/Netlify/Vercel Alternative",
       "description": "Coolify is an open-source, self-hostable platform for deploying applications, databases, and services to your own servers. It's designed as an alternative to Vercel, Heroku, Netlify, and Railway. - **...",
@@ -122,8 +178,8 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "c6ad405ac16a7910af91d4e2770427944fcba50111f1ad6b357d2c2f78a4eb43",
       "tags": [
-        "couchdb-cluster",
-        "databases"
+        "databases",
+        "couchdb-cluster"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/10-databases/databases/couchdb-cluster/.env.example"
     },
@@ -151,9 +207,23 @@
       "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/crowdsec/compose.yml",
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/11-security-identity/crowdsec",
       "icon_url": "https://raw.githubusercontent.com/crowdsecurity/crowdsec/master/docs/assets/crowdsec_logo.png",
-      "content_hash": "ec043dde778a9e873ffa5304e3542cb6eb52b72032fc4e2edf0651370dd8c48b",
+      "content_hash": "9d4e15a83a88ee8a10fed15f9253b0bb3be3968d7d430917a09ffcc8c6670fe8",
       "tags": [
         "crowdsec"
+      ]
+    },
+    {
+      "id": "16-development-tools-cyberchef",
+      "name": "CyberChef",
+      "description": "CyberChef is a simple, intuitive web app for carrying out all manner of \"cyber\" operations within a web browser (encoding, decoding, hashing, regex, data parsing). ```bash",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/16-development-tools/cyberchef/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/16-development-tools/cyberchef",
+      "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/cyberchef.webp",
+      "content_hash": "b4041f70a2f946562920e87b6551eae35624f79e2fd90fefb8e489fc4229ca72",
+      "tags": [
+        "cyberchef"
       ]
     },
     {
@@ -184,6 +254,34 @@
         "dokploy"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/dokploy/.env.example"
+    },
+    {
+      "id": "05-monitoring-reporting-dozzle",
+      "name": "Dozzle",
+      "description": "Dozzle is a small, lightweight application that gives you a web-based log viewer for Docker containers in real time. ```bash",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/dozzle/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/05-monitoring-reporting/dozzle",
+      "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/dozzle.webp",
+      "content_hash": "7ab9e3d7fcbe03b76356c089e94c75d4aa8a12562375aa448277b7b803163993",
+      "tags": [
+        "dozzle"
+      ]
+    },
+    {
+      "id": "16-development-tools-drawio",
+      "name": "Draw.io (Diagrams.net)",
+      "description": "Draw.io is a powerful, self-hosted diagramming application for creating architecture diagrams, flowcharts, UML models, and network topology maps. ```bash",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/16-development-tools/drawio/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/16-development-tools/drawio",
+      "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/diagrams-net.webp",
+      "content_hash": "8303bc124bffaefaaa7e2478833560fb579e010a9eb5f618d3333beaf14663bd",
+      "tags": [
+        "drawio"
+      ]
     },
     {
       "id": "13-api-gateway-api-gateways-kong",
@@ -217,6 +315,35 @@
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/15-media-storage/file-sharing/.env.example"
     },
     {
+      "id": "15-media-storage-static-file-servers-erugo",
+      "name": "Erugo",
+      "description": "Erugo is a lightweight self-hosted file sharing platform (WeTransfer alternative) allowing fast file sharing. ```bash",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/15-media-storage/static-file-servers/erugo/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/15-media-storage/static-file-servers/erugo",
+      "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/erugo.webp",
+      "content_hash": "853b5abb7e9a0600bde4bd741c3f9c647fe66dc07c540104780bc584131583e6",
+      "tags": [
+        "static-file-servers",
+        "erugo"
+      ]
+    },
+    {
+      "id": "16-development-tools-excalidraw",
+      "name": "Excalidraw",
+      "description": "Excalidraw is a virtual collaborative whiteboard tool that lets you easily sketch diagrams that have a hand-drawn feel. ```bash",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/16-development-tools/excalidraw/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/16-development-tools/excalidraw",
+      "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/excalidraw.webp",
+      "content_hash": "85879003ace1787d3e0c075466e6c68ff818e8af2a46682821be57f106662eb6",
+      "tags": [
+        "excalidraw"
+      ]
+    },
+    {
       "id": "02-container-orchestration-virtualization-fedora",
       "name": "Fedora Workstation avec Docker",
       "description": "Ce projet permet d'exécuter Fedora Workstation dans un conteneur Docker en utilisant l'image [dockurr/fedora](https://github.com/dockur/fedora). - Docker et Docker Compose installés",
@@ -231,6 +358,20 @@
         "virtualization"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/virtualization/fedora/.env.example"
+    },
+    {
+      "id": "08-code-management-forgejo",
+      "name": "Forgejo",
+      "description": "Forgejo is a community-driven, self-hosted Git forge designed to be lightweight, secure, and user-friendly. ```bash",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/08-code-management/forgejo/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/08-code-management/forgejo",
+      "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/forgejo.webp",
+      "content_hash": "f70cbc96aad8a213f9f34e4aae17a8dfd72634085c6a25a39ff6ddeae613603d",
+      "tags": [
+        "forgejo"
+      ]
     },
     {
       "id": "08-code-management-gitea",
@@ -258,9 +399,9 @@
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/glances.webp",
       "content_hash": "24ccef0be6ccffbb5fd34bcfd2b0c5506a3983f107a31b2bc4c16c6cbc6985d5",
       "tags": [
-        "glances",
         "monitoring",
-        "observability"
+        "observability",
+        "glances"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/observability/monitoring/glances/.env.example"
     },
@@ -275,11 +416,25 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "a42a14995dbf727f4e1301a0c5911f3a6a1ce798a04d0a6fa39bfaf5f6a262bc",
       "tags": [
+        "arcane",
         "glances",
-        "projects",
-        "arcane"
+        "projects"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/arcane/projects/glances/.env.example"
+    },
+    {
+      "id": "05-monitoring-reporting-glitchtip",
+      "name": "GlitchTip",
+      "description": "GlitchTip is an open-source error tracking and Application Performance Monitoring (APM) platform compatible with Sentry SDKs. - **GlitchTip Web & Worker**: Core Python/Django application container.",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/glitchtip/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/05-monitoring-reporting/glitchtip",
+      "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/glitchtip.webp",
+      "content_hash": "1037cd1bcfb383d8f5c9f08d29c9495bfc9b2c3c12a115ddc93146e09fb324d9",
+      "tags": [
+        "glitchtip"
+      ]
     },
     {
       "id": "05-monitoring-reporting-observability-grafana",
@@ -292,10 +447,24 @@
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/grafana.webp",
       "content_hash": "275510222386c96456a62d4f54f41b2206acc198cb6b7ea0d35e188b23cfc32c",
       "tags": [
-        "observability",
-        "grafana"
+        "grafana",
+        "observability"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/observability/grafana/.env.example"
+    },
+    {
+      "id": "12-document-management-hedgedoc",
+      "name": "HedgeDoc — Collaborative Real-Time Markdown Editor",
+      "description": "HedgeDoc is an open-source collaborative real-time markdown editor. ```bash",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/12-document-management/hedgedoc/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/12-document-management/hedgedoc",
+      "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
+      "content_hash": "66b8ac4dc06c262c91ab2632a9ae0b32d297869193419cafdf03b49ced3bb090",
+      "tags": [
+        "hedgedoc"
+      ]
     },
     {
       "id": "03-iot-smart-home-home-assistant",
@@ -311,6 +480,20 @@
         "home-assistant"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/03-iot-smart-home/home-assistant/.env.example"
+    },
+    {
+      "id": "05-monitoring-reporting-homepage",
+      "name": "Homepage",
+      "description": "Homepage is a modern, fully customizable, highly performant dashboard for self-hosted services and application portals. ```bash",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/homepage/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/05-monitoring-reporting/homepage",
+      "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/homepage.webp",
+      "content_hash": "2188dee03b885600140f422dbda5b574438603f37e7c3708a1b2e5c6d8b67284",
+      "tags": [
+        "homepage"
+      ]
     },
     {
       "id": "16-development-tools-it-tools",
@@ -369,8 +552,8 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "c5750660cd295d8e718c01303225263dc1f670710491ac86f4ac7653874f7239",
       "tags": [
-        "api-tools",
-        "hoppscotch"
+        "hoppscotch",
+        "api-tools"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/13-api-gateway/api-tools/hoppscotch/.env.example"
     },
@@ -417,9 +600,9 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "9adb4c75f740a5d057ca6498b4c354a2358f406a384fd08e3206ce550bbd0821",
       "tags": [
-        "super-token",
         "identity-providers",
-        "auth-managment"
+        "auth-managment",
+        "super-token"
       ]
     },
     {
@@ -496,8 +679,8 @@
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/jenkins.webp",
       "content_hash": "6aa4923f3274c90ae45db82b4ca557951f729b850e919461d90c00b27475d36d",
       "tags": [
-        "jenkins",
-        "ci-cd"
+        "ci-cd",
+        "jenkins"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/07-automation/ci-cd/jenkins/.env.example"
     },
@@ -528,8 +711,8 @@
       "content_hash": "82f52f772a07cf4bae7f20c01260de5e774fb1e01c7507dcdfc988f54270e776",
       "tags": [
         "identity-providers",
-        "keycloak",
-        "auth-managment"
+        "auth-managment",
+        "keycloak"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/identity-providers/auth-managment/keycloak/.env.example"
     },
@@ -544,8 +727,8 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "27a8d8fbb8dd5db78c4320f3b09e7ae0b2a34752059b572f540541be4a944072",
       "tags": [
-        "mailcatcher",
-        "mail-servers"
+        "mail-servers",
+        "mailcatcher"
       ]
     },
     {
@@ -575,8 +758,8 @@
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/minio.webp",
       "content_hash": "5f4e9583ffaf00309f69a0e03390594626902d2cdff22a8f41a14ea3b4ae8fd2",
       "tags": [
-        "object-storage",
-        "minio-s3"
+        "minio-s3",
+        "object-storage"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/15-media-storage/object-storage/minio-s3/.env.example"
     },
@@ -591,9 +774,9 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "2bcd1b42c59f7bbac6539b58fc28c9a39c8639644303cda6821970ad83502733",
       "tags": [
-        "security-tools",
         "security",
-        "neuvector"
+        "neuvector",
+        "security-tools"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/security-tools/security/neuvector/.env.example"
     },
@@ -689,6 +872,20 @@
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/06-ai/open-webui/.env.example"
     },
     {
+      "id": "15-media-storage-pairdrop",
+      "name": "PairDrop",
+      "description": "PairDrop is an open-source WebRTC P2P file sharing application that allows you to easily share files across devices directly in the browser. ```bash",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/15-media-storage/pairdrop/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/15-media-storage/pairdrop",
+      "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/pairdrop.webp",
+      "content_hash": "5b56450ce934f1fb2130c5e4e401ec48c9bff1fdce033fc299f9a4d88d5e0387",
+      "tags": [
+        "pairdrop"
+      ]
+    },
+    {
       "id": "12-document-management-paperless-ngx",
       "name": "Paperless-ngx",
       "description": "Paperless-ngx is a document management system that transforms physical documents into a searchable online archive. - OCR processing for scanned documents",
@@ -714,11 +911,25 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "0af31b69601ada10736ed45065df3cef4287085f790765f8e5693558f0a52337",
       "tags": [
-        "passbolt",
         "identity-providers",
-        "auth-managment"
+        "auth-managment",
+        "passbolt"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/identity-providers/auth-managment/passbolt/.env.example"
+    },
+    {
+      "id": "15-media-storage-pingvin-share",
+      "name": "Pingvin Share",
+      "description": "Pingvin Share is a self-hosted file sharing platform that allows you to share files via a link with password protection and expiration dates. ```bash",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/15-media-storage/pingvin-share/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/15-media-storage/pingvin-share",
+      "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/pingvin-share.webp",
+      "content_hash": "8ab3663760ff1b77e8f2a1f6394494ee903ef9bc0c050d3398aa5ecc45ca4e41",
+      "tags": [
+        "pingvin-share"
+      ]
     },
     {
       "id": "02-container-orchestration-portainer",
@@ -776,8 +987,8 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "22572bd2165e3d53112027cdeb9f8f196f84e378e230427cc26b9d4abd255eab",
       "tags": [
-        "redis",
-        "databases"
+        "databases",
+        "redis"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/10-databases/databases/redis/.env.example"
     },
@@ -790,7 +1001,7 @@
       "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/15-media-storage/object-storage/rustfs/docker-compose.yml",
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/15-media-storage/object-storage/rustfs",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "817a72bf67f4c3ce02bb95aa3695d469d5f46f47fdfdf8ae481dbc8935d6f5da",
+      "content_hash": "5c54a2ae13d86e518ce255fdd03ebd15db35ff0cd47d88f9bbe8efc5ccb5d84f",
       "tags": [
         "object-storage",
         "rustfs"
@@ -808,8 +1019,8 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "b6574b3617f534d335038f8ba25ce9ef86ca857be2b9e765289f7a48c81d078a",
       "tags": [
-        "security-tools",
-        "ssl-certificates"
+        "ssl-certificates",
+        "security-tools"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/security-tools/ssl-certificates/.env.example"
     },
@@ -822,7 +1033,7 @@
       "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/15-media-storage/object-storage/seaweedfs/docker-compose.yml",
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/15-media-storage/object-storage/seaweedfs",
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
-      "content_hash": "138a745785b2a3155dc076cc8bb59edfd4de019dc29e6a760143faa8afa00fa8",
+      "content_hash": "6ef3f4d71e4704cfb9d6e89ad77c8bc34468c6f9aaa1995ece8490009ee9dc36",
       "tags": [
         "object-storage",
         "seaweedfs"
@@ -840,8 +1051,8 @@
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/sonarqube.webp",
       "content_hash": "464432d1ac986bcc4f6897a350cd3b5c461a769f9da474f2f66c6c9f143db41f",
       "tags": [
-        "code-quality",
-        "sonarcube"
+        "sonarcube",
+        "code-quality"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/code-quality/sonarcube/.env.example"
     },
@@ -856,10 +1067,24 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "9fbab9a9e97f65fc9ad066186c1570168273f549522d776d79fc51ca3de56988",
       "tags": [
-        "static-files",
-        "statics-files-server"
+        "statics-files-server",
+        "static-files"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/15-media-storage/static-files/statics-files-server/.env.example"
+    },
+    {
+      "id": "12-document-management-stirling-pdf",
+      "name": "Stirling-PDF",
+      "description": "Stirling-PDF is a powerful, locally hosted web application that allows you to perform various operations on PDF files (merge, split, OCR, convert, watermark, sign, etc.). ```bash",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/12-document-management/stirling-pdf/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/12-document-management/stirling-pdf",
+      "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/stirling-pdf.webp",
+      "content_hash": "74d3fb832ccf8c05e913f415062b1545875853691bc73526613f236c3d2b830e",
+      "tags": [
+        "stirling-pdf"
+      ]
     },
     {
       "id": "01-infrastructure-traefik",
@@ -931,11 +1156,27 @@
       "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/uptime-kuma/compose.yml",
       "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/05-monitoring-reporting/uptime-kuma",
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/uptime-kuma.webp",
-      "content_hash": "00c30c819f6ed25d244aa3706b5a0747691ab5f9b5fc935dcca6a035f1661735",
+      "content_hash": "098974afb7edb56680db8defc34664fa055559d8c8afb0cd1a50dd418483a94a",
       "tags": [
         "uptime-kuma"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/05-monitoring-reporting/uptime-kuma/.env.example"
+    },
+    {
+      "id": "10-databases-databases-valkey",
+      "name": "Valkey In-Memory Data Store Compose Stack",
+      "description": "[Valkey](https://valkey.io/) is an open-source, high-performance in-memory data store (BSD-licensed community fork of Redis supported by the Linux Foundation). ---",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/10-databases/databases/valkey/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/10-databases/databases/valkey",
+      "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
+      "content_hash": "5297a0e3c4fc076f3c0bb1b7b6117d102693d36911795e8dd6d7d6b52b5b2507",
+      "tags": [
+        "valkey",
+        "databases"
+      ],
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/10-databases/databases/valkey/.env.example"
     },
     {
       "id": "11-security-identity-wazuh",
@@ -995,8 +1236,8 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "557dcafb1278ff9a164a5f70c4b83d5975bdf111cefff0460ce3bb830c047430",
       "tags": [
-        "object-storage",
-        "using-s3fs-volume"
+        "using-s3fs-volume",
+        "object-storage"
       ]
     },
     {
@@ -1010,8 +1251,8 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "906397ecaa2090a921df62d1baec718e9ec5cb2257ff2762d6437063a16690f1",
       "tags": [
-        "macos",
-        "virtualization"
+        "virtualization",
+        "macos"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/02-container-orchestration/virtualization/macos/.env.example"
     },
@@ -1026,8 +1267,8 @@
       "icon_url": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/n8n.webp",
       "content_hash": "909be77327c0dce4e4d5e657d09f3ddd304d72773a90fbb34165bd1105330f10",
       "tags": [
-        "n8n",
-        "workflow"
+        "workflow",
+        "n8n"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/07-automation/workflow/n8n/.env.example"
     },
@@ -1042,8 +1283,8 @@
       "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
       "content_hash": "050b530808919849039857a8b8a8ef8d5a3a6e57f6ffc3203cfe3f886c285888",
       "tags": [
-        "ntfy",
-        "notification"
+        "notification",
+        "ntfy"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/18-communication/notification/ntfy/.env.example"
     }

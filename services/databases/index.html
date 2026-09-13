@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#databases" class="md-skip">
+        <a href="#databases-data-stores" class="md-skip">
           Skip to content
         </a>
       
@@ -2785,6 +2785,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../document-management/hedgedoc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HedgeDoc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -4008,6 +4036,62 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dev-tools/bentopdf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BentoPDF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dev-tools/stirling-pdf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Stirling-PDF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -4513,13 +4597,24 @@
                 
                   
 
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">databases</span>
+      
+    
+  </nav>
+
 
   
   
 
 
-<h1 id="databases">Databases<a class="headerlink" href="#databases" title="Permanent link">&para;</a></h1>
-<p>Solutions de bases de données containerisées.</p>
+<h1 id="databases-data-stores">Databases &amp; Data Stores<a class="headerlink" href="#databases-data-stores" title="Permanent link">&para;</a></h1>
+<p>Solutions de bases de données et magasins de données containerisés.</p>
 <h2 id="services-disponibles">Services disponibles<a class="headerlink" href="#services-disponibles" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -4531,21 +4626,28 @@
 </thead>
 <tbody>
 <tr>
+<td><a href="postgresql/">PostgreSQL</a></td>
+<td>SQL</td>
+<td>Base de données relationnelle (Transactions ACID)</td>
+</tr>
+<tr>
 <td><a href="couchdb/">CouchDB Cluster</a></td>
 <td>NoSQL</td>
 <td>Base de données documentaire distribuée</td>
 </tr>
 <tr>
-<td><a href="postgresql/">PostgreSQL</a></td>
-<td>SQL</td>
-<td>Base de données relationnelle</td>
+<td><a href="valkey-redis-etcd/">Valkey / Redis / etcd</a></td>
+<td>In-Memory / Key-Value</td>
+<td>Comparatif et guide d'architecture (Cache, Task Queue, Consensus)</td>
 </tr>
 </tbody>
 </table>
 <h2 id="choisir-une-solution">Choisir une solution<a class="headerlink" href="#choisir-une-solution" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>CouchDB</strong> : Documents JSON, réplication multi-master, offline-first</li>
 <li><strong>PostgreSQL</strong> : SQL standard, transactions ACID, extensions riches</li>
+<li><strong>Valkey (compatible Redis)</strong> : In-memory cache ultra-rapide, queues Celery/workers, pub/sub</li>
+<li><strong>CouchDB</strong> : Documents JSON, réplication multi-master, offline-first</li>
+<li><strong>etcd</strong> : Consistance stricte Raft pour orchestration de cluster et Kubernetes</li>
 </ul>
 
 
@@ -4553,6 +4655,9 @@
 
 
 
+
+  
+  
 
 
 
