@@ -9,6 +9,8 @@ lang: fr
 
 Collection de configurations Docker Compose prêtes à l'emploi pour services self-hosted.
 
+👉 **[Guide des Alternatives Open-Source Self-Hosted (Buzz, Baserow, Cal.com, DocuSeal, Syncthing, Cap, Umami, Coolify)](services/open-source-alternatives.md)**
+
 ## Categories
 
 ### Infrastructure
