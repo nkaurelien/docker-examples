@@ -27,6 +27,7 @@
   community.docker.docker_compose_v2:
     project_src: "{{ arcane_compose_dir }}"
     state: present
+    pull: always
     remove_orphans: true
 
 - name: Install and enable Arcane systemd service for boot startup
