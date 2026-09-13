@@ -80,5 +80,6 @@ volumes:
 
 ## Voir Aussi
 
+- [Purge et Nettoyage des Secrets Git](purging-git-secrets.md)
 - [Docker Capabilities](../../docker/capabilities.md)
 - [Socket Proxy Permissions](../../reference/socket-proxy-permissions.md)
