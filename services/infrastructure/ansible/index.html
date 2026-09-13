@@ -1115,10 +1115,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-commands-via-makefile" class="md-nav__link">
+  <a href="#quick-commands-via-makefile-just" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🚀 Quick Commands via Makefile
+        🚀 Quick Commands via Makefile &amp; Just
       
     </span>
   </a>
@@ -4583,10 +4583,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-commands-via-makefile" class="md-nav__link">
+  <a href="#quick-commands-via-makefile-just" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🚀 Quick Commands via Makefile
+        🚀 Quick Commands via Makefile &amp; Just
       
     </span>
   </a>
@@ -4688,8 +4688,8 @@
 </tbody>
 </table>
 <hr />
-<h2 id="quick-commands-via-makefile">🚀 Quick Commands via Makefile<a class="headerlink" href="#quick-commands-via-makefile" title="Permanent link">&para;</a></h2>
-<p>You can run Ansible operations directly from the root workspace using the <code>make</code> commands:</p>
+<h2 id="quick-commands-via-makefile-just">🚀 Quick Commands via Makefile &amp; Just<a class="headerlink" href="#quick-commands-via-makefile-just" title="Permanent link">&para;</a></h2>
+<p>You can run Ansible operations directly from the root workspace using <code>make</code> or <code>just</code> commands:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Test SSH connectivity to inventory hosts</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>make<span class="w"> </span>ansible-ping
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
@@ -4699,11 +4699,22 @@
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Display inventory structure and resolved variables</span>
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>make<span class="w"> </span>ansible-inventory
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Execute the main playbook across all hosts</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Execute the main playbook across all hosts (full stack)</span>
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>make<span class="w"> </span>ansible-deploy
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1"># Install Galaxy roles and collections</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>make<span class="w"> </span>ansible-galaxy-install
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>just<span class="w"> </span>ansible-deploy-homelab
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1"># Targeted fast deployment (deploy only specific service/tags)</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>make<span class="w"> </span>ansible-deploy<span class="w"> </span><span class="nv">TAGS</span><span class="o">=</span><span class="s2">&quot;homepage&quot;</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>just<span class="w"> </span>ansible-deploy-homelab<span class="w"> </span><span class="nv">TAGS</span><span class="o">=</span><span class="s2">&quot;homepage&quot;</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="c1"># Deploy multiple services</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>make<span class="w"> </span>ansible-deploy<span class="w"> </span><span class="nv">TAGS</span><span class="o">=</span><span class="s2">&quot;open-webui,jenkins&quot;</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="c1"># Skip slow system preparation (apt update)</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>make<span class="w"> </span>ansible-deploy<span class="w"> </span><span class="nv">SKIP_TAGS</span><span class="o">=</span><span class="s2">&quot;common&quot;</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="c1"># Install Galaxy roles and collections</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>make<span class="w"> </span>ansible-galaxy-install
 </span></code></pre></div>
 <hr />
 <h2 id="secret-management-dynamic-lookups">🔒 Secret Management &amp; Dynamic Lookups<a class="headerlink" href="#secret-management-dynamic-lookups" title="Permanent link">&para;</a></h2>
