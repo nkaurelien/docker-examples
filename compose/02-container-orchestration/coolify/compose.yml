@@ -1,5 +1,5 @@
 x-arcane:
-  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/coolify.webp
+  icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/coolify.svg
   urls:
     - https://coolify.io/
     - https://github.com/coolifyomg/coolify
@@ -102,7 +102,7 @@ services:
       - docker-proxy-network
       - traefik-public
     labels:
-      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/coolify.webp"
+      - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/coolify.svg"
       - "traefik.enable=true"
       - "traefik.http.routers.coolify.rule=Host(`coolify.apps.local`)"
       - "traefik.http.routers.coolify.entrypoints=websecure"

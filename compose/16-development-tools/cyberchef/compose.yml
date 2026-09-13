@@ -1,5 +1,5 @@
 x-arcane:
-  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/cyberchef.webp
+  icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/cyberchef.svg
   urls:
     - https://gchq.github.io/CyberChef/
     - https://github.com/gchq/CyberChef
@@ -15,7 +15,7 @@ services:
       - default
       - traefik-public
     labels:
-      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/cyberchef.webp"
+      - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/cyberchef.svg"
       - "traefik.enable=true"
       - "traefik.http.routers.cyberchef.rule=Host(`cyberchef.${DOMAIN:-apps.local}`) || Host(`chef.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.cyberchef.entrypoints=web"

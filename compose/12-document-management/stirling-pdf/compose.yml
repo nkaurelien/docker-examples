@@ -1,5 +1,5 @@
 x-arcane:
-  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/stirling-pdf.webp
+  icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/stirling-pdf.svg
   urls:
     - https://github.com/Stirling-Tools/Stirling-PDF
 
@@ -25,7 +25,7 @@ services:
       - default
       - traefik-public
     labels:
-      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/stirling-pdf.webp"
+      - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/stirling-pdf.svg"
       - "traefik.enable=true"
       - "traefik.http.routers.stirling-pdf.rule=Host(`stirling.${DOMAIN:-apps.local}`) || Host(`stirling-pdf.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.stirling-pdf.entrypoints=web"

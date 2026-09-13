@@ -1,5 +1,5 @@
 x-arcane:
-  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/vscode.webp
+  icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/vscode.svg
   urls:
     - https://coder.com/
     - https://github.com/coder/code-server
@@ -25,7 +25,7 @@ services:
       - default
       - traefik-public
     labels:
-      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/vscode.webp"
+      - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/vscode.svg"
       - "traefik.enable=true"
       - "traefik.http.routers.code-server.rule=Host(`code.${DOMAIN:-apps.local}`) || Host(`vscode.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.code-server.entrypoints=web"

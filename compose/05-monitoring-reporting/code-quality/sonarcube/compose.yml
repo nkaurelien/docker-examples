@@ -1,5 +1,5 @@
 x-arcane:
-  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/sonarqube.webp
+  icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/sonarqube.svg
   urls:
     - https://www.sonarqube.org/
     - https://github.com/SonarSource/sonarqube
@@ -84,7 +84,7 @@ services:
       - "traefik.http.routers.sonarqube.rule=Host(`sonarqube.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.sonarqube.entrypoints=web"
       - "traefik.http.services.sonarqube.loadbalancer.server.port=9000"
-      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/sonarqube.webp"
+      - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/sonarqube.svg"
     depends_on:
       sonar_db:
         condition: service_healthy

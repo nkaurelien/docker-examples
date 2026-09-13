@@ -1,5 +1,5 @@
 x-arcane:
-  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/pingvin-share.webp
+  icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/pingvin-share.svg
   urls:
     - https://github.com/stonerl/pingvin-share
 
@@ -20,7 +20,7 @@ services:
       - default
       - traefik-public
     labels:
-      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/pingvin-share.webp"
+      - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/pingvin-share.svg"
       - "traefik.enable=true"
       - "traefik.http.routers.pingvin-share.rule=Host(`pingvin.${DOMAIN:-apps.local}`) || Host(`pingvin-share.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.pingvin-share.entrypoints=web"

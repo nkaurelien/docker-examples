@@ -9,6 +9,7 @@ hooks:
 
 theme:
   name: material
+  logo: material/docker
   language: en
   palette:
     # Light mode

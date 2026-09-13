@@ -1,5 +1,5 @@
 x-arcane:
-  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/wordpress.webp
+  icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/wordpress.svg
   urls:
     - https://wordpress.org/
     - https://github.com/WordPress/WordPress
@@ -166,7 +166,7 @@ services:
       - "traefik.http.routers.wordpress.rule=Host(`wordpress.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.wordpress.entrypoints=web"
       - "traefik.http.services.wordpress.loadbalancer.server.port=80"
-      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/wordpress.webp"
+      - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/wordpress.svg"
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: ${MYSQL_USER:-wordpress}

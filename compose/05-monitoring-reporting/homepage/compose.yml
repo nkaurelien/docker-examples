@@ -1,5 +1,5 @@
 x-arcane:
-  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/homepage.webp
+  icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/homepage.svg
   urls:
     - https://gethomepage.dev/
     - https://github.com/gethomepage/homepage
@@ -54,7 +54,7 @@ services:
       - homepage-internal
       - traefik-public
     labels:
-      - "com.getarcaneapp.arcane.icon=https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/homepage.webp"
+      - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/homepage.svg"
       - "traefik.enable=true"
       - "traefik.http.routers.homepage.rule=Host(`homepage.${DOMAIN:-apps.local}`) || Host(`home.${DOMAIN:-apps.local}`)"
       - "traefik.http.routers.homepage.entrypoints=web"
