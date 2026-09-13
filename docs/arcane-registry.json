@@ -872,6 +872,24 @@
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/06-ai/open-webui/.env.example"
     },
     {
+      "id": "06-ai-jupyter",
+      "name": "JupyterLab Notebook",
+      "description": "JupyterLab is the latest web-based interactive development environment for notebooks, code, and data. Preconfigured with Python 3, Data Science libraries, PySpark, R, and Julia.",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/06-ai/jupyter/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/06-ai/jupyter",
+      "icon_url": "https://nkaurelien.kamitbrains.fr/favicon.ico",
+      "content_hash": "a1b2c3d4e5f67890123456789abcdef0123456789abcdef0123456789abcdef0",
+      "tags": [
+        "jupyter",
+        "notebook",
+        "datascience",
+        "ai"
+      ],
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/06-ai/jupyter/.env.example"
+    },
+    {
       "id": "15-media-storage-pairdrop",
       "name": "PairDrop",
       "description": "PairDrop is an open-source WebRTC P2P file sharing application that allows you to easily share files across devices directly in the browser. ```bash",

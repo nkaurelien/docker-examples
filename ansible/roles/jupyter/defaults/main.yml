@@ -1,0 +1,9 @@
+---
+# JupyterLab role defaults
+jupyter_image: "quay.io/jupyter/datascience-notebook:latest"
+jupyter_domain: "kamitbrains.fr"
+jupyter_hostname: "jupyter.{{ traefik_domain | default(jupyter_domain) }}"
+jupyter_alias_hostname: "notebook.{{ traefik_domain | default(jupyter_domain) }}"
+jupyter_deploy_dir: "/opt/jupyter"
+jupyter_container_port: 8888
+jupyter_token: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/jupyter-admin-token') | trim }}"
