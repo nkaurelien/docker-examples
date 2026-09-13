@@ -1,11 +1,13 @@
-# Cloudflare
+# Cloudflare API Credentials & Configuration
 
-ID du compte
-d9476f05c64f3f8a4d6cbe1fce80bb01
+- **Account ID File**: `.secrets/cloudflare-account-id`
+- **API Key File**: `.secrets/cloudflare-api-key`
 
 ## Exemple d’utilisation
 
 ```sh
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/d9476f05c64f3f8a4d6cbe1fce80bb01/tokens/verify" \
-     -H "Authorization: Bearer <file:.secrets/cloudflare-api-key>"
+ACCOUNT_ID=$(cat .secrets/cloudflare-account-id)
+API_KEY=$(cat .secrets/cloudflare-api-key)
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/tokens/verify" \
+     -H "Authorization: Bearer ${API_KEY}"
 ```

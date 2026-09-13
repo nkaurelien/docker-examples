@@ -25,10 +25,12 @@ tags: communication, notification, ntfy, push, push-notifications
 
 ## Quick Start: Sending Push Notifications
 
+> 🔒 **Topic Security**: Since ntfy topic authorization without login permits public subscription, topics used for system alerts are protected by appending a high-entropy random string (stored in `.secrets/ntfy-topic`).
+
 ### 1. Publish a Message via cURL
 
 ```bash
-curl -d "Disk usage alert on Contabo server" https://ntfy.kamitbrains.fr/system-alerts
+curl -d "Disk usage alert on Contabo server" https://ntfy.kamitbrains.fr/$(cat .secrets/ntfy-topic)
 ```
 
 ### 2. Publish with Title, Tags, and Priority
@@ -39,13 +41,15 @@ curl \
   -H "Tags: white_check_mark,database" \
   -H "Priority: high" \
   -d "Database backup completed successfully in 45 seconds." \
-  https://ntfy.kamitbrains.fr/backups
+  https://ntfy.kamitbrains.fr/$(cat .secrets/ntfy-topic)
 ```
 
 ### 3. Subscribe to a Topic
 
-- **Android / iOS App**: Open the official **ntfy** mobile application, add custom server `https://ntfy.kamitbrains.fr`, and subscribe to topic `system-alerts`.
+- **Android / iOS App**: Open the official **ntfy** mobile application, add custom server `https://ntfy.kamitbrains.fr`, and subscribe to the secret topic configured in `.secrets/ntfy-topic`.
+
 - **Web Interface**: Open `https://ntfy.kamitbrains.fr` in any browser to view live topics.
+
 
 ---
 
@@ -85,3 +89,21 @@ services:
 
 - **Uptime Kuma**: Automatically monitored at `https://ntfy.kamitbrains.fr/v1/health`.
 - **Systemd Service**: Managed via `ntfy.service` for automatic boot startup.
+
+---
+
+## Secret Topic Rotation Procedure
+
+To rotate the secret alert topic name:
+
+1. Update the secret file `.secrets/ntfy-topic` with a new pronounceable code:
+   ```bash
+   echo "alerts-<new-pronounceable-code>" > .secrets/ntfy-topic
+   ```
+2. Update the CSV entry `Ntfy Push Secret Topic` in `.secrets/passbolt_import_secrets.csv`.
+3. Re-run Ansible deployment to seed the new notification topic into Uptime Kuma:
+   ```bash
+   ansible-playbook -i ansible/inventory.yml ansible/site.yml --tags "ntfy,uptime-kuma"
+   ```
+4. Resubscribe the Ntfy mobile app or subscribers to the new topic name.
+

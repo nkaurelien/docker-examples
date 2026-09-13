@@ -8,12 +8,14 @@ Ce dossier contient les clés de chiffrement, de signature JWT, l'adresse email 
 #
 # username : arcane
 # email    : .secrets/admin-login (ou configurable via .secrets/arcane-admin-email)
-# password : arcane-admin        (DEFAUT — A CHANGER au 1er login)
+# password : (voir le fichier .secrets/arcane-admin-password)
+
 ```
 
 ## 📄 Fichiers associés :
 * `arcane-admin-email` : Email de l'administrateur (par défaut `.secrets/admin-login`), injecté dynamiquement par le service seeder `arcane-db-seeder`.
-* `arcane-admin-password` : Mot de passe d'administration par défaut (`arcane-admin` ou généré) à utiliser lors du premier accès sur `https://arcane.kamitbrains.fr`.
+* `arcane-admin-password` : Mot de passe d'administration (stocké dans le passfile `.secrets/arcane-admin-password`) à utiliser lors du premier accès sur `https://arcane.kamitbrains.fr`.
+
 * `arcane-jwt-secret` : Clé secrète hexadécimale de 64 caractères (32 octets) utilisée pour la signature des jetons de session JWT Arcane.
 * `arcane-encryption-key` : Clé secrète hexadécimale de 64 caractères (32 octets) utilisée pour le chiffrement des données sensibles stockées en base SQLite.
 

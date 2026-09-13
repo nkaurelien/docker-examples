@@ -2,4 +2,6 @@
 
 - **Service Name**: changedetection
 - **URL**: `https://changedetection.kamitbrains.fr`
-- **Ntfy Notification Webhook**: `https://ntfy.kamitbrains.fr/alerts`
+- **Ntfy Notification Webhook**: `https://ntfy.kamitbrains.fr/<secret-topic>` (voir `.secrets/ntfy-topic`)
+
+
