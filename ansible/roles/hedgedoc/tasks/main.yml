@@ -19,7 +19,6 @@
   community.docker.docker_compose_v2:
     project_src: "{{ hedgedoc_compose_dir }}"
     state: present
-    recreate: always
     remove_orphans: true
 
 - name: Initialize HedgeDoc admin user account via bin/manage_users
