@@ -15,6 +15,8 @@
       tags: [glances, monitoring]
     - role: arcane
       tags: [arcane, manager, paas]
+    - role: coolify
+      tags: [coolify, paas, orchestration, apps]
     - role: crowdsec
       tags: [crowdsec, security, ids]
     - role: uptime-kuma

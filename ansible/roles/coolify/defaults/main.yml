@@ -1,0 +1,9 @@
+---
+# Coolify PaaS role defaults
+coolify_image: "ghcr.io/coollabsio/coolify:latest"
+coolify_domain: "kamitbrains.fr"
+coolify_hostname: "coolify.{{ traefik_domain | default(coolify_domain) }}"
+coolify_deploy_dir: "/opt/coolify"
+coolify_container_port: 8000
+coolify_db_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/coolify-db-password') | trim }}"
+coolify_app_key: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/coolify-app-key') | trim }}"
