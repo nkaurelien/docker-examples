@@ -5,6 +5,33 @@ x-arcane:
     - https://github.com/umami-software/umami
 
 services:
+  umami-init:
+    image: postgres:16-alpine
+    container_name: umami-init
+    restart: "no"
+    depends_on:
+      umami-db:
+        condition: service_healthy
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-umami}
+      POSTGRES_USER: ${POSTGRES_USER:-umami}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-umami_db_password_change_me}
+      ADMIN_USER: ${UMAMI_ADMIN_USER:-admin}
+      WEBSITE_NAME: "Personal Portfolio"
+      WEBSITE_DOMAIN: "nkaurelien.kamitbrains.fr"
+    networks:
+      - umami-internal
+    entrypoint:
+      - sh
+      - -c
+      - |
+        PGPASSWORD="$$POSTGRES_PASSWORD" psql -h umami-db -U "$$POSTGRES_USER" -d "$$POSTGRES_DB" -c "
+          INSERT INTO public.website (website_id, name, domain, user_id, created_by)
+          SELECT gen_random_uuid(), '$$WEBSITE_NAME', '$$WEBSITE_DOMAIN', user_id, user_id
+          FROM public.user WHERE username = '$$ADMIN_USER'
+          AND NOT EXISTS (SELECT 1 FROM public.website WHERE domain = '$$WEBSITE_DOMAIN');
+        "
+
   umami:
     image: ghcr.io/umami-software/umami:postgresql-latest
     container_name: umami
@@ -12,6 +39,8 @@ services:
     depends_on:
       umami-db:
         condition: service_healthy
+      umami-init:
+        condition: service_completed_successfully
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER:-umami}:${POSTGRES_PASSWORD:-umami_db_password_change_me}@umami-db:5432/${POSTGRES_DB:-umami}
       - APP_SECRET=${APP_SECRET:-umami_app_secret_change_me_32char}
