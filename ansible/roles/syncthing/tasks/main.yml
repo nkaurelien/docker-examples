@@ -1,0 +1,28 @@
+---
+- name: Ensure Syncthing deployment directory exists
+  ansible.builtin.file:
+    path: "{{ syncthing_deploy_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Deploy Syncthing docker-compose configuration
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ syncthing_deploy_dir }}/docker-compose.yml"
+    mode: '0644'
+
+- name: Start Syncthing container stack via docker compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ syncthing_deploy_dir }}"
+    state: present
+    remove_orphans: true
+
+- name: Install and enable Syncthing systemd service for boot startup
+  ansible.builtin.include_role:
+    name: systemd-service
+  vars:
+    systemd_service_name: "syncthing"
+    systemd_service_description: "Syncthing Continuous P2P File Synchronization Platform"
+    systemd_compose_dir: "{{ syncthing_deploy_dir }}"
+    systemd_compose_files: "-f docker-compose.yml"
+    systemd_project_name: "syncthing"

@@ -1,0 +1,88 @@
+x-arcane:
+  icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/seafile.svg
+  urls:
+    - https://www.seafile.com/
+    - https://github.com/haiwen/seafile
+
+services:
+  seafile-db:
+    image: mariadb:10.11
+    container_name: seafile-db
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-seafile_db_password_change_me}
+      - MYSQL_LOG_CONSOLE=1
+    volumes:
+      - seafile-db-data:/var/lib/mysql
+    networks:
+      - seafile-internal
+    healthcheck:
+      test: ["CMD-SHELL", "healthcheck.sh --connect --innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  seafile-memcached:
+    image: memcached:1.6-alpine
+    container_name: seafile-memcached
+    restart: unless-stopped
+    entrypoint: memcached -m 256
+    networks:
+      - seafile-internal
+
+  seafile:
+    image: seafileltd/seafile-mc:latest
+    container_name: seafile
+    restart: unless-stopped
+    depends_on:
+      seafile-db:
+        condition: service_healthy
+      seafile-memcached:
+        condition: service_started
+    environment:
+      - DB_HOST=seafile-db
+      - DB_ROOT_PASSWD=${DB_PASSWORD:-seafile_db_password_change_me}
+      - TIME_ZONE=Europe/Paris
+      - SEAFILE_ADMIN_EMAIL=${SEAFILE_ADMIN_EMAIL:-admin@kamitbrains.fr}
+      - SEAFILE_ADMIN_PASSWORD=${SEAFILE_ADMIN_PASSWORD:-seafile_admin_password_change_me}
+      - SEAFILE_SERVER_LETSENCRYPT=false
+      - SEAFILE_SERVER_HOSTNAME=seafile.${DOMAIN:-kamitbrains.fr}
+    volumes:
+      - seafile-data:/shared
+    networks:
+      - traefik-public
+      - seafile-internal
+    labels:
+      - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/seafile.svg"
+      - "traefik.enable=true"
+      - "traefik.http.routers.seafile.rule=Host(`seafile.${DOMAIN:-kamitbrains.fr}`) || Host(`drive.${DOMAIN:-kamitbrains.fr}`)"
+      - "traefik.http.routers.seafile.entrypoints=websecure"
+      - "traefik.http.routers.seafile.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.seafile.middlewares=crowdsec-bouncer@file"
+      - "traefik.http.services.seafile.loadbalancer.server.port=80"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:80/ || exit 1"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  seafile-data:
+  seafile-db-data:
+
+networks:
+  traefik-public:
+    external: true
+  seafile-internal:
+    driver: bridge

@@ -1,0 +1,53 @@
+x-arcane:
+  icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/syncthing.svg
+  urls:
+    - https://syncthing.net/
+    - https://github.com/syncthing/syncthing
+
+services:
+  syncthing:
+    image: lscr.io/linuxserver/syncthing:latest
+    container_name: syncthing
+    hostname: syncthing
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+    volumes:
+      - syncthing-config:/config
+      - syncthing-data:/data
+    ports:
+      - "22000:22000/tcp"
+      - "22000:22000/udp"
+      - "21027:21027/udp"
+    networks:
+      - traefik-public
+      - default
+    labels:
+      - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/syncthing.svg"
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-public"
+      - "traefik.http.routers.syncthing.rule=Host(`syncthing.${DOMAIN:-kamitbrains.fr}`) || Host(`sync.${DOMAIN:-kamitbrains.fr}`)"
+      - "traefik.http.routers.syncthing.entrypoints=websecure"
+      - "traefik.http.routers.syncthing.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.syncthing.middlewares=crowdsec-bouncer@file"
+      - "traefik.http.services.syncthing.loadbalancer.server.port=8384"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8384/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  syncthing-config:
+  syncthing-data:
+
+networks:
+  traefik-public:
+    external: true

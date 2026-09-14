@@ -189,6 +189,8 @@ nav:
       - File Sharing:
           - Overview: services/file-sharing/index.md
           - Erugo: services/file-sharing/erugo.md
+          - Syncthing: services/file-sharing/syncthing.md
+          - Seafile: services/file-sharing/seafile.md
 
   - Data Processing:
       - Overview: services/data-processing/index.md
