@@ -26,3 +26,10 @@
     systemd_compose_dir: "{{ databasement_deploy_dir }}"
     systemd_compose_files: "-f docker-compose.yml"
     systemd_project_name: "databasement"
+
+- name: Initialize Databasement admin user account
+  ansible.builtin.command:
+    cmd: >-
+      docker exec databasement php artisan tinker --execute="App\Models\User::firstOrCreate(['email' => '{{ databasement_admin_email }}'], ['name' => 'Administrator', 'password' => Hash::make('{{ databasement_admin_password }}'), 'super_admin' => true, 'email_verified_at' => now()]);"
+  changed_when: false
+
