@@ -52,8 +52,14 @@
     - Ntfy:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/ntfy.svg
         href: https://ntfy.{{ homepage_domain }}
-        description: Push Notification Service
+        description: Push Notification Service (pub/sub)
         container: ntfy
+        server: my-docker
+    - Gotify:
+        icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/gotify.svg
+        href: https://gotify.{{ homepage_domain }}
+        description: Real-Time Push Notification Server & WebSocket API
+        container: gotify
         server: my-docker
     - Arcane:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/arcane.svg

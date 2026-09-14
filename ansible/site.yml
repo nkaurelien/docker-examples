@@ -25,6 +25,8 @@
       tags: [uptime-kuma, status, monitoring]
     - role: ntfy
       tags: [ntfy, notification, communication]
+    - role: gotify
+      tags: [gotify, notification, communication]
     - role: passbolt
       tags: [passbolt, passwords, auth, security]
     - role: changedetection
