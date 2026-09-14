@@ -17,6 +17,24 @@
     state: present
     remove_orphans: true
 
+- name: Check and initialize Umami admin password if default password 'umami' is active
+  community.docker.docker_container_exec:
+    container: umami
+    command: >
+      sh -c '
+        LOGIN_RES=$(curl -s -X POST http://localhost:3000/api/auth/login -H "Content-Type: application/json" -d "{\"username\":\"admin\",\"password\":\"umami\"}");
+        if echo "$LOGIN_RES" | grep -q "token"; then
+          TOKEN=$(echo "$LOGIN_RES" | sed -n "s/.*\"token\":\"\([^\"]*\)\".*/\1/p");
+          USER_ID=$(echo "$LOGIN_RES" | sed -n "s/.*\"id\":\"\([^\"]*\)\".*/\1/p");
+          curl -s -X POST "http://localhost:3000/api/users/$USER_ID" -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" -d "{\"password\":\"{{ umami_admin_password }}\"}";
+          echo "ADMIN_PASSWORD_INITIALIZED";
+        else
+          echo "ADMIN_PASSWORD_ALREADY_SET";
+        fi
+      '
+  register: umami_init_result
+  changed_when: umami_init_result.stdout is defined and "ADMIN_PASSWORD_INITIALIZED" in umami_init_result.stdout
+
 - name: Install and enable Umami systemd service for boot startup
   ansible.builtin.include_role:
     name: systemd-service
