@@ -1,3 +1,9 @@
+x-arcane:
+  icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/gotify.svg
+  urls:
+    - https://gotify.net/
+    - https://github.com/gotify/server
+
 services:
   gotify:
     image: gotify/server:latest
