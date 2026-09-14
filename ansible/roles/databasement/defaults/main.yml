@@ -1,0 +1,8 @@
+---
+# Databasement role defaults
+databasement_domain: "{{ traefik_domain | default('kamitbrains.fr') }}"
+databasement_hostname: "databasement.{{ databasement_domain }}"
+databasement_alias_hostname: "db-backup.{{ databasement_domain }}"
+databasement_deploy_dir: "/opt/databasement"
+databasement_image: "davidcrty/databasement:latest"
+databasement_port: 2226

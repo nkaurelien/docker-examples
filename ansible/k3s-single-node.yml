@@ -1,0 +1,8 @@
+---
+- name: Build single node k3s cluster on K1 mini
+  hosts: k3s_cluster
+  become: true
+  vars:
+    k3s_become: true
+  roles:
+    - role: xanmanning.k3s
