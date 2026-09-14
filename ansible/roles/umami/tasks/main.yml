@@ -1,8 +1,17 @@
 ---
-- name: Ensure Umami deployment directory exists
+- name: Ensure Umami deployment and scripts directories exist
   ansible.builtin.file:
-    path: "{{ umami_deploy_dir }}"
+    path: "{{ item }}"
     state: directory
+    mode: '0755'
+  loop:
+    - "{{ umami_deploy_dir }}"
+    - "{{ umami_deploy_dir }}/scripts"
+
+- name: Deploy Umami ntfy report script
+  ansible.builtin.template:
+    src: umami-ntfy-report.js.j2
+    dest: "{{ umami_deploy_dir }}/scripts/umami-ntfy-report.js"
     mode: '0755'
 
 - name: Deploy Umami docker-compose configuration

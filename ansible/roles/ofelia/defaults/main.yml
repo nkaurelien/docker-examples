@@ -1,0 +1,4 @@
+---
+# Ofelia job scheduler defaults
+ofelia_deploy_dir: "/opt/ofelia"
+ofelia_image: "mcuadros/ofelia:latest"

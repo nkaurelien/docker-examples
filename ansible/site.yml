@@ -11,6 +11,8 @@
       tags: [ssl, security]
     - role: traefik
       tags: [traefik, proxy, reverse-proxy]
+    - role: ofelia
+      tags: [ofelia, scheduler, cron]
     - role: glances
       tags: [glances, monitoring]
     - role: arcane

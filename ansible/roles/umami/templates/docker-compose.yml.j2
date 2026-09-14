@@ -109,6 +109,44 @@ services:
           cpus: "0.10"
           memory: 128M
 
+  umami-reporter:
+    image: node:20-alpine
+    container_name: umami-reporter
+    restart: unless-stopped
+    depends_on:
+      umami:
+        condition: service_healthy
+    environment:
+      - UMAMI_URL=http://umami:{{ umami_container_port }}
+      - UMAMI_USERNAME={{ umami_admin_user }}
+      - UMAMI_PASSWORD={{ umami_admin_password }}
+      - NTFY_TOPIC_URL={{ umami_ntfy_topic_url }}
+    volumes:
+      - ./scripts:/app/scripts
+    networks:
+      - umami-internal
+    working_dir: /app
+    labels:
+      - "ofelia.enabled=true"
+      - "ofelia.job-exec.umami-report-weekly.schedule=0 9 * * 1"
+      - "ofelia.job-exec.umami-report-weekly.command=node /app/scripts/umami-ntfy-report.js"
+      - "ofelia.job-exec.umami-report-daily.schedule=0 20 * * *"
+      - "ofelia.job-exec.umami-report-daily.command=node /app/scripts/umami-ntfy-report.js"
+    command: tail -f /dev/null
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+        reservations:
+          memory: 32M
+
+
 volumes:
   umami-db-data:
 
