@@ -1394,6 +1394,26 @@
         "rclone"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/01-infrastructure/backrest/.env.example"
+    },
+    {
+      "id": "01-infrastructure-databasement",
+      "name": "Databasement",
+      "description": "Self-hosted database backup manager with Web UI supporting MySQL, PostgreSQL, MongoDB, and Redis with SSH tunnel support.",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/01-infrastructure/databasement/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/01-infrastructure/databasement",
+      "icon_url": "https://raw.githubusercontent.com/selfhst/icons/main/svg/postgresql.svg",
+      "content_hash": "databasement-compose-hash",
+      "tags": [
+        "databasement",
+        "database",
+        "backup",
+        "mysql",
+        "postgresql",
+        "redis"
+      ],
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/01-infrastructure/databasement/.env.example"
     }
   ]
 }

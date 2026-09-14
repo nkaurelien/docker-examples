@@ -8,6 +8,8 @@ roles:
     version: 5.4.0
   - name: darkwizard242.hostctl
     version: 1.4.0
+  - name: xanmanning.k3s
+    version: 3.6.4
 
 collections:
   - name: community.docker

@@ -1,0 +1,63 @@
+# Databasement — Self-Hosted Database Backup Manager & Web UI
+# Web UI: https://databasement.kamitbrains.fr
+
+x-arcane:
+  icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/postgresql.svg
+  urls:
+    - https://github.com/David-Crty/databasement
+
+services:
+  databasement:
+    image: davidcrty/databasement:latest
+    container_name: databasement
+    hostname: databasement
+    restart: unless-stopped
+    environment:
+      - DB_CONNECTION=sqlite
+      - DB_DATABASE=/data/database.sqlite
+      - ENABLE_QUEUE_WORKER=true
+      - ENABLE_SCHEDULER=true
+      - APP_PORT=2226
+      - APP_TIMEZONE=Europe/Paris
+      - TZ=Europe/Paris
+    volumes:
+      - databasement-data:/data
+      - /var/lib/docker/volumes:/userdata/volumes:ro
+    ports:
+      - "2226:2226"
+    networks:
+      - traefik-public
+      - default
+    labels:
+      - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/postgresql.svg"
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-public"
+      - "traefik.http.routers.databasement.rule=Host(`databasement.kamitbrains.fr`) || Host(`db-backup.kamitbrains.fr`)"
+      - "traefik.http.routers.databasement.entrypoints=websecure"
+      - "traefik.http.routers.databasement.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.databasement.middlewares=crowdsec-bouncer@file"
+      - "traefik.http.services.databasement.loadbalancer.server.port=2226"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:2226/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          memory: 128M
+
+volumes:
+  databasement-data:
+
+networks:
+  traefik-public:
+    external: true

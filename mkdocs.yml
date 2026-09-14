@@ -194,6 +194,7 @@ nav:
       - Backup Tools:
           - Overview: services/backups/index.md
           - Backrest: services/backups/backrest.md
+          - Databasement: services/backups/databasement.md
 
   - Data Processing:
       - Overview: services/data-processing/index.md

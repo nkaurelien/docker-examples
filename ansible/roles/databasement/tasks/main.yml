@@ -1,0 +1,28 @@
+---
+- name: Ensure Databasement deployment directory exists
+  ansible.builtin.file:
+    path: "{{ databasement_deploy_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Deploy Databasement docker-compose configuration
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ databasement_deploy_dir }}/docker-compose.yml"
+    mode: '0644'
+
+- name: Start Databasement container stack via docker compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ databasement_deploy_dir }}"
+    state: present
+    remove_orphans: true
+
+- name: Install and enable Databasement systemd service for boot startup
+  ansible.builtin.include_role:
+    name: systemd-service
+  vars:
+    systemd_service_name: "databasement"
+    systemd_service_description: "Databasement Database Backup Manager & Web UI"
+    systemd_compose_dir: "{{ databasement_deploy_dir }}"
+    systemd_compose_files: "-f docker-compose.yml"
+    systemd_project_name: "databasement"
