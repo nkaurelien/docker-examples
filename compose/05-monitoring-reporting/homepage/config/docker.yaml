@@ -1,4 +1,6 @@
 # Homepage Docker Integration via Docker Socket Proxy
 
 my-docker:
-  host: tcp://homepage-socket-proxy:2375
+  host: homepage-socket-proxy
+  port: 2375
+
