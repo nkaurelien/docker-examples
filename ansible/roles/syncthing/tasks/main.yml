@@ -66,10 +66,9 @@
   changed_when: "'CHANGED' in syncthing_auth_update.stdout"
 
 - name: Restart Syncthing container if authentication configuration was updated
-  community.docker.docker_container:
-    name: syncthing
-    state: restarted
+  ansible.builtin.command: docker restart syncthing
   when: syncthing_auth_update.changed
+
 
 - name: Install and enable Syncthing systemd service for boot startup
   ansible.builtin.include_role:
