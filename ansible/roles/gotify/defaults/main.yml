@@ -1,0 +1,9 @@
+---
+# Gotify role defaults
+gotify_domain: "{{ traefik_domain | default('kamitbrains.fr') }}"
+gotify_hostname: "gotify.{{ gotify_domain }}"
+gotify_alias_hostname: "push.{{ gotify_domain }}"
+gotify_deploy_dir: "/opt/gotify"
+gotify_image: "gotify/server:latest"
+gotify_admin_user: "{{ lookup('file', playbook_dir + '/../.secrets/gotify-admin-login') | trim }}"
+gotify_admin_password: "{{ lookup('file', playbook_dir + '/../.secrets/gotify-admin-password') | trim }}"
