@@ -1,9 +1,14 @@
 ---
-- name: Ensure Jenkins deployment directory exists
+- name: Ensure Jenkins deployment and data directories exist with UID 1000 permissions
   ansible.builtin.file:
-    path: "{{ jenkins_compose_dir }}"
+    path: "{{ item.path }}"
     state: directory
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
     mode: '0755'
+  loop:
+    - { path: "{{ jenkins_compose_dir }}" }
+    - { path: "{{ jenkins_compose_dir }}/data", owner: "1000", group: "1000" }
 
 - name: Deploy Jenkins docker-compose configuration
   ansible.builtin.template:
