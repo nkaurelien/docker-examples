@@ -29,6 +29,21 @@ Standardized backup and snapshot solutions for self-hosted Docker volumes and Li
 
 ---
 
+## Decision Guide & Architecture Selection
+
+Use this decision matrix to select the ideal backup approach based on operational constraints and infrastructure requirements:
+
+| Operational Need / Use Case | Recommended Solution | Rationale & Key Advantages |
+| :--- | :--- | :--- |
+| **Ready-to-use Web Interface** | **Databasement** | Web-based UI out of the box, multi-tenant workspace, single-container deployment. |
+| **Total Control & DevOps Automation** | **Native Scripts + Restic** | Complete auditability, zero UI overhead, client-side AES-256 encryption & deduplication. |
+| **Docker / Kubernetes Environments** | **Databasement** OR **Restic CronJob** | Databasement for web-managed nodes; native Restic CronJobs for GitOps/K8s pipelines. |
+| **Mission-Critical PostgreSQL** | **pgBackRest** | Physical WAL streaming, Point-in-Time Recovery (PITR), and parallel delta restores. |
+| **High-Volume MySQL / MariaDB** | **Percona XtraBackup** | Non-blocking physical hot backups for enterprise multi-gigabyte MySQL databases. |
+| **SQLite Databases** | **`sqlite3 .backup`** | Safe live hot-copy command, integrated natively in Databasement or custom Restic scripts. |
+
+---
+
 ## Comparative Matrix
 
 | Tool | Encryption | Deduplication | Web UI | Primary Backend Support |
