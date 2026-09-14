@@ -29,6 +29,13 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          memory: 128M
 
   seafile-memcached:
     image: memcached:1.6-alpine
@@ -37,6 +44,18 @@ services:
     entrypoint: memcached -m 256
     networks:
       - seafile-internal
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 256M
+        reservations:
+          memory: 64M
 
   seafile:
     image: seafileltd/seafile-mc:latest
@@ -79,6 +98,14 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: 1024M
+        reservations:
+          memory: 256M
+
 
 volumes:
   seafile-data:

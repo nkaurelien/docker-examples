@@ -17,6 +17,60 @@
     state: present
     remove_orphans: true
 
+- name: Ensure Syncthing Web GUI admin authentication is configured
+  become: true
+  ansible.builtin.shell: |
+    python3 -c "
+    import xml.etree.ElementTree as ET
+    import bcrypt, sys
+
+    config_path = '/var/lib/docker/volumes/syncthing_syncthing-config/_data/config.xml'
+    try:
+        tree = ET.parse(config_path)
+    except Exception as e:
+        sys.exit(0)
+
+    root = tree.getroot()
+    changed = False
+
+    gui = root.find('gui')
+    if gui is not None:
+        user = gui.find('user')
+        if user is None:
+            user = ET.SubElement(gui, 'user')
+            changed = True
+        if user.text != '{{ syncthing_admin_user }}':
+            user.text = '{{ syncthing_admin_user }}'
+            changed = True
+
+        password = gui.find('password')
+        if password is None or not password.text or not password.text.startswith('$2'):
+            if password is None:
+                password = ET.SubElement(gui, 'password')
+            raw_pass = '''{{ syncthing_admin_password }}'''.encode('utf-8')
+            password.text = bcrypt.hashpw(raw_pass, bcrypt.gensalt()).decode()
+            changed = True
+
+    options = root.find('options')
+    if options is not None:
+        for unacked in options.findall('unackedNotificationID'):
+            if unacked.text == 'authenticationUserAndPassword':
+                options.remove(unacked)
+                changed = True
+
+    if changed:
+        tree.write(config_path, encoding='utf-8', xml_declaration=True)
+        print('CHANGED')
+    "
+  register: syncthing_auth_update
+  changed_when: "'CHANGED' in syncthing_auth_update.stdout"
+
+- name: Restart Syncthing container if authentication configuration was updated
+  community.docker.docker_container:
+    name: syncthing
+    state: restarted
+  when: syncthing_auth_update.changed
+
 - name: Install and enable Syncthing systemd service for boot startup
   ansible.builtin.include_role:
     name: systemd-service
@@ -26,3 +80,4 @@
     systemd_compose_dir: "{{ syncthing_deploy_dir }}"
     systemd_compose_files: "-f docker-compose.yml"
     systemd_project_name: "syncthing"
+
