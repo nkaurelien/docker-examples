@@ -35,26 +35,19 @@
   register: umami_init_result
   changed_when: umami_init_result.stdout is defined and "ADMIN_PASSWORD_INITIALIZED" in umami_init_result.stdout
 
-- name: Ensure configured websites exist in Umami
+- name: Direct SQL Insert — Ensure websites exist in PostgreSQL database
   community.docker.docker_container_exec:
-    container: umami
+    container: umami-db
     command: >
-      sh -c '
-        LOGIN_RES=$(curl -s -X POST http://localhost:3000/api/auth/login -H "Content-Type: application/json" -d "{\"username\":\"{{ umami_admin_user }}\",\"password\":\"{{ umami_admin_password }}\"}");
-        TOKEN=$(echo "$LOGIN_RES" | sed -n "s/.*\"token\":\"\([^\"]*\)\".*/\1/p");
-        if [ -n "$TOKEN" ]; then
-          WEBSITES=$(curl -s -H "Authorization: Bearer $TOKEN" http://localhost:3000/api/websites);
-          if ! echo "$WEBSITES" | grep -q "{{ item.domain }}"; then
-            curl -s -X POST http://localhost:3000/api/websites -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" -d "{\"name\":\"{{ item.name }}\",\"domain\":\"{{ item.domain }}\"}";
-            echo "WEBSITE_CREATED_{{ item.domain }}";
-          else
-            echo "WEBSITE_EXISTS_{{ item.domain }}";
-          fi
-        fi
-      '
+      psql -U {{ umami_db_user }} -d {{ umami_db_name }} -c "
+        INSERT INTO public.website (website_id, name, domain, user_id, created_by)
+        SELECT gen_random_uuid(), '{{ item.name }}', '{{ item.domain }}', user_id, user_id
+        FROM public.user WHERE username = '{{ umami_admin_user }}'
+        AND NOT EXISTS (SELECT 1 FROM public.website WHERE domain = '{{ item.domain }}');
+      "
   loop: "{{ umami_websites }}"
-  register: umami_website_results
-  changed_when: item.stdout is defined and "WEBSITE_CREATED_" in item.stdout
+  register: umami_db_sql_results
+  changed_when: item.stdout is defined and "INSERT 0 1" in item.stdout
 
 - name: Install and enable Umami systemd service for boot startup
   ansible.builtin.include_role:
