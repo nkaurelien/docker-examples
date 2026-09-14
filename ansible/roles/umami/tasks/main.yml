@@ -35,20 +35,6 @@
   register: umami_init_result
   changed_when: umami_init_result.stdout is defined and "ADMIN_PASSWORD_INITIALIZED" in umami_init_result.stdout
 
-- name: Direct SQL Insert — Ensure websites exist in PostgreSQL database
-  community.docker.docker_container_exec:
-    container: umami-db
-    command: >
-      psql -U {{ umami_db_user }} -d {{ umami_db_name }} -c "
-        INSERT INTO public.website (website_id, name, domain, user_id, created_by)
-        SELECT gen_random_uuid(), '{{ item.name }}', '{{ item.domain }}', user_id, user_id
-        FROM public.user WHERE username = '{{ umami_admin_user }}'
-        AND NOT EXISTS (SELECT 1 FROM public.website WHERE domain = '{{ item.domain }}');
-      "
-  loop: "{{ umami_websites }}"
-  register: umami_db_sql_results
-  changed_when: item.stdout is defined and "INSERT 0 1" in item.stdout
-
 - name: Install and enable Umami systemd service for boot startup
   ansible.builtin.include_role:
     name: systemd-service

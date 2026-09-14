@@ -8,6 +8,32 @@ x-arcane:
     - https://github.com/umami-software/umami
 
 services:
+  umami-init:
+    image: postgres:16-alpine
+    container_name: umami-init
+    restart: "no"
+    depends_on:
+      umami-db:
+        condition: service_healthy
+    environment:
+      - POSTGRES_DB={{ umami_db_name }}
+      - POSTGRES_USER={{ umami_db_user }}
+      - POSTGRES_PASSWORD={{ umami_db_password }}
+      - ADMIN_USER={{ umami_admin_user }}
+    networks:
+      - umami-internal
+    command: >
+      sh -c '
+        {% for site in umami_websites %}
+        PGPASSWORD="$$POSTGRES_PASSWORD" psql -h umami-db -U "$$POSTGRES_USER" -d "$$POSTGRES_DB" -c "
+          INSERT INTO public.website (website_id, name, domain, user_id, created_by)
+          SELECT gen_random_uuid(), '\''{{ site.name }}'\'', '\''{{ site.domain }}'\'', user_id, user_id
+          FROM public.user WHERE username = '\''$$ADMIN_USER'\''
+          AND NOT EXISTS (SELECT 1 FROM public.website WHERE domain = '\''{{ site.domain }}'\'');
+        ";
+        {% endfor %}
+      '
+
   umami:
     image: {{ umami_image }}
     container_name: umami
@@ -15,6 +41,8 @@ services:
     depends_on:
       umami-db:
         condition: service_healthy
+      umami-init:
+        condition: service_completed_successfully
     environment:
       - DATABASE_URL=postgresql://{{ umami_db_user }}:{{ umami_db_password }}@umami-db:5432/{{ umami_db_name }}
       - APP_SECRET={{ umami_app_secret }}
