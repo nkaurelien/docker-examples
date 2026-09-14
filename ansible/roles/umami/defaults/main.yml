@@ -16,3 +16,7 @@ umami_db_name: "umami"
 umami_db_user: "umami"
 umami_db_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/umami-db-password') | trim }}"
 umami_app_secret: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/umami-app-secret') | trim }}"
+
+umami_websites:
+  - name: "Personal Portfolio"
+    domain: "nkaurelien.kamitbrains.fr"
