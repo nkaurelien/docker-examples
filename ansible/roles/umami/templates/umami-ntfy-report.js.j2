@@ -1,6 +1,6 @@
 /**
  * Script d'automatisation des rapports Umami vers ntfy.
- * S'authentifie sur l'API Umami, récupère les statistiques (vues, visiteurs, événements),
+ * S'authentifie sur l'API Umami v2, récupère les statistiques (vues, visiteurs, événements),
  * et génère une synthèse transmise directement via notification push ntfy.
  */
 
@@ -54,6 +54,12 @@ async function getStats(token, websiteId, startAt, endAt) {
   return res.json();
 }
 
+function extractVal(stat) {
+  if (typeof stat === 'number') return stat;
+  if (typeof stat === 'object' && stat !== null && 'value' in stat) return stat.value || 0;
+  return Number(stat) || 0;
+}
+
 async function sendNtfyReport(reportText) {
   if (!NTFY_TOPIC_URL) {
     console.log('\n--- RAPPORT SYNTHÈSE (Console) ---');
@@ -96,18 +102,24 @@ async function run() {
     let reportLines = [`📈 Bilan des 7 derniers jours :`];
 
     for (const site of websites) {
-      const stats = await getStats(token, site.id, startAt, endAt);
-      const visits = stats.visits?.value || 1;
-      const totaltime = stats.totaltime?.value || 0;
-      const bounces = stats.bounces?.value || 0;
+      const rawStats = await getStats(token, site.id, startAt, endAt);
+      
+      const pageviews = extractVal(rawStats.pageviews);
+      const visitors = extractVal(rawStats.visitors);
+      const visits = extractVal(rawStats.visits);
+      const bounces = extractVal(rawStats.bounces);
+      const totaltime = extractVal(rawStats.totaltime);
+
+      const avgTime = visits > 0 ? Math.round(totaltime / visits) : 0;
+      const bounceRate = visits > 0 ? Math.round((bounces / visits) * 100) : 0;
 
       reportLines.push(
         `\n🌐 Site: ${site.name} (${site.domain})`,
-        `• Pages vues : ${stats.pageviews?.value || 0}`,
-        `• Visiteurs uniques : ${stats.visitors?.value || 0}`,
-        `• Sessions : ${stats.visits?.value || 0}`,
-        `• Temps moyen : ${Math.round(totaltime / visits)}s`,
-        `• Taux de rebond : ${Math.round((bounces / visits) * 100)}%`
+        `• Pages vues : ${pageviews}`,
+        `• Visiteurs uniques : ${visitors}`,
+        `• Sessions : ${visits}`,
+        `• Temps moyen : ${avgTime}s`,
+        `• Taux de rebond : ${bounceRate}%`
       );
     }
 
