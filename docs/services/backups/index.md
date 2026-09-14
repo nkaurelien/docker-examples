@@ -8,10 +8,13 @@ Standardized backup and snapshot solutions for self-hosted Docker volumes and Li
 
 ## Recommended Backup Tools
 
-### 1. Restic & Autorestic (Recommended)
+### 1. Restic, Autorestic & GUI Tools (Recommended)
 - **Description**: The modern, fast, lightweight, end-to-end encrypted, and deduplicated backup tool.
 - **Rclone Integration**: Restic natively supports **Rclone** as a backend (`rclone:remote:path`). This enables backing up Docker volumes to over 40+ storage providers (Google Drive, OneDrive, Dropbox, Mega, Backblaze B2, S3, MinIO, SFTP) with client-side encryption.
 - **Autorestic**: A CLI wrapper around Restic that uses simple YAML configuration files to schedule and automate volume backups effortlessly.
+- **Backrest**: Web-based UI and orchestrator for Restic deployed via Docker, providing a web dashboard for cron schedules, snapshot browsing, and notifications.
+- **Restic Browser (`emuell/restic-browser`)**: Cross-platform desktop GUI (Tauri/Rust) to browse snapshots, inspect files, and restore items from Restic repositories locally without using CLI commands.
+
 
 ### 2. Kopia
 - **Description**: Fast and secure backup tool featuring a rich Web GUI for snapshot management, browsing file versions, and quick restores.
