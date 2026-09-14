@@ -4,31 +4,37 @@
         href: https://passwords.{{ homepage_domain }}
         description: Team Password Manager (GPG / PostgreSQL)
         container: passbolt
+        server: my-docker
     - ChangeDetection:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/changedetection.svg
         href: https://changedetection.{{ homepage_domain }}
         description: Web Page & API Surveillance
         container: changedetection
+        server: my-docker
     - IT-Tools:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/it-tools.svg
         href: https://tools.{{ homepage_domain }}
         description: Developer & SysAdmin Tools
         container: it-tools
+        server: my-docker
     - BentoPDF:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/bentopdf.svg
         href: https://pdf.{{ homepage_domain }}
         description: Privacy-First Client-Side PDF Toolkit
         container: bentopdf
+        server: my-docker
     - Stirling-PDF:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/stirling-pdf.svg
         href: https://stirling.{{ homepage_domain }}
         description: Full-Featured Server-Side PDF Suite & OCR
         container: stirling-pdf
+        server: my-docker
     - Paperless-ngx:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/paperless-ngx.svg
         href: https://paperless.{{ homepage_domain }}
         description: Open Source Document Management System & OCR
         container: paperless
+        server: my-docker
 
 - Management & Monitoring:
     - Uptime Kuma:
@@ -36,31 +42,37 @@
         href: https://uptime.{{ homepage_domain }}
         description: Infrastructure Health & Status Monitors
         container: uptime-kuma
+        server: my-docker
     - Dozzle Logs:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/dozzle.svg
         href: https://logs.{{ homepage_domain }}
         description: Real-time Docker Container Log Viewer
         container: dozzle
+        server: my-docker
     - Ntfy:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/ntfy.svg
         href: https://ntfy.{{ homepage_domain }}
         description: Push Notification Service
         container: ntfy
+        server: my-docker
     - Arcane:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/arcane.svg
         href: https://arcane.{{ homepage_domain }}
         description: Docker Container Management UI
         container: arcane
+        server: my-docker
     - Coolify:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/coolify.svg
         href: https://coolify.{{ homepage_domain }}
         description: Self-Hostable PaaS Engine & App Store
         container: coolify
+        server: my-docker
     - Glances:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/glances.svg
         href: https://glances.{{ homepage_domain }}
         description: Real-time System Metrics
         container: glances
+        server: my-docker
     - Cockpit:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/cockpit.svg
         href: https://cockpit.{{ homepage_domain }}
@@ -71,6 +83,7 @@
         href: https://umami.{{ homepage_domain }}
         description: Privacy-Focused Cookie-Free Web Analytics
         container: umami
+        server: my-docker
 
 - Sharing & Productivity:
     - Erugo:
@@ -78,41 +91,49 @@
         href: https://share.{{ homepage_domain }}
         description: WeTransfer-like Self-Hosted File Transfer (Erugo)
         container: erugo
+        server: my-docker
     - PairDrop:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/pairdrop.svg
         href: https://drop.{{ homepage_domain }}
         description: Web-based Peer-to-Peer File Sharing
         container: pairdrop
+        server: my-docker
     - Syncthing:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/syncthing.svg
         href: https://syncthing.{{ homepage_domain }}
         description: Continuous Peer-to-Peer Encrypted File Synchronization
         container: syncthing
+        server: my-docker
     - Seafile:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/seafile.svg
         href: https://seafile.{{ homepage_domain }}
         description: High-Performance Enterprise File Sync & Share Platform
         container: seafile
+        server: my-docker
     - Backrest (Restic):
-        icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/restic.svg
+        icon: https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/restic.png
         href: https://backrest.{{ homepage_domain }}
         description: Restic Backup Web UI & Cron Orchestrator
         container: backrest
+        server: my-docker
     - Databasement:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/postgresql.svg
         href: https://databasement.{{ homepage_domain }}
         description: Multi-Database Backup Manager & Web UI (MySQL, Postgres, Mongo, Redis)
         container: databasement
+        server: my-docker
     - HedgeDoc:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/hedgedoc.svg
         href: https://pad.{{ homepage_domain }}
         description: Collaborative Real-time Markdown Editor
         container: hedgedoc
+        server: my-docker
     - Excalidraw:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/excalidraw.svg
         href: https://draw.{{ homepage_domain }}
         description: Virtual Whiteboard & Collaborative Sketching
         container: excalidraw
+        server: my-docker
 
 - Code & Development:
     - Forgejo Git:
@@ -120,16 +141,19 @@
         href: https://git.{{ homepage_domain }}
         description: Self-Hosted Git Platform & Code Hosting (Forgejo)
         container: forgejo
+        server: my-docker
     - Jenkins:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/jenkins.svg
         href: https://jenkins.{{ homepage_domain }}
         description: Open-Source Automation Server & CI/CD Engine
         container: jenkins
+        server: my-docker
     - GlitchTip:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/glitchtip.svg
         href: https://glitchtip.{{ homepage_domain }}
         description: Open-Source Error Tracking & APM (Sentry Compatible)
         container: glitchtip
+        server: my-docker
 
 - AI & Data:
     - Open WebUI:
@@ -137,11 +161,13 @@
         href: https://ai.{{ homepage_domain }}
         description: User-Friendly LLM & AI Interface for Ollama
         container: open-webui
+        server: my-docker
     - JupyterLab:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/jupyter.svg
         href: https://jupyter.{{ homepage_domain }}
         description: Interactive AI & Data Science Notebook Environment
         container: jupyter
+        server: my-docker
 
 - Security & Authentication:
     - TinyAuth:
@@ -149,11 +175,13 @@
         href: https://auth.{{ homepage_domain }}
         description: ForwardAuth SSO Middleware
         container: tinyauth
+        server: my-docker
     - Traefik:
         icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/traefik.svg
         href: https://traefik.{{ homepage_domain }}
         description: Edge Reverse Proxy & TLS Ingress
         container: traefik
+        server: my-docker
 
 - Documentation & Portals:
     - Personal Portfolio:
@@ -166,4 +194,3 @@
         href: https://nkaurelien.github.io/docker-examples/
         description: Official Docker Examples & IaC Documentation
         ping: https://nkaurelien.github.io/docker-examples/
-
