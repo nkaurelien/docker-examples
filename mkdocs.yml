@@ -139,6 +139,7 @@ nav:
 
   - Automation:
       - Overview: services/automation/index.md
+      - Ofelia Job Scheduler: services/automation/ofelia.md
 
   - Code Management:
       - Overview: services/code-management/index.md
