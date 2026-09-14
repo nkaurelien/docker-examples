@@ -59,6 +59,8 @@
       tags: [syncthing, sync, storage, tools]
     - role: seafile
       tags: [seafile, storage, drive, tools]
+    - role: backrest
+      tags: [backrest, restic, backup, storage, tools]
     - role: homepage
       tags: [homepage, dashboard, portal, home, apps]
     - role: open-webui

@@ -1,0 +1,7 @@
+---
+# Backrest role defaults
+backrest_domain: "{{ traefik_domain | default('kamitbrains.fr') }}"
+backrest_hostname: "backrest.{{ backrest_domain }}"
+backrest_deploy_dir: "/opt/backrest"
+backrest_image: "garethgeorge/backrest:latest"
+backrest_port: 9898

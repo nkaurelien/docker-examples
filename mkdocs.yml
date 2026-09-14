@@ -191,7 +191,9 @@ nav:
           - Erugo: services/file-sharing/erugo.md
           - Syncthing: services/file-sharing/syncthing.md
           - Seafile: services/file-sharing/seafile.md
-      - Backup Tools: services/backups/index.md
+      - Backup Tools:
+          - Overview: services/backups/index.md
+          - Backrest: services/backups/backrest.md
 
   - Data Processing:
       - Overview: services/data-processing/index.md
