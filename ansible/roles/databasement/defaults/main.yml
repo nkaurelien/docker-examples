@@ -6,3 +6,6 @@ databasement_alias_hostname: "db-backup.{{ databasement_domain }}"
 databasement_deploy_dir: "/opt/databasement"
 databasement_image: "davidcrty/databasement:latest"
 databasement_port: 2226
+databasement_admin_email: "{{ lookup('file', playbook_dir + '/../.secrets/databasement-admin-login') | trim }}"
+databasement_admin_password: "{{ lookup('file', playbook_dir + '/../.secrets/databasement-admin-password') | trim }}"
+
