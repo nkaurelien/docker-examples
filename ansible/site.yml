@@ -55,6 +55,10 @@
       tags: [umami, analytics, monitoring, tools]
     - role: paperless
       tags: [paperless, document, dms, tools]
+    - role: syncthing
+      tags: [syncthing, sync, storage, tools]
+    - role: seafile
+      tags: [seafile, storage, drive, tools]
     - role: homepage
       tags: [homepage, dashboard, portal, home, apps]
     - role: open-webui

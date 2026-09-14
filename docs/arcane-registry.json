@@ -1339,6 +1339,42 @@
         "dms"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/12-document-management/paperless-ngx/.env.example"
+    },
+    {
+      "id": "15-media-storage-syncthing",
+      "name": "Syncthing",
+      "description": "Continuous, peer-to-peer (P2P), encrypted file synchronization application.",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/15-media-storage/syncthing/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/15-media-storage/syncthing",
+      "icon_url": "https://raw.githubusercontent.com/selfhst/icons/main/svg/syncthing.svg",
+      "content_hash": "syncthing-compose-hash",
+      "tags": [
+        "syncthing",
+        "file-sharing",
+        "p2p-sync",
+        "storage"
+      ],
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/15-media-storage/syncthing/.env.example"
+    },
+    {
+      "id": "15-media-storage-seafile",
+      "name": "Seafile",
+      "description": "Open-source, high-performance file sync and share solution with encryption and team collaboration.",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/15-media-storage/seafile/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/15-media-storage/seafile",
+      "icon_url": "https://raw.githubusercontent.com/selfhst/icons/main/svg/seafile.svg",
+      "content_hash": "seafile-compose-hash",
+      "tags": [
+        "seafile",
+        "file-sharing",
+        "cloud-storage",
+        "drive"
+      ],
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/15-media-storage/seafile/.env.example"
     }
   ]
 }
