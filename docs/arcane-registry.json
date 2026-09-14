@@ -1375,6 +1375,25 @@
         "drive"
       ],
       "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/15-media-storage/seafile/.env.example"
+    },
+    {
+      "id": "01-infrastructure-backrest",
+      "name": "Backrest",
+      "description": "Web-based UI and backup orchestrator built for Restic with cron scheduling and snapshot browser.",
+      "version": "1.0.0",
+      "author": "nkaurelien",
+      "compose_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/01-infrastructure/backrest/compose.yml",
+      "documentation_url": "https://github.com/nkaurelien/docker-examples/tree/main/compose/01-infrastructure/backrest",
+      "icon_url": "https://raw.githubusercontent.com/selfhst/icons/main/svg/restic.svg",
+      "content_hash": "backrest-compose-hash",
+      "tags": [
+        "backrest",
+        "restic",
+        "backup",
+        "orchestration",
+        "rclone"
+      ],
+      "env_url": "https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/01-infrastructure/backrest/.env.example"
     }
   ]
 }
