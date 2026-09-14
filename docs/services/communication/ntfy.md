@@ -50,6 +50,16 @@ curl \
 
 - **Web Interface**: Open `https://ntfy.kamitbrains.fr` in any browser to view live topics.
 
+---
+
+## Automated Analytics & Monitoring Push Integrations
+
+### Umami Web Analytics Push Reports
+The **Umami** analytics reporting pipeline uses **ntfy** push notifications to transmit automated 7-day traffic summaries (pageviews, unique visitors, sessions, average time, bounce rate) directly to subscribers.
+- **Trigger**: Ofelia Job Scheduler (`0 20 * * *` daily, `0 9 * * 1` weekly).
+- **Documentation**: [Umami Analytics Documentation](../monitoring/umami.md)
+
+
 
 ---
 
