@@ -1,0 +1,64 @@
+x-arcane:
+  icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/postgresql.svg
+  urls:
+    - https://github.com/Portabase/portabase
+
+services:
+  portabase-app:
+    image: portabase/portabase:latest
+    container_name: portabase-app
+    restart: unless-stopped
+    depends_on:
+      portabase-db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-portabase}:${POSTGRES_PASSWORD:-portabase_password}@portabase-db:5432/${POSTGRES_DB:-portabase}
+      - PROJECT_URL=https://portabase.${DOMAIN:-kamitbrains.fr}
+      - PROJECT_SECRET=${PROJECT_SECRET:-portabase_secret_key_change_me}
+      - TZ=Europe/Paris
+    volumes:
+      - portabase-data:/data
+    networks:
+      - traefik-public
+      - portabase-internal
+    labels:
+      - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/postgresql.svg"
+      - "traefik.enable=true"
+      - "traefik.http.routers.portabase.rule=Host(`portabase.${DOMAIN:-kamitbrains.fr}`)"
+      - "traefik.http.routers.portabase.entrypoints=websecure"
+      - "traefik.http.routers.portabase.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.portabase.middlewares=crowdsec-bouncer@file"
+      - "traefik.http.services.portabase.loadbalancer.server.port=80"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:80/api/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  portabase-db:
+    image: postgres:17-alpine
+    container_name: portabase-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-portabase}
+      - POSTGRES_USER=${POSTGRES_USER:-portabase}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-portabase_password}
+    volumes:
+      - portabase-db-data:/var/lib/postgresql/data
+    networks:
+      - portabase-internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-portabase} -d ${POSTGRES_DB:-portabase}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  portabase-data:
+  portabase-db-data:
+
+networks:
+  traefik-public:
+    external: true
+  portabase-internal:
+    driver: bridge
