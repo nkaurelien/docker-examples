@@ -67,6 +67,8 @@
       tags: [backrest, restic, backup, storage, tools]
     - role: databasement
       tags: [databasement, database, backup, storage, tools]
+    - role: portabase
+      tags: [portabase, database, backup, storage, tools]
     - role: homepage
       tags: [homepage, dashboard, portal, home, apps]
     - role: open-webui

@@ -1,0 +1,12 @@
+---
+# Portabase role defaults
+portabase_domain: "{{ traefik_domain | default('kamitbrains.fr') }}"
+portabase_hostname: "portabase.{{ portabase_domain }}"
+portabase_alias_hostname: "portabase-backup.{{ portabase_domain }}"
+portabase_deploy_dir: "/opt/portabase"
+portabase_image: "portabase/portabase:latest"
+portabase_db_user: "portabase"
+portabase_db_name: "portabase"
+portabase_db_password: "{{ lookup('file', playbook_dir + '/../.secrets/portabase-db-password') | trim }}"
+portabase_project_secret: "{{ lookup('file', playbook_dir + '/../.secrets/portabase-project-secret') | trim }}"
+
