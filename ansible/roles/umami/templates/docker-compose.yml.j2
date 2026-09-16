@@ -129,9 +129,9 @@ services:
     labels:
       - "ofelia.enabled=true"
       - "ofelia.job-exec.umami-report-weekly.schedule=0 9 * * 1"
-      - "ofelia.job-exec.umami-report-weekly.command=node /app/scripts/umami-ntfy-report.js"
+      - "ofelia.job-exec.umami-report-weekly.command=node /app/scripts/umami-ntfy-report.js --weekly"
       - "ofelia.job-exec.umami-report-daily.schedule=0 20 * * *"
-      - "ofelia.job-exec.umami-report-daily.command=node /app/scripts/umami-ntfy-report.js"
+      - "ofelia.job-exec.umami-report-daily.command=node /app/scripts/umami-ntfy-report.js --daily"
     command: tail -f /dev/null
     logging:
       driver: "json-file"
