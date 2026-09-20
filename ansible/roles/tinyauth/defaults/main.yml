@@ -8,12 +8,12 @@ tinyauth_secret: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-secret
 
 # List of authorized SSO users & credentials
 tinyauth_users:
-  - username: "admin@kamitbrains.fr"
+  - username: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-admin-login', errors='ignore') | default('admin@example.test', true) | trim }}"
     password: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-admin-password', errors='ignore') | default('change-me-tinyauth-admin-password', true) | trim }}"
   - username: "admin"
     password: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-admin-password', errors='ignore') | default('change-me-tinyauth-admin-password', true) | trim }}"
-  - username: "nkaurelien@gmail.com"
+  - username: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-user-nkaurelien-login', errors='ignore') | default('user@example.test', true) | trim }}"
     password: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-user-nkaurelien-password', errors='ignore') | default('change-me-tinyauth-nkaurelien-password', true) | trim }}"
-  - username: ".secrets/tinyauth-user-etombe-login"
+  - username: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-user-etombe-login', errors='ignore') | default('user2@example.test', true) | trim }}"
     password: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-user-etombe-password', errors='ignore') | default('change-me-tinyauth-etombe-password', true) | trim }}"
 

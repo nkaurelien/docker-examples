@@ -26,8 +26,10 @@ git log --all --full-history --name-only -- ".secrets/" | grep -E "^\.secrets/" 
 ### 2. Rechercher des motifs de secrets spécifiques (Regex / String matching)
 ```bash
 # Rechercher les commits contenant une chaîne spécifique (ex: email ou mot de passe)
-git log -S "admin@kamitbrains.fr" --oneline
-git log -S "[REDACTED]" --oneline
+git log -S "$(cat /tmp/motif-recherche)" --oneline
+
+# Ne jamais écrire le secret recherché directement dans la ligne de commande :
+# il serait enregistré dans l'historique du shell (~/.zsh_history, ~/.bash_history).
 ```
 
 ---
@@ -50,49 +52,54 @@ git clone --mirror file://. ../docker-examples-backup.git
 
 Nous utilisons `git filter-branch` avec un script Python (`/tmp/sanitize_tree.py`) exécuté à chaque commit réécrit.
 
-### 1. Écriture du script d'assainissement (`/tmp/sanitize_tree.py`)
+### 1. Construction de la table de remplacement
 
-```python
-import os
-import glob
-import re
+`git filter-repo` attend un fichier de motifs, à raison d'une règle par ligne :
 
-SECRETS_DIR = ".secrets"
+```text
+literal:<valeur-a-purger>==>[REDACTED]
+regex:[\w.-]+@exemple\.test==>.secrets/admin-login
+```
 
-# Table de remplacement Regex (Motif -> Valeur assainie)
-REPLACEMENTS = [
-    (r"admin@kamitbrains\.fr", ".secrets/admin-login"),
-    (r"nkaurelien@gmail\.com", ".secrets/user-nkaurelien-login"),
-    (r"etombe_ndedi@hotmail\.fr", ".secrets/user-etombe-login"),
-    (r"kamitbrains_admin", ".secrets/forgejo-admin-login"),
-    # Mots de passe & Clés secrètes
-    (r"[REDACTED]", "[REDACTED]"),
-    (r"[REDACTED]", "[REDACTED]"),
-    (r"[REDACTED]", "[REDACTED]"),
-    (r"[REDACTED]", "[REDACTED]"),
-    (r"[REDACTED]", "[REDACTED]"),
-]
+> [!CAUTION]
+> **Ce fichier est un inventaire complet de vos secrets en clair.**
+> C'est le piège principal de toute la procédure, et il se referme sans bruit : on
+> rédige la table, on purge, puis on documente la méthode « pour la prochaine fois »
+> en y recopiant la table — et le commit de documentation réintroduit dans
+> l'historique exactement ce que la purge venait d'en retirer.
+>
+> Règles non négociables :
+> - Le fichier vit dans `/tmp`, **jamais** dans l'arborescence du dépôt.
+> - Il est détruit dès la purge terminée (`shred -u` plutôt que `rm`).
+> - La documentation décrit la **méthode**, jamais les **valeurs**.
+> - Si le dépôt publie un site (MkDocs, GitHub Pages), vérifier que la page générée
+>   ne contient pas non plus ces valeurs : le HTML publié est un canal d'exposition
+>   distinct de l'historique Git, et indexable par les moteurs de recherche.
 
-if os.path.exists(SECRETS_DIR):
-    for filepath in glob.glob(os.path.join(SECRETS_DIR, "*.md")):
-        try:
-            with open(filepath, "r", encoding="utf-8") as f:
-                content = f.read()
-            new_content = content
-            for pattern, repl in REPLACEMENTS:
-                new_content = re.sub(pattern, repl, new_content)
-            if new_content != content:
-                with open(filepath, "w", encoding="utf-8") as f:
-                    f.write(new_content)
-        except Exception:
-            pass
+Génération de la table à partir des fichiers de secrets non versionnés, sans jamais
+recopier une valeur à la main :
+
+```bash
+# Les valeurs proviennent de .secrets/, ignoré par git
+for f in .secrets/*-password .secrets/*-token; do
+  printf 'literal:%s==>[REDACTED]\n' "$(cat "$f")"
+done > /tmp/purge-rules.txt
+chmod 600 /tmp/purge-rules.txt
 ```
 
 ### 2. Exécution du filtrage sur l'ensemble des révisions (`HEAD`)
 
+`git filter-branch` est officiellement déconseillé par Git (lent, et sujet à des
+corruptions silencieuses). L'outil recommandé est **`git-filter-repo`** :
+
 ```bash
-FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch -f --tree-filter 'python3 /tmp/sanitize_tree.py' HEAD
+# Sur TOUTES les références, pas seulement HEAD :
+# une branche oubliée (gh-pages, une branche de feature) conserverait le secret.
+git filter-repo --replace-text /tmp/purge-rules.txt --force
 ```
+
+> `git filter-repo` retire le remote `origin` après réécriture, volontairement, pour
+> éviter un `push` réflexe. Il faut le rétablir explicitement à l'étape 5.
 
 ---
 
@@ -134,7 +141,12 @@ git push origin main --force
 ```bash
 # Supprimer la branche de backup une fois le succès confirmé
 git branch -D backup-main-before-purge
-rm -f /tmp/sanitize_tree.py
+
+# Détruire la table de motifs — elle contient les secrets en clair
+shred -u /tmp/purge-rules.txt
+
+# Le clone miroir de sauvegarde contient ENCORE les secrets : le détruire aussi
+rm -rf ../docker-examples-backup.git
 ```
 
 ---
