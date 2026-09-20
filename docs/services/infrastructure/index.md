@@ -18,9 +18,9 @@ Core infrastructure services for networking, reverse proxy, SSL/TLS management, 
 
 ```mermaid
 graph LR
-    Client -->|DNS Query| Bind9
-    Bind9 -->|Resolve| Traefik
-    Traefik -->|Route| Services
+    Client -->|"DNS Query"| Bind9
+    Bind9 -->|"Resolve"| Traefik
+    Traefik -->|"Route"| Services
 ```
 
 ## Common Configuration

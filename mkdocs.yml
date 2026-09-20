@@ -110,6 +110,7 @@ nav:
 
   - Orchestration:
       - Overview: services/orchestration/index.md
+      - K3s Kubernetes (K1 Mini): services/orchestration/k3s.md
       - Portainer: services/orchestration/portainer.md
       - Rancher: services/orchestration/rancher.md
       - Coolify: services/orchestration/coolify.md

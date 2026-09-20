@@ -3,3 +3,4 @@
 .vault_pass
 group_vars/webservers_fr.yml
 group_vars/webservers_tn.yml
+airgap/

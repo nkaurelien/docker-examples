@@ -13,3 +13,6 @@ roles:
 
 collections:
   - name: community.docker
+  - name: https://github.com/k3s-io/k3s-ansible.git
+    type: git
+    version: master

@@ -1,36 +1,62 @@
-# Index des Secrets du Projet
+# 🔐 Registre des Secrets & Identifiants Homelab
 
-Le dossier `.secrets/` contient l'ensemble des jetons d'API, mots de passe et clés cryptographiques utilisés par **Ansible**, le **SDK Cloudflare** et nos stacks **Docker**.
-
-> ⚠️ **Sécurité** : Le dossier `.secrets/` est strictement ignoré par Git via le fichier `.gitignore`. Aucun secret ne doit jamais être commité en clair dans le dépôt.
+Ce dossier `.secrets/` est ignoré par Git (via `.gitignore` : `.secrets/*`, excepté les fichiers `.md` sans valeurs sensibles ou ce guide).
 
 ---
 
-## 📋 Inventaire des secrets et documentation associée
+## 📋 Répertoire des Accès et Tokens
 
-| Composant | Fichiers de secrets | Fichier de documentation |
-|---|---|---|
-| **Serveur Contabo SSH** | `ssh-contabo-server-ip`<br>`ssh-contabo-server-user-login`<br>`ssh-contabo-server-password` | [**`ssh-contabo.md`**](./ssh-contabo.md) |
-| **Serveur Homelab SSH** | `ssh-kamitbrains-homelab-fqdn`<br>`ssh-kamitbrains-homelab-ip`<br>`ssh-kamitbrains-homelab-mac`<br>`ssh-kamitbrains-homelab-user-login`<br>`ssh-kamitbrains-homelab-password` | [**`ssh-kamitbrains-homelab.md`**](./ssh-kamitbrains-homelab.md) |
-| **API Cloudflare** | `cloudflare-account-id`<br>`cloudflare-api-key` | [**`cloudflare.md`**](./cloudflare.md) |
-| **Arcane PaaS Manager** | `arcane-jwt-secret`<br>`arcane-encryption-key` | [**`arcane.md`**](./arcane.md) |
-| **Glances Monitoring** | `glances-basic-auth-password` | [**`glances.md`**](./glances.md) |
-| **Ntfy Notification Service** | `ntfy-admin-password`<br>`ntfy-topic` | [**`ntfy.md`**](./ntfy.md) |
-
+### 1. Headlamp (Dashboard Kubernetes)
+- **URL** : `https://headlamp.kamitbrains-minipc-k1.lab`
+- **Méthode** : Token Bearer (ServiceAccount `headlamp` avec ClusterRole `cluster-admin`)
+- **Fichier du Token** : `.secrets/headlamp-token.txt`
+- **Commande de régénération si expiré** :
+  ```bash
+  kubectl --context k3s-ansible -n headlamp create token headlamp --duration=8760h
+  ```
 
 ---
 
-## 🛠️ Génération automatique des secrets manquants
+### 2. Rancher Server
+- **URL** : `https://rancher.kamitbrains-minipc-k1.lab`
+- **Utilisateur initial** : `admin`
+- **Bootstrap Password initial** : `admin`
+- **Fichier des identifiants** : `.secrets/rancher-credentials.txt`
 
-Pour régénérer ou créer les secrets manquants en une ligne Python :
+---
 
-```bash
-python3 -c "
-import secrets, os
-s = '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets'
-open(f'{s}/arcane-jwt-secret', 'w').write(secrets.token_hex(32) + '\n')
-open(f'{s}/arcane-encryption-key', 'w').write(secrets.token_hex(32) + '\n')
-open(f'{s}/glances-basic-auth-password', 'w').write(secrets.token_urlsafe(16) + '\n')
-print('Secrets générés avec succès.')
-"
-```
+### 3. Databases (Namespace `databases`)
+
+#### A. Apache CouchDB 3.4
+- **URL Web (Fauxton)** : `https://couchdb.kamitbrains-minipc-k1.lab`
+- **Utilisateur** : `admin`
+- **Mot de passe par défaut** : `couchdb_secure_password`
+- **Secret Erlang** : `couchdb_homelab_secret_key`
+- **Fichier** : `.secrets/couchdb.env`
+
+#### B. PostgreSQL 16 (Interne)
+- **Service DNS interne** : `postgres.databases.svc.cluster.local:5432`
+- **Utilisateur** : `postgres`
+- **Mot de passe par défaut** : `postgres_secure_password`
+- **Base par défaut** : `homelab`
+- **Fichier** : `.secrets/postgres.env`
+
+---
+
+### 4. Monitoring (Namespace `monitoring`)
+
+#### Umami Analytics
+- **URL Web** : `https://analytics.kamitbrains-minipc-k1.lab`
+- **Base de données dédiée** : `umami-db.monitoring.svc.cluster.local:5432` (user `umami` / pass `umami_secure_password`)
+- **Compte Administrateur Umami initial** :
+  - **Login** : `admin`
+  - **Mot de passe** : `umami`
+- **Fichier** : `.secrets/umami.env`
+
+---
+
+### 5. Services IA & Speech-To-Text (Namespace `ai`)
+
+#### Faster-Whisper (Wyoming STT)
+- **Service TCP interne** : `faster-whisper.ai.svc.cluster.local:10300`
+- **Protocole** : Wyoming (binaire, sans authentification par défaut, restreint au réseau interne du cluster).

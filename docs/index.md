@@ -19,6 +19,7 @@ Collection de configurations Docker Compose prêtes à l'emploi pour services se
 
 ### Orchestration
 
+- **[K3s Kubernetes (K1 Mini)](services/orchestration/k3s.md)** - Cluster Kubernetes K3s Homelab (Air-Gap, Traefik, cert-manager)
 - **[Portainer](services/orchestration/portainer.md)** - Docker/Kubernetes UI
 - **[Rancher](services/orchestration/rancher.md)** - Kubernetes management
 - **[Coolify](services/orchestration/coolify.md)** - PaaS self-hosted (alt. Heroku/Vercel)

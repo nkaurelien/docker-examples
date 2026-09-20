@@ -42,3 +42,26 @@ ansible-deploy:
 ansible-galaxy-install:
 	@echo "Installing Galaxy roles from requirements.yml..."
 	@cd $(ANSIBLE_DIR) && ansible-galaxy role install -r requirements.yml --force
+	@cd $(ANSIBLE_DIR) && ansible-galaxy collection install -r requirements.yml --force
+
+# --- K3s Cluster Targets (K1 Mini) ---
+.PHONY: k3s-deploy k3s-reset k3s-status k3s-airgap-prep
+
+k3s-airgap-prep:
+	@echo "Preparing Air-Gap artifacts for K3s..."
+	@$(ANSIBLE_DIR)/scripts/prepare-airgap.sh v1.31.12+k3s1 amd64
+
+k3s-deploy:
+	@./scripts/banner.py "K3S DEPLOY" "Deploying K3s on K1 Mini (192.168.0.210)" slant cyan
+	@cd $(ANSIBLE_DIR) && ansible-playbook -i k3s-io-inventory.yml k3s-io-deploy.yml
+
+k3s-reset:
+	@./scripts/banner.py "K3S RESET" "Teardown & Clean K3s on K1 Mini" slant yellow
+	@cd $(ANSIBLE_DIR) && ansible-playbook -i k3s-io-inventory.yml k3s-io-reset.yml
+
+k3s-status:
+	@./scripts/banner.py "K3S STATUS" "Acemagic K1 Mini • Kubernetes v1.31.12" slant green
+	@echo "=== K3s Nodes ==="
+	@kubectl --context k3s-ansible get nodes -o wide
+	@echo "\n=== K3s Pods ==="
+	@kubectl --context k3s-ansible get pods -A
