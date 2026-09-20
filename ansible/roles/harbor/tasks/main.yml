@@ -1,0 +1,65 @@
+---
+- name: Ensure Harbor deployment and data directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ harbor_deploy_dir }}"
+    - "{{ harbor_data_dir }}"
+
+- name: Check if Harbor prepare script exists
+  ansible.builtin.stat:
+    path: "{{ harbor_deploy_dir }}/prepare"
+  register: harbor_prepare_stat
+
+- name: Download Harbor online installer tarball
+  ansible.builtin.get_url:
+    url: "https://github.com/goharbor/harbor/releases/download/{{ harbor_version }}/harbor-online-installer-{{ harbor_version }}.tgz"
+    dest: "/tmp/harbor-installer-{{ harbor_version }}.tgz"
+    mode: '0644'
+  when: not harbor_prepare_stat.stat.exists
+
+- name: Extract Harbor online installer into deployment directory
+  ansible.builtin.unarchive:
+    src: "/tmp/harbor-installer-{{ harbor_version }}.tgz"
+    dest: "{{ harbor_deploy_dir }}"
+    remote_src: true
+    extra_opts:
+      - --strip-components=1
+  when: not harbor_prepare_stat.stat.exists
+
+- name: Deploy harbor.yml configuration file
+  ansible.builtin.template:
+    src: harbor.yml.j2
+    dest: "{{ harbor_deploy_dir }}/harbor.yml"
+    mode: '0640'
+  register: harbor_config_template
+
+- name: Run Harbor prepare script to generate internal stack configuration
+  ansible.builtin.command:
+    cmd: "./prepare {{ '--with-trivy' if harbor_trivy_enabled else '' }}"
+    chdir: "{{ harbor_deploy_dir }}"
+  when: harbor_config_template.changed or not harbor_prepare_stat.stat.exists
+
+- name: Deploy Docker Compose override configuration for Traefik routing
+  ansible.builtin.template:
+    src: docker-compose.override.yml.j2
+    dest: "{{ harbor_deploy_dir }}/docker-compose.override.yml"
+    mode: '0644'
+
+- name: Start Harbor container stack via docker compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ harbor_deploy_dir }}"
+    state: present
+    remove_orphans: true
+
+- name: Install and enable Harbor systemd service for boot startup
+  ansible.builtin.include_role:
+    name: systemd-service
+  vars:
+    systemd_service_name: "harbor"
+    systemd_service_description: "Harbor Cloud-Native OCI Registry & Artifact Repository Service"
+    systemd_compose_dir: "{{ harbor_deploy_dir }}"
+    systemd_compose_files: "-f docker-compose.yml -f docker-compose.override.yml"
+    systemd_project_name: "harbor"

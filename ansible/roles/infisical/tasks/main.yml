@@ -1,0 +1,28 @@
+---
+- name: Ensure Infisical deployment directory exists
+  ansible.builtin.file:
+    path: "{{ infisical_compose_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Deploy Infisical docker-compose configuration
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ infisical_compose_dir }}/docker-compose.yml"
+    mode: '0644'
+
+- name: Start Infisical container stack via docker compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ infisical_compose_dir }}"
+    state: present
+    remove_orphans: true
+
+- name: Install and enable Infisical systemd service for boot startup
+  ansible.builtin.include_role:
+    name: systemd-service
+  vars:
+    systemd_service_name: "infisical"
+    systemd_service_description: "Infisical Secrets Management Service"
+    systemd_compose_dir: "{{ infisical_compose_dir }}"
+    systemd_compose_files: "-f docker-compose.yml"
+    systemd_project_name: "infisical"

@@ -1,0 +1,74 @@
+# =============================================================================
+# Standalone Infisical Stack with Shared / Dedicated Postgres & Redis
+# Documentation : https://infisical.com/docs/self-hosting/deployment-options/standalone-infisical
+# =============================================================================
+
+services:
+  infisical:
+    image: infisical/infisical:latest
+    container_name: infisical-standalone
+    restart: unless-stopped
+    depends_on:
+      infisical-db:
+        condition: service_healthy
+      infisical-redis:
+        condition: service_healthy
+    environment:
+      - NODE_ENV=production
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY}
+      - AUTH_SECRET=${AUTH_SECRET}
+      - SITE_URL=${SITE_URL:-http://localhost:8080}
+      - DB_CONNECTION_URI=postgresql://${DB_USER:-infisical}:${DB_PASSWORD:-infisical_secure_password}@infisical-db:5432/${DB_NAME:-infisical}
+      - REDIS_URL=redis://infisical-redis:6379
+    ports:
+      - "8080:8080"
+    networks:
+      - infisical-network
+
+  # Instance PostgreSQL (peut être mutualisée si vous pointez vers un PG existant)
+  infisical-db:
+    image: postgres:16-alpine
+    container_name: infisical-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=${DB_NAME:-infisical}
+      - POSTGRES_USER=${DB_USER:-infisical}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-infisical_secure_password}
+    volumes:
+      - infisical-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-infisical} -d ${DB_NAME:-infisical}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - infisical-network
+
+  # Instance Valkey (fork open-source de Redis sous Linux Foundation, suite au
+  # passage de Redis sous licence RSALv2/SSPLv1). Drop-in : protocole RESP identique.
+  # Peut être mutualisée avec une instance Valkey existante.
+  infisical-redis:
+    image: valkey/valkey:8-alpine
+    container_name: infisical-redis
+    restart: unless-stopped
+    command: ["valkey-server", "--appendonly", "yes"]
+    volumes:
+      - infisical-redis-data:/data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - infisical-network
+
+volumes:
+  infisical-db-data:
+    driver: local
+  infisical-redis-data:
+    driver: local
+
+networks:
+  infisical-network:
+    name: infisical-network
+    driver: bridge

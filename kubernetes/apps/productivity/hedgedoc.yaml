@@ -1,0 +1,107 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: productivity
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: hedgedoc-uploads
+  namespace: productivity
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hedgedoc
+  namespace: productivity
+  labels:
+    app: hedgedoc
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: hedgedoc
+  template:
+    metadata:
+      labels:
+        app: hedgedoc
+    spec:
+      containers:
+        - name: hedgedoc
+          image: lscr.io/linuxserver/hedgedoc:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: CMD_DOMAIN
+              value: "pad.kamitbrains-minipc-k1.lab"
+            - name: CMD_PROTOCOL_USEREVERSEPROXY
+              value: "true"
+            - name: CMD_ALLOW_ANONYMOUS
+              value: "true"
+            - name: CMD_ALLOW_FREEURL
+              value: "true"
+          ports:
+            - containerPort: 3000
+              name: http
+          volumeMounts:
+            - name: uploads
+              mountPath: /hedgedoc/public/uploads
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+      volumes:
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: hedgedoc-uploads
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hedgedoc
+  namespace: productivity
+spec:
+  type: ClusterIP
+  selector:
+    app: hedgedoc
+  ports:
+    - port: 3000
+      targetPort: 3000
+      name: http
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hedgedoc
+  namespace: productivity
+  annotations:
+    cert-manager.io/cluster-issuer: homelab-ca-issuer
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - pad.kamitbrains-minipc-k1.lab
+      secretName: hedgedoc-tls
+  rules:
+    - host: pad.kamitbrains-minipc-k1.lab
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hedgedoc
+                port:
+                  number: 3000

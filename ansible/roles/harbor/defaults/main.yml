@@ -1,0 +1,16 @@
+---
+# Harbor role defaults
+harbor_version: "v2.11.1"
+harbor_domain: "kamitbrains-minipc-k1.lab"
+harbor_hostname: "harbor.{{ harbor_domain }}"
+harbor_deploy_dir: "/opt/harbor"
+harbor_data_dir: "/opt/harbor/data"
+
+# Secrets lookup (relative to playbook_dir)
+harbor_admin_username: "{{ lookup('file', playbook_dir + '/../.secrets/harbor-admin-login', errors='ignore') | default('admin', true) | trim }}"
+harbor_admin_password: "{{ lookup('file', playbook_dir + '/../.secrets/harbor-admin-password', errors='ignore') | default('<INSERT_HARBOR_ADMIN_PASSWORD>', true) | trim }}"
+harbor_db_password: "{{ lookup('file', playbook_dir + '/../.secrets/harbor-db-password', errors='ignore') | default('<INSERT_HARBOR_DB_PASSWORD>', true) | trim }}"
+harbor_secret_key: "{{ lookup('file', playbook_dir + '/../.secrets/harbor-secret-key', errors='ignore') | default('<INSERT_HARBOR_SECRET_KEY>', true) | trim }}"
+
+# Scanner options
+harbor_trivy_enabled: true

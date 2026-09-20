@@ -1,0 +1,7 @@
+---
+# tasks file for openstack
+- name: Display OpenStack role notice
+  ansible.builtin.debug:
+    msg:
+      - "Le rôle OpenStack est actuellement en statut d'étude/documentation."
+      - "Veuillez consulter roles/openstack/README.md et roles/openstack/TODO.md."

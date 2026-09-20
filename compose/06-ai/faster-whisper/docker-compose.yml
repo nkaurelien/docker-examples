@@ -1,0 +1,26 @@
+services:
+  faster-whisper:
+    image: lscr.io/linuxserver/faster-whisper:latest
+    container_name: faster-whisper
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+      - WHISPER_MODEL=base-int8    # Modèles dispo: tiny, base, small, medium, large-v3 (-int8 recommandé sur CPU)
+      - WHISPER_BEAM=1             # Taille de faisceau (1 = vitesse maximale)
+      - WHISPER_LANG=auto          # Détection automatique ou 'fr', 'en'
+    volumes:
+      - whisper-data:/config
+    ports:
+      - "10300:10300"              # Port Wyoming standard
+    networks:
+      - homelab-network
+
+volumes:
+  whisper-data:
+    driver: local
+
+networks:
+  homelab-network:
+    external: true

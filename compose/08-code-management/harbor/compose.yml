@@ -1,0 +1,124 @@
+# Harbor Enterprise OCI & Artifact Registry Stack
+# Standalone Reference Stack for Docker Compose
+
+x-arcane:
+  icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/harbor.svg
+  urls:
+    - https://goharbor.io/
+    - https://github.com/goharbor/harbor
+
+services:
+  harbor-db:
+    image: goharbor/harbor-db:v2.11.1
+    container_name: harbor-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=${HARBOR_DB_PASSWORD:-harbor_db_secret}
+    volumes:
+      - harbor-db-data:/var/lib/postgresql/data
+    networks:
+      - harbor-internal
+
+  harbor-redis:
+    image: goharbor/redis-photon:v2.11.1
+    container_name: harbor-redis
+    restart: unless-stopped
+    networks:
+      - harbor-internal
+
+  harbor-portal:
+    image: goharbor/harbor-portal:v2.11.1
+    container_name: harbor-portal
+    restart: unless-stopped
+    networks:
+      - harbor-internal
+
+  harbor-core:
+    image: goharbor/harbor-core:v2.11.1
+    container_name: harbor-core
+    restart: unless-stopped
+    depends_on:
+      - harbor-db
+      - harbor-redis
+    environment:
+      - PORT=8080
+      - HARBOR_ADMIN_PASSWORD=${HARBOR_ADMIN_PASSWORD:-admin}
+      - POSTGRESQL_PASSWORD=${HARBOR_DB_PASSWORD:-harbor_db_secret}
+      - SECRET_KEY=${HARBOR_SECRET_KEY:-harbor_secret_key_32chars}
+    networks:
+      - harbor-internal
+
+  harbor-jobservice:
+    image: goharbor/harbor-jobservice:v2.11.1
+    container_name: harbor-jobservice
+    restart: unless-stopped
+    depends_on:
+      - harbor-core
+    networks:
+      - harbor-internal
+
+  harbor-registry:
+    image: goharbor/registry-photon:v2.11.1
+    container_name: harbor-registry
+    restart: unless-stopped
+    depends_on:
+      - harbor-core
+    volumes:
+      - harbor-storage:/storage
+    networks:
+      - harbor-internal
+
+  harbor-registryctl:
+    image: goharbor/harbor-registryctl:v2.11.1
+    container_name: harbor-registryctl
+    restart: unless-stopped
+    depends_on:
+      - harbor-registry
+    networks:
+      - harbor-internal
+
+  harbor-trivy:
+    image: goharbor/trivy-adapter-photon:v2.11.1
+    container_name: harbor-trivy
+    restart: unless-stopped
+    volumes:
+      - harbor-trivy-cache:/home/scanner/.cache
+    networks:
+      - harbor-internal
+
+  harbor-proxy:
+    image: goharbor/nginx-photon:v2.11.1
+    container_name: harbor-proxy
+    restart: unless-stopped
+    depends_on:
+      - harbor-portal
+      - harbor-core
+      - harbor-registry
+    networks:
+      - traefik-public
+      - harbor-internal
+    labels:
+      - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/harbor.svg"
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-public"
+      - "traefik.http.routers.harbor.rule=Host(`${HARBOR_HOSTNAME:-harbor.kamitbrains-minipc-k1.lab}`) || Host(`harbor.kamitbrains.local`) || Host(`harbor.kamitbrains.fr`)"
+      - "traefik.http.routers.harbor.entrypoints=websecure"
+      - "traefik.http.routers.harbor.tls=true"
+      - "traefik.http.services.harbor.loadbalancer.server.port=8080"
+      - "traefik.http.routers.harbor-http.rule=Host(`${HARBOR_HOSTNAME:-harbor.kamitbrains-minipc-k1.lab}`) || Host(`harbor.kamitbrains.local`) || Host(`harbor.kamitbrains.fr`)"
+      - "traefik.http.routers.harbor-http.entrypoints=web"
+      - "traefik.http.routers.harbor-http.service=harbor"
+
+volumes:
+  harbor-db-data:
+    name: harbor-db-data
+  harbor-storage:
+    name: harbor-storage
+  harbor-trivy-cache:
+    name: harbor-trivy-cache
+
+networks:
+  traefik-public:
+    external: true
+  harbor-internal:
+    internal: true

@@ -1,0 +1,54 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kaniko-build-fastapi
+  namespace: default
+  labels:
+    app.kubernetes.io/name: kaniko-builder
+spec:
+  ttlSecondsAfterFinished: 600
+  backoffLimit: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: kaniko-builder
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: kaniko
+          image: gcr.io/kaniko-project/executor:latest
+          args:
+            # Contexte de build. Le dépôt Git est le défaut : Kaniko clone lui-même,
+            # aucun volume à pré-remplir.
+            - "--context=git://github.com/nkaurelien/docker-examples.git#refs/heads/main"
+            - "--context-sub-path=kubernetes/apps/fastapi-boilerplate"
+            # Alternatives :
+            #   - "--context=s3://mon-bucket/context.tar.gz"
+            #   - "--context=dir:///workspace"   <- exige un PVC réellement peuplé,
+            #     pas un emptyDir : celui-ci est vide au démarrage et le build échoue.
+            - "--dockerfile=Dockerfile"
+            - "--destination=ghcr.io/kamitbrains/fastapi-api:latest"
+            # Cache porté par le registre. --cache-dir sur un emptyDir serait inutile :
+            # le volume est détruit avec le pod, donc jamais réutilisé d'un build à l'autre.
+            - "--cache=true"
+            - "--cache-repo=ghcr.io/kamitbrains/fastapi-api/cache"
+            # Optionnel : si le registre local est en HTTP non-sécurisé :
+            # - "--insecure"
+            # - "--skip-tls-verify"
+          volumeMounts:
+            - name: kaniko-secret
+              mountPath: /kaniko/.docker
+          resources:
+            requests:
+              cpu: 500m
+              memory: 512Mi
+            limits:
+              cpu: 2000m
+              memory: 2048Mi
+      volumes:
+        - name: kaniko-secret
+          secret:
+            secretName: kaniko-registry-secret
+            items:
+              - key: .dockerconfigjson
+                path: config.json

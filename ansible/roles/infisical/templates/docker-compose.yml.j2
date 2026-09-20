@@ -1,0 +1,24 @@
+services:
+  infisical:
+    image: {{ infisical_image }}
+    container_name: infisical
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - ENCRYPTION_KEY={{ infisical_encryption_key }}
+      - AUTH_SECRET={{ infisical_auth_secret }}
+      - SITE_URL={{ infisical_site_url }}
+      - DB_CONNECTION_URI=postgresql://{{ infisical_db_user }}:{{ infisical_db_password }}@{{ infisical_db_host }}:{{ infisical_db_port }}/{{ infisical_db_name }}
+      - REDIS_URL=redis://{{ infisical_redis_host }}:{{ infisical_redis_port }}
+    networks:
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.infisical.rule=Host(`{{ infisical_site_url | regex_replace('^https?://', '') }}`)"
+      - "traefik.http.routers.infisical.entrypoints=websecure"
+      - "traefik.http.routers.infisical.tls.certresolver=letsencrypt"
+      - "traefik.http.services.infisical.loadbalancer.server.port={{ infisical_port }}"
+
+networks:
+  traefik-public:
+    external: true

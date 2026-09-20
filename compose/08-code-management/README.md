@@ -9,6 +9,8 @@ Source code hosting, artifact repositories, and package management.
 ## Existing Projects
 
 - **docker-registry/** - Private Docker registry
+- **forgejo/** - Self-hosted Git forge
+- **harbor/** - Enterprise OCI & Artifact Registry
 - **jfrog-artifactory/** - Universal artifact repository
 
 ## Suggested Open Source Services

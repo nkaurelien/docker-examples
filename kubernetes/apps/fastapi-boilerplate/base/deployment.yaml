@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-api
+  labels:
+    app.kubernetes.io/name: fastapi-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: fastapi-api
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: fastapi-api
+    spec:
+      # L'image est construite par le Dockerfile de ce dossier (uvicorn direct, 1 worker
+      # par pod) et poussée par le Job Kaniko de infrastructure/ci-cd/kaniko/.
+      # Ne pas revenir à tiangolo/uvicorn-gunicorn-fastapi : Gunicorn lance un worker par
+      # cœur CPU à l'intérieur du pod et entre en conflit avec le scaling horizontal du HPA.
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+      containers:
+        - name: api
+          image: ghcr.io/kamitbrains/fastapi-api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+              name: http
+          envFrom:
+            - configMapRef:
+                name: api-config
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+            # readOnlyRootFilesystem non activé : à valider d'abord avec la lib HTTP
+            # utilisée (certains clients écrivent dans /tmp) avant de durcir.
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi

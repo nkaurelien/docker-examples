@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: code-management
+---
+# Remarque Déploiement Kubernetes / Helm :
+# Harbor est une application complexe multi-services (10 conteneurs).
+# Sur Kubernetes / K3s, le moyen officiel et recommandé est d'installer le Helm Chart goharbor/harbor :
+#
+# 1. Ajouter le repo Helm officiel :
+#    helm repo add harbor https://helm.goharbor.io
+#    helm repo update
+#
+# 2. Déployer via Helm avec injection du secret non-versionné :
+#    helm upgrade --install harbor harbor/harbor \
+#      --namespace code-management \
+#      --create-namespace \
+#      -f helm/values/harbor/values.yaml \
+#      --set harborAdminPassword="$(cat .secrets/harbor-admin-password)"

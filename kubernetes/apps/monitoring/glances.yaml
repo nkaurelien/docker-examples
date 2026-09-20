@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: glances
+  namespace: monitoring
+  labels:
+    app: glances
+spec:
+  selector:
+    matchLabels:
+      app: glances
+  template:
+    metadata:
+      labels:
+        app: glances
+    spec:
+      hostNetwork: true
+      hostPID: true
+      containers:
+        - name: glances
+          image: nicolargo/glances:latest-full
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: GLANCES_OPT
+              value: "-w"
+          ports:
+            - containerPort: 61208
+              name: web
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 384Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: glances
+  namespace: monitoring
+spec:
+  type: ClusterIP
+  selector:
+    app: glances
+  ports:
+    - port: 61208
+      targetPort: 61208
+      name: web
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: glances
+  namespace: monitoring
+  annotations:
+    cert-manager.io/cluster-issuer: homelab-ca-issuer
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - glances.kamitbrains-minipc-k1.lab
+      secretName: glances-tls
+  rules:
+    - host: glances.kamitbrains-minipc-k1.lab
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: glances
+                port:
+                  number: 61208

@@ -1,0 +1,11 @@
+---
+# Faster-Whisper Ansible role defaults
+faster_whisper_image: "lscr.io/linuxserver/faster-whisper:latest"
+faster_whisper_compose_dir: "/opt/faster-whisper"
+faster_whisper_port: 10300
+faster_whisper_puid: "1000"
+faster_whisper_pgid: "1000"
+faster_whisper_tz: "Europe/Paris"
+faster_whisper_model: "base-int8"
+faster_whisper_beam: 1
+faster_whisper_lang: "auto"

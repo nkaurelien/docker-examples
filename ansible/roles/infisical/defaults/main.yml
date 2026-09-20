@@ -1,0 +1,19 @@
+---
+# Infisical Ansible role defaults
+infisical_image: "infisical/infisical:latest"
+infisical_compose_dir: "/opt/infisical"
+infisical_port: 8080
+infisical_site_url: "https://secrets.{{ traefik_domain | default('kamitbrains.fr') }}"
+infisical_encryption_key: "6c2249821f29b253815f3a1a631b0bd8"
+infisical_auth_secret: "/7zCsI4mohBuDW7hkl19Y/bRfRDoCn3KblQrYgE6qxA="
+# Paramètres DB & Redis (mutualisables)
+infisical_use_shared_postgres: true
+infisical_db_host: "passbolt-db"
+infisical_db_port: 5432
+infisical_db_name: "infisical"
+infisical_db_user: "postgres"
+infisical_db_password: "change_me_secure_db_password"
+
+infisical_use_shared_redis: true
+infisical_redis_host: "glitchtip-valkey"
+infisical_redis_port: 6379

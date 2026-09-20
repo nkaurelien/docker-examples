@@ -145,6 +145,13 @@ nav:
   - Code Management:
       - Overview: services/code-management/index.md
       - Gitea: services/code-management/gitea.md
+      - Harbor Registry: services/code-management/harbor.md
+
+  - Articles & Deep Dives:
+      - Harbor Password Hashing: articles/harbor-password-hashing-deep-dive.md
+      - Harbor Dual-Stack Architecture: articles/harbor-dual-stack-k3s-docker-traefik.md
+      - Zero-Trust Ansible Secrets: articles/harbor-zero-trust-ansible-secrets.md
+      - Container Syslog Logging: articles/harbor-observability-syslog-loggly.md
 
   - App & Server Management:
       - Overview: services/app-management/index.md

@@ -1,0 +1,26 @@
+services:
+  faster-whisper:
+    image: "{{ faster_whisper_image }}"
+    container_name: faster-whisper
+    restart: unless-stopped
+    environment:
+      - PUID={{ faster_whisper_puid }}
+      - PGID={{ faster_whisper_pgid }}
+      - TZ={{ faster_whisper_tz }}
+      - WHISPER_MODEL={{ faster_whisper_model }}
+      - WHISPER_BEAM={{ faster_whisper_beam }}
+      - WHISPER_LANG={{ faster_whisper_lang }}
+    volumes:
+      - whisper-data:/config
+    ports:
+      - "{{ faster_whisper_port }}:10300"
+    networks:
+      - homelab-network
+
+volumes:
+  whisper-data:
+    driver: local
+
+networks:
+  homelab-network:
+    external: true

@@ -28,6 +28,8 @@ kubernetes/
 │       └── traefik-dashboard.yaml
 │
 └── apps/                             # Applications Homelab
+    ├── code-management/
+    │   └── harbor.yaml               # Registre OCI Harbor (Chart Helm goharbor/harbor)
     ├── fastapi-boilerplate/          # Template d'API multi-environnement (dev, staging, prod)
     │   ├── base/
     │   └── overlays/
@@ -59,6 +61,7 @@ Tous les services ci-dessous sont exposés via **Traefik Ingress** et sécurisé
 
 | Application | Namespace | URL / Endpoint d'accès | Domaine / Rôle |
 | :--- | :--- | :--- | :--- |
+| **Harbor OCI Registry** | `code-management` | `https://harbor.kamitbrains-minipc-k1.lab` | Registre OCI & Dépôt d'Artefacts d'Entreprise (Helm + Trivy) |
 | **Homepage** | `tools` | `https://home.kamitbrains-minipc-k1.lab` | Portail d'accueil du Homelab |
 | **Infisical** | `security` | `https://infisical.kamitbrains-minipc-k1.lab` | Gestionnaire de Secrets & Clés (Mutualisé PG + Valkey) |
 | **Headlamp (UI K8s)** | `headlamp` | `https://headlamp.kamitbrains-minipc-k1.lab` | Dashboard cluster léger |

@@ -1,0 +1,64 @@
+# Harbor Helm Chart Custom Values for K3s / Traefik / Cert-Manager
+# Official Chart: harbor/harbor (https://helm.goharbor.io)
+
+expose:
+  type: ingress
+  tls:
+    enabled: true
+    certSource: none
+  ingress:
+    hosts:
+      core: harbor.kamitbrains-minipc-k1.lab
+    controller: default
+    className: traefik
+    annotations:
+      cert-manager.io/cluster-issuer: homelab-ca-issuer
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+
+externalURL: https://harbor.kamitbrains-minipc-k1.lab
+
+# Le mot de passe administrateur n'est PAS versionné dans ce fichier.
+# Il est injecté au déploiement via : --set harborAdminPassword="$(cat .secrets/harbor-admin-password)"
+harborAdminPassword: ""
+
+persistence:
+  enabled: true
+  resourcePolicy: keep
+  persistentVolumeClaim:
+    registry:
+      storageClass: "local-path"
+      size: 50Gi
+    chartmuseum:
+      storageClass: "local-path"
+      size: 5Gi
+    jobservice:
+      storageClass: "local-path"
+      size: 1Gi
+    database:
+      storageClass: "local-path"
+      size: 10Gi
+    redis:
+      storageClass: "local-path"
+      size: 5Gi
+    trivy:
+      storageClass: "local-path"
+      size: 5Gi
+
+trivy:
+  enabled: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 1000m
+      memory: 1024Mi
+
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: false
+
+cache:
+  enabled: true
+  expireHours: 24

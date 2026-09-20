@@ -1,0 +1,31 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: dev
+
+resources:
+  - ../../base
+
+namePrefix: dev-
+
+configMapGenerator:
+  - name: api-config
+    literals:
+      - ENVIRONMENT=development
+      - DEBUG=true
+      - APP_NAME=FastAPI (Dev)
+
+patches:
+  - target:
+      kind: Ingress
+      name: fastapi-api
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: api-dev.kamitbrains-minipc-k1.lab
+      - op: replace
+        path: /spec/tls/0/hosts/0
+        value: api-dev.kamitbrains-minipc-k1.lab
+      - op: replace
+        path: /spec/tls/0/secretName
+        value: dev-fastapi-tls
