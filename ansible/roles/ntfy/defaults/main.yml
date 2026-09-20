@@ -9,7 +9,7 @@ ntfy_compose_dir: "/opt/ntfy"
 
 # Admin password & topic lookup
 ntfy_admin_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ntfy-admin-password', errors='ignore') | default('ntfy-admin-password-change-me', true) | trim }}"
-ntfy_topic: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ntfy-topic', errors='ignore') | default('alerts-kobavado-7890', true) | trim }}"
+ntfy_topic: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ntfy-topic', errors='ignore') | default('<INSERT_SECRET_NTFY_TOPIC>', true) | trim }}"
 
 
 

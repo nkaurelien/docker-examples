@@ -5,11 +5,24 @@
     state: directory
     mode: '0755'
 
+- name: Ensure Dozzle data directory exists with write permissions
+  ansible.builtin.file:
+    path: "{{ dozzle_data_dir }}"
+    state: directory
+    mode: '0777'
+
 - name: Deploy Dozzle docker-compose configuration
   ansible.builtin.template:
     src: docker-compose.yml.j2
     dest: "{{ dozzle_compose_dir }}/docker-compose.yml"
     mode: '0644'
+
+- name: Deploy Dozzle notifications destination configuration (Ntfy)
+  ansible.builtin.template:
+    src: notifications.yml.j2
+    dest: "{{ dozzle_data_dir }}/notifications.yml"
+    mode: '0666'
+    force: false
 
 - name: Start Dozzle container stack via docker compose
   community.docker.docker_compose_v2:

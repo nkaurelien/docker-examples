@@ -1,7 +1,17 @@
 ---
 # Dozzle role defaults
 dozzle_image: "amir20/dozzle:latest"
-dozzle_domain: "kamitbrains.fr"
-dozzle_hostname: "logs.{{ traefik_domain | default(dozzle_domain) }}"
+dozzle_domain: "{{ traefik_domain | default('kamitbrains.fr') }}"
+dozzle_hostname: "logs.{{ dozzle_domain }}"
 dozzle_compose_dir: "/opt/dozzle"
+dozzle_data_dir: "/opt/dozzle/data"
 dozzle_container_port: 8080
+
+# Ntfy Alert Destination Defaults (Serveur Ntfy auto-hébergé sur kamitbrains.fr)
+dozzle_ntfy_enabled: true
+dozzle_ntfy_host: "https://ntfy.{{ dozzle_domain }}"
+dozzle_ntfy_topic: "{{ lookup('file', playbook_dir + '/../.secrets/ntfy-topic', errors='ignore') | default('<INSERT_SECRET_NTFY_TOPIC>', true) | trim }}"
+dozzle_ntfy_url: "{{ dozzle_ntfy_host }}/{{ dozzle_ntfy_topic }}"
+
+# MCP (Model Context Protocol) Support
+dozzle_enable_mcp: true

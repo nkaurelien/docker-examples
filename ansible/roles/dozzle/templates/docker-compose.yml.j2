@@ -8,12 +8,34 @@ x-arcane:
     - https://github.com/amir20/dozzle
 
 services:
+  dozzle-init:
+    image: busybox:latest
+    container_name: dozzle-init
+    volumes:
+      - {{ dozzle_data_dir }}:/data
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /data
+        if [ ! -f /data/notifications.yml ]; then
+          printf 'subscriptions: []\ndispatchers:\n  - id: 1\n    name: ntfy\n    type: webhook\n    url: {{ dozzle_ntfy_url }}\n    template: |-\n      {\n        "topic": "{{ dozzle_ntfy_topic }}",\n        "title": "{{ '{{' }} .Container.Name {{ '}}' }}",\n        "message": "{{ '{{' }} .Detail {{ '}}' }}"\n      }\n' > /data/notifications.yml
+        fi
+        chmod -R 777 /data
+    restart: "no"
+
   dozzle:
     image: {{ dozzle_image }}
     container_name: dozzle
     restart: unless-stopped
+    depends_on:
+      dozzle-init:
+        condition: service_completed_successfully
+    environment:
+      DOZZLE_ENABLE_MCP: "{{ dozzle_enable_mcp | default(true) | lower }}"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - {{ dozzle_data_dir }}:/data
     networks:
       - {{ traefik_public_network | default('traefik-public') }}
     labels:
