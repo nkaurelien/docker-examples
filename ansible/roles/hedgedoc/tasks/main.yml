@@ -9,6 +9,21 @@
     - "{{ hedgedoc_compose_dir }}/data"
     - "{{ hedgedoc_compose_dir }}/uploads"
 
+# L'entrypoint de l'image demarre en root puis passe a `gosu hedgedoc` (uid 10000).
+# Il chown `public/uploads` mais PAS `data/` : sans ce chown, le fichier SQLite reste
+# a root et l'application echoue en boucle sur `SQLITE_READONLY` au moment des migrations.
+- name: Ensure HedgeDoc data and uploads directories belong to the container user
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "10000"
+    group: "10000"
+    mode: '0755'
+    recurse: true
+  loop:
+    - "{{ hedgedoc_data_dir | default(hedgedoc_compose_dir ~ '/data') }}"
+    - "{{ hedgedoc_uploads_dir | default(hedgedoc_compose_dir ~ '/uploads') }}"
+
 - name: Deploy HedgeDoc docker-compose configuration
   ansible.builtin.template:
     src: docker-compose.yml.j2
@@ -25,6 +40,8 @@
   community.docker.docker_container_exec:
     container: hedgedoc
     command: "bin/manage_users --pass '{{ hedgedoc_admin_password }}' --add '{{ hedgedoc_admin_email }}'"
+  # --add echoue si le compte existe deja ; --reset applique le mot de passe courant.
+  # Note : l'email doit suivre IMMEDIATEMENT --reset, --pass se place avant.
   ignore_errors: true
 
 - name: Install and enable HedgeDoc systemd service for boot startup
