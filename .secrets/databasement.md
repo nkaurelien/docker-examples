@@ -2,6 +2,6 @@
 
 - **URL**: `https://databasement.kamitbrains.fr`
 - **Username**: `admin@kamitbrains.fr`
-- **Password**: `[REDACTED]`
+- **Password**: `.secrets/databasement-admin-password`
 - **Container**: `databasement`
 - **Config**: `/opt/databasement`

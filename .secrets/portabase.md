@@ -4,6 +4,6 @@
 - **Alias**: `https://portabase-backup.kamitbrains.fr`
 - **Database**: PostgreSQL 17 (`portabase-db`)
 - **DB User**: `portabase`
-- **DB Password**: `[REDACTED]`
+- **DB Password**: `.secrets/portabase-db-password`
 - **Container**: `portabase-app`
 - **Config**: `/opt/portabase`

@@ -2,6 +2,6 @@
 
 - **URL**: `https://backrest.kamitbrains.fr`
 - **Username**: `admin`
-- **Password**: `[REDACTED]`
+- **Password**: `.secrets/backrest-admin-password`
 - **Container**: `backrest`
 - **Config**: `/opt/backrest`
