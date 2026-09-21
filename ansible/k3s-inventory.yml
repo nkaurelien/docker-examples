@@ -2,6 +2,6 @@
 k3s_cluster:
   hosts:
     k1-mini:
-      ansible_host: 192.168.0.205
+      ansible_host: 192.168.0.210
       ansible_user: kamitbrains
       ansible_python_interpreter: /usr/bin/python3

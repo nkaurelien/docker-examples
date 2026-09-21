@@ -7,7 +7,7 @@ lang: fr
 
 # K3s Kubernetes Homelab (Acemagic K1 Mini)
 
-Guide complet du cluster **K3s (Lightweight Kubernetes)** déployé sur le serveur physique **Acemagic K1 Mini** (`kamitbrains-minipc-k1.lab` / `192.168.0.205`).
+Guide complet du cluster **K3s (Lightweight Kubernetes)** déployé sur le serveur physique **Acemagic K1 Mini** (`kamitbrains-minipc-k1.lab` / `192.168.0.210`).
 
 ---
 

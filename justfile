@@ -4,7 +4,7 @@
 set shell := ["bash", "-uc"]
 
 HOSTCTL_PROFILE := "kamitbrains-homelab"
-HOMELAB_IP      := "192.168.0.205"
+HOMELAB_IP      := "192.168.0.210"
 HOMELAB_TLD     := "kamitbrains.local"
 
 DOMAINS := "kamitbrains.local " + \

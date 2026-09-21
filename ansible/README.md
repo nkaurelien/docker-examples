@@ -12,9 +12,9 @@ Ce dossier contient la suite de playbooks, rôles et inventaires Ansible pour l'
 
 | Environnement | Hôte / IP | Système | Rôle principal |
 | :--- | :--- | :--- | :--- |
-| **K1 Mini (Homelab)** | `kamitbrains-minipc-k1.lab`<br>`192.168.0.205` | Ubuntu 26.04 LTS (4c/8t, 32 Go RAM) | **Cluster K3s Kubernetes** (Air-Gap / k3s-ansible) |
+| **K1 Mini (Homelab)** | `kamitbrains-minipc-k1.lab`<br>`192.168.0.210` | Ubuntu 26.04 LTS (4c/8t, 32 Go RAM) | **Cluster K3s Kubernetes** (Air-Gap / k3s-ansible) |
 | **Contabo (FR)** | `contabo_server_fr` | Ubuntu LTS | Docker Stacks & Reverse Proxy Traefik |
-| **Laptop AsOne4Health** | `192.168.0.195` | Linux | Services centraux AsOne4Health / CouchDB |
+| **Laptop AsOne4Health** | `192.168.0.205` | Linux | Services centraux AsOne4Health / CouchDB |
 
 ---
 
@@ -24,7 +24,7 @@ Le déploiement de K3s est orchestré avec la collection officielle **[k3s-io/k3
 
 ### 1. Fichiers Dédiés K3s
 
-- **`k3s-io-inventory.yml`** : Inventaire ciblant le nœud `k1-mini` avec configuration du endpoint `192.168.0.205:6443` et activation d'Air-Gap (`airgap_dir`).
+- **`k3s-io-inventory.yml`** : Inventaire ciblant le nœud `k1-mini` avec configuration du endpoint `192.168.0.210:6443` et activation d'Air-Gap (`airgap_dir`).
 - **`k3s-io-deploy.yml`** : Playbook appelant `k3s.orchestration.site`.
 - **`k3s-io-reset.yml`** : Playbook de désinstallation et nettoyage complet appelant `k3s.orchestration.reset`.
 - **`scripts/prepare-airgap.sh`** : Télécharge localement les binaires et images K3s dans `airgap/`.

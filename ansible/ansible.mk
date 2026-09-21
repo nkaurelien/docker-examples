@@ -52,7 +52,7 @@ k3s-airgap-prep:
 	@$(ANSIBLE_DIR)/scripts/prepare-airgap.sh v1.31.12+k3s1 amd64
 
 k3s-deploy:
-	@./scripts/banner.py "K3S DEPLOY" "Deploying K3s on K1 Mini (192.168.0.205)" slant cyan
+	@./scripts/banner.py "K3S DEPLOY" "Deploying K3s on K1 Mini (192.168.0.210)" slant cyan
 	@cd $(ANSIBLE_DIR) && ansible-playbook -i k3s-io-inventory.yml k3s-io-deploy.yml
 
 k3s-reset:
