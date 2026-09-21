@@ -4,7 +4,7 @@ tags: boilerplates, kubernetes, k3s, roadmap, homelab
 
 # Kubernetes Architecture & Homelab (K3s)
 
-Ce dossier regroupe les manifestes Kubernetes, configurations Kustomize et déploiements d'applications sur le cluster **K3s** du serveur **Acemagic K1 Mini** (`192.168.0.210`).
+Ce dossier regroupe les manifestes Kubernetes, configurations Kustomize et déploiements d'applications sur le cluster **K3s** du serveur **Acemagic K1 Mini** (`192.168.0.205`).
 
 ---
 
@@ -101,7 +101,7 @@ sudo hostctl add domains kamitbrains-homelab \
   pad.kamitbrains-minipc-k1.lab \
   couchdb.kamitbrains-minipc-k1.lab \
   infisical.kamitbrains-minipc-k1.lab \
-  --ip 192.168.0.210
+  --ip 192.168.0.205
 ```
 
 ---

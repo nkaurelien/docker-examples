@@ -8,7 +8,7 @@ Gitea is a lightweight, self-hosted, all-in-one software development platform fe
 
 ## Architecture & Homelab Setup
 
-- **Host**: `192.168.0.210` (`kamitbrains_homelab`)
+- **Host**: `192.168.0.205` (`kamitbrains_homelab`)
 - **Web Interface URL**: `https://gitea.kamitbrains-minipc-k1.lab` (also `gitea.kamitbrains.local`, `gitea.kamitbrains.fr`)
 - **HTTP Internal Port**: `3000`
 - **SSH Port**: `2223` (mapped to container port `22` to avoid collision with Forgejo on `2222`)

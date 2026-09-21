@@ -35,7 +35,7 @@ data:
     - Infrastructure:
         - K3s Cluster:
             icon: k3s.png
-            href: "https://192.168.0.210:6443"
+            href: "https://192.168.0.205:6443"
             description: "Kubernetes Control-Plane"
         - Headlamp:
             icon: kubernetes.png

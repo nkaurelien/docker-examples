@@ -18,6 +18,8 @@
     src: app.ini.j2
     dest: "{{ gitea_deploy_dir }}/data/gitea/conf/app.ini"
     mode: '0644'
+    owner: "1000"
+    group: "1000"
 
 - name: Deploy Gitea docker-compose configuration
   ansible.builtin.template:
