@@ -1,0 +1,47 @@
+# Gitea Helm Chart Custom Values for K3s / Traefik / Cert-Manager
+# Official Chart: gitea/gitea (https://dl.gitea.com/charts/)
+
+ingress:
+  enabled: true
+  className: traefik
+  hosts:
+    - host: gitea.kamitbrains-minipc-k1.lab
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: gitea-ingress-tls
+      hosts:
+        - gitea.kamitbrains-minipc-k1.lab
+  annotations:
+    cert-manager.io/cluster-issuer: homelab-ca-issuer
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+
+gitea:
+  admin:
+    username: "admin"
+    password: "" # Set at deploy time via: --set gitea.admin.password="$(cat .secrets/gitea-admin-password)"
+    email: "admin@kamitbrains-minipc-k1.lab"
+
+  config:
+    APP_NAME: "Gitea: Git with a cup of tea"
+    RUN_MODE: prod
+    server:
+      DOMAIN: gitea.kamitbrains-minipc-k1.lab
+      HTTP_PORT: 3000
+      ROOT_URL: https://gitea.kamitbrains-minipc-k1.lab/
+      SSH_DOMAIN: gitea.kamitbrains-minipc-k1.lab
+      SSH_PORT: 2222
+      SSH_LISTEN_PORT: 22
+
+persistence:
+  enabled: true
+  storageClass: "local-path"
+  size: 20Gi
+
+postgresql:
+  enabled: true
+  persistence:
+    enabled: true
+    storageClass: "local-path"
+    size: 10Gi

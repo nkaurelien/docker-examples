@@ -1,0 +1,17 @@
+---
+# Gitea role defaults
+gitea_version: "1.22.6"
+gitea_domain: "kamitbrains-minipc-k1.lab"
+gitea_hostname: "gitea.{{ gitea_domain }}"
+gitea_deploy_dir: "/opt/gitea"
+gitea_data_dir: "/opt/gitea/data"
+
+# Secrets lookup (relative to playbook_dir)
+gitea_admin_username: "{{ lookup('file', playbook_dir + '/../.secrets/gitea-admin-login', errors='ignore') | default('admin', true) | trim }}"
+gitea_admin_password: "{{ lookup('file', playbook_dir + '/../.secrets/gitea-admin-password', errors='ignore') | default('<INSERT_GITEA_ADMIN_PASSWORD>', true) | trim }}"
+gitea_admin_email: "admin@{{ gitea_domain }}"
+gitea_db_password: "{{ lookup('file', playbook_dir + '/../.secrets/gitea-db-password', errors='ignore') | default('<INSERT_GITEA_DB_PASSWORD>', true) | trim }}"
+gitea_secret_key: "{{ lookup('file', playbook_dir + '/../.secrets/gitea-secret-key', errors='ignore') | default('<INSERT_GITEA_SECRET_KEY>', true) | trim }}"
+
+# Enable Gitea Actions Runner
+gitea_runner_enabled: true

@@ -51,6 +51,8 @@
       tags: [dozzle, logs, docker, monitoring, tools]
     - role: forgejo
       tags: [forgejo, git, code, dev, tools]
+    - role: gitea
+      tags: [gitea, git, code, dev, tools]
     - role: harbor
       tags: [harbor, registry, oci, code, dev, tools]
     - role: cockpit
