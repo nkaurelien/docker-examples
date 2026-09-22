@@ -1,6 +1,6 @@
 ---
 # Uptime Kuma role defaults
-uptime_kuma_version: "2.5.3"
+uptime_kuma_version: "2.5.5"
 uptime_kuma_image: "louislam/uptime-kuma:{{ uptime_kuma_version }}"
 uptime_kuma_port: 3001
 uptime_kuma_domain: "{{ traefik_domain | default('kamitbrains.fr') }}"
@@ -8,7 +8,13 @@ uptime_kuma_hostname: "status.{{ uptime_kuma_domain }}"
 uptime_kuma_alias_hostname: "uptime.{{ uptime_kuma_domain }}"
 
 uptime_kuma_compose_dir: "/opt/uptime-kuma"
+uptime_kuma_container: "uptime-kuma"
+uptime_kuma_volume: "uptime-kuma-data"
 uptime_kuma_timezone: "Europe/Paris"
+
+# Admin account — created only if the instance has no user yet (otherwise the setup wizard is open)
+uptime_kuma_admin_user: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/uptime-kuma-admin-login', errors='ignore') | default('admin', true) | trim }}"
+uptime_kuma_admin_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/uptime-kuma-admin-password', errors='ignore') | default('', true) | trim }}"
 
 # Basic auth credentials for protected monitors
 uptime_kuma_traefik_auth_user: "admin"
@@ -18,7 +24,35 @@ uptime_kuma_glances_auth_user: "admin"
 uptime_kuma_glances_auth_pass: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/glances-basic-auth-password', errors='ignore') | default('glances-password-change-me', true) | trim }}"
 
 # Ntfy push topic for alert notifications
+uptime_kuma_ntfy_url: "https://ntfy.{{ uptime_kuma_domain }}"
 uptime_kuma_ntfy_topic: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ntfy-topic', errors='ignore') | default('<INSERT_SECRET_NTFY_TOPIC>', true) | trim }}"
 
+# Monitors — id is the idempotency key (INSERT OR IGNORE then UPDATE): never reuse an id for another service.
+# url: full URL, or `sub` + optional `path` on uptime_kuma_domain ; auth: basic credentials ;
+# accepted: HTTP codes considered up ; public: shown on the public status page.
+uptime_kuma_monitor_interval: 60
+uptime_kuma_monitors:
+  - { id: 1, name: "Traefik Proxy", sub: "traefik", path: "/dashboard/", description: "Edge Reverse Proxy Dashboard", auth: { user: "{{ uptime_kuma_traefik_auth_user }}", pass: "{{ uptime_kuma_traefik_auth_pass }}" } }
+  - { id: 2, name: "Glances Monitoring", sub: "glances", description: "System & Container Resource Monitoring", auth: { user: "{{ uptime_kuma_glances_auth_user }}", pass: "{{ uptime_kuma_glances_auth_pass }}" } }
+  - { id: 3, name: "Arcane PaaS Manager", sub: "arcane", description: "Docker Container Management Dashboard" }
+  - { id: 4, name: "Uptime Kuma Status", sub: "status", path: "/api/entry-page", description: "Uptime & Service Health Monitor" }
+  - { id: 5, name: "Ntfy Push Notifications", sub: "ntfy", path: "/v1/health", description: "HTTP Pub-Sub Push Notification Service" }
+  - { id: 6, name: "Passbolt Password Manager", sub: "passwords", path: "/healthcheck/status.json", description: "OpenPGP Team Password Manager" }
+  - { id: 7, name: "ChangeDetection.io", sub: "changedetection", description: "Web & API Surveillance Monitor" }
+  - { id: 8, name: "IT-Tools Collection", sub: "tools", description: "Web Developer Tools Collection" }
+  - { id: 9, name: "TinyAuth SSO", sub: "auth", description: "ForwardAuth SSO Middleware" }
+  - { id: 10, name: "Homepage Portal", sub: "home", description: "Central Infrastructure Dashboard (home/apps)" }
+  - { id: 11, name: "BentoPDF Toolkit", sub: "pdf", description: "Privacy-First Client-Side PDF Toolkit" }
+  - { id: 12, name: "Stirling-PDF Suite", sub: "stirling", description: "Full-Featured Server-Side PDF Suite & OCR" }
+  - { id: 13, name: "Pingvin Share", sub: "share", description: "Self-Hosted File Sharing Platform" }
+  - { id: 14, name: "PairDrop P2P Transfer", sub: "drop", description: "Local & Web Peer-to-Peer File Sharing" }
+  - { id: 15, name: "HedgeDoc Collaborative Pad", sub: "pad", description: "Collaborative Real-time Markdown Editor" }
+  - { id: 16, name: "Excalidraw Whiteboard", sub: "draw", description: "Virtual Whiteboard & Sketching Tool" }
+  - { id: 17, name: "Dozzle Log Viewer", sub: "logs", description: "Real-time Docker Log Viewer" }
+  - { id: 18, name: "Docker Examples Docs", url: "https://nkaurelien.github.io/docker-examples/", description: "Official Docker Examples & IaC Documentation" }
 
-
+# Public status page (no TinyAuth on /status/* and the assets it needs; dashboard stays behind TinyAuth)
+uptime_kuma_status_page_slug: "default"
+uptime_kuma_status_page_title: "{{ uptime_kuma_domain }} Infrastructure Status"
+uptime_kuma_status_page_public: true
+uptime_kuma_status_page_as_entry: false

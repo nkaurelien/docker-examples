@@ -5,6 +5,14 @@
     state: directory
     mode: '0755'
 
+# Without db-config.json, Kuma 2 waits on the database-choice wizard (SQLite / MariaDB)
+- name: Pre-seed SQLite database choice in the data volume
+  ansible.builtin.command: >-
+    docker run --rm --memory 64m -v {{ uptime_kuma_volume }}:/app/data --entrypoint sh {{ uptime_kuma_image }}
+    -c 'test -f /app/data/db-config.json && echo present || echo "{\"type\":\"sqlite\"}" > /app/data/db-config.json'
+  register: uptime_kuma_dbconfig
+  changed_when: "'present' not in uptime_kuma_dbconfig.stdout"
+
 - name: Deploy Uptime Kuma docker-compose configuration
   ansible.builtin.template:
     src: docker-compose.yml.j2
@@ -15,7 +23,59 @@
   community.docker.docker_compose_v2:
     project_src: "{{ uptime_kuma_compose_dir }}"
     state: present
-    remove_orphans: true
+    pull: missing
+    remove_orphans: true   # removes the former uptime-kuma-db-seeder container
+
+- name: Wait for Uptime Kuma to be ready
+  ansible.builtin.command: docker exec {{ uptime_kuma_container }} curl -fsS http://127.0.0.1:3001/api/entry-page
+  register: uptime_kuma_ready
+  until: uptime_kuma_ready.rc == 0
+  retries: 20
+  delay: 6
+  changed_when: false
+
+- name: Count Uptime Kuma users
+  ansible.builtin.command: docker exec {{ uptime_kuma_container }} sqlite3 /app/data/kuma.db "SELECT count(*) FROM user;"
+  register: uptime_kuma_users
+  changed_when: false
+
+# No user = setup wizard open to the first visitor: create the admin account right away
+- name: Create Uptime Kuma admin account
+  when: uptime_kuma_users.stdout | trim == '0'
+  no_log: true
+  block:
+    - name: Require the admin password secret
+      ansible.builtin.assert:
+        that: uptime_kuma_admin_password | length >= 12
+        fail_msg: ".secrets/uptime-kuma-admin-password missing or shorter than 12 characters"
+
+    - name: Hash admin password (bcryptjs shipped in the Kuma image)
+      ansible.builtin.command:
+        argv: [docker, exec, -w, /app, -e, KUMA_PASSWORD, "{{ uptime_kuma_container }}", node, -e,
+               "process.stdout.write(require('bcryptjs').hashSync(process.env.KUMA_PASSWORD, 10))"]
+      environment:
+        KUMA_PASSWORD: "{{ uptime_kuma_admin_password }}"
+      register: uptime_kuma_admin_hash
+      changed_when: false
+
+    - name: Insert admin account
+      ansible.builtin.command:
+        argv: [docker, exec, "{{ uptime_kuma_container }}", sqlite3, /app/data/kuma.db,
+               "INSERT INTO user (id, username, password, active) VALUES (1, '{{ uptime_kuma_admin_user }}', '{{ uptime_kuma_admin_hash.stdout }}', 1);"]
+      notify: Restart Uptime Kuma
+
+- name: Render monitors / notification / status page seed
+  ansible.builtin.template:
+    src: seed.sql.j2
+    dest: "{{ uptime_kuma_compose_dir }}/seed.sql"
+    mode: '0600'
+  register: uptime_kuma_seed
+
+# Kuma loads users and monitors at startup: restart after any change
+- name: Apply seed to kuma.db
+  ansible.builtin.shell: docker exec -i {{ uptime_kuma_container }} sqlite3 -bail /app/data/kuma.db < {{ uptime_kuma_compose_dir }}/seed.sql
+  when: uptime_kuma_seed.changed or uptime_kuma_users.stdout | trim == '0'
+  notify: Restart Uptime Kuma
 
 - name: Install and enable Uptime Kuma systemd service for boot startup
   ansible.builtin.include_role:

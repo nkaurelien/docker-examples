@@ -14,7 +14,18 @@ Ce dossier contient la suite de playbooks, rôles et inventaires Ansible pour l'
 | :--- | :--- | :--- | :--- |
 | **K1 Mini (Homelab)** | `kamitbrains-minipc-k1.lab`<br>`192.168.0.210` | Ubuntu 26.04 LTS (4c/8t, 32 Go RAM) | **Cluster K3s Kubernetes** (Air-Gap / k3s-ansible) |
 | **Contabo (FR)** | `contabo_server_fr` | Ubuntu LTS | Docker Stacks & Reverse Proxy Traefik |
-| **Laptop AsOne4Health** | `192.168.0.205` | Linux | Services centraux AsOne4Health / CouchDB |
+| **Laptop AsOne4Health** | `kamitbrains-laptop.lab`<br>`192.168.0.205` | Linux | Services centraux AsOne4Health / CouchDB |
+
+> ⚠️ **Deux machines distinctes, un seul nom d'hôte.** Le K1 Mini et le laptop AsOne4Health
+> repondent tous les deux a `kamitbrains.local` : seule l'IP les distingue. Verifier
+> `.secrets/ssh-kamitbrains-homelab-ip` (= `192.168.0.210`) avant tout `ansible-playbook`.
+>
+> - **K1 Mini (`192.168.0.210`)** : cible de CE repo — K3s, Traefik, Gitea, stacks Docker perso.
+> - **Laptop AsOne4Health (`192.168.0.205`)** : pilote par l'IaC du repo `asone4health-global`
+>   (`make kamit-central`) — **nginx + certificats mkcert** sur les ports 80/443.
+>   N'y deployer aucun role de ce repo : Traefik y prend 80/443, desactive nginx et casse
+>   TLS pour `*.asone4health.kamitbrains.local` (incident du 21/09/2026, cert
+>   `TRAEFIK DEFAULT CERT` auto-signe → `CERTIFICATE_VERIFY_FAILED` cote backend).
 
 ---
 
