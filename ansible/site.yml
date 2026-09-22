@@ -55,6 +55,7 @@
       tags: [gitea, git, code, dev, tools]
     - role: harbor
       tags: [harbor, registry, oci, code, dev, tools]
+      when: inventory_hostname in groups['homelab']
     - role: cockpit
       tags: [cockpit, admin, system, monitoring, tools]
     - role: glitchtip
