@@ -39,3 +39,5 @@ site/
 **/.secrets/*
 !**/.secrets/*.md
 *.csv
+# Claude
+.claude-flow/
