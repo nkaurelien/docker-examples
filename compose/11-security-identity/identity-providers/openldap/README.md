@@ -12,7 +12,8 @@ This stack provides an **OpenLDAP** directory server alongside **phpLDAPadmin**,
    ```
 
 2. Access **phpLDAPadmin**:
-   - URL: `http://localhost:8088`
+   - Local HTTP: `http://localhost:8088`
+   - Traefik HTTPS: `https://ldap.kamitbrains.local` (or your configured `PHPLDAPADMIN_HOSTNAME`)
 
    > ⚠️ **Note:** phpLDAPadmin requires the full **Login DN**, not just a username.
 

@@ -80,6 +80,13 @@ services:
         condition: service_healthy
     networks:
       - ldap-network
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.phpldapadmin.rule=Host(`${PHPLDAPADMIN_HOSTNAME:-ldap.kamitbrains.local}`)"
+      - "traefik.http.routers.phpldapadmin.entrypoints=websecure"
+      - "traefik.http.routers.phpldapadmin.tls.certresolver=letsencrypt"
+      - "traefik.http.services.phpldapadmin.loadbalancer.server.port=80"
     restart: unless-stopped
     logging:
       driver: "json-file"
@@ -119,3 +126,6 @@ networks:
   ldap-network:
     driver: bridge
     name: ldap-network
+  traefik-public:
+    external: true
+    name: traefik-public

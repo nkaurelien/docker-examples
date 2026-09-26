@@ -46,7 +46,8 @@ Celui-ci attend que le serveur OpenLDAP soit prêt, puis injecte un script d'ini
 ### 3. Interface Web phpLDAPadmin
 
 Une fois le serveur démarré, vous pouvez accéder à l'interface d'administration :
-- **URL** : `http://localhost:8088`
+- **Accès direct (HTTP local)** : `http://localhost:8088`
+- **Accès via Traefik (HTTPS / TLS)** : `https://ldap.kamitbrains.local` (ou le nom d'hôte configuré dans `PHPLDAPADMIN_HOSTNAME`)
 
 > ⚠️ **Important pour la connexion :** phpLDAPadmin requiert le **DN complet** (Distinguished Name) dans le champ **Login DN**, et non pas un simple identifiant/username.
 
