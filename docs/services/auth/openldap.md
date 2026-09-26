@@ -65,6 +65,8 @@ Une fois le serveur démarré, vous pouvez accéder à l'interface d'administrat
 
 > ⚠️ **Important pour la connexion :** phpLDAPadmin requiert le **DN complet** (Distinguished Name) dans le champ **Login DN**, et non pas un simple identifiant/username.
 
+![Page de connexion phpLDAPadmin](https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/identity-providers/openldap/screenshots/phpldapadmin-login.png)
+
 #### Option A : Connexion Administrateur (Gestion complète)
 - **Login DN** : `cn=admin,dc=kamitbrains,dc=local`
 - **Mot de passe** : `password` (`.secrets/ldap_admin_password.txt`)
@@ -73,6 +75,10 @@ Une fois le serveur démarré, vous pouvez accéder à l'interface d'administrat
 - **Login DN** : `cn=aurelien,ou=devops,dc=kamitbrains,dc=local`
 - **Mot de passe** : `Aurelien@123` (`.secrets/user_aurelien_password.txt`)
 *(Note : dans les applications tierces comme Nextcloud ou Grafana qui utilisent l'attribut `uid`, l'identifiant à saisir sera `nkaurelien`).*
+
+Une fois connecté en admin, l'arbre de l'annuaire affiche les groupes, les OUs et le conteneur de politiques de mots de passe créés par `init-ldap` :
+
+![Arbre de l'annuaire dans phpLDAPadmin après initialisation](https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/identity-providers/openldap/screenshots/phpldapadmin-tree.png)
 
 ### 4. Requêtes CLI (Vérification)
 

@@ -18,6 +18,8 @@ This stack provides an **OpenLDAP** directory server alongside **phpLDAPadmin**,
 
    > ⚠️ **Note:** phpLDAPadmin requires the full **Login DN**, not just a username.
 
+   ![phpLDAPadmin login page](screenshots/phpldapadmin-login.png)
+
    Passwords come from the files in `.secrets/`; the values below are the defaults from `.secrets.example/`.
 
    - **Admin Login:**
@@ -45,6 +47,10 @@ The script is idempotent: "already exists" results (LDAP codes 68 and 20) are tr
 docker compose up -d --force-recreate init-ldap
 docker logs init-ldap
 ```
+
+Once logged in as admin, the directory tree shows the groups, OUs and the password policy container:
+
+![phpLDAPadmin directory tree after initialization](screenshots/phpldapadmin-tree.png)
 
 ### Verifying access
 You can verify that the user `cn=aurelien` has access by running an LDAP search from your host (if you have ldap-utils installed) or from inside the container:
