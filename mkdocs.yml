@@ -214,6 +214,7 @@ nav:
   - Authentication:
       - Overview: services/auth/index.md
       - Keycloak: services/auth/keycloak.md
+      - OpenLDAP: services/auth/openldap.md
       - Passbolt: services/auth/passbolt.md
       - Zitadel: services/auth/zitadel.md
 

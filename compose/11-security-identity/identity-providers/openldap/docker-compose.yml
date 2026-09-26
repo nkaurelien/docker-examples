@@ -1,0 +1,101 @@
+# OpenLDAP with phpLDAPadmin
+# Usage:
+#   cp .env.example .env
+#   # Edit .env with your values
+#   docker compose up -d
+
+services:
+  openldap:
+    image: osixia/openldap:1.5.0
+    container_name: openldap
+    environment:
+      LDAP_ORGANISATION: ${LDAP_ORGANISATION:-exampleorg}
+      LDAP_DOMAIN: ${LDAP_DOMAIN:-example.in}
+      LDAP_BASE_DN: ${LDAP_BASE_DN:-dc=example,dc=in}
+      LDAP_ADMIN_PASSWORD: ${LDAP_ADMIN_PASSWORD:-password}
+      LDAP_CONFIG_PASSWORD: ${LDAP_ADMIN_PASSWORD:-password}
+    ports:
+      - "${LDAP_PORT:-389}:389"
+      - "${LDAPS_PORT:-636}:636"
+    volumes:
+      - openldap-data:/var/lib/ldap
+      - openldap-config:/etc/ldap/slapd.d
+    networks:
+      - ldap-network
+    healthcheck:
+      test: ["CMD-SHELL", "ldapsearch -x -H ldap://localhost -b '' -s base namingContexts || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+
+  init-ldap:
+    image: osixia/openldap:1.5.0
+    container_name: init-ldap
+    depends_on:
+      openldap:
+        condition: service_healthy
+    environment:
+      LDAP_BASE_DN: ${LDAP_BASE_DN:-dc=example,dc=in}
+      LDAP_ADMIN_PASSWORD: ${LDAP_ADMIN_PASSWORD:-password}
+    volumes:
+      - ./scripts/init.sh:/init.sh:ro
+    entrypoint: ["/bin/bash", "/init.sh"]
+    networks:
+      - ldap-network
+    restart: "no"
+
+  phpldapadmin:
+    image: osixia/phpldapadmin:latest
+    container_name: phpldapadmin
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: "openldap"
+      PHPLDAPADMIN_HTTPS: "false"
+    ports:
+      - "${PHPLDAPADMIN_PORT:-8080}:80"
+    depends_on:
+      openldap:
+        condition: service_healthy
+    networks:
+      - ldap-network
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
+
+volumes:
+  openldap-data:
+    driver: local
+    name: openldap-data
+  openldap-config:
+    driver: local
+    name: openldap-config
+
+networks:
+  ldap-network:
+    driver: bridge
+    name: ldap-network
