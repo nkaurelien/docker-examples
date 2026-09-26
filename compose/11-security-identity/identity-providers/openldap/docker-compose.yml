@@ -69,7 +69,7 @@ services:
     restart: "no"
 
   phpldapadmin:
-    image: osixia/phpldapadmin:latest
+    image: osixia/phpldapadmin:0.9.0
     container_name: phpldapadmin
     environment:
       PHPLDAPADMIN_LDAP_HOSTS: "openldap"
