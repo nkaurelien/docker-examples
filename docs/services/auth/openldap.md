@@ -140,3 +140,9 @@ L'overlay OpenLDAP **`ppolicy`** est activé automatiquement sur la base de donn
 - **Chiffrement réseau (TLS/LDAPS) :** En production, privilégiez le port sécurisé `636` (LDAPS) ou `StartTLS` sur le port `389` pour éviter l'interception des requêtes sur le réseau local.
 - **phpLDAPadmin via Reverse Proxy HTTPS :** Si l'interface web doit être exposée en dehors du réseau local, placez-la impérativement derrière un Reverse Proxy avec certificat SSL valide (Traefik ou Nginx Proxy Manager).
 - **Modification des secrets :** Les fichiers du dossier `.secrets/` doivent impérativement être modifiés avec des mots de passe uniques et forts avant tout déploiement en production.
+
+---
+
+## 🔗 Références & Liens Utiles
+- [Dépôt GitHub osixia/container-openldap](https://github.com/osixia/container-openldap)
+- [Guide Medium : Setting up OpenLDAP server with Docker (par Amrutha)](https://medium.com/@amrutha_20595/setting-up-openldap-server-with-docker-d38781c259b2)

@@ -86,3 +86,7 @@ The OpenLDAP **`ppolicy`** overlay is enabled and enforced globally (`cn=default
 - **Max Failed Attempts (`pwdMaxFailure`)**: 5 failed login attempts.
 - **Lockout Duration (`pwdLockoutDuration`)**: 900 seconds (15 minutes).
 - **Auto-Hashing (`olcPPolicyHashCleartext`)**: Automatically converts cleartext password modifications to secure hashes.
+
+## References & Documentation
+- [osixia/container-openldap (GitHub Repository)](https://github.com/osixia/container-openldap)
+- [Setting up OpenLDAP Server with Docker (Medium Guide by Amrutha)](https://medium.com/@amrutha_20595/setting-up-openldap-server-with-docker-d38781c259b2)
