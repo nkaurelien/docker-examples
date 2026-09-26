@@ -8,6 +8,7 @@ CONFIG_DN="cn=admin,cn=config"
 # Read passwords from mounted Docker Compose secrets (/run/secrets/*)
 SECRETS_DIR="/run/secrets"
 ADMIN_PASSWORD=$(cat "${SECRETS_DIR}/ldap_admin_password")
+CONFIG_PASSWORD=$(cat "${SECRETS_DIR}/ldap_config_password")
 AURELIEN_RAW=$(cat "${SECRETS_DIR}/user_aurelien_password")
 IDRISS_RAW=$(cat "${SECRETS_DIR}/user_idriss_password")
 MICHEL_RAW=$(cat "${SECRETS_DIR}/user_michel_password")
@@ -90,7 +91,7 @@ memberOf: cn=devops-team,${LDAP_BASE_DN}
 EOF
 
 echo "6. Granting Read Access to user aurelien..."
-ldapmodify -x -H ldap://$LDAP_HOST -w "$ADMIN_PASSWORD" -D "$CONFIG_DN" << EOF
+ldapmodify -x -H ldap://$LDAP_HOST -w "$CONFIG_PASSWORD" -D "$CONFIG_DN" << EOF
 dn: olcDatabase={1}mdb,cn=config
 changetype: modify
 add: olcAccess

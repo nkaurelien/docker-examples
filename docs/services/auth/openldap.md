@@ -107,8 +107,9 @@ dc=kamitbrains,dc=local (Racine / Domaine)
 
 ---
 
-## 🔒 Sécurité : Hachage des Mots de Passe (`{SSHA}`)
+## 🔒 Sécurité et Durcissement
 
+### 1. Hachage des Mots de Passe (`{SSHA}`)
 Les mots de passe ne sont **jamais stockés en clair**. Le conteneur d'initialisation utilise l'outil officiel OpenLDAP `slappasswd` pour générer un hachage salé au format `{SSHA}` (SHA-1 + Salt aléatoire) lors de la création de chaque compte :
 
 ```bash
@@ -116,5 +117,16 @@ Les mots de passe ne sont **jamais stockés en clair**. Le conteneur d'initialis
 slappasswd -s "MonMotDePasseSecret"
 # Résultat : {SSHA}hSJamTTdc8MudXG9O2Bw5pq6uifvPrdC
 ```
+Dans l'annuaire, l'attribut `userPassword` contient uniquement cette empreinte. Lors de l'authentification (via phpLDAPadmin ou une application cliente), OpenLDAP compare le sel et le hash sans jamais avoir besoin de connaître le mot de passe en clair.
 
-Dans l'annuaire, l'attribut `userPassword` contient uniquement cette empreinte `{SSHA}...`. Lors de l'authentification (via phpLDAPadmin ou une application cliente), OpenLDAP compare le sel et le hash sans jamais avoir besoin de connaître le mot de passe en clair.
+### 2. Ségrégation des Privilèges d'Administration (Double Secret)
+Deux comptes administrateurs distincts sont configurés avec des mots de passe séparés via **Docker Secrets** :
+- **`ldap_admin_password`** (`cn=admin,dc=kamitbrains,dc=local`) : Administrateur du DIT (données de l'annuaire : utilisateurs, groupes, OUs).
+- **`ldap_config_password`** (`cn=admin,cn=config`) : Administrateur système du moteur OpenLDAP (schémas, overlays, ACLs, modules).
+
+Cette séparation empêche qu'un compte ayant des droits sur les données puisse compromettre ou altérer le moteur OpenLDAP sous-jacent.
+
+### 3. Bonnes Pratiques en Production
+- **Chiffrement réseau (TLS/LDAPS) :** En production, privilégiez le port sécurisé `636` (LDAPS) ou `StartTLS` sur le port `389` pour éviter l'interception des requêtes sur le réseau local.
+- **phpLDAPadmin via Reverse Proxy HTTPS :** Si l'interface web doit être exposée en dehors du réseau local, placez-la impérativement derrière un Reverse Proxy avec certificat SSL valide (Traefik ou Nginx Proxy Manager).
+- **Modification des secrets :** Les fichiers du dossier `.secrets/` doivent impérativement être modifiés avec des mots de passe uniques et forts avant tout déploiement en production.

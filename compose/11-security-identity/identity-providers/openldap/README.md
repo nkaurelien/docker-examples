@@ -64,8 +64,16 @@ dc=kamitbrains,dc=local (Domain Root / Base DN)
 - **`groupOfNames`**: Group containing references to its members (`member: <full DN>`).
 - **`memberOf`**: Reverse-membership attribute assigned to users for quick group-based access control checks.
 
-## Security: Password Hashing ({SSHA})
+## Security & Hardening
 
+### 1. Password Hashing ({SSHA})
 Passwords are **never stored in cleartext**. The bootstrap script dynamically hashes user passwords with `slappasswd` using salted SHA-1 (`{SSHA}`) before inserting them into the LDAP directory:
 - Generated value format: `{SSHA}hSJamTTdc8MudXG9O2Bw5pq6uifvPrdC`
 - Password verification is performed by matching the salt and hash, keeping cleartext credentials confidential.
+
+### 2. Privilege Separation (Dual Secret Architecture)
+Two distinct administrator passwords are configured via **Docker Compose Secrets**:
+- **`ldap_admin_password`** (`cn=admin,dc=kamitbrains,dc=local`): Directory administrator (manages users, OUs, and groups).
+- **`ldap_config_password`** (`cn=admin,cn=config`): Low-level OpenLDAP engine administrator (schemas, modules, ACLs).
+
+This prevents directory data managers from modifying the server's runtime configuration.
