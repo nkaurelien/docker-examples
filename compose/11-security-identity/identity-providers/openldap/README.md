@@ -7,6 +7,7 @@ This stack provides an **OpenLDAP** directory server alongside **phpLDAPadmin**,
 1. Start the stack:
    ```bash
    cp .env.example .env
+   cp -r .secrets.example .secrets
    docker compose up -d
    ```
 

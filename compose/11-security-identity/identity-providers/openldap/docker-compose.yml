@@ -1,7 +1,7 @@
 # OpenLDAP with phpLDAPadmin
 # Usage:
 #   cp .env.example .env
-#   # Edit .env with your values
+#   cp -r .secrets.example .secrets   # Or customize passwords in .secrets/
 #   docker compose up -d
 
 services:
@@ -9,11 +9,13 @@ services:
     image: osixia/openldap:1.5.0
     container_name: openldap
     environment:
-      LDAP_ORGANISATION: ${LDAP_ORGANISATION:-exampleorg}
-      LDAP_DOMAIN: ${LDAP_DOMAIN:-example.in}
-      LDAP_BASE_DN: ${LDAP_BASE_DN:-dc=example,dc=in}
-      LDAP_ADMIN_PASSWORD: ${LDAP_ADMIN_PASSWORD:-password}
-      LDAP_CONFIG_PASSWORD: ${LDAP_ADMIN_PASSWORD:-password}
+      LDAP_ORGANISATION: ${LDAP_ORGANISATION:-kamitbrains-it}
+      LDAP_DOMAIN: ${LDAP_DOMAIN:-kamitbrains.local}
+      LDAP_BASE_DN: ${LDAP_BASE_DN:-dc=kamitbrains,dc=local}
+      LDAP_ADMIN_PASSWORD_FILE: /run/secrets/ldap_admin_password
+      LDAP_CONFIG_PASSWORD_FILE: /run/secrets/ldap_admin_password
+    secrets:
+      - ldap_admin_password
     ports:
       - "${LDAP_PORT:-389}:389"
       - "${LDAPS_PORT:-636}:636"
@@ -50,8 +52,12 @@ services:
       openldap:
         condition: service_healthy
     environment:
-      LDAP_BASE_DN: ${LDAP_BASE_DN:-dc=example,dc=in}
-      LDAP_ADMIN_PASSWORD: ${LDAP_ADMIN_PASSWORD:-password}
+      LDAP_BASE_DN: ${LDAP_BASE_DN:-dc=kamitbrains,dc=local}
+    secrets:
+      - ldap_admin_password
+      - user_aurelien_password
+      - user_idriss_password
+      - user_michel_password
     volumes:
       - ./scripts/init.sh:/init.sh:ro
     entrypoint: ["/bin/bash", "/init.sh"]
@@ -66,7 +72,7 @@ services:
       PHPLDAPADMIN_LDAP_HOSTS: "openldap"
       PHPLDAPADMIN_HTTPS: "false"
     ports:
-      - "${PHPLDAPADMIN_PORT:-8080}:80"
+      - "${PHPLDAPADMIN_PORT:-8088}:80"
     depends_on:
       openldap:
         condition: service_healthy
@@ -86,6 +92,16 @@ services:
         reservations:
           cpus: '0.1'
           memory: 64M
+
+secrets:
+  ldap_admin_password:
+    file: ./.secrets/ldap_admin_password.txt
+  user_aurelien_password:
+    file: ./.secrets/user_aurelien_password.txt
+  user_idriss_password:
+    file: ./.secrets/user_idriss_password.txt
+  user_michel_password:
+    file: ./.secrets/user_michel_password.txt
 
 volumes:
   openldap-data:

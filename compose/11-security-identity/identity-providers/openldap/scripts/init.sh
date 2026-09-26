@@ -1,13 +1,19 @@
 #!/bin/bash
-# Init script executed by the init-ldap container
+# Init script executed by the init-ldap container using Docker Secrets
 
 LDAP_HOST="openldap"
-# The base DN and password are provided via environment variables in docker-compose.yml
 ADMIN_DN="cn=admin,${LDAP_BASE_DN}"
 CONFIG_DN="cn=admin,cn=config"
 
+# Read passwords from mounted Docker Compose secrets (/run/secrets/*)
+SECRETS_DIR="/run/secrets"
+ADMIN_PASSWORD=$(cat "${SECRETS_DIR}/ldap_admin_password")
+AURELIEN_RAW=$(cat "${SECRETS_DIR}/user_aurelien_password")
+IDRISS_RAW=$(cat "${SECRETS_DIR}/user_idriss_password")
+MICHEL_RAW=$(cat "${SECRETS_DIR}/user_michel_password")
+
 echo "1. Creating Organizational Units (OUs)..."
-ldapadd -x -H ldap://$LDAP_HOST -w "$LDAP_ADMIN_PASSWORD" -D "$ADMIN_DN" << EOF
+ldapadd -x -H ldap://$LDAP_HOST -w "$ADMIN_PASSWORD" -D "$ADMIN_DN" << EOF
 dn: ou=devops,${LDAP_BASE_DN}
 objectClass: organizationalUnit
 ou: devops
@@ -17,13 +23,13 @@ objectClass: organizationalUnit
 ou: appdev
 EOF
 
-echo "2. Generating SSHA password hashes..."
-AURELIEN_HASH=$(slappasswd -s "Aurelien@123")
-IDRISS_HASH=$(slappasswd -s "Idriss@123")
-MICHEL_HASH=$(slappasswd -s "Michel@123")
+echo "2. Generating SSHA password hashes from secrets..."
+AURELIEN_HASH=$(slappasswd -s "$AURELIEN_RAW")
+IDRISS_HASH=$(slappasswd -s "$IDRISS_RAW")
+MICHEL_HASH=$(slappasswd -s "$MICHEL_RAW")
 
 echo "3. Creating User Accounts..."
-ldapadd -x -H ldap://$LDAP_HOST -w "$LDAP_ADMIN_PASSWORD" -D "$ADMIN_DN" << EOF
+ldapadd -x -H ldap://$LDAP_HOST -w "$ADMIN_PASSWORD" -D "$ADMIN_DN" << EOF
 dn: cn=aurelien,ou=devops,${LDAP_BASE_DN}
 objectClass: inetOrgPerson
 cn: aurelien
@@ -47,7 +53,7 @@ userPassword: $MICHEL_HASH
 EOF
 
 echo "4. Creating Groups..."
-ldapadd -x -H ldap://$LDAP_HOST -w "$LDAP_ADMIN_PASSWORD" -D "$ADMIN_DN" << EOF
+ldapadd -x -H ldap://$LDAP_HOST -w "$ADMIN_PASSWORD" -D "$ADMIN_DN" << EOF
 dn: cn=appdev-team,${LDAP_BASE_DN}
 objectClass: top
 objectClass: groupOfNames
@@ -66,7 +72,7 @@ member: cn=michel,ou=appdev,${LDAP_BASE_DN}
 EOF
 
 echo "5. Modifying MemberOf Attributes..."
-ldapadd -x -H ldap://$LDAP_HOST -w "$LDAP_ADMIN_PASSWORD" -D "$ADMIN_DN" << EOF
+ldapadd -x -H ldap://$LDAP_HOST -w "$ADMIN_PASSWORD" -D "$ADMIN_DN" << EOF
 dn: cn=aurelien,ou=devops,${LDAP_BASE_DN}
 changetype: modify
 add: memberOf
@@ -84,7 +90,7 @@ memberOf: cn=devops-team,${LDAP_BASE_DN}
 EOF
 
 echo "6. Granting Read Access to user aurelien..."
-ldapmodify -x -H ldap://$LDAP_HOST -w "$LDAP_ADMIN_PASSWORD" -D "$CONFIG_DN" << EOF
+ldapmodify -x -H ldap://$LDAP_HOST -w "$ADMIN_PASSWORD" -D "$CONFIG_DN" << EOF
 dn: olcDatabase={1}mdb,cn=config
 changetype: modify
 add: olcAccess

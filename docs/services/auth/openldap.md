@@ -18,10 +18,16 @@ La configuration complète avec le conteneur d'initialisation se trouve dans :
 
 ### 1. Démarrer la stack
 
-La stack comprend OpenLDAP, phpLDAPadmin et un script d'initialisation (qui s'assure d'importer vos utilisateurs par défaut au démarrage) :
+La stack comprend OpenLDAP, phpLDAPadmin et un script d'initialisation sécurisé par **Docker Secrets** :
 
 ```bash
 cd compose/11-security-identity/identity-providers/openldap
+
+# Initialiser le fichier d'environnement et les secrets
+cp .env.example .env
+cp -r .secrets.example .secrets
+
+# Démarrer la stack
 docker compose up -d
 ```
 
