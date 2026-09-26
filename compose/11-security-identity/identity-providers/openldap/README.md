@@ -77,3 +77,11 @@ Two distinct administrator passwords are configured via **Docker Compose Secrets
 - **`ldap_config_password`** (`cn=admin,cn=config`): Low-level OpenLDAP engine administrator (schemas, modules, ACLs).
 
 This prevents directory data managers from modifying the server's runtime configuration.
+
+### 3. Password Policy Overlay (`ppolicy`) & Brute-force Protection
+The OpenLDAP **`ppolicy`** overlay is enabled and enforced globally (`cn=default,ou=policies,dc=kamitbrains,dc=local`):
+- **Minimum Password Length (`pwdMinLength`)**: 8 characters.
+- **Account Lockout (`pwdLockout`)**: Enabled (`TRUE`).
+- **Max Failed Attempts (`pwdMaxFailure`)**: 5 failed login attempts.
+- **Lockout Duration (`pwdLockoutDuration`)**: 900 seconds (15 minutes).
+- **Auto-Hashing (`olcPPolicyHashCleartext`)**: Automatically converts cleartext password modifications to secure hashes.

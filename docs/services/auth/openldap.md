@@ -126,7 +126,16 @@ Deux comptes administrateurs distincts sont configurés avec des mots de passe s
 
 Cette séparation empêche qu'un compte ayant des droits sur les données puisse compromettre ou altérer le moteur OpenLDAP sous-jacent.
 
-### 3. Bonnes Pratiques en Production
+### 3. Overlay Password Policy (`ppolicy`) & Protection Anti-Bruteforce
+L'overlay OpenLDAP **`ppolicy`** est activé automatiquement sur la base de données `mdb`. Une politique globale par défaut est appliquée sous `cn=default,ou=policies,dc=kamitbrains,dc=local` :
+- **Longueur minimale (`pwdMinLength`)** : 8 caractères obligatoires.
+- **Verrouillage de compte (`pwdLockout`)** : Activé (`TRUE`).
+- **Tolérance aux échecs (`pwdMaxFailure`)** : 5 tentatives infructueuses autorisées.
+- **Durée de verrouillage (`pwdLockoutDuration`)** : 15 minutes (900 secondes) de blocage automatique du compte en cas de dépassement.
+- **Fenêtre de comptage des échecs (`pwdFailureCountInterval`)** : 15 minutes.
+- **Hachage automatique des modifications (`olcPPolicyHashCleartext`)** : Tout mot de passe modifié via LDAP en clair est automatiquement haché avant stockage.
+
+### 4. Bonnes Pratiques en Production
 - **Chiffrement réseau (TLS/LDAPS) :** En production, privilégiez le port sécurisé `636` (LDAPS) ou `StartTLS` sur le port `389` pour éviter l'interception des requêtes sur le réseau local.
 - **phpLDAPadmin via Reverse Proxy HTTPS :** Si l'interface web doit être exposée en dehors du réseau local, placez-la impérativement derrière un Reverse Proxy avec certificat SSL valide (Traefik ou Nginx Proxy Manager).
 - **Modification des secrets :** Les fichiers du dossier `.secrets/` doivent impérativement être modifiés avec des mots de passe uniques et forts avant tout déploiement en production.

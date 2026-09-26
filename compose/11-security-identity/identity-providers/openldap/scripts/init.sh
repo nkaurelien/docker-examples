@@ -98,4 +98,50 @@ add: olcAccess
 olcAccess: {2}to * by dn="cn=aurelien,ou=devops,${LDAP_BASE_DN}" read
 EOF
 
+echo "7. Enabling and Configuring PPolicy Overlay..."
+# Load ppolicy module into cn=module{0},cn=config
+ldapmodify -x -H ldap://$LDAP_HOST -w "$CONFIG_PASSWORD" -D "$CONFIG_DN" << EOF
+dn: cn=module{0},cn=config
+changetype: modify
+add: olcModuleLoad
+olcModuleLoad: ppolicy
+EOF
+
+# Attach ppolicy overlay to the mdb database
+ldapadd -x -H ldap://$LDAP_HOST -w "$CONFIG_PASSWORD" -D "$CONFIG_DN" << EOF
+dn: olcOverlay=ppolicy,olcDatabase={1}mdb,cn=config
+objectClass: olcOverlayConfig
+objectClass: olcPPolicyConfig
+olcOverlay: ppolicy
+olcPPolicyDefault: cn=default,ou=policies,${LDAP_BASE_DN}
+olcPPolicyUseLockout: TRUE
+olcPPolicyHashCleartext: TRUE
+EOF
+
+echo "8. Creating Default Password Policy..."
+# Create ou=policies container
+ldapadd -x -H ldap://$LDAP_HOST -w "$ADMIN_PASSWORD" -D "$ADMIN_DN" << EOF
+dn: ou=policies,${LDAP_BASE_DN}
+objectClass: organizationalUnit
+ou: policies
+EOF
+
+# Define default security policy (min length 8, lockout after 5 failures for 15 mins)
+ldapadd -x -H ldap://$LDAP_HOST -w "$ADMIN_PASSWORD" -D "$ADMIN_DN" << EOF
+dn: cn=default,ou=policies,${LDAP_BASE_DN}
+objectClass: top
+objectClass: device
+objectClass: pwdPolicy
+cn: default
+pwdAttribute: userPassword
+pwdMinLength: 8
+pwdMaxFailure: 5
+pwdLockout: TRUE
+pwdLockoutDuration: 900
+pwdFailureCountInterval: 900
+pwdMustChange: FALSE
+pwdAllowUserChange: TRUE
+pwdSafeModify: FALSE
+EOF
+
 echo "Initialization complete!"
