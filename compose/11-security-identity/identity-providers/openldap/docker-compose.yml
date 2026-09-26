@@ -2,6 +2,7 @@
 # Usage:
 #   cp .env.example .env
 #   cp -r .secrets.example .secrets   # Or customize passwords in .secrets/
+#   docker network create traefik-public   # Once, if Traefik isn't already running
 #   docker compose up -d
 
 services:
@@ -83,6 +84,7 @@ services:
       - traefik-public
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=traefik-public"
       - "traefik.http.routers.phpldapadmin.rule=Host(`${PHPLDAPADMIN_HOSTNAME:-ldap.kamitbrains.local}`)"
       - "traefik.http.routers.phpldapadmin.entrypoints=websecure"
       - "traefik.http.routers.phpldapadmin.tls.certresolver=letsencrypt"
