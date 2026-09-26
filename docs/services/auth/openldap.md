@@ -12,7 +12,10 @@ La configuration complète avec le conteneur d'initialisation se trouve dans :
 - Initialisation automatique avec un conteneur dédié (création OUs, utilisateurs, groupes).
 - Interface web (phpLDAPadmin).
 - Persistance des données.
-- Support du TLS, de la réplication, et des politiques de mots de passe complexes en natif (géré par osixia).
+- Mots de passe gérés par Docker Secrets et hachés en `{SSHA}`.
+- Politique de mots de passe (`ppolicy`) : longueur minimale et verrouillage anti-bruteforce.
+- `memberOf` maintenu automatiquement par l'overlay `memberof`.
+- Script d'initialisation idempotent (relançable sans erreur).
 
 ## 🛠️ Utilisation
 
@@ -27,6 +30,9 @@ cd compose/11-security-identity/identity-providers/openldap
 cp .env.example .env
 cp -r .secrets.example .secrets
 
+# Créer le réseau Traefik (une seule fois, si Traefik ne tourne pas déjà)
+docker network create traefik-public
+
 # Démarrer la stack
 docker compose up -d
 ```
@@ -36,16 +42,24 @@ docker compose up -d
 Nous avons inclus un conteneur nommé `init-ldap`. 
 Celui-ci attend que le serveur OpenLDAP soit prêt, puis injecte un script d'initialisation (`scripts/init.sh`) qui :
 1. Crée les OUs (Unités Organisationnelles) : `ou=devops`, `ou=appdev`.
-2. Crée les Utilisateurs : `nkaurelien`, `idriss`, `michel`.
-3. Crée les Groupes : `appdev-team`, `devops-team`.
-4. Assigne les utilisateurs aux groupes correspondants via l'attribut `memberOf`.
-5. Modifie les ACL (Listes de Contrôle d'Accès) pour autoriser par exemple l'utilisateur `nkaurelien` à lire l'annuaire.
+2. Crée les utilisateurs `cn=aurelien` (uid `nkaurelien`), `cn=idriss` (uid `nnid`) et `cn=michel` (uid `edmich`), avec des mots de passe hachés en `{SSHA}`.
+3. Reconfigure l'overlay `memberof` pour suivre `groupOfNames`/`member` (osixia le configure par défaut pour `groupOfUniqueNames`/`uniqueMember`).
+4. Crée les groupes `appdev-team` (aurelien, idriss) et `devops-team` (aurelien, michel). L'overlay renseigne automatiquement `memberOf` sur chaque utilisateur.
+5. Modifie les ACL (Listes de Contrôle d'Accès) pour autoriser `cn=aurelien` à lire l'annuaire.
+6. Active l'overlay `ppolicy` et crée la politique par défaut `cn=default,ou=policies`.
 
-*Ce conteneur d'initialisation s'arrête de lui-même une fois sa tâche accomplie avec succès (`restart: "no"`).*
+*Ce conteneur s'arrête une fois sa tâche terminée (`restart: "no"`). Il sort en erreur (code 1) si un secret est absent ou vide, ou si une opération LDAP échoue réellement.*
+
+Le script est **idempotent** : les résultats « existe déjà » (codes LDAP 68 et 20) sont considérés comme des succès, et l'overlay `ppolicy` n'est ajouté que s'il est absent. Pour le relancer :
+
+```bash
+docker compose up -d --force-recreate init-ldap
+docker logs init-ldap
+```
 
 ### 3. Interface Web phpLDAPadmin
 
-Une fois le serveur démarré, vous pouvez accéder à l'interface d'administration :
+Une fois le serveur démarré, vous pouvez accéder à l'interface d'administration. Les mots de passe ci-dessous sont les valeurs par défaut de `.secrets.example/` ; ce sont les fichiers de `.secrets/` qui font foi.
 - **Accès direct (HTTP local)** : `http://localhost:8088`
 - **Accès via Traefik (HTTPS / TLS)** : `https://ldap.kamitbrains.local` (ou le nom d'hôte configuré dans `PHPLDAPADMIN_HOSTNAME`)
 
@@ -53,11 +67,11 @@ Une fois le serveur démarré, vous pouvez accéder à l'interface d'administrat
 
 #### Option A : Connexion Administrateur (Gestion complète)
 - **Login DN** : `cn=admin,dc=kamitbrains,dc=local`
-- **Mot de passe** : `password`
+- **Mot de passe** : `password` (`.secrets/ldap_admin_password.txt`)
 
 #### Option B : Connexion Utilisateur (ex: Aurelien)
 - **Login DN** : `cn=aurelien,ou=devops,dc=kamitbrains,dc=local`
-- **Mot de passe** : `Aurelien@123`
+- **Mot de passe** : `Aurelien@123` (`.secrets/user_aurelien_password.txt`)
 *(Note : dans les applications tierces comme Nextcloud ou Grafana qui utilisent l'attribut `uid`, l'identifiant à saisir sera `nkaurelien`).*
 
 ### 4. Requêtes CLI (Vérification)
@@ -67,7 +81,14 @@ Vous pouvez tester l'accès LDAP directement depuis le conteneur principal avec 
 ```bash
 docker exec -it openldap ldapsearch -x -D "cn=aurelien,ou=devops,dc=kamitbrains,dc=local" -w Aurelien@123 -b "dc=kamitbrains,dc=local"
 ```
-Cela vous confirmera que l'utilisateur `nkaurelien` (et son mot de passe) sont correctement configurés et ont l'accès en lecture.
+Cela vous confirmera que l'utilisateur `cn=aurelien` (uid `nkaurelien`) et son mot de passe sont correctement configurés et qu'il a l'accès en lecture.
+
+Pour vérifier les appartenances aux groupes calculées par l'overlay :
+
+```bash
+docker exec openldap ldapsearch -x -LLL -D "cn=admin,dc=kamitbrains,dc=local" -w password \
+  -b "dc=kamitbrains,dc=local" "(objectClass=inetOrgPerson)" memberOf
+```
 
 ---
 
@@ -106,12 +127,15 @@ dc=kamitbrains,dc=local (Racine / Domaine)
 - **`member` (sur le groupe)** : Contient le DN de chaque personne membre (ex: `member: cn=aurelien,ou=devops,dc=kamitbrains,dc=local`).
 - **`memberOf` (sur l'utilisateur)** : Attribut miroir placé directement sur la fiche utilisateur pour simplifier les requêtes de droits d'accès depuis les applications clientes (Nextcloud, Keycloak, Grafana, Portainer).
 
+!!! warning "Ne jamais écrire `memberOf` à la main"
+    `memberOf` doit être calculé par l'overlay `memberof` à partir des `member` des groupes. L'écrire à la main crée des incohérences : ajouts et retraits de membres ne sont plus répercutés. Point d'attention avec `osixia/openldap` : l'overlay suit par défaut `groupOfUniqueNames`/`uniqueMember`. Avec des `groupOfNames`, il faut changer `olcMemberOfGroupOC` et `olcMemberOfMemberAD` **avant** de créer les groupes, ce que fait le script d'initialisation.
+
 ---
 
 ## 🔒 Sécurité et Durcissement
 
 ### 1. Hachage des Mots de Passe (`{SSHA}`)
-Les mots de passe ne sont **jamais stockés en clair**. Le conteneur d'initialisation utilise l'outil officiel OpenLDAP `slappasswd` pour générer un hachage salé au format `{SSHA}` (SHA-1 + Salt aléatoire) lors de la création de chaque compte :
+Les mots de passe ne sont **jamais stockés en clair**. Le conteneur d'initialisation utilise l'outil officiel OpenLDAP `slappasswd` pour générer un hachage salé au format `{SSHA}` (SHA-1 + sel aléatoire) lors de la création de chaque compte. `{SSHA}` reste un hachage rapide, suffisant pour un lab ; en production, préférez un hachage lent comme Argon2 (module `pw-argon2`).
 
 ```bash
 # Exemple de génération d'un mot de passe sécurisé :
@@ -129,6 +153,7 @@ Cette séparation empêche qu'un compte ayant des droits sur les données puisse
 
 ### 3. Overlay Password Policy (`ppolicy`) & Protection Anti-Bruteforce
 L'overlay OpenLDAP **`ppolicy`** est activé automatiquement sur la base de données `mdb`. Une politique globale par défaut est appliquée sous `cn=default,ou=policies,dc=kamitbrains,dc=local` :
+- **Contrôle qualité (`pwdCheckQuality: 1`)** : indispensable, sans lui `pwdMinLength` est ignoré.
 - **Longueur minimale (`pwdMinLength`)** : 8 caractères obligatoires.
 - **Verrouillage de compte (`pwdLockout`)** : Activé (`TRUE`).
 - **Tolérance aux échecs (`pwdMaxFailure`)** : 5 tentatives infructueuses autorisées.
@@ -136,9 +161,17 @@ L'overlay OpenLDAP **`ppolicy`** est activé automatiquement sur la base de donn
 - **Fenêtre de comptage des échecs (`pwdFailureCountInterval`)** : 15 minutes.
 - **Hachage automatique des modifications (`olcPPolicyHashCleartext`)** : Tout mot de passe modifié via LDAP en clair est automatiquement haché avant stockage.
 
+La politique ne s'applique pas au root DN (`cn=admin,...`), qui contourne ppolicy. Test rapide (doit échouer avec `Constraint violation`) :
+
+```bash
+docker exec openldap ldappasswd -x -D "cn=michel,ou=appdev,dc=kamitbrains,dc=local" -w Michel@123 -s abc
+```
+
 ### 4. Bonnes Pratiques en Production
 - **Chiffrement réseau (TLS/LDAPS) :** En production, privilégiez le port sécurisé `636` (LDAPS) ou `StartTLS` sur le port `389` pour éviter l'interception des requêtes sur le réseau local.
 - **phpLDAPadmin via Reverse Proxy HTTPS :** Si l'interface web doit être exposée en dehors du réseau local, placez-la impérativement derrière un Reverse Proxy avec certificat SSL valide (Traefik ou Nginx Proxy Manager).
+- **Certificats Traefik :** Let's Encrypt ne délivre pas de certificat pour un nom en `.local`. Utilisez un vrai domaine (challenge DNS pour un hôte interne) ou acceptez le certificat auto-signé par défaut de Traefik en lab.
+- **Label `traefik.docker.network` :** phpLDAPadmin est sur deux réseaux ; ce label force Traefik à passer par `traefik-public`, sinon il peut viser l'IP de `ldap-network` et renvoyer une 502.
 - **Modification des secrets :** Les fichiers du dossier `.secrets/` doivent impérativement être modifiés avec des mots de passe uniques et forts avant tout déploiement en production.
 
 ---
