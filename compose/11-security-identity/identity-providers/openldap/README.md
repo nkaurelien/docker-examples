@@ -62,3 +62,9 @@ dc=kamitbrains,dc=local (Domain Root / Base DN)
 - **`inetOrgPerson`**: Standard object class representing a human user (supports `cn`, `sn`, `uid`, `mail`, `userPassword`).
 - **`groupOfNames`**: Group containing references to its members (`member: <full DN>`).
 - **`memberOf`**: Reverse-membership attribute assigned to users for quick group-based access control checks.
+
+## Security: Password Hashing ({SSHA})
+
+Passwords are **never stored in cleartext**. The bootstrap script dynamically hashes user passwords with `slappasswd` using salted SHA-1 (`{SSHA}`) before inserting them into the LDAP directory:
+- Generated value format: `{SSHA}hSJamTTdc8MudXG9O2Bw5pq6uifvPrdC`
+- Password verification is performed by matching the salt and hash, keeping cleartext credentials confidential.

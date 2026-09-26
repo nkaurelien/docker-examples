@@ -98,3 +98,17 @@ dc=kamitbrains,dc=local (Racine / Domaine)
 
 - **`member` (sur le groupe)** : Contient le DN de chaque personne membre (ex: `member: cn=aurelien,ou=devops,dc=kamitbrains,dc=local`).
 - **`memberOf` (sur l'utilisateur)** : Attribut miroir placé directement sur la fiche utilisateur pour simplifier les requêtes de droits d'accès depuis les applications clientes (Nextcloud, Keycloak, Grafana, Portainer).
+
+---
+
+## 🔒 Sécurité : Hachage des Mots de Passe (`{SSHA}`)
+
+Les mots de passe ne sont **jamais stockés en clair**. Le conteneur d'initialisation utilise l'outil officiel OpenLDAP `slappasswd` pour générer un hachage salé au format `{SSHA}` (SHA-1 + Salt aléatoire) lors de la création de chaque compte :
+
+```bash
+# Exemple de génération d'un mot de passe sécurisé :
+slappasswd -s "MonMotDePasseSecret"
+# Résultat : {SSHA}hSJamTTdc8MudXG9O2Bw5pq6uifvPrdC
+```
+
+Dans l'annuaire, l'attribut `userPassword` contient uniquement cette empreinte `{SSHA}...`. Lors de l'authentification (via phpLDAPadmin ou une application cliente), OpenLDAP compare le sel et le hash sans jamais avoir besoin de connaître le mot de passe en clair.
