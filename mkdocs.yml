@@ -210,6 +210,7 @@ nav:
   - Communication:
       - Overview: services/communication/index.md
       - Ntfy Push Notifications: services/communication/ntfy.md
+      - Jitsi Meet (JWT, événements, TURN): services/communication/jitsi-meet.md
 
   - Authentication:
       - Overview: services/auth/index.md

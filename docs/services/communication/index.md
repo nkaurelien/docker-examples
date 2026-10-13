@@ -23,6 +23,6 @@ Platforms to consider:
 - **Rocket.Chat** - Team collaboration
 - **Zulip** - Chat with threading
 - **Matrix/Element** - Decentralized chat
-- **Jitsi Meet** - Video conferencing
+- **Jitsi Meet** - Video conferencing — [projet prêt à l'emploi](jitsi-meet.md) (JWT, événements de salle, TURN)
 - **BigBlueButton** - Web conferencing for education
 - **Discourse** - Discussion forum

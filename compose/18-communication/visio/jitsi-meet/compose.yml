@@ -1,0 +1,70 @@
+# Jitsi Meet auto-hébergé : accès par jeton (JWT HS256), événements de salle vers un backend,
+# relais TURN optionnel (profil `turn`). TLS terminé par un reverse proxy (cf. nginx/meet.conf.example).
+name: ${COMPOSE_PROJECT_NAME:-jitsi-meet}
+
+x-jitsi: &jitsi
+  restart: unless-stopped
+  env_file: .env
+  networks:
+    meet.jitsi:
+
+services:
+  web:
+    <<: *jitsi
+    image: jitsi/web:${JITSI_IMAGE_VERSION:-stable-11031}
+    # Jamais exposé directement : le reverse proxy ajoute TLS et la règle frame-ancestors.
+    ports:
+      - "${JITSI_HTTP_BIND:-127.0.0.1}:${JITSI_HTTP_PORT:-8000}:80"
+    volumes:
+      - ./config/web:/config
+      - ./config/transcripts:/usr/share/jitsi-meet/transcripts
+    depends_on:
+      - prosody
+
+  prosody:
+    <<: *jitsi
+    image: jitsi/prosody:${JITSI_IMAGE_VERSION:-stable-11031}
+    expose: ["5222", "5280", "5347"]
+    volumes:
+      - ./config/prosody/config:/config
+      - ./config/prosody/prosody-plugins-custom:/prosody-plugins-custom
+    networks:
+      meet.jitsi:
+        aliases: [xmpp.meet.jitsi]
+
+  jicofo:
+    <<: *jitsi
+    image: jitsi/jicofo:${JITSI_IMAGE_VERSION:-stable-11031}
+    volumes:
+      - ./config/jicofo:/config
+    depends_on:
+      - prosody
+
+  jvb:
+    <<: *jitsi
+    image: jitsi/jvb:${JITSI_IMAGE_VERSION:-stable-11031}
+    # Seul port public : les médias, en UDP.
+    ports:
+      - "${JVB_PORT:-10000}:${JVB_PORT:-10000}/udp"
+    volumes:
+      - ./config/jvb:/config
+    depends_on:
+      - prosody
+
+  # Relais TURN (réseaux qui bloquent l'UDP) : `docker compose --profile turn up -d`.
+  coturn:
+    profiles: [turn]
+    image: coturn/coturn:${COTURN_IMAGE_VERSION:-4.6}
+    restart: unless-stopped
+    network_mode: host
+    command:
+      - -c
+      - /etc/coturn/turnserver.conf
+      - --static-auth-secret=${TURN_CREDENTIALS:-}
+      - --realm=${TURN_REALM:-meet.example.com}
+      - --external-ip=${JVB_ADVERTISE_IPS:-}
+    volumes:
+      - ./coturn/turnserver.conf:/etc/coturn/turnserver.conf:ro
+
+networks:
+  meet.jitsi:

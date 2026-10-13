@@ -9,6 +9,7 @@ Messaging, notifications, and collaboration tools.
 ## Existing Projects
 
 - **notification/** - Notification services
+- **visio/jitsi-meet/** - Visioconférence Jitsi auto-hébergée (JWT, événements de salle, TURN)
 
 ## Suggested Open Source Services
 

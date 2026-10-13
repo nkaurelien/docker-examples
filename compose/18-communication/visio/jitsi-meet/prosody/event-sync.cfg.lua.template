@@ -1,0 +1,13 @@
+-- Généré par `make event-sync` depuis prosody/event-sync.cfg.lua.template — ne pas éditer.
+-- Module event_sync (jitsi-contrib, livré dans l'image jitsi/prosody sous /prosody-plugins-contrib).
+-- Lu après jitsi-meet.cfg.lua grâce au préfixe zz-.
+Component "event-sync.meet.jitsi" "event_sync_component"
+    muc_component = "muc.meet.jitsi"
+    breakout_component = "breakout.meet.jitsi"
+    api_prefix = "${EVENT_SYNC_URL}"
+    api_headers = {
+        ["Authorization"] = "Bearer ${EVENT_SYNC_TOKEN}";
+    }
+    api_timeout = 10
+    api_retry_count = 5
+    api_retry_delay = 2
