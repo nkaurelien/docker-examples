@@ -182,7 +182,7 @@ Seuls les participants qui ne joignent pas `jvb` directement passent par le rela
 
 | Besoin | Choix de ce projet | Alternative |
 |---|---|---|
-| Serveur de visio | **Jitsi Meet** : interface complète prête à intégrer en iframe, JWT, `event_sync` | **LiveKit Server** (open source Apache 2.0, Go — base de *La Suite Meet* de la DINUM) : SFU moderne, **TURN intégré** (`rtc.turn.enabled`, UDP 443), webhooks natifs ; mais l'interface est à construire avec ses SDK (ou déployer La Suite Meet). *LiveKit Cloud* / *JaaS* : versions hébergées payantes. |
+| Serveur de visio | **Jitsi Meet** (*produit fini*) : interface complète prête à intégrer en iframe, JWT, `event_sync` | **LiveKit Server** (*infrastructure* : remplace le moteur de Jitsi, pas son interface ; open source Apache 2.0, Go — base de *La Suite Meet* de la DINUM) : SFU moderne, **TURN intégré** (`rtc.turn.enabled`, UDP 443), webhooks natifs ; mais l'interface est à construire avec ses SDK (ou déployer La Suite Meet). *LiveKit Cloud* / *JaaS* : versions hébergées payantes. |
 | Relais TURN | **coturn** (profil `turn`) ou identifiant d'un service géré | **eturnal** (équivalent coturn), TURN intégré de LiveKit (si on change de serveur de visio), **STUNner** (Kubernetes). |
 
 ---
