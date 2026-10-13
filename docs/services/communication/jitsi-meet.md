@@ -152,8 +152,13 @@ Prosody génère des identifiants temporaires à partir du secret partagé : rie
 `coturn/turnserver.conf` interdit le relais vers les réseaux privés (sinon le TURN devient un proxy
 vers votre infrastructure) et limite le débit par utilisateur.
 
-Pour le TLS sur 443 (réseaux les plus fermés) : une IP dédiée, ou un multiplexage
-`nginx stream` + `ssl_preread` si le 443 est déjà pris par le reverse proxy.
+**UDP 443** : un socket UDP 443 ne gêne pas le reverse proxy (TCP 443). Un TURN en UDP 443
+(pratique recommandée par la DINUM pour *La Suite Meet*) passe les réseaux qui ferment les ports
+UDP « exotiques » mais laissent l'UDP 443 (HTTP/3). Avec coturn en `network_mode: host`, le TCP 443
+est déjà pris : désactiver l'écoute TCP sur ce port, ou dédier le 443 à un autre IP.
+
+Pour le TLS sur **TCP** 443 (réseaux « HTTPS seul ») : une IP dédiée, un multiplexage
+`nginx stream` + `ssl_preread`, ou un service géré (option B).
 
 ### Option B — service géré (ex. Cloudflare TURN)
 
@@ -173,6 +178,15 @@ Seuls les participants qui ne joignent pas `jvb` directement passent par le rela
 
 ---
 
+## Alternatives et choix
+
+| Besoin | Choix de ce projet | Alternative |
+|---|---|---|
+| Serveur de visio | **Jitsi Meet** : interface complète prête à intégrer en iframe, JWT, `event_sync` | **LiveKit Server** (open source Apache 2.0, Go — base de *La Suite Meet* de la DINUM) : SFU moderne, **TURN intégré** (`rtc.turn.enabled`, UDP 443), webhooks natifs ; mais l'interface est à construire avec ses SDK (ou déployer La Suite Meet). *LiveKit Cloud* / *JaaS* : versions hébergées payantes. |
+| Relais TURN | **coturn** (profil `turn`) ou identifiant d'un service géré | **eturnal** (équivalent coturn), TURN intégré de LiveKit (si on change de serveur de visio), **STUNner** (Kubernetes). |
+
+---
+
 ## Dépannage
 
 | Symptôme | Cause probable |
@@ -181,4 +195,5 @@ Seuls les participants qui ne joignent pas `jvb` directement passent par le rela
 | `config.js` en 403 | `config/web` non traversable : `chmod 0755` (fait par `make setup`) |
 | event_sync ignoré au démarrage | `conf.d` illisible pour prosody (uid 100) : `chmod 0755` sur le dossier |
 | Salle rejointe, ni son ni image | UDP 10000 bloqué (pare-feu, hébergeur) ou `JVB_ADVERTISE_IPS` erronée ; réseau client fermé → TURN |
+| UDP injoignable alors que le pare-feu de la machine accepte tout | serveur derrière un **NAT de datacenter** (IP privée sur l'interface) : faire rediriger UDP 10000 (et les ports TURN). Test : `nc -lu 10001` sur le serveur, `echo test \| nc -u <ip> 10001` depuis l'extérieur |
 | `ERR_CONNECTION_RESET` dans un seul navigateur | permission réseau local ou filtrage propre à ce navigateur |
