@@ -143,7 +143,7 @@ docker-examples/
 │   ├── 08-code-management/           # Gitea, Docker Registry, JFrog Artifactory
 │   ├── 09-app-server-management/     # Business Apps (Odoo ERP), Content Management (WordPress, Drupal)
 │   ├── 10-databases/                 # PostgreSQL, CouchDB Cluster, CockroachDB
-│   ├── 11-security-identity/         # Keycloak, Zitadel, SuperTokens, Wazuh SIEM, ClamAV, Socket Proxy
+│   ├── 11-security-identity/         # Keycloak, Zitadel, SuperTokens, Wazuh SIEM, ClamAV, CrowdSec (Traefik / OpenResty AppSec), Socket Proxy
 │   ├── 12-document-management/       # Paperless-ngx
 │   ├── 13-api-gateway/               # Traefik, Kong, Tyk, WSO2 AM, Hasura GraphQL, Hoppscotch
 │   ├── 14-mail-services/             # Mailpit, Docker Mailserver, Mailcatcher, Mailu

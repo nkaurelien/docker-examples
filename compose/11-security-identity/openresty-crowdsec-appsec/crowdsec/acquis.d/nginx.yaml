@@ -1,0 +1,5 @@
+# Journaux d'accès d'OpenResty (volume partagé, lecture seule)
+filenames:
+  - /var/log/openresty/access.log
+labels:
+  type: nginx

@@ -1,0 +1,6 @@
+# Surcharge de /etc/crowdsec/config.yaml
+# log_level warning : masque le journal d'accès de la LAPI (le bouncer en
+# mode stream l'interroge toutes les 10 s, sinon ~85 % des logs).
+api:
+  server:
+    log_level: warning

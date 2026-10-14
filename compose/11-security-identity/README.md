@@ -37,6 +37,8 @@ Secrets management, password managers, and security scanning.
 ### Existing Projects
 
 - **security-tools/security/** - Security configurations
+- **crowdsec/** - CrowdSec engine + Traefik bouncer
+- **openresty-crowdsec-appsec/** - OpenResty frontal with CrowdSec Lua bouncer + AppSec WAF
 
 ### Suggested Open Source Services
 

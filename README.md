@@ -25,7 +25,7 @@ docker-examples/
 │   ├── 08-code-management/           # Gitea, Docker Registry, JFrog Artifactory
 │   ├── 09-app-server-management/     # Business Apps (Odoo ERP), Content Management (WordPress, Drupal)
 │   ├── 10-databases/                 # PostgreSQL, CouchDB Cluster, CockroachDB
-│   ├── 11-security-identity/         # Keycloak, Zitadel, SuperTokens, Wazuh SIEM, ClamAV, Socket Proxy
+│   ├── 11-security-identity/         # Keycloak, Zitadel, SuperTokens, Wazuh SIEM, ClamAV, CrowdSec (Traefik / OpenResty AppSec), Socket Proxy
 │   ├── 12-document-management/       # Paperless-ngx
 │   ├── 13-api-gateway/               # Traefik, Kong, Tyk, WSO2 AM, Hasura GraphQL, Hoppscotch
 │   ├── 14-mail-services/             # Mailpit, Docker Mailserver, Mailcatcher, Mailu
@@ -47,7 +47,7 @@ docker-examples/
 - **[Container Orchestration](compose/02-container-orchestration/)** - [Arcane](compose/02-container-orchestration/arcane/), [Portainer](compose/02-container-orchestration/portainer/), [Coolify](compose/02-container-orchestration/coolify/), [Dokploy](compose/02-container-orchestration/dokploy/).
 - **[AI & LLM Platforms](compose/06-ai/)** - [Ollama Local](compose/06-ai/ollama-local/), [Open WebUI](compose/06-ai/open-webui/), [Jupyter Notebooks](compose/06-ai/jupyter/), [DGX SSH Tunnel](compose/06-ai/dgx-ollama-tunnel/).
 - **[API Management & Gateways](compose/13-api-gateway/)** - [Traefik](compose/13-api-gateway/api-gateways/), [Kong](compose/13-api-gateway/api-gateways/), [Hasura](compose/13-api-gateway/graphql/).
-- **[Security & Identity](compose/11-security-identity/)** - [Keycloak](compose/11-security-identity/identity-providers/), [Zitadel](compose/11-security-identity/identity-providers/), [Wazuh SIEM](compose/11-security-identity/wazuh/), [Docker Socket Proxy](compose/11-security-identity/security-tools/).
+- **[Security & Identity](compose/11-security-identity/)** - [Keycloak](compose/11-security-identity/identity-providers/), [Zitadel](compose/11-security-identity/identity-providers/), [Wazuh SIEM](compose/11-security-identity/wazuh/), [OpenResty + CrowdSec AppSec](compose/11-security-identity/openresty-crowdsec-appsec/), [Docker Socket Proxy](compose/11-security-identity/security-tools/).
 - **[Data Processing & Analytics](compose/17-data-processing/)** - [Kafka + Logstash Stack](compose/17-data-processing/kafka-logstash/).
 - **[Cloudflare DNS CLI](scripts/cloudflare_dns.py)** - Automated DNS management powered by official Cloudflare Python SDK v5.
 
