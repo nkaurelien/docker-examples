@@ -8,7 +8,8 @@ Tools for network monitoring, traffic analysis, and network infrastructure manag
 
 ## Existing Projects
 
-*No projects yet - suggestions below*
+- **asterisk/** - Asterisk open source VoIP PBX
+- **geoip-api/** - IP geolocation REST API (MaxMind GeoLite2, offline)
 
 ## Suggested Open Source Services
 

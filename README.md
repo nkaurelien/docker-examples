@@ -18,7 +18,7 @@ docker-examples/
 │   ├── 01-infrastructure/            # Bind9 DNS, Nginx Certbot, Traefik
 │   ├── 02-container-orchestration/   # Arcane PaaS Manager, Portainer, Coolify, Dokploy, K8s Cert-Manager, Longhorn
 │   ├── 03-iot-smart-home/            # Home Assistant, ChangeDetection.io
-│   ├── 04-network-management/        # Asterisk VoIP
+│   ├── 04-network-management/        # Asterisk VoIP, GeoIP API
 │   ├── 05-monitoring-reporting/      # Checkmk, Uptime Kuma, Glances, Observability (Prometheus/Grafana), SonarQube
 │   ├── 06-ai/                        # Ollama Local, Open WebUI, Jupyter Notebooks, DGX SSH Tunnel
 │   ├── 07-automation/                # Workflow automation, CI/CD, Cron & PM2 Scheduling
