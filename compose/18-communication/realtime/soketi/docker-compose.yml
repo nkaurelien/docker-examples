@@ -1,0 +1,109 @@
+# Soketi : serveur WebSocket compatible protocole Pusher (laravel-echo / pusher-js / SDK pusher).
+name: soketi-realtime
+
+x-soketi-env: &soketi-env
+  SOKETI_DEBUG: ${SOKETI_DEBUG:-0}
+  SOKETI_PORT: "6001"
+  # L'id DOIT être numérique : le SDK Python `pusher` lève « ValueError: Invalid app id » sinon.
+  SOKETI_DEFAULT_APP_ID: ${SOKETI_APP_ID:?SOKETI_APP_ID manquant (lancez make setup)}
+  SOKETI_DEFAULT_APP_KEY: ${SOKETI_APP_KEY:?SOKETI_APP_KEY manquant}
+  SOKETI_DEFAULT_APP_SECRET: ${SOKETI_APP_SECRET:?SOKETI_APP_SECRET manquant}
+  # Les navigateurs ne publient pas : seul le backend émet (API HTTP signée).
+  SOKETI_DEFAULT_APP_ENABLE_CLIENT_MESSAGES: "false"
+  # Webhooks de présence, filtrés sur un préfixe de canal (en production : private-user.).
+  SOKETI_DEFAULT_APP_WEBHOOKS: >-
+    [{"url":"http://webhook-receiver:8000/webhooks/soketi",
+      "event_types":["channel_occupied","channel_vacated"],
+      "filter":{"channel_name_starts_with":"${WEBHOOK_CHANNEL_PREFIX:-demo-user.}"}}]
+  # File Redis : les webhooks en attente survivent à un redémarrage de Soketi.
+  SOKETI_QUEUE_DRIVER: redis
+  SOKETI_DB_REDIS_HOST: redis
+  SOKETI_DB_REDIS_PORT: "6379"
+  # Métriques Prometheus sur un port séparé (Soketi ne collecte pas les « stats » Pusher).
+  SOKETI_METRICS_ENABLED: "1"
+  SOKETI_METRICS_SERVER_PORT: "9601"
+
+services:
+  soketi:
+    image: quay.io/soketi/soketi:1.6-16-debian
+    restart: unless-stopped
+    environment: *soketi-env
+    ports:
+      - "127.0.0.1:${SOKETI_PORT:-6001}:6001"     # WebSocket /app/ + API de publication /apps/
+      - "127.0.0.1:${SOKETI_METRICS_PORT:-9601}:9601"
+    depends_on:
+      redis:
+        condition: service_healthy
+      webhook-receiver:
+        condition: service_started
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "require('http').get('http://127.0.0.1:6001/ready',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))"
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks: [edge, backend]
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks: [backend]          # aucun port publié
+
+  webhook-receiver:
+    image: python:3.12-slim
+    restart: unless-stopped
+    command: ["python", "-u", "/app/receiver.py"]
+    environment:
+      SOKETI_APP_KEY: ${SOKETI_APP_KEY}
+      SOKETI_APP_SECRET: ${SOKETI_APP_SECRET}
+    volumes:
+      - ./webhook-receiver/receiver.py:/app/receiver.py:ro
+    networks: [backend]
+
+  demo:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    environment:
+      SOKETI_APP_KEY: ${SOKETI_APP_KEY}
+      SOKETI_PUBLIC_PORT: ${SOKETI_PORT:-6001}
+    volumes:
+      - ./demo/index.html:/usr/share/nginx/html/index.html:ro
+      - ./demo/default.conf.template:/etc/nginx/templates/default.conf.template:ro
+    ports:
+      - "127.0.0.1:${DEMO_PORT:-8088}:80"
+    networks: [edge]
+
+  # Outil ponctuel : make publish (SDK Python `pusher`, comme un backend FastAPI).
+  publisher:
+    image: python:3.12-slim
+    profiles: [tools]
+    environment:
+      SOKETI_APP_ID: ${SOKETI_APP_ID}
+      SOKETI_APP_KEY: ${SOKETI_APP_KEY}
+      SOKETI_APP_SECRET: ${SOKETI_APP_SECRET}
+      SOKETI_HOST: soketi
+      SOKETI_PORT: "6001"
+    volumes:
+      - ./scripts/publish.py:/app/publish.py:ro
+    entrypoint: ["sh", "-c", "pip install -q --disable-pip-version-check --root-user-action=ignore pusher && python /app/publish.py \"$$@\"", "--"]
+    networks: [edge, backend]   # edge : accès PyPI pour pip install
+
+networks:
+  edge: {}
+  backend:
+    internal: true
+
+volumes:
+  redis-data:

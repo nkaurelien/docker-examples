@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Démo Soketi + laravel-echo</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 760px; margin: 2rem auto; padding: 0 1rem; }
+    #state { font-weight: bold; }
+    li { font-family: ui-monospace, monospace; font-size: .85rem; margin: .4rem 0; white-space: pre-wrap; }
+    .note { background: #f5f5f5; border-left: 4px solid #888; padding: .6rem 1rem; font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <h1>Démo Soketi + laravel-echo</h1>
+  <p>Canal : <code id="channel"></code> — état : <span id="state">…</span></p>
+  <p>Publiez un événement avec <code>make publish</code> : il apparaît ci-dessous sans rechargement.</p>
+  <ul id="events"></ul>
+
+  <p class="note">
+    Démo volontairement simple : le canal est <strong>public</strong>, n'importe qui connaissant son nom peut s'y abonner.
+    En production, utilisez un canal <strong>privé</strong> (<code>Echo.private('user.42')</code> → <code>private-user.42</code>)
+    et un endpoint d'authentification côté backend (<code>authEndpoint</code>) qui ne signe <em>que</em> le canal de
+    l'utilisateur connecté. Et ne transportez qu'une référence (id, type, actions) : le contenu se relit par l'API authentifiée.
+  </p>
+
+  <script src="/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pusher-js@8.4.0/dist/web/pusher.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.16.1/dist/echo.iife.js"></script>
+  <script>
+    const CHANNEL = 'demo-user.42';
+    document.getElementById('channel').textContent = CHANNEL;
+
+    window.Pusher = Pusher;
+    const echo = new Echo({
+      broadcaster: 'pusher',
+      key: window.SOKETI.key,
+      wsHost: window.location.hostname,
+      wsPort: window.SOKETI.port,
+      wssPort: window.SOKETI.port,
+      forceTLS: false,                 // true derrière un reverse proxy TLS (wss://)
+      enabledTransports: ['ws', 'wss'], // Soketi ne fait que du WebSocket : pas de repli sockjs/xhr
+      cluster: 'mt1',                  // option exigée par pusher-js, ignorée par Soketi
+      enableStats: false,              // Soketi ne collecte pas les stats Pusher
+    });
+
+    const state = document.getElementById('state');
+    echo.connector.pusher.connection.bind('state_change', ({ current }) => { state.textContent = current; });
+
+    // Le point initial évite le préfixe d'espace de noms « App.Events. » ajouté par Echo.
+    echo.channel(CHANNEL).listen('.notification.created', (event) => {
+      const li = document.createElement('li');
+      li.textContent = new Date().toLocaleTimeString() + '  ' + JSON.stringify(event, null, 2);
+      document.getElementById('events').prepend(li);
+    });
+  </script>
+</body>
+</html>

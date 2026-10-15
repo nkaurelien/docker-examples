@@ -24,5 +24,6 @@ Platforms to consider:
 - **Zulip** - Chat with threading
 - **Matrix/Element** - Decentralized chat
 - **Jitsi Meet** - Video conferencing — [projet prêt à l'emploi](jitsi-meet.md) (JWT, événements de salle, TURN)
+- **Soketi** - WebSocket temps réel compatible Pusher — [projet prêt à l'emploi](soketi.md) (laravel-echo, webhooks signés, file Redis)
 - **BigBlueButton** - Web conferencing for education
 - **Discourse** - Discussion forum

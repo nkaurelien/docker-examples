@@ -211,6 +211,7 @@ nav:
       - Overview: services/communication/index.md
       - Ntfy Push Notifications: services/communication/ntfy.md
       - Jitsi Meet (JWT, événements, TURN): services/communication/jitsi-meet.md
+      - Soketi (temps réel compatible Pusher): services/communication/soketi.md
 
   - Authentication:
       - Overview: services/auth/index.md

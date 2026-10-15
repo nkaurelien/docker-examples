@@ -10,6 +10,7 @@ Messaging, notifications, and collaboration tools.
 
 - **notification/** - Notification services
 - **visio/jitsi-meet/** - Visioconférence Jitsi auto-hébergée (JWT, événements de salle, TURN)
+- **realtime/soketi/** - WebSocket temps réel compatible Pusher (laravel-echo, SDK `pusher`, webhooks signés, file Redis)
 
 ## Suggested Open Source Services
 

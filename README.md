@@ -32,7 +32,7 @@ docker-examples/
 │   ├── 15-media-storage/             # MinIO S3, Erugo File Sharing, Static Files Server, S3FS Volume
 │   ├── 16-development-tools/         # IT-Tools, Excalidraw
 │   ├── 17-data-processing/           # Kafka + Logstash real-time processing stack
-│   └── 18-communication/             # Novu notification engine
+│   └── 18-communication/             # Novu, ntfy, Jitsi Meet, Soketi (temps réel compatible Pusher)
 ├── docs/                             # MkDocs source documentation & Arcane templates registry
 ├── helm/                             # Kubernetes Helm charts
 ├── kubernetes/                       # Native Kubernetes manifests
