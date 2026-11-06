@@ -35,7 +35,9 @@ services:
       - POSTGRES_USER=${DB_USER:-infisical}
       - POSTGRES_PASSWORD=${DB_PASSWORD:-infisical_secure_password}
     volumes:
-      - infisical-db-data:/var/lib/postgresql/data
+      - type: volume
+        source: infisical-db-data
+        target: /var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-infisical} -d ${DB_NAME:-infisical}"]
       interval: 10s
@@ -53,7 +55,9 @@ services:
     restart: unless-stopped
     command: ["valkey-server", "--appendonly", "yes"]
     volumes:
-      - infisical-redis-data:/data
+      - type: volume
+        source: infisical-redis-data
+        target: /data
     healthcheck:
       test: ["CMD", "valkey-cli", "ping"]
       interval: 10s

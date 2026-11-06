@@ -11,7 +11,9 @@ services:
     # depends_on:
     #   - backend-webapi
     volumes:
-      - "./frontend/patient:/usr/share/nginx/app"
+      - type: bind
+        source: ./frontend/patient
+        target: /usr/share/nginx/app
     environment:
       SITE: "patient"
 
@@ -26,7 +28,9 @@ services:
     # depends_on:
     #   - backend-webapi
     volumes:
-      - "./frontend/doctor:/usr/share/nginx/app"
+      - type: bind
+        source: ./frontend/doctor
+        target: /usr/share/nginx/app
     environment:
       SITE: "doctor"
 
@@ -46,7 +50,9 @@ services:
       - PORT=80
       - COUCHDB_URL=http://admin:s3cr3t@couchdb:5984/
     volumes:
-      - "./backend:/usr/src/app/src"
+      - type: bind
+        source: ./backend
+        target: /usr/src/app/src
     links:
       - couchdb
     depends_on:
@@ -64,7 +70,9 @@ services:
       COUCHDB_USER: ${COUCHDB_USER:-admin}
       COUCHDB_PASSWORD: ${COUCHDB_PASSWORD:-s3cr3t}
     volumes:
-      - couchdb_data:/opt/couchdb/data
+      - type: volume
+        source: couchdb_data
+        target: /opt/couchdb/data
     ports:
       - "10000:5984"
 

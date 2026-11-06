@@ -11,7 +11,9 @@ services:
     ports:
       - "8085:80"
     volumes:
-      - ./storage:/var/www/html/storage
+      - type: bind
+        source: ./storage
+        target: /var/www/html/storage
     networks:
       - default
       - traefik-public

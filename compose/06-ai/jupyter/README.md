@@ -8,7 +8,7 @@ tags: ai, docker, docker-compose
 ## Jupiter
 
 ```console
-docker compose -f docker-compose-all-notebook.yml up jupyter -d
+docker compose -f compose-all-notebook.yml up jupyter -d
 ```
 
 Ouvrir le lien

@@ -208,7 +208,7 @@ Ofelia supports two mutually exclusive ways to configure jobs. You must choose o
 
 **Current Configuration:**
 
-In [docker-compose.yml](docker-compose.yml), the Ofelia service is configured as:
+In [compose.yml](compose.yml), the Ofelia service is configured as:
 
 ```yaml
 ofelia:
@@ -231,7 +231,7 @@ couchdb-0:
 
 **How to modify the schedule or command:**
 
-1. Edit the labels in `docker-compose.yml` (couchdb-0 service)
+1. Edit the labels in `compose.yml` (couchdb-0 service)
 2. Recreate the container with new labels:
    ```bash
    docker-compose up -d couchdb-0  # Recreate with new labels
@@ -243,7 +243,7 @@ couchdb-0:
    ```
 
 **Advantages:**
-- ✅ Infrastructure-as-code (everything in docker-compose.yml)
+- ✅ Infrastructure-as-code (everything in compose.yml)
 - ✅ No external configuration files
 - ✅ Auto-discovery of containers
 - ✅ Easy to version control
@@ -260,7 +260,7 @@ couchdb-0:
 
 **To switch to this method:**
 
-1. **Update the Ofelia service** in [docker-compose.yml](docker-compose.yml):
+1. **Update the Ofelia service** in [compose.yml](compose.yml):
 
    ```yaml
    ofelia:
@@ -313,7 +313,7 @@ docker ps --filter "name=couchdb-0"
 
 | Feature | Docker Labels (`daemon --docker`) | Config File (`daemon --config`) |
 |---------|-----------------------------------|----------------------------------|
-| Configuration location | docker-compose.yml | config/ofelia.ini |
+| Configuration location | compose.yml | config/ofelia.ini |
 | Auto-discovery | ✅ Yes | ❌ No (must specify container name) |
 | Hot reload | Restart Ofelia + recreate container | Restart Ofelia only |
 | Multiple jobs | Multiple label sets | Single file |
@@ -365,7 +365,7 @@ make backup-service-logs     # View Ofelia logs
 make backup-now              # Run backup immediately
 ```
 
-**Note:** Ofelia uses Docker labels to configure jobs. If you modify the backup schedule or command in `docker-compose.yml`, recreate the couchdb-0 container and restart Ofelia:
+**Note:** Ofelia uses Docker labels to configure jobs. If you modify the backup schedule or command in `compose.yml`, recreate the couchdb-0 container and restart Ofelia:
 ```bash
 docker-compose up -d couchdb-0
 docker-compose restart ofelia

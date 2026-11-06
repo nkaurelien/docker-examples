@@ -13,7 +13,9 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-seafile_db_password_change_me}
       - MYSQL_LOG_CONSOLE=1
     volumes:
-      - seafile-db-data:/var/lib/mysql
+      - type: volume
+        source: seafile-db-data
+        target: /var/lib/mysql
     networks:
       - seafile-internal
     healthcheck:
@@ -53,7 +55,9 @@ services:
       - SEAFILE_SERVER_LETSENCRYPT=false
       - SEAFILE_SERVER_HOSTNAME=seafile.${DOMAIN:-kamitbrains.fr}
     volumes:
-      - seafile-data:/shared
+      - type: volume
+        source: seafile-data
+        target: /shared
     networks:
       - traefik-public
       - seafile-internal

@@ -10,7 +10,9 @@ services:
       # - ./nginx/conf.d:/etc/nginx/conf.d
       # - ./nginx/html:/usr/share/nginx/html
       # - /mnt/minio-nginx/nginx/conf.d:/etc/nginx/conf.d
-      - /mnt/minio-nginx/nginx/html:/usr/share/nginx/html
+      - type: bind
+        source: /mnt/minio-nginx/nginx/html
+        target: /usr/share/nginx/html
       # - minio_nginx_volume:/path/to/minio/in/nginx
     depends_on:
       - minio
@@ -27,7 +29,9 @@ services:
       MINIO_ACCESS_KEY: "minioadmin"
       MINIO_SECRET_KEY: "minioadmin"
     volumes:
-      - minio_data:/data
+      - type: volume
+        source: minio_data
+        target: /data
     command: server /data --console-address ":9001"
 
   # minio:

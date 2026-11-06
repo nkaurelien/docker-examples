@@ -24,11 +24,23 @@ services:
     ports:
       - "${PORT_BASE}0:5984"
     volumes:
-      - "data-couch-0:/opt/couchdb/data"
-      - "./config/couchdb0/local.ini:/opt/couchdb/etc/local.ini"
-      - "./manage:/opt/manage:ro"
-      - "./scripts:/opt/scripts:ro"
-      - "./backups:/opt/backups"
+      - type: volume
+        source: data-couch-0
+        target: /opt/couchdb/data
+      - type: bind
+        source: ./config/couchdb0/local.ini
+        target: /opt/couchdb/etc/local.ini
+      - type: bind
+        source: ./manage
+        target: /opt/manage
+        read_only: true
+      - type: bind
+        source: ./scripts
+        target: /opt/scripts
+        read_only: true
+      - type: bind
+        source: ./backups
+        target: /opt/backups
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5984/"]
       interval: 30s
@@ -65,8 +77,12 @@ services:
     ports:
       - "${PORT_BASE}1:5984"
     volumes:
-      - "data-couch-1:/opt/couchdb/data"
-      - "./config/couchdb1/local.ini:/opt/couchdb/etc/local.ini"
+      - type: volume
+        source: data-couch-1
+        target: /opt/couchdb/data
+      - type: bind
+        source: ./config/couchdb1/local.ini
+        target: /opt/couchdb/etc/local.ini
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5984/"]
       interval: 30s
@@ -103,8 +119,12 @@ services:
     ports:
       - "${PORT_BASE}2:5984"
     volumes:
-      - "data-couch-2:/opt/couchdb/data"
-      - "./config/couchdb2/local.ini:/opt/couchdb/etc/local.ini"
+      - type: volume
+        source: data-couch-2
+        target: /opt/couchdb/data
+      - type: bind
+        source: ./config/couchdb2/local.ini
+        target: /opt/couchdb/etc/local.ini
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5984/"]
       interval: 30s
@@ -132,7 +152,10 @@ services:
       asone4health_network:
         ipv4_address: ${CLUSTER_INIT_IP}
     volumes:
-      - ./init-cluster-docker.sh:/init-cluster.sh:ro
+      - type: bind
+        source: ./init-cluster-docker.sh
+        target: /init-cluster.sh
+        read_only: true
     command: ["/bin/sh", "/init-cluster.sh"]
     restart: "no"
 
@@ -173,8 +196,13 @@ services:
     ports:
       - "8501:8501"
     volumes:
-      - ./backups:/app/backups
-      - ./manage:/app/manage:ro
+      - type: bind
+        source: ./backups
+        target: /app/backups
+      - type: bind
+        source: ./manage
+        target: /app/manage
+        read_only: true
     restart: unless-stopped
 
   # Ofelia Job Scheduler
@@ -196,7 +224,10 @@ services:
       asone4health_network:
         ipv4_address: ${BACKUP_SERVICE_IP:-172.19.0.25}
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
     restart: unless-stopped
     profiles: ["backup"]
 

@@ -15,12 +15,25 @@ services:
       # Pas d'enregistrement auprès de l'API centrale (CAPI) pour la démo
       - DISABLE_ONLINE_API=true
     volumes:
-      - crowdsec-config:/etc/crowdsec
-      - crowdsec-data:/var/lib/crowdsec/data
-      - ./crowdsec/acquis.d:/etc/crowdsec/acquis.d:ro
-      - ./crowdsec/config.yaml.local:/etc/crowdsec/config.yaml.local:ro
+      - type: volume
+        source: crowdsec-config
+        target: /etc/crowdsec
+      - type: volume
+        source: crowdsec-data
+        target: /var/lib/crowdsec/data
+      - type: bind
+        source: ./crowdsec/acquis.d
+        target: /etc/crowdsec/acquis.d
+        read_only: true
+      - type: bind
+        source: ./crowdsec/config.yaml.local
+        target: /etc/crowdsec/config.yaml.local
+        read_only: true
       # Journaux d'accès écrits par OpenResty
-      - openresty-logs:/var/log/openresty:ro
+      - type: volume
+        source: openresty-logs
+        target: /var/log/openresty
+        read_only: true
     healthcheck:
       test: ["CMD", "cscli", "lapi", "status"]
       interval: 10s
@@ -47,9 +60,17 @@ services:
     ports:
       - "${HTTP_PORT:-80}:80"
     volumes:
-      - ./openresty/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf:ro
-      - ./openresty/conf.d:/etc/nginx/conf.d:ro
-      - openresty-logs:/var/log/openresty
+      - type: bind
+        source: ./openresty/nginx.conf
+        target: /usr/local/openresty/nginx/conf/nginx.conf
+        read_only: true
+      - type: bind
+        source: ./openresty/conf.d
+        target: /etc/nginx/conf.d
+        read_only: true
+      - type: volume
+        source: openresty-logs
+        target: /var/log/openresty
     depends_on:
       crowdsec:
         condition: service_healthy

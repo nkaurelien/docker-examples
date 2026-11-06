@@ -17,7 +17,9 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./data:/app/data
+      - type: bind
+        source: ./data
+        target: /app/data
     environment:
       - TZ=Europe/Paris
     networks:
@@ -59,23 +61,52 @@ ports:
 
 ## Volumes
 
-### Types de volumes
+### Syntaxe longue recommandée (List of Dict)
+
+La spécification Docker Compose recommande l'utilisation de la syntaxe sous forme de liste de dictionnaires pour une meilleure lisibilité, granularité et expressivité :
 
 ```yaml
 volumes:
-  # Named volume (géré par Docker)
-  - app-data:/app/data
+  # Bind mount (chemin local de l'hôte)
+  - type: bind
+    source: ./config
+    target: /app/config
 
-  # Bind mount (chemin local)
-  - ./config:/app/config
+  # Bind mount en lecture seule (read-only)
+  - type: bind
+    source: ./config
+    target: /app/config
+    read_only: true
 
-  # Read-only
-  - ./config:/app/config:ro
+  # Bind mount avec label SELinux partagé (:z)
+  - type: bind
+    source: ./projects
+    target: /app/projects
+    bind:
+      selinux: z
 
-  # Tmpfs (RAM)
+  # Named volume (volume managé par Docker)
+  - type: volume
+    source: app-data
+    target: /app/data
+
+  # Volume anonyme (initialisé avec le contenu de l'image)
+  - type: volume
+    target: /var/www/html/modules
+
+  # Tmpfs (monté en mémoire vive RAM)
   - type: tmpfs
     target: /tmp
 ```
+
+### Équivalence avec la syntaxe courte (Short Syntax)
+
+| Syntaxe courte (chaîne) | Syntaxe longue (`list of dict`) |
+|-------------------------|--------------------------------|
+| `./config:/app/config` | `type: bind`, `source: ./config`, `target: /app/config` |
+| `./config:/app/config:ro` | `type: bind`, `source: ./config`, `target: /app/config`, `read_only: true` |
+| `app-data:/app/data` | `type: volume`, `source: app-data`, `target: /app/data` |
+| `/path/in/container` | `type: volume`, `target: /path/in/container` |
 
 ### Déclaration et Bonnes Pratiques de Nommage
 

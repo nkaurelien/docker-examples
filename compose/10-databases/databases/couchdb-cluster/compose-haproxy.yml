@@ -4,7 +4,9 @@ services:
     ports:
       - "5984:5984"
     volumes:
-      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+      - type: bind
+        source: ./haproxy.cfg
+        target: /usr/local/etc/haproxy/haproxy.cfg
     networks:
       asone4health_network:
         ipv4_address: 172.19.0.200 # Remplacez par l'adresse IP souhaitée

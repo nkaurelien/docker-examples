@@ -12,7 +12,10 @@ services:
       - "--providers.docker.exposedbydefault=true"
       - "--entrypoints.web.address=:80"
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
     networks:
       - traefik-public
 
@@ -80,7 +83,9 @@ services:
       COUCHDB_USER: ${COUCHDB_USER:-admin}
       COUCHDB_PASSWORD: ${COUCHDB_PASSWORD:-s3cr3t}
     volumes:
-      - couchdb_data:/opt/couchdb/data
+      - type: volume
+        source: couchdb_data
+        target: /opt/couchdb/data
     ports:
       - "5984:5984"
     networks:

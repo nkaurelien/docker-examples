@@ -18,7 +18,9 @@ services:
       - JUPYTER_ENABLE_LAB=yes
       - JUPYTER_TOKEN=${JUPYTER_TOKEN:-secret}
     volumes:
-      - ./data:/home/jovyan/work
+      - type: bind
+        source: ./data
+        target: /home/jovyan/work
     networks:
       - ${TRAEFIK_PUBLIC_NETWORK:-traefik-public}
     labels:

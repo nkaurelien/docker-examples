@@ -11,7 +11,9 @@ services:
       - WHISPER_BEAM=1             # Taille de faisceau (1 = vitesse maximale)
       - WHISPER_LANG=auto          # Détection automatique ou 'fr', 'en'
     volumes:
-      - whisper-data:/config
+      - type: volume
+        source: whisper-data
+        target: /config
     ports:
       - "10300:10300"              # Port Wyoming standard
     networks:

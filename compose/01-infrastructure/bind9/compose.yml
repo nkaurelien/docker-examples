@@ -10,9 +10,15 @@ services:
       - TZ=${TZ:-Europe/Paris}
       - BIND9_USER=bind
     volumes:
-      - ./config:/etc/bind
-      - ./cache:/var/cache/bind
-      - ./records:/var/lib/bind
+      - type: bind
+        source: ./config
+        target: /etc/bind
+      - type: bind
+        source: ./cache
+        target: /var/cache/bind
+      - type: bind
+        source: ./records
+        target: /var/lib/bind
     networks:
       - default
       - traefik-public

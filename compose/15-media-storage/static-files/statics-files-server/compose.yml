@@ -38,7 +38,9 @@ services:
       COUCHDB_USER: ${COUCHDB_USER:-admin}
       COUCHDB_PASSWORD: ${COUCHDB_PASSWORD:-s3cr3t}
     volumes:
-      - couchdb_data:/opt/couchdb/data
+      - type: volume
+        source: couchdb_data
+        target: /opt/couchdb/data
     ports:
       - "5984:5984"
 

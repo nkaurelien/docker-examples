@@ -31,7 +31,7 @@ tags: dev-tools, ocr, pdf, pdf-suite, stirling-pdf
 
 Le rôle Ansible se trouve dans `ansible/roles/stirling-pdf`.
 
-### Service `docker-compose.yml`
+### Service `compose.yml`
 
 ```yaml
 services:

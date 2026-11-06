@@ -10,7 +10,10 @@ services:
     networks:
       - socket-proxy
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
     environment:
       # Ofelia needs read access to containers and exec
       # Deny write operations

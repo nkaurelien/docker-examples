@@ -15,11 +15,24 @@ services:
       - COLLECTIONS=crowdsecurity/traefik crowdsecurity/sshd crowdsecurity/linux
       - LAPI_KEY_TRAEFIK=${CROWDSEC_LAPI_KEY:-change-me-crowdsec-lapi-key}
     volumes:
-      - /var/log/traefik:/var/log/traefik:ro
-      - /var/log/auth.log:/var/log/auth.log:ro
-      - /var/log/syslog:/var/log/syslog:ro
-      - crowdsec-config:/etc/crowdsec
-      - crowdsec-data:/var/lib/crowdsec/data
+      - type: bind
+        source: /var/log/traefik
+        target: /var/log/traefik
+        read_only: true
+      - type: bind
+        source: /var/log/auth.log
+        target: /var/log/auth.log
+        read_only: true
+      - type: bind
+        source: /var/log/syslog
+        target: /var/log/syslog
+        read_only: true
+      - type: volume
+        source: crowdsec-config
+        target: /etc/crowdsec
+      - type: volume
+        source: crowdsec-data
+        target: /var/lib/crowdsec/data
     security_opt:
       - no-new-privileges:true
     networks:

@@ -10,7 +10,9 @@ services:
     profiles:
       - dev
     volumes:
-      - mailpit-data:/data
+      - type: volume
+        source: mailpit-data
+        target: /data
       # - /etc/localtime:/etc/localtime:ro  # Linux only
     ports:
       - "${MAILPIT_UI_PORT:-8025}:8025"     # Web UI

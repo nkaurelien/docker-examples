@@ -17,7 +17,9 @@ services:
       - PROJECT_SECRET=${PROJECT_SECRET:-portabase_secret_key_change_me}
       - TZ=Europe/Paris
     volumes:
-      - portabase-data:/data
+      - type: volume
+        source: portabase-data
+        target: /data
     networks:
       - traefik-public
       - portabase-internal
@@ -44,7 +46,9 @@ services:
       - POSTGRES_USER=${POSTGRES_USER:-portabase}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-portabase_password}
     volumes:
-      - portabase-db-data:/var/lib/postgresql/data
+      - type: volume
+        source: portabase-db-data
+        target: /var/lib/postgresql/data
     networks:
       - portabase-internal
     healthcheck:

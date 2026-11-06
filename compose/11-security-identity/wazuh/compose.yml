@@ -32,12 +32,24 @@ services:
       retries: 5
       start_period: 60s
     volumes:
-      - wazuh-indexer-data:/var/lib/wazuh-indexer
-      - ./config/root-ca/certs/root-ca.pem:/usr/share/wazuh-indexer/config/certs/root-ca.pem
-      - ./config/wazuh_indexer/certs/wazuh.indexer-key.pem:/usr/share/wazuh-indexer/config/certs/indexer-key.pem
-      - ./config/wazuh_indexer/certs/wazuh.indexer.pem:/usr/share/wazuh-indexer/config/certs/indexer.pem
-      - ./config/wazuh_indexer/certs/admin.pem:/usr/share/wazuh-indexer/config/certs/admin.pem
-      - ./config/wazuh_indexer/certs/admin-key.pem:/usr/share/wazuh-indexer/config/certs/admin-key.pem
+      - type: volume
+        source: wazuh-indexer-data
+        target: /var/lib/wazuh-indexer
+      - type: bind
+        source: ./config/root-ca/certs/root-ca.pem
+        target: /usr/share/wazuh-indexer/config/certs/root-ca.pem
+      - type: bind
+        source: ./config/wazuh_indexer/certs/wazuh.indexer-key.pem
+        target: /usr/share/wazuh-indexer/config/certs/indexer-key.pem
+      - type: bind
+        source: ./config/wazuh_indexer/certs/wazuh.indexer.pem
+        target: /usr/share/wazuh-indexer/config/certs/indexer.pem
+      - type: bind
+        source: ./config/wazuh_indexer/certs/admin.pem
+        target: /usr/share/wazuh-indexer/config/certs/admin.pem
+      - type: bind
+        source: ./config/wazuh_indexer/certs/admin-key.pem
+        target: /usr/share/wazuh-indexer/config/certs/admin-key.pem
     networks:
       - wazuh-network
 
@@ -75,14 +87,30 @@ services:
       - INDEXER_USERNAME=wazuh-manager
       - INDEXER_PASSWORD=${INDEXER_PASSWORD:-wazuh-manager}
     volumes:
-      - wazuh_api_configuration:/var/wazuh-manager/api/configuration
-      - wazuh_etc:/var/wazuh-manager/etc
-      - wazuh_logs:/var/wazuh-manager/logs
-      - wazuh_queue:/var/wazuh-manager/queue
-      - wazuh_var_multigroups:/var/wazuh-manager/var/multigroups
-      - ./config/root-ca/certs/root-ca.pem:/var/wazuh-manager/etc/certs/root-ca.pem
-      - ./config/wazuh_manager/certs/wazuh.manager.pem:/var/wazuh-manager/etc/certs/manager.pem
-      - ./config/wazuh_manager/certs/wazuh.manager-key.pem:/var/wazuh-manager/etc/certs/manager-key.pem
+      - type: volume
+        source: wazuh_api_configuration
+        target: /var/wazuh-manager/api/configuration
+      - type: volume
+        source: wazuh_etc
+        target: /var/wazuh-manager/etc
+      - type: volume
+        source: wazuh_logs
+        target: /var/wazuh-manager/logs
+      - type: volume
+        source: wazuh_queue
+        target: /var/wazuh-manager/queue
+      - type: volume
+        source: wazuh_var_multigroups
+        target: /var/wazuh-manager/var/multigroups
+      - type: bind
+        source: ./config/root-ca/certs/root-ca.pem
+        target: /var/wazuh-manager/etc/certs/root-ca.pem
+      - type: bind
+        source: ./config/wazuh_manager/certs/wazuh.manager.pem
+        target: /var/wazuh-manager/etc/certs/manager.pem
+      - type: bind
+        source: ./config/wazuh_manager/certs/wazuh.manager-key.pem
+        target: /var/wazuh-manager/etc/certs/manager-key.pem
     networks:
       - wazuh-network
 
@@ -110,11 +138,21 @@ services:
       - SERVER_SSL_KEY=/usr/share/wazuh-dashboard/config/certs/dashboard-key.pem
       - OPENSEARCH_SSL_CERTIFICATE_AUTHORITIES=/usr/share/wazuh-dashboard/config/certs/root-ca.pem
     volumes:
-      - ./config/wazuh_dashboard/certs/wazuh.dashboard.pem:/usr/share/wazuh-dashboard/config/certs/dashboard.pem
-      - ./config/wazuh_dashboard/certs/wazuh.dashboard-key.pem:/usr/share/wazuh-dashboard/config/certs/dashboard-key.pem
-      - ./config/root-ca/certs/root-ca.pem:/usr/share/wazuh-dashboard/config/certs/root-ca.pem
-      - wazuh-dashboard-config:/usr/share/wazuh-dashboard/config
-      - wazuh-dashboard-custom:/usr/share/wazuh-dashboard/plugins/wazuh/public/assets/custom
+      - type: bind
+        source: ./config/wazuh_dashboard/certs/wazuh.dashboard.pem
+        target: /usr/share/wazuh-dashboard/config/certs/dashboard.pem
+      - type: bind
+        source: ./config/wazuh_dashboard/certs/wazuh.dashboard-key.pem
+        target: /usr/share/wazuh-dashboard/config/certs/dashboard-key.pem
+      - type: bind
+        source: ./config/root-ca/certs/root-ca.pem
+        target: /usr/share/wazuh-dashboard/config/certs/root-ca.pem
+      - type: volume
+        source: wazuh-dashboard-config
+        target: /usr/share/wazuh-dashboard/config
+      - type: volume
+        source: wazuh-dashboard-custom
+        target: /usr/share/wazuh-dashboard/plugins/wazuh/public/assets/custom
     depends_on:
       wazuh.indexer:
         condition: service_healthy

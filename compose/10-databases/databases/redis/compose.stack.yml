@@ -8,7 +8,9 @@ services:
     environment:
       REDIS_ARGS: "--requirepass ${REDIS_STACK_PASSWORD:-redis123}"
     volumes:
-      - redis_stack_data:/data
+      - type: volume
+        source: redis_stack_data
+        target: /data
     healthcheck:
       test: ["CMD", "redis-cli", "-a", "${REDIS_STACK_PASSWORD:-redis123}", "ping"]
       interval: 10s

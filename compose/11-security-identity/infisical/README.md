@@ -25,5 +25,5 @@ docker compose up -d
 ## 🔄 Mutualisation de PostgreSQL et Redis (Optionnel)
 
 Si vous possédez déjà une instance PostgreSQL et Redis (ou Valkey) sur votre machine ou serveur hôte :
-1. Commentez les services `infisical-db` et `infisical-redis` dans `docker-compose.yml`.
+1. Commentez les services `infisical-db` et `infisical-redis` dans `compose.yml`.
 2. Ajustez `DB_CONNECTION_URI` et `REDIS_URL` dans votre `.env` pour pointer vers vos services existants.

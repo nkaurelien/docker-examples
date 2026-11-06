@@ -42,9 +42,17 @@ services:
       # Staging server for testing (uncomment to avoid rate limits)
       # - "--certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - ./config/dynamic:/etc/traefik/dynamic:ro
-      - ./letsencrypt:/letsencrypt
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+      - type: bind
+        source: ./config/dynamic
+        target: /etc/traefik/dynamic
+        read_only: true
+      - type: bind
+        source: ./letsencrypt
+        target: /letsencrypt
     labels:
       - "traefik.enable=true"
       # Dashboard with HTTPS

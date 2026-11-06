@@ -24,7 +24,7 @@ The repository follows a modular architecture where each service category is iso
 ## Common Commands
 
 ### Docker Compose Operations
-Most services use either `compose.yml` or `docker-compose.yml`:
+Services standardize on `compose.yml` (official Docker Compose Specification):
 ```bash
 # Start services
 docker-compose up -d

@@ -18,7 +18,9 @@ services:
       MINIO_ACCESS_KEY: "minioadmin"
       MINIO_SECRET_KEY: "minioadmin"
     volumes:
-      - minio_data:/data
+      - type: volume
+        source: minio_data
+        target: /data
     networks:
       - minio_network
       - traefik-public

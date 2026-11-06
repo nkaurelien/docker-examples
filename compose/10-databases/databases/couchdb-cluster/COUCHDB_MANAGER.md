@@ -98,7 +98,7 @@ couchdb-manager:
     context: .
     dockerfile_inline: |
       FROM python:3.11-slim
-      # ... (see docker-compose.yml for full definition)
+      # ... (see compose.yml for full definition)
   ports:
     - "8501:8501"
   environment:
@@ -183,7 +183,7 @@ couchdb-cluster/
 │   ├── couchdb0/              # Node 0 config
 │   ├── couchdb1/              # Node 1 config
 │   └── couchdb2/              # Node 2 config
-├── docker-compose.yml        # Service definitions (all services)
+├── compose.yml        # Service definitions (all services)
 ├── Makefile                  # Management commands
 └── README.md                 # Complete documentation
 ```

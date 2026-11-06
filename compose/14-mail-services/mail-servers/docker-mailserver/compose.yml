@@ -10,11 +10,22 @@ services:
       - "587:587"
       - "993:993"
     volumes:
-      - ./docker-data/dms/mail-data/:/var/mail/
-      - ./docker-data/dms/mail-state/:/var/mail-state/
-      - ./docker-data/dms/mail-logs/:/var/log/mail/
-      - ./docker-data/dms/config/:/tmp/docker-mailserver/
-      - /etc/localtime:/etc/localtime:ro
+      - type: bind
+        source: ./docker-data/dms/mail-data/
+        target: /var/mail/
+      - type: bind
+        source: ./docker-data/dms/mail-state/
+        target: /var/mail-state/
+      - type: bind
+        source: ./docker-data/dms/mail-logs/
+        target: /var/log/mail/
+      - type: bind
+        source: ./docker-data/dms/config/
+        target: /tmp/docker-mailserver/
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
     environment:
       - ENABLE_RSPAMD=1
       - ENABLE_CLAMAV=1
@@ -29,8 +40,12 @@ services:
       ports:
         - "8005:80"
       volumes:
-        - ./docker-data/roundcube/config/:/var/www/html/config/
-        - ./docker-data/roundcube/data/:/var/www/html/logs/
+        - type: bind
+          source: ./docker-data/roundcube/config/
+          target: /var/www/html/config/
+        - type: bind
+          source: ./docker-data/roundcube/data/
+          target: /var/www/html/logs/
       environment:
         - ROUNDCUBEMAIL_DB_TYPE=sqlite
         - ROUNDCUBEMAIL_DB_PATH=/var/www/html/config/sqlite.db

@@ -225,7 +225,7 @@ Exemple correct:
 
 ### Solution
 
-1. **Ajouter `hostname` dans docker-compose.yml pour chaque service CouchDB:**
+1. **Ajouter `hostname` dans compose.yml pour chaque service CouchDB:**
 
 ```yaml
 services:
@@ -387,7 +387,7 @@ docker compose up -d --force-recreate couchdb-0 couchdb-1 couchdb-2
 
 **Solutions:**
 1. Nettoyage de 199.8 GB d'images Docker non utilisées
-2. Ajout de `hostname` dans docker-compose.yml
+2. Ajout de `hostname` dans compose.yml
 3. Recréation des containers
 
 **Temps de résolution:** ~30 minutes

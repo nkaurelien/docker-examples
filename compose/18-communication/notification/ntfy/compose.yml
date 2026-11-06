@@ -22,9 +22,15 @@ services:
       TZ: ${TIMEZONE}
 
     volumes:
-      - ./cache:/var/cache/ntfy
-      - ./etc:/etc/ntfy
-      - ntfy_data:/var/lib/ntfy
+      - type: bind
+        source: ./cache
+        target: /var/cache/ntfy
+      - type: bind
+        source: ./etc
+        target: /etc/ntfy
+      - type: volume
+        source: ntfy_data
+        target: /var/lib/ntfy
 
     ports:
       - "${NTFY_PORT}:80"

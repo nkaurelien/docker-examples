@@ -17,9 +17,17 @@ services:
       - "3000:3000"   # Web UI
       - "2222:22"     # SSH
     volumes:
-      - gitea-data:/data
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
+      - type: volume
+        source: gitea-data
+        target: /data
+      - type: bind
+        source: /etc/timezone
+        target: /etc/timezone
+        read_only: true
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
     environment:
       # User configuration
       - USER_UID=1000
@@ -65,7 +73,9 @@ services:
     container_name: gitea-db
     restart: unless-stopped
     volumes:
-      - gitea-postgres:/var/lib/postgresql/data
+      - type: volume
+        source: gitea-postgres
+        target: /var/lib/postgresql/data
     environment:
       - POSTGRES_DB=gitea
       - POSTGRES_USER=gitea
@@ -87,7 +97,10 @@ services:
     profiles:
       - runner
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
     environment:
       # Disable most endpoints by default
       - LOG_LEVEL=info
@@ -144,7 +157,9 @@ services:
       - runner
     volumes:
       # Runner data and cache
-      - gitea-runner-data:/data
+      - type: volume
+        source: gitea-runner-data
+        target: /data
       # Optional: custom config
       # - ./runner/config.yaml:/config.yaml
     environment:

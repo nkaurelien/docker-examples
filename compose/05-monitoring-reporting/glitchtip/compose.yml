@@ -14,7 +14,9 @@ services:
       - POSTGRES_USER=glitchtip
       - POSTGRES_PASSWORD=glitchtip_secure_pass
     volumes:
-      - glitchtip-db-data:/var/lib/postgresql/data
+      - type: volume
+        source: glitchtip-db-data
+        target: /var/lib/postgresql/data
     networks:
       - glitchtip-internal
     healthcheck:
@@ -83,7 +85,9 @@ services:
       - SERVER_ROLE=all_in_one
       - PORT=8000
     volumes:
-      - glitchtip-uploads:/code/uploads
+      - type: volume
+        source: glitchtip-uploads
+        target: /code/uploads
     networks:
       - default
       - traefik-public

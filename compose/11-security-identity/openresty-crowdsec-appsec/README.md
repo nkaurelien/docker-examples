@@ -41,7 +41,7 @@ Frontal HTTP OpenResty protégé par CrowdSec : blocage des IP bannies (décisio
 
 ```
 openresty-crowdsec-appsec/
-├── docker-compose.yml
+├── compose.yml
 ├── .env.example
 ├── crowdsec/
 │   ├── acquis.d/

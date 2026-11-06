@@ -21,7 +21,9 @@ services:
       - "3003:3000"
       - "2222:22"
     volumes:
-      - ./data:/data
+      - type: bind
+        source: ./data
+        target: /data
     networks:
       - default
       - traefik-public

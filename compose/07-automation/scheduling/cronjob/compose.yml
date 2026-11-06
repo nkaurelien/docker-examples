@@ -7,7 +7,10 @@ services:
       - agenda
     command: daemon --docker
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
     labels:
       ofelia.job-local.my-test-job.schedule: "@every 5s"
       ofelia.job-local.my-test-job.command: "date"

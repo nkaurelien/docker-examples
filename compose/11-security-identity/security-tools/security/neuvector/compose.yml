@@ -21,8 +21,22 @@ services:
       - "18401:18401"       # Enforcer cluster communication
       - "8443:8443"         # Manager web UI (HTTPS)
     volumes:
-      - /lib/modules:/lib/modules:ro
-      - /var/neuvector:/var/neuvector
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /proc:/host/proc:ro
-      - /sys/fs/cgroup:/host/cgroup:ro
+      - type: bind
+        source: /lib/modules
+        target: /lib/modules
+        read_only: true
+      - type: bind
+        source: /var/neuvector
+        target: /var/neuvector
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+      - type: bind
+        source: /proc
+        target: /host/proc
+        read_only: true
+      - type: bind
+        source: /sys/fs/cgroup
+        target: /host/cgroup
+        read_only: true

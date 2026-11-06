@@ -15,8 +15,14 @@ services:
       - "443:443"
       - "80:80"
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./ssl/certs:/etc/nginx/ssl:ro
+      - type: bind
+        source: ./nginx/conf.d
+        target: /etc/nginx/conf.d
+        read_only: true
+      - type: bind
+        source: ./ssl/certs
+        target: /etc/nginx/ssl
+        read_only: true
     depends_on:
       - artifactory
     restart: always

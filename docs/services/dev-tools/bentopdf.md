@@ -29,7 +29,7 @@ tags: bentopdf, client-side, dev-tools, pdf, pdf-tools, privacy-first
 
 Le rôle Ansible se trouve dans `ansible/roles/bentopdf`.
 
-### Service `docker-compose.yml`
+### Service `compose.yml`
 
 ```yaml
 services:

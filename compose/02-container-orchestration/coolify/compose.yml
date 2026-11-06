@@ -16,7 +16,10 @@ services:
     container_name: coolify-docker-proxy
     restart: unless-stopped
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
     environment:
       # Logging
       - LOG_LEVEL=info
@@ -65,11 +68,21 @@ services:
       - "8080:8080"
     volumes:
       # Persistent data
-      - coolify-data:/data
-      - coolify-ssh:/data/coolify/ssh
-      - coolify-applications:/data/coolify/applications
-      - coolify-databases:/data/coolify/databases
-      - coolify-services:/data/coolify/services
+      - type: volume
+        source: coolify-data
+        target: /data
+      - type: volume
+        source: coolify-ssh
+        target: /data/coolify/ssh
+      - type: volume
+        source: coolify-applications
+        target: /data/coolify/applications
+      - type: volume
+        source: coolify-databases
+        target: /data/coolify/databases
+      - type: volume
+        source: coolify-services
+        target: /data/coolify/services
     environment:
       - APP_ENV=production
       - APP_KEY=${APP_KEY:-base64:REPLACE_WITH_GENERATED_KEY}
@@ -117,7 +130,9 @@ services:
     container_name: coolify-db
     restart: unless-stopped
     volumes:
-      - coolify-postgres:/var/lib/postgresql/data
+      - type: volume
+        source: coolify-postgres
+        target: /var/lib/postgresql/data
     environment:
       - POSTGRES_DB=coolify
       - POSTGRES_USER=coolify
@@ -137,7 +152,9 @@ services:
     restart: unless-stopped
     command: redis-server --appendonly yes
     volumes:
-      - coolify-redis-data:/data
+      - type: volume
+        source: coolify-redis-data
+        target: /data
     networks:
       - coolify-network
     healthcheck:

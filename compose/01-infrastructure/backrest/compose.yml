@@ -18,10 +18,20 @@ services:
       - BACKREST_DATA=/data
       - TZ=Europe/Paris
     volumes:
-      - backrest-config:/config
-      - backrest-cache:/cache
-      - /var/lib/docker/volumes:/userdata/volumes:ro
-      - /opt:/userdata/opt:ro
+      - type: volume
+        source: backrest-config
+        target: /config
+      - type: volume
+        source: backrest-cache
+        target: /cache
+      - type: bind
+        source: /var/lib/docker/volumes
+        target: /userdata/volumes
+        read_only: true
+      - type: bind
+        source: /opt
+        target: /userdata/opt
+        read_only: true
     ports:
       - "9898:9898"
     networks:

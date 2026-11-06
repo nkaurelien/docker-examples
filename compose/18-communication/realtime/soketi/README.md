@@ -87,7 +87,7 @@ Le webhook `channel_vacated` arrive quelques secondes après la fermeture de l'o
 | `WEBHOOK_CHANNEL_PREFIX` | Préfixe des canaux qui déclenchent les webhooks (`demo-user.` ici, `private-user.` en production) |
 | `SOKETI_PORT` / `SOKETI_METRICS_PORT` / `DEMO_PORT` | Ports publiés sur `127.0.0.1` |
 
-Côté Soketi (dans `docker-compose.yml`) :
+Côté Soketi (dans `compose.yml`) :
 
 - `SOKETI_DEFAULT_APP_ENABLE_CLIENT_MESSAGES=false` : les navigateurs ne peuvent pas publier (`client-*`), seul le backend émet ;
 - `SOKETI_DEFAULT_APP_WEBHOOKS` : JSON, filtré par `channel_name_starts_with` ;

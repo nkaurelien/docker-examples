@@ -27,9 +27,13 @@ services:
       - 2222:22
     volumes:
       # Persister les données Ubuntu
-      - ubuntu_data:/storage
+      - type: volume
+        source: ubuntu_data
+        target: /storage
       # Partager des fichiers avec l'hôte (optionnel)
-      - ./shared:/shared
+      - type: bind
+        source: ./shared
+        target: /shared
     restart: unless-stopped
     networks:
       - ubuntu_network

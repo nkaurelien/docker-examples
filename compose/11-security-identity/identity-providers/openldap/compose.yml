@@ -22,8 +22,12 @@ services:
       - "${LDAP_PORT:-389}:389"
       - "${LDAPS_PORT:-636}:636"
     volumes:
-      - openldap-data:/var/lib/ldap
-      - openldap-config:/etc/ldap/slapd.d
+      - type: volume
+        source: openldap-data
+        target: /var/lib/ldap
+      - type: volume
+        source: openldap-config
+        target: /etc/ldap/slapd.d
     networks:
       - ldap-network
     healthcheck:
@@ -62,7 +66,10 @@ services:
       - user_idriss_password
       - user_michel_password
     volumes:
-      - ./scripts/init.sh:/init.sh:ro
+      - type: bind
+        source: ./scripts/init.sh
+        target: /init.sh
+        read_only: true
     entrypoint: ["/bin/bash", "/init.sh"]
     networks:
       - ldap-network

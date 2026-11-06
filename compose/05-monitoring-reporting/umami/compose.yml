@@ -85,7 +85,9 @@ services:
       - POSTGRES_USER=${POSTGRES_USER:-umami}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-umami_db_password_change_me}
     volumes:
-      - umami-db-data:/var/lib/postgresql/data
+      - type: volume
+        source: umami-db-data
+        target: /var/lib/postgresql/data
     networks:
       - umami-internal
     healthcheck:

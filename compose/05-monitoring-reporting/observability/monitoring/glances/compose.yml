@@ -19,12 +19,27 @@ services:
       - "61208:61208"    # Web UI
       - "61209:61209"    # API
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
       # Mount host filesystems for full monitoring
-      - /:/rootfs:ro
-      - /etc/os-release:/etc/os-release:ro
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
+      - type: bind
+        source: /
+        target: /rootfs
+        read_only: true
+      - type: bind
+        source: /etc/os-release
+        target: /etc/os-release
+        read_only: true
+      - type: bind
+        source: /proc
+        target: /host/proc
+        read_only: true
+      - type: bind
+        source: /sys
+        target: /host/sys
+        read_only: true
       # Uncomment for Podman support
       # - /run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock:ro
     environment:

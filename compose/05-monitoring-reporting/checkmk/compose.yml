@@ -12,7 +12,9 @@ services:
       - "8000:8000"   # Agent receiver
     volumes:
       # Persistent site data
-      - checkmk-data:/omd/sites
+      - type: volume
+        source: checkmk-data
+        target: /omd/sites
     tmpfs:
       # Performance optimization (use RAM for temp files)
       - /opt/omd/sites/cmk/tmp:uid=1000,gid=1000

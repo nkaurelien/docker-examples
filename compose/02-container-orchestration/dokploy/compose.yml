@@ -16,7 +16,10 @@ services:
     container_name: dokploy-docker-proxy
     restart: unless-stopped
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
     environment:
       # Logging
       - LOG_LEVEL=info
@@ -70,7 +73,9 @@ services:
       - "3000:3000"
     volumes:
       # Persistent data
-      - dokploy-data:/app/data
+      - type: volume
+        source: dokploy-data
+        target: /app/data
     environment:
       - NODE_ENV=production
       - TZ=${TZ:-Europe/Paris}

@@ -29,7 +29,9 @@ services:
       - CA_EXPIRE=${CA_EXPIRE:-3650}
     volumes:
       # Output directory for generated certificates
-      - ./certs/omgwtfssl:/certs
+      - type: bind
+        source: ./certs/omgwtfssl
+        target: /certs
 
   # mkcert - Locally-Trusted Development Certificates
   # https://github.com/FiloSottile/mkcert
@@ -56,7 +58,9 @@ services:
         echo "Certificates generated in /certs" &&
         ls -la /certs/
     volumes:
-      - ./certs/mkcert:/certs
+      - type: bind
+        source: ./certs/mkcert
+        target: /certs
 
   # OpenSSL - System-level self-signed certificate generation
   # Uses the standard openssl command from Alpine Linux
@@ -91,6 +95,8 @@ services:
         echo "Certificates generated in /certs" &&
         ls -la /certs/
     volumes:
-      - ./certs/openssl:/certs
+      - type: bind
+        source: ./certs/openssl
+        target: /certs
 
 volumes: {}

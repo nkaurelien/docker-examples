@@ -53,7 +53,9 @@ services:
     restart: unless-stopped
     command: ["redis-server", "--appendonly", "yes"]
     volumes:
-      - redis-data:/data
+      - type: volume
+        source: redis-data
+        target: /data
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
@@ -69,7 +71,10 @@ services:
       SOKETI_APP_KEY: ${SOKETI_APP_KEY}
       SOKETI_APP_SECRET: ${SOKETI_APP_SECRET}
     volumes:
-      - ./webhook-receiver/receiver.py:/app/receiver.py:ro
+      - type: bind
+        source: ./webhook-receiver/receiver.py
+        target: /app/receiver.py
+        read_only: true
     networks: [backend]
 
   demo:
@@ -79,8 +84,14 @@ services:
       SOKETI_APP_KEY: ${SOKETI_APP_KEY}
       SOKETI_PUBLIC_PORT: ${SOKETI_PORT:-6001}
     volumes:
-      - ./demo/index.html:/usr/share/nginx/html/index.html:ro
-      - ./demo/default.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - type: bind
+        source: ./demo/index.html
+        target: /usr/share/nginx/html/index.html
+        read_only: true
+      - type: bind
+        source: ./demo/default.conf.template
+        target: /etc/nginx/templates/default.conf.template
+        read_only: true
     ports:
       - "127.0.0.1:${DEMO_PORT:-8088}:80"
     networks: [edge]
@@ -96,7 +107,10 @@ services:
       SOKETI_HOST: soketi
       SOKETI_PORT: "6001"
     volumes:
-      - ./scripts/publish.py:/app/publish.py:ro
+      - type: bind
+        source: ./scripts/publish.py
+        target: /app/publish.py
+        read_only: true
     entrypoint: ["sh", "-c", "pip install -q --disable-pip-version-check --root-user-action=ignore pusher && python /app/publish.py \"$$@\"", "--"]
     networks: [edge, backend]   # edge : accès PyPI pour pip install
 

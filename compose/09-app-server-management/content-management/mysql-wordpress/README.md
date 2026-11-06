@@ -416,7 +416,7 @@ sudo chmod -R 755 ./database/dumps
 
 ```
 mysql-wordpress/
-├── docker-compose.yml      # Main Docker Compose configuration
+├── compose.yml      # Main Docker Compose configuration
 ├── .env                    # Environment variables (create from .env.example)
 ├── .env.example            # Example environment configuration
 ├── .gitignore              # Git ignore rules

@@ -30,7 +30,9 @@ services:
       RUSTFS_CONSOLE_ENABLE: "true"
       RUSTFS_CONSOLE_ADDRESS: ":9001"
     volumes:
-      - rustfs-data:/data
+      - type: volume
+        source: rustfs-data
+        target: /data
     networks: [rustfs]
     restart: unless-stopped
     healthcheck:

@@ -19,8 +19,12 @@ services:
       - SUDO_PASSWORD=${SUDO_PASSWORD:-vscode_secure_pass}
       - DEFAULT_WORKSPACE=/config/workspace
     volumes:
-      - ./config:/config
-      - ./workspace:/config/workspace
+      - type: bind
+        source: ./config
+        target: /config
+      - type: bind
+        source: ./workspace
+        target: /config/workspace
     networks:
       - default
       - traefik-public

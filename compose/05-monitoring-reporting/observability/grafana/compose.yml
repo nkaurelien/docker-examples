@@ -18,8 +18,12 @@ services:
       - default
       - traefik-public
     volumes:
-      - ./grafana-config:/etc/grafana
-      - 'grafana_storage:/var/lib/grafana'
+      - type: bind
+        source: ./grafana-config
+        target: /etc/grafana
+      - type: volume
+        source: grafana_storage
+        target: /var/lib/grafana
     labels:
       - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/grafana.svg"
       - "traefik.enable=true"

@@ -3,8 +3,12 @@ services:
     image: postgres:16-alpine
     container_name: ${COMPOSE_PROJECT_NAME:-postgres}_db
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./init:/docker-entrypoint-initdb.d
+      - type: volume
+        source: postgres_data
+        target: /var/lib/postgresql/data
+      - type: bind
+        source: ./init
+        target: /docker-entrypoint-initdb.d
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
@@ -45,7 +49,9 @@ services:
     ports:
       - "${PGADMIN_PORT:-5050}:80"
     volumes:
-      - pgadmin_data:/var/lib/pgadmin
+      - type: volume
+        source: pgadmin_data
+        target: /var/lib/pgadmin
     restart: unless-stopped
     profiles:
       - tools
@@ -70,8 +76,12 @@ services:
       postgres:
         condition: service_healthy
     volumes:
-      - ./backups:/backups
-      - ./scripts:/scripts
+      - type: bind
+        source: ./backups
+        target: /backups
+      - type: bind
+        source: ./scripts
+        target: /scripts
     environment:
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
@@ -93,8 +103,12 @@ services:
       postgres:
         condition: service_healthy
     volumes:
-      - ./backups:/backups
-      - ./scripts:/scripts
+      - type: bind
+        source: ./backups
+        target: /backups
+      - type: bind
+        source: ./scripts
+        target: /scripts
     environment:
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
@@ -117,7 +131,10 @@ services:
         condition: service_healthy
     command: daemon --docker
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
     restart: unless-stopped
     profiles:
       - backup

@@ -153,7 +153,7 @@ Documentation available at: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 Each service directory contains:
 - `README.md` or `readme.md` - Service-specific documentation
-- `compose.yml` or `docker-compose.yml` - Docker Compose configuration
+- `compose.yml` - Docker Compose configuration
 - Configuration files and initialization scripts
 - Environment variable examples
 

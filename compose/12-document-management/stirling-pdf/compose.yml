@@ -17,10 +17,18 @@ services:
       - LANGS=fr_FR,en_US
       - JAVA_TOOL_OPTIONS=-XX:MaxMetaspaceSize=384m -XX:MaxRAMPercentage=65
     volumes:
-      - ./trainingData:/usr/share/tessdata
-      - ./configs:/configs
-      - ./logs:/logs
-      - ./customFiles:/customFiles
+      - type: bind
+        source: ./trainingData
+        target: /usr/share/tessdata
+      - type: bind
+        source: ./configs
+        target: /configs
+      - type: bind
+        source: ./logs
+        target: /logs
+      - type: bind
+        source: ./customFiles
+        target: /customFiles
     networks:
       - default
       - traefik-public

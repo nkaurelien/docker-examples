@@ -12,7 +12,10 @@ services:
     # ports:
     #   - "2375:2375"    # Docker API (debug/info only)
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
     environment:
       # Traefik only needs read access
       # Deny write operations
@@ -87,8 +90,13 @@ services:
       # - "--certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL:-admin@example.com}"
       # - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
     volumes:
-      - ./config/dynamic:/etc/traefik/dynamic:ro
-      - traefik_letsencrypt:/letsencrypt
+      - type: bind
+        source: ./config/dynamic
+        target: /etc/traefik/dynamic
+        read_only: true
+      - type: volume
+        source: traefik_letsencrypt
+        target: /letsencrypt
     labels:
       - "traefik.enable=true"
       # Dashboard routing

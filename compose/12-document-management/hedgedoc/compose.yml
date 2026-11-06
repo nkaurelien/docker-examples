@@ -12,8 +12,12 @@ services:
       - CMD_ALLOW_ANONYMOUS=true
       - CMD_ALLOW_EMAIL_REGISTER=true
     volumes:
-      - ./uploads:/hedgedoc/public/uploads
-      - ./data:/hedgedoc/data
+      - type: bind
+        source: ./uploads
+        target: /hedgedoc/public/uploads
+      - type: bind
+        source: ./data
+        target: /hedgedoc/data
     ports:
       - "3000:3000"
     healthcheck:

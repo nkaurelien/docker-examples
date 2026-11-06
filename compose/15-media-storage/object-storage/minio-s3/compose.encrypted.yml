@@ -41,7 +41,9 @@ services:
       MINIO_KMS_SECRET_KEY: "${MINIO_KMS_KEY_NAME:-demo-key}:${MINIO_KMS_KEY:?MINIO_KMS_KEY manquant — lancer ./generate-kms-key.sh}"
       MINIO_KMS_AUTO_ENCRYPTION: "${MINIO_KMS_AUTO_ENCRYPTION:-on}"
     volumes:
-      - minio_encrypted_data:/data
+      - type: volume
+        source: minio_encrypted_data
+        target: /data
     networks:
       - minio_network
       - traefik-public

@@ -13,7 +13,10 @@ services:
     container_name: arcane-docker-proxy
     restart: unless-stopped
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
     environment:
       - LOG_LEVEL=info
       # Required by Arcane Manager
@@ -67,15 +70,33 @@ services:
     ports:
       - "${ARCANE_PORT:-3552}:3552"
     volumes:
-      - arcane-data:/app/data
+      - type: volume
+        source: arcane-data
+        target: /app/data
       # Path to stack/projects directory
-      - ${PROJECTS_DIR:-./projects}:/app/data/projects:z
+      - type: bind
+        source: ${PROJECTS_DIR:-./projects}
+        target: /app/data/projects
+        bind:
+          selinux: z
       # Path to local templates directory
-      - ${TEMPLATES_DIR:-./templates}:/app/data/templates:z
+      - type: bind
+        source: ${TEMPLATES_DIR:-./templates}
+        target: /app/data/templates
+        bind:
+          selinux: z
       # Path to build workspace for Dockerfiles and contexts
-      - ${BUILDS_DIR:-./builds}:/builds:z
+      - type: bind
+        source: ${BUILDS_DIR:-./builds}
+        target: /builds
+        bind:
+          selinux: z
       # Path to exported volume backups
-      - ${BACKUPS_DIR:-./backups}:/backups:z
+      - type: bind
+        source: ${BACKUPS_DIR:-./backups}
+        target: /backups
+        bind:
+          selinux: z
     environment:
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
@@ -109,7 +130,9 @@ services:
     image: alpine:latest
     container_name: arcane-db-seeder
     volumes:
-      - arcane-data:/app/data
+      - type: volume
+        source: arcane-data
+        target: /app/data
     entrypoint:
       - sh
       - -c

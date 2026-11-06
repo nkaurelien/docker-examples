@@ -54,7 +54,7 @@ make logs
 ### 3. Access n8n
 
 - **URL**: http://localhost (via nginx reverse proxy on port 80)
-- **Direct URL**: http://localhost:5678 (if enabled in docker-compose.yml)
+- **Direct URL**: http://localhost:5678 (if enabled in compose.yml)
 - **Username**: admin (configurable in .env)
 - **Password**: Set in .env as `N8N_BASIC_AUTH_PASSWORD`
 
@@ -323,7 +323,7 @@ make up
 
 1. **Increase execution data pruning frequency**
    ```yaml
-   # In docker-compose.yml
+   # In compose.yml
    EXECUTIONS_DATA_MAX_AGE: 24  # Keep only 24 hours
    ```
 
@@ -395,7 +395,7 @@ To enable HTTPS:
    - Uncomment the HTTPS server block
    - Update `server_name` with your domain
 
-3. **Update docker-compose.yml**:
+3. **Update compose.yml**:
    - Uncomment the HTTPS port mapping
    - Uncomment the SSL volume mount
 

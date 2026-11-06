@@ -29,10 +29,18 @@ services:
       - USERMAP_UID=1000
       - USERMAP_GID=1000
     volumes:
-      - paperless-data:/usr/src/paperless/data
-      - paperless-media:/usr/src/paperless/media
-      - ./export:/usr/src/paperless/export
-      - ./consume:/usr/src/paperless/consume
+      - type: volume
+        source: paperless-data
+        target: /usr/src/paperless/data
+      - type: volume
+        source: paperless-media
+        target: /usr/src/paperless/media
+      - type: bind
+        source: ./export
+        target: /usr/src/paperless/export
+      - type: bind
+        source: ./consume
+        target: /usr/src/paperless/consume
     networks:
       - traefik-public
       - paperless-internal
@@ -73,7 +81,9 @@ services:
       - POSTGRES_USER=${POSTGRES_USER:-paperless}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-paperless_db_password_change_me}
     volumes:
-      - paperless-db-data:/var/lib/postgresql/data
+      - type: volume
+        source: paperless-db-data
+        target: /var/lib/postgresql/data
     networks:
       - paperless-internal
     healthcheck:
@@ -99,7 +109,9 @@ services:
     container_name: paperless-redis
     restart: unless-stopped
     volumes:
-      - paperless-redis-data:/data
+      - type: volume
+        source: paperless-redis-data
+        target: /data
     networks:
       - paperless-internal
     healthcheck:

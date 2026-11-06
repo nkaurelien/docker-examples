@@ -70,7 +70,7 @@ docker-compose down
 
 ### Changer le port
 
-Pour utiliser un port différent, modifiez la ligne `ports` dans `docker-compose.yml` :
+Pour utiliser un port différent, modifiez la ligne `ports` dans `compose.yml` :
 
 ```yaml
 ports:

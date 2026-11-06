@@ -13,12 +13,23 @@ services:
       - "3310:3310"
     volumes:
       # Virus database persistence
-      - clamav-db:/var/lib/clamav
+      - type: volume
+        source: clamav-db
+        target: /var/lib/clamav
       # Custom configuration (optional)
-      - ./config/clamd.conf:/etc/clamav/clamd.conf:ro
-      - ./config/freshclam.conf:/etc/clamav/freshclam.conf:ro
+      - type: bind
+        source: ./config/clamd.conf
+        target: /etc/clamav/clamd.conf
+        read_only: true
+      - type: bind
+        source: ./config/freshclam.conf
+        target: /etc/clamav/freshclam.conf
+        read_only: true
       # Directory to scan (mount your application uploads here)
-      - scan-volume:/scandir:ro
+      - type: volume
+        source: scan-volume
+        target: /scandir
+        read_only: true
     environment:
       # Update virus definitions on startup
       - CLAMAV_NO_FRESHCLAMD=false

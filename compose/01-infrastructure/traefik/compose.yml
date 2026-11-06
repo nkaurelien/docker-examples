@@ -38,9 +38,17 @@ services:
       # - "--certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL:-admin@example.com}"
       # - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - ./config/dynamic:/etc/traefik/dynamic:ro
-      - traefik_letsencrypt:/letsencrypt
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+      - type: bind
+        source: ./config/dynamic
+        target: /etc/traefik/dynamic
+        read_only: true
+      - type: volume
+        source: traefik_letsencrypt
+        target: /letsencrypt
     labels:
       - "traefik.enable=true"
       # Dashboard routing

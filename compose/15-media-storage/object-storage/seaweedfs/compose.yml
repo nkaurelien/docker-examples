@@ -28,7 +28,9 @@ services:
       - "9333:9333"     # HTTP API / UI
       - "19333:19333"   # gRPC
     volumes:
-      - master-data:/data
+      - type: volume
+        source: master-data
+        target: /data
     networks: [seaweedfs]
     restart: unless-stopped
 
@@ -42,7 +44,9 @@ services:
       - "8080:8080"
       - "18080:18080"
     volumes:
-      - volume-data:/data
+      - type: volume
+        source: volume-data
+        target: /data
     depends_on: [master]
     networks: [seaweedfs]
     restart: unless-stopped
@@ -56,7 +60,9 @@ services:
       - "8888:8888"
       - "18888:18888"
     volumes:
-      - filer-data:/data
+      - type: volume
+        source: filer-data
+        target: /data
     depends_on: [master, volume]
     networks: [seaweedfs]
     restart: unless-stopped
@@ -72,7 +78,10 @@ services:
     ports:
       - "8333:8333"     # endpoint S3
     volumes:
-      - ./config/s3.json:/etc/seaweedfs/s3.json:ro
+      - type: bind
+        source: ./config/s3.json
+        target: /etc/seaweedfs/s3.json
+        read_only: true
     depends_on: [filer]
     networks: [seaweedfs]
     restart: unless-stopped
@@ -99,8 +108,13 @@ services:
     ports:
       - "9091:9090"
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - prometheus-data:/prometheus
+      - type: bind
+        source: ./prometheus/prometheus.yml
+        target: /etc/prometheus/prometheus.yml
+        read_only: true
+      - type: volume
+        source: prometheus-data
+        target: /prometheus
     depends_on: [master]
     networks: [seaweedfs]
     restart: unless-stopped

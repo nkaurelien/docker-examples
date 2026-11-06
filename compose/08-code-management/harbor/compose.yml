@@ -15,7 +15,9 @@ services:
     environment:
       - POSTGRES_PASSWORD=${HARBOR_DB_PASSWORD:-harbor_db_secret}
     volumes:
-      - harbor-db-data:/var/lib/postgresql/data
+      - type: volume
+        source: harbor-db-data
+        target: /var/lib/postgresql/data
     networks:
       - harbor-internal
 
@@ -64,7 +66,9 @@ services:
     depends_on:
       - harbor-core
     volumes:
-      - harbor-storage:/storage
+      - type: volume
+        source: harbor-storage
+        target: /storage
     networks:
       - harbor-internal
 
@@ -82,7 +86,9 @@ services:
     container_name: harbor-trivy
     restart: unless-stopped
     volumes:
-      - harbor-trivy-cache:/home/scanner/.cache
+      - type: volume
+        source: harbor-trivy-cache
+        target: /home/scanner/.cache
     networks:
       - harbor-internal
 

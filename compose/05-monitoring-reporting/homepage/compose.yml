@@ -10,7 +10,10 @@ services:
     container_name: homepage-socket-proxy
     restart: unless-stopped
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
     environment:
       - LOG_LEVEL=info
       - CONTAINERS=1
@@ -53,9 +56,17 @@ services:
     environment:
       - HOMEPAGE_ALLOWED_HOSTS=homepage.${DOMAIN:-apps.local},localhost
     volumes:
-      - ./config:/app/config
-      - ./images:/app/public/images:ro
-      - ./icons:/app/public/icons:ro
+      - type: bind
+        source: ./config
+        target: /app/config
+      - type: bind
+        source: ./images
+        target: /app/public/images
+        read_only: true
+      - type: bind
+        source: ./icons
+        target: /app/public/icons
+        read_only: true
     networks:
       - default
       - homepage-internal

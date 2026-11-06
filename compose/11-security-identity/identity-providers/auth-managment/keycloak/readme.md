@@ -20,7 +20,7 @@ Keycloak will be available at `http://localhost:8080`
 
 ```
 keycloak/
-├── docker-compose.yml          # Keycloak + PostgreSQL + init container
+├── compose.yml          # Keycloak + PostgreSQL + init container
 ├── .env.example                # Environment variables template
 ├── realm-export.json           # Realm config (auto-imported on first start)
 ├── keycloak-admin.http         # REST Client file for API testing
@@ -208,7 +208,7 @@ Drop custom Keycloak provider JARs into `providers/` directory.
 
 For production behind a reverse proxy (Nginx):
 
-1. Change `start-dev` to `start` in docker-compose.yml command
+1. Change `start-dev` to `start` in compose.yml command
 2. Bind Keycloak to `127.0.0.1:8080` (change port mapping in compose)
 3. Set `KEYCLOAK_HOSTNAME=auth.yourdomain.com`
 4. Configure Nginx with TLS termination and proxy to `127.0.0.1:8080`

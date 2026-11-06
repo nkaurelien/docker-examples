@@ -8,7 +8,10 @@ services:
   socket-proxy:
     image: tecnativa/docker-socket-proxy:latest
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
     networks:
       - socket-proxy
     environment:
@@ -56,7 +59,9 @@ services:
       - AGENT_CLUSTER_ADDR=tasks.agent
       - DOCKER_HOST=tcp://socket-proxy:2375
     volumes:
-      - /var/lib/docker/volumes:/var/lib/docker/volumes
+      - type: bind
+        source: /var/lib/docker/volumes
+        target: /var/lib/docker/volumes
     networks:
       - agent_network
       - socket-proxy
@@ -78,7 +83,9 @@ services:
       - "9000:9000"
       - "8000:8000"
     volumes:
-      - portainer_data:/data
+      - type: volume
+        source: portainer_data
+        target: /data
     networks:
       - agent_network
       - socket-proxy

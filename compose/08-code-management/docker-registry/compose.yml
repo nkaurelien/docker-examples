@@ -9,7 +9,9 @@ services:
       - REGISTRY_HTTP_SECRET=o43g2kjgn2iuhv2k4jn2f23f290qfghsdg
       - REGISTRY_STORAGE_DELETE_ENABLED=true
     volumes:
-      - ./registry-data:/var/lib/registry
+      - type: bind
+        source: ./registry-data
+        target: /var/lib/registry
 
   ui:
     image: jc21/registry-ui

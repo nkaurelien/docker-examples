@@ -16,8 +16,12 @@ services:
     ports:
       - "${JITSI_HTTP_BIND:-127.0.0.1}:${JITSI_HTTP_PORT:-8000}:80"
     volumes:
-      - ./config/web:/config
-      - ./config/transcripts:/usr/share/jitsi-meet/transcripts
+      - type: bind
+        source: ./config/web
+        target: /config
+      - type: bind
+        source: ./config/transcripts
+        target: /usr/share/jitsi-meet/transcripts
     depends_on:
       - prosody
 
@@ -26,8 +30,12 @@ services:
     image: jitsi/prosody:${JITSI_IMAGE_VERSION:-stable-11031}
     expose: ["5222", "5280", "5347"]
     volumes:
-      - ./config/prosody/config:/config
-      - ./config/prosody/prosody-plugins-custom:/prosody-plugins-custom
+      - type: bind
+        source: ./config/prosody/config
+        target: /config
+      - type: bind
+        source: ./config/prosody/prosody-plugins-custom
+        target: /prosody-plugins-custom
     networks:
       meet.jitsi:
         aliases: [xmpp.meet.jitsi]
@@ -36,7 +44,9 @@ services:
     <<: *jitsi
     image: jitsi/jicofo:${JITSI_IMAGE_VERSION:-stable-11031}
     volumes:
-      - ./config/jicofo:/config
+      - type: bind
+        source: ./config/jicofo
+        target: /config
     depends_on:
       - prosody
 
@@ -47,7 +57,9 @@ services:
     ports:
       - "${JVB_PORT:-10000}:${JVB_PORT:-10000}/udp"
     volumes:
-      - ./config/jvb:/config
+      - type: bind
+        source: ./config/jvb
+        target: /config
     depends_on:
       - prosody
 
@@ -64,7 +76,10 @@ services:
       - --realm=${TURN_REALM:-meet.example.com}
       - --external-ip=${JVB_ADVERTISE_IPS:-}
     volumes:
-      - ./coturn/turnserver.conf:/etc/coturn/turnserver.conf:ro
+      - type: bind
+        source: ./coturn/turnserver.conf
+        target: /etc/coturn/turnserver.conf
+        read_only: true
 
 networks:
   meet.jitsi:

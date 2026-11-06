@@ -15,7 +15,9 @@ services:
     ports:
       - "3001:3001"
     volumes:
-      - uptime-kuma-data:/app/data
+      - type: volume
+        source: uptime-kuma-data
+        target: /app/data
     environment:
       - TZ=${TZ:-Europe/Paris}
       - UMASK=0022

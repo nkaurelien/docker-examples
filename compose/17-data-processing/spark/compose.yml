@@ -87,7 +87,9 @@ services:
       - NOTEBOOK_APP_TOKEN=secret
       - MASTER=spark://spark-master:7077
     volumes:
-      - ./notebooks:/home/jovyan/work
+      - type: bind
+        source: ./notebooks
+        target: /home/jovyan/work
     networks:
       - default
       - traefik-public

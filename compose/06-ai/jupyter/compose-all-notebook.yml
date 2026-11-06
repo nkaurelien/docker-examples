@@ -6,7 +6,9 @@ services:
       - "8889:8888"
     volumes:
       # - "./:/home/nkaurelien/work"
-      - "./volumes/jupyter:/home/jovyan/work"
+      - type: bind
+        source: ./volumes/jupyter
+        target: /home/jovyan/work
     environment:
       - NOTEBOOK_APP_TOKEN=secret
     command: start-notebook.sh --NotebookApp.token='secret'

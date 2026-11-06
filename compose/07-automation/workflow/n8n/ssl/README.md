@@ -41,7 +41,7 @@ sudo chmod 600 ssl/key.pem
 After placing your certificates in this directory:
 
 1. Uncomment the HTTPS server block in `nginx.conf`
-2. Uncomment the HTTPS port and SSL volume mount in `docker-compose.yml`
+2. Uncomment the HTTPS port and SSL volume mount in `compose.yml`
 3. Update `N8N_PROTOCOL` to `https` in your `.env` file
 4. Update `WEBHOOK_URL` to use `https://` in your `.env` file
 5. Restart the services: `docker compose down && docker compose up -d`

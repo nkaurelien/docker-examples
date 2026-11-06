@@ -8,7 +8,9 @@ services:
     ports:
       - "11434:11434"
     volumes:
-      - ollama_data:/root/.ollama
+      - type: volume
+        source: ollama_data
+        target: /root/.ollama
     # Décommentez la section suivante si vous possédez des GPU NVIDIA configurés avec le nvidia-container-toolkit
     # deploy:
     #   resources:

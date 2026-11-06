@@ -64,7 +64,7 @@ Depuis un autre conteneur du même réseau Docker : `http://geoip-api:8080/<ip>`
 - **Tag figé, monté régulièrement** : `latest` donne les données les plus fraîches mais rend les
   déploiements non reproductibles. Figer le tag et le monter chaque mois (ou via Renovate / Dependabot).
 - **Précision** : GeoLite2 est approximatif à l'échelle de la ville ; pour de la production exigeante,
-  une base GeoIP2 commerciale se monte en volume (voir `docker-compose.yml`).
+  une base GeoIP2 commerciale se monte en volume (voir `compose.yml`).
 - **Durcissement** : système de fichiers en lecture seule, `no-new-privileges`, mémoire bornée.
 
 ## Liens

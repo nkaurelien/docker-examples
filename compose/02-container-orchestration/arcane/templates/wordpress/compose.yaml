@@ -9,7 +9,9 @@ services:
       WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:-wordpress_password}
       WORDPRESS_DB_NAME: wordpress
     volumes:
-      - wordpress_data:/var/www/html
+      - type: volume
+        source: wordpress_data
+        target: /var/www/html
     depends_on:
       - db
     restart: always
@@ -22,7 +24,9 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD:-wordpress_password}
       MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
     volumes:
-      - db_data:/var/lib/mysql
+      - type: volume
+        source: db_data
+        target: /var/lib/mysql
     restart: always
 
 volumes:

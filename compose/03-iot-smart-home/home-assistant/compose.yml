@@ -11,10 +11,18 @@ services:
     # Host network recommended for discovery and integrations
     network_mode: host
     volumes:
-      - ./config:/config
-      - /etc/localtime:/etc/localtime:ro
+      - type: bind
+        source: ./config
+        target: /config
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
       # Required for Bluetooth support
-      - /run/dbus:/run/dbus:ro
+      - type: bind
+        source: /run/dbus
+        target: /run/dbus
+        read_only: true
     environment:
       - TZ=${TZ:-Europe/Paris}
     # Required for USB device access and some integrations
@@ -33,8 +41,13 @@ services:
     ports:
       - "8080:8080"  # Web UI
     volumes:
-      - ./zigbee2mqtt:/app/data
-      - /run/udev:/run/udev:ro
+      - type: bind
+        source: ./zigbee2mqtt
+        target: /app/data
+      - type: bind
+        source: /run/udev
+        target: /run/udev
+        read_only: true
     environment:
       - TZ=${TZ:-Europe/Paris}
     # USB Zigbee adapter (adjust device path as needed)
@@ -62,9 +75,15 @@ services:
       - "1883:1883"   # MQTT
       - "9001:9001"   # WebSocket
     volumes:
-      - ./mosquitto/config:/mosquitto/config
-      - ./mosquitto/data:/mosquitto/data
-      - ./mosquitto/log:/mosquitto/log
+      - type: bind
+        source: ./mosquitto/config
+        target: /mosquitto/config
+      - type: bind
+        source: ./mosquitto/data
+        target: /mosquitto/data
+      - type: bind
+        source: ./mosquitto/log
+        target: /mosquitto/log
     environment:
       - TZ=${TZ:-Europe/Paris}
     networks:

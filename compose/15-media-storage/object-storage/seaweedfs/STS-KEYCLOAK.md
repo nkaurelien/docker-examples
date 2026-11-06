@@ -13,7 +13,7 @@ Côté **Keycloak local** (réalisé + validé) :
 - Compte de test **`seaweedfs-poc`** / `AsoneTest.2026`, rôle realm **`doctor`**.
 - **JWT ROPC validé** : `iss = https://connect.asone4health.kamitbrains.local/realms/asone4health`, `azp=seaweedfs-s3`, `realm_access.roles=[doctor,…]`. Le realm local n'a **pas** de `frontendUrl` divergent (iss correct).
 
-Côté **POC** (fichiers prêts) : `config/iam.json`, `docker-compose.sts.yml`, `test-sts.sh`, `.env` (valeurs réelles), `config/rootCA.pem` (CA mkcert copié).
+Côté **POC** (fichiers prêts) : `config/iam.json`, `compose.sts.yml`, `test-sts.sh`, `.env` (valeurs réelles), `config/rootCA.pem` (CA mkcert copié).
 
 **Reste à faire par toi** : démarrer Docker + `brew install awscli jq`, puis lancer (Étapes 3-4). Les Étapes 1-2 ci-dessous sont documentées pour reproductibilité / autre realm.
 
@@ -47,7 +47,7 @@ Dans le realm **`asone4health`** (KC local ; utiliser `asone4health-sandbox` si 
 ```bash
 export KEYCLOAK_HOST_IP=192.168.0.195
 export MKCERT_CA="$(mkcert -CAROOT)/rootCA.pem"
-docker compose -f docker-compose.yml -f docker-compose.sts.yml up -d
+docker compose -f compose.yml -f compose.sts.yml up -d
 docker compose logs -f s3     # vérifier le chargement de l'IAM/OIDC
 ```
 

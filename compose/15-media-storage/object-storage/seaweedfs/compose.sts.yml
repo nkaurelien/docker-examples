@@ -16,9 +16,18 @@ services:
       -iam.config=/etc/seaweedfs/iam.json
       -metricsPort=9327
     volumes:
-      - ./config/s3.json:/etc/seaweedfs/s3.json:ro
-      - ./config/iam.json:/etc/seaweedfs/iam.json:ro
-      - ${MKCERT_CA:-./config/rootCA.pem}:/etc/ssl/certs/mkcert-rootCA.pem:ro
+      - type: bind
+        source: ./config/s3.json
+        target: /etc/seaweedfs/s3.json
+        read_only: true
+      - type: bind
+        source: ./config/iam.json
+        target: /etc/seaweedfs/iam.json
+        read_only: true
+      - type: bind
+        source: ${MKCERT_CA:-./config/rootCA.pem}
+        target: /etc/ssl/certs/mkcert-rootCA.pem
+        read_only: true
     environment:
       # Go valide le JWKS Keycloak (HTTPS mkcert) via ce CA.
       # POC : remplace le trust store ; le seul TLS sortant de s3 est le KC local.

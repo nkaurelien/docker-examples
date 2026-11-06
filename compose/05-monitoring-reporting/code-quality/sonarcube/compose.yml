@@ -56,7 +56,9 @@ services:
       sonarcube:
         condition: service_healthy
     volumes:
-      - .:/app
+      - type: bind
+        source: .
+        target: /app
     command: >
       sonar-scanner
       -Dsonar.projectKey=MyProjectKey
@@ -94,9 +96,15 @@ services:
       SONAR_JDBC_PASSWORD: sonar
       GIT_DEPTH: "0"
     volumes:
-      - sonarqube_data:/opt/sonarqube/data
-      - sonarqube_extensions:/opt/sonarqube/extensions
-      - sonarqube_logs:/opt/sonarqube/logs
+      - type: volume
+        source: sonarqube_data
+        target: /opt/sonarqube/data
+      - type: volume
+        source: sonarqube_extensions
+        target: /opt/sonarqube/extensions
+      - type: volume
+        source: sonarqube_logs
+        target: /opt/sonarqube/logs
     healthcheck:
       test: ["CMD", "/bin/bash", "-c", "wget -qO- http://localhost:9000/api/system/status
             | grep -q -e '\"status\":\"UP\"' -e '\"status\":\"DB_MIGRATION_NEEDED\"\
@@ -133,7 +141,9 @@ services:
     networks:
       - sonarcube
     volumes:
-      - sonarqube_db:/var/lib/postgresql/data
+      - type: volume
+        source: sonarqube_db
+        target: /var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d sonar -U sonar"]
       interval: 10s

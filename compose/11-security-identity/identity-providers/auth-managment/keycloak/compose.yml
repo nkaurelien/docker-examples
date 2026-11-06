@@ -48,10 +48,21 @@ services:
       SMTP_PASSWORD: ${SMTP_PASSWORD:-}
 
     volumes:
-      - ./realm-export.json:/opt/keycloak/data/import/realm-export.json:ro
-      - ./providers:/opt/keycloak/providers:ro
-      - ./themes/my-app:/opt/keycloak/themes/my-app:ro
-      - keycloak-data:/opt/keycloak/data
+      - type: bind
+        source: ./realm-export.json
+        target: /opt/keycloak/data/import/realm-export.json
+        read_only: true
+      - type: bind
+        source: ./providers
+        target: /opt/keycloak/providers
+        read_only: true
+      - type: bind
+        source: ./themes/my-app
+        target: /opt/keycloak/themes/my-app
+        read_only: true
+      - type: volume
+        source: keycloak-data
+        target: /opt/keycloak/data
     ports:
       - "${KEYCLOAK_PORT:-8080}:8080"
     depends_on:
@@ -95,7 +106,10 @@ services:
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
     volumes:
-      - ./scripts:/scripts:ro
+      - type: bind
+        source: ./scripts
+        target: /scripts
+        read_only: true
     entrypoint: ["/bin/sh", "/scripts/init-user-profile.sh"]
     networks:
       - keycloak-network
@@ -109,7 +123,9 @@ services:
       POSTGRES_USER: ${KC_DB_USERNAME:-keycloak}
       POSTGRES_PASSWORD: ${KC_DB_PASSWORD}
     volumes:
-      - keycloak-db-data:/var/lib/postgresql/data
+      - type: volume
+        source: keycloak-db-data
+        target: /var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U keycloak -d keycloak"]
       interval: 10s

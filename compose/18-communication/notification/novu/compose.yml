@@ -30,7 +30,9 @@ services:
       - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
     command: server /data --console-address ":9001"
     volumes:
-      - minio_data:/data
+      - type: volume
+        source: minio_data
+        target: /data
     ports:
       - "${MINIO_API_PORT}:9000"  # API
       - "${MINIO_CONSOLE_PORT}:9001"  # Console Web UI
@@ -57,7 +59,9 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
-      - mongodb:/data/db
+      - type: volume
+        source: mongodb
+        target: /data/db
     ports:
       - "${MONGO_PORT}:27017"
     healthcheck:

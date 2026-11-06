@@ -25,7 +25,9 @@ services:
       - 5900:5900/udp
     volumes:
       # Persister les données macOS
-      - macos_data:/storage
+      - type: volume
+        source: macos_data
+        target: /storage
     restart: unless-stopped
     networks:
       - macos_network

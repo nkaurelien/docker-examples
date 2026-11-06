@@ -107,7 +107,10 @@ services:
       - kafka2
       - kafka3
     volumes:
-      - ./pipeline_index:/usr/share/logstash/pipeline:ro
+      - type: bind
+        source: ./pipeline_index
+        target: /usr/share/logstash/pipeline
+        read_only: true
     environment:
       LS_JAVA_OPTS: "-Xmx${LOGSTASH_HEAP_SIZE:-2g} -Xms${LOGSTASH_HEAP_SIZE:-2g} -XX:+UseG1GC -XX:MaxGCPauseMillis=50"
       PIPELINE_WORKERS: ${LOGSTASH_PIPELINE_WORKERS:-1}
@@ -130,7 +133,10 @@ services:
       - "5045:5044"
       - "${LOGSTASH_MONITORING_PORT:-9601}:9600"
     volumes:
-      - ./pipeline_storage:/usr/share/logstash/pipeline:ro
+      - type: bind
+        source: ./pipeline_storage
+        target: /usr/share/logstash/pipeline
+        read_only: true
     environment:
       LS_JAVA_OPTS: "-Xmx${LOGSTASH_HEAP_SIZE:-2g} -Xms${LOGSTASH_HEAP_SIZE:-2g} -XX:+UseG1GC -XX:MaxGCPauseMillis=50"
       PIPELINE_WORKERS: ${LOGSTASH_PIPELINE_WORKERS:-1}

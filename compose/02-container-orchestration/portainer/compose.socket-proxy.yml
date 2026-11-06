@@ -12,7 +12,10 @@ services:
     # ports:
     #   - "2375:2375"    # Docker API (debug/info only)
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
     environment:
       # Portainer requires more permissions than Traefik
       # Allow read/write operations
@@ -63,7 +66,9 @@ services:
       # - "8000:8000" # Remove if you do not intend to use Edge Agents
       # - "9000:9000" # If you require HTTP port 9000 open for legacy reasons
     volumes:
-      - portainer_data:/data
+      - type: volume
+        source: portainer_data
+        target: /data
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost:9000/api/status"]
       interval: 30s

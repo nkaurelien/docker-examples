@@ -21,8 +21,13 @@ services:
       - APP_TIMEZONE=Europe/Paris
       - TZ=Europe/Paris
     volumes:
-      - databasement-data:/data
-      - /var/lib/docker/volumes:/userdata/volumes:ro
+      - type: volume
+        source: databasement-data
+        target: /data
+      - type: bind
+        source: /var/lib/docker/volumes
+        target: /userdata/volumes
+        read_only: true
     ports:
       - "2226:2226"
     networks:

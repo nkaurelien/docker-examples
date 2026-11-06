@@ -10,7 +10,9 @@ services:
     container_name: changedetection
     hostname: changedetection
     volumes:
-      - ./data:/datastore
+      - type: bind
+        source: ./data
+        target: /datastore
     ports:
       - 5001:5000
     networks:

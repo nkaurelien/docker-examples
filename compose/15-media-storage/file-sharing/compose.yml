@@ -3,7 +3,9 @@ services:
     image: wardy784/erugo:latest
     restart: unless-stopped
     volumes:
-      - erugo_storage:/var/www/html/storage
+      - type: volume
+        source: erugo_storage
+        target: /var/www/html/storage
     ports:
       - "${ERUGO_PORT:-9998}:80"
     environment:
