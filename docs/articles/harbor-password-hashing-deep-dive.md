@@ -41,7 +41,7 @@ In Python notation:
 import hashlib
 
 salt = "Uzl97ZzBps67Q1etRoDZXVwEyAYoiI39"
-password = "1Q2f316jbcXE2drG94z0qlE4"
+password = "<HARBOR_ADMIN_PASSWORD>"
 
 derived_hash = hashlib.pbkdf2_hmac('sha256', password.encode(), salt.encode(), 4096, 16).hex()
 # Result: '872ee3a8b41b9bc42b5b7cc5b85b7b8f'

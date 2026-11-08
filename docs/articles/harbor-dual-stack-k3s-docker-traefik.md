@@ -128,7 +128,7 @@ Verify that both API endpoints are operational:
 
 ```bash
 # Test OCI Distribution API v2 Endpoint
-curl -u "admin:1Q2f316jbcXE2drG94z0qlE4" -sk https://harbor.kamitbrains-minipc-k1.lab/v2/_catalog
+curl -u "admin:${HARBOR_ADMIN_PASSWORD}" -sk https://harbor.kamitbrains-minipc-k1.lab/v2/_catalog
 
 # Push a test image to the OCI registry
 docker tag alpine:latest harbor.kamitbrains-minipc-k1.lab/library/alpine:latest

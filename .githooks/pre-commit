@@ -1,0 +1,5 @@
+#!/bin/sh
+# Bloque le commit si gitleaks détecte un secret dans les changements indexés.
+command -v gitleaks >/dev/null 2>&1 || { echo "gitleaks absent (brew install gitleaks) : vérification ignorée" >&2; exit 0; }
+gitleaks git --staged --no-banner --redact --config .gitleaks.toml . || {
+  echo "✋ Secret détecté : retirez-le (ou ajoutez une exception vérifiée dans .gitleaks.toml)." >&2; exit 1; }

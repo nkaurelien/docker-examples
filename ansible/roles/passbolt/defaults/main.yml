@@ -1,16 +1,32 @@
 ---
-# Passbolt role defaults
+# Passbolt role defaults (valeurs génériques : les vraies valeurs vivent dans le dépôt d'infra privé)
 passbolt_version: "ce"
 passbolt_image: "passbolt/passbolt:latest"
 passbolt_postgres_version: "16-alpine"
 passbolt_postgres_image: "postgres:{{ passbolt_postgres_version }}"
-passbolt_domain: "kamitbrains.fr"
+passbolt_domain: "example.com"
 passbolt_hostname: "passwords.{{ traefik_domain | default(passbolt_domain) }}"
 passbolt_port: 80
 passbolt_compose_dir: "/opt/passbolt"
 
-# Database secrets lookup
+# Secrets : fichiers lus dans ce dossier (non versionné), relatif au playbook appelant.
+passbolt_secrets_dir: "{{ playbook_dir }}/../.secrets"
+
+# Database
 passbolt_db_name: "passbolt"
 passbolt_db_user: "passbolt"
-passbolt_db_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/passbolt-db-password', errors='ignore') | default('passbolt-db-pass-change-me', true) | trim }}"
-passbolt_admin_email: "admin@kamitbrains.fr"
+passbolt_db_password: "{{ lookup('file', passbolt_secrets_dir ~ '/passbolt-db-password', errors='ignore') | default('passbolt-db-pass-change-me', true) | trim }}"
+passbolt_admin_email: "admin@{{ passbolt_domain }}"
+
+# SMTP (optionnel) : n'importe quel relais (Brevo, Mailjet, SES, ...).
+# Désactivé tant que host, login et mot de passe ne sont pas tous renseignés.
+# Ex. Brevo (gratuit, 300 e-mails/jour) : host "smtp-relay.brevo.com", port 587, STARTTLS.
+passbolt_smtp_host: ""
+passbolt_smtp_port: 587
+passbolt_smtp_tls: true  # STARTTLS
+passbolt_smtp_username: "{{ lookup('file', passbolt_secrets_dir ~ '/passbolt-smtp-login', errors='ignore') | default('', true) | trim }}"
+passbolt_smtp_password: "{{ lookup('file', passbolt_secrets_dir ~ '/passbolt-smtp-password', errors='ignore') | default('', true) | trim }}"
+passbolt_smtp_enabled: "{{ (passbolt_smtp_host | length > 0) and (passbolt_smtp_username | length > 0) and (passbolt_smtp_password | length > 0) }}"
+# L'expéditeur doit être un domaine/adresse validé chez le relais (SPF/DKIM).
+passbolt_email_from: "no-reply@{{ passbolt_domain }}"
+passbolt_email_from_name: "Passbolt"

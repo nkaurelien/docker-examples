@@ -59,6 +59,15 @@ services:
       - DATASOURCES_DEFAULT_ENCODING=utf8
       - PASSBOLT_PLUGINS_EXPORT_POLICIES_ALLOW_CSV_FORMAT=true
       - PASSBOLT_PLUGINS_EXPORTPOLICIES_ALLOWCSVFORMAT=true
+{% if passbolt_smtp_enabled | bool %}
+      - EMAIL_DEFAULT_FROM={{ passbolt_email_from }}
+      - EMAIL_DEFAULT_FROM_NAME={{ passbolt_email_from_name }}
+      - EMAIL_TRANSPORT_DEFAULT_HOST={{ passbolt_smtp_host }}
+      - EMAIL_TRANSPORT_DEFAULT_PORT={{ passbolt_smtp_port }}
+      - EMAIL_TRANSPORT_DEFAULT_USERNAME={{ passbolt_smtp_username }}
+      - EMAIL_TRANSPORT_DEFAULT_PASSWORD={{ passbolt_smtp_password }}
+      - EMAIL_TRANSPORT_DEFAULT_TLS={{ passbolt_smtp_tls | bool | lower }}
+{% endif %}
     volumes:
       - passbolt-gpg-keys:/etc/passbolt/gpg
       - passbolt-jwt-keys:/etc/passbolt/jwt

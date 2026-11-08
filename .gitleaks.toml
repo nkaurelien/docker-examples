@@ -1,0 +1,13 @@
+# Config gitleaks du dépôt public : règles par défaut + exceptions vérifiées (exemples, pas de vrais secrets).
+# Vérifier : gitleaks git --no-banner --redact .     Hook : .githooks/pre-commit
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Exemples et documentation tierce vérifiés"
+paths = [
+  '''^\.agents/skills/''',                                     # docs de skills (placeholders)
+  '''compose/11-security-identity/wazuh/config/.*/certs/''',  # certificats de démo Wazuh (jamais déployés)
+  '''compose/15-media-storage/object-storage/seaweedfs/config/iam\.json''',  # clés de PoC
+  '''(^|/)search/search_index\.json$''',                      # build mkdocs
+]
