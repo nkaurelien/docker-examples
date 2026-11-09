@@ -32,7 +32,7 @@ services:
       - "traefik.http.routers.backrest.rule=Host(`{{ backrest_hostname }}`)"
       - "traefik.http.routers.backrest.entrypoints=websecure"
       - "traefik.http.routers.backrest.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.backrest.middlewares=crowdsec-bouncer@file,tinyauth-auth@docker"
+      - "traefik.http.routers.backrest.middlewares={{ backrest_traefik_middlewares }}"
       - "traefik.http.services.backrest.loadbalancer.server.port={{ backrest_port }}"
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:{{ backrest_port }}/ || exit 1"]

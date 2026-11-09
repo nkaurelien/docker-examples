@@ -5,3 +5,5 @@ backrest_hostname: "backrest.{{ backrest_domain }}"
 backrest_deploy_dir: "/opt/backrest"
 backrest_image: "garethgeorge/backrest:latest"
 backrest_port: 9898
+# Middlewares Traefik du routeur. Derrière Cloudflare Access (DNS proxied), mettre cloudflare-only@file en tête.
+backrest_traefik_middlewares: "crowdsec-bouncer@file,tinyauth-auth@docker"

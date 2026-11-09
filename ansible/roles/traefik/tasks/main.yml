@@ -47,6 +47,27 @@
     dest: "/opt/traefik/config/dynamic/crowdsec-bouncer.yml"
     mode: '0644'
 
+# Middleware cloudflare-only : n'accepte que les IP de Cloudflare. À placer en tête des routeurs protégés par
+# Cloudflare Access (enregistrement DNS proxied), sinon on contourne Access en visant l'IP du serveur.
+- name: Récupérer les plages d'IP de Cloudflare
+  ansible.builtin.uri:
+    url: "https://www.cloudflare.com/ips-{{ item }}"
+    return_content: true
+  loop: [v4, v6]
+  register: traefik_cf_ips
+  delegate_to: localhost
+  become: false
+  run_once: true
+  check_mode: false
+
+- name: Deploy Traefik cloudflare-only middleware configuration
+  ansible.builtin.template:
+    src: traefik-cloudflare-only.yml.j2
+    dest: "/opt/traefik/config/dynamic/cloudflare-only.yml"
+    mode: '0644'
+  vars:
+    traefik_cloudflare_ranges: "{{ traefik_cf_ips.results | map(attribute='content') | map('split') | flatten | select | list }}"
+
 - name: Deploy Traefik docker-compose configuration
   ansible.builtin.template:
     src: docker-compose.yml.j2
