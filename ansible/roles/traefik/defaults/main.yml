@@ -3,7 +3,9 @@
 traefik_version: "v3.6"
 traefik_domain: "kamitbrains.fr"
 traefik_public_network: "traefik-public"
-traefik_acme_email: "nkaurelien@gmail.com"
+# E-mail ACME (Let's Encrypt) : .secrets/traefik-acme-email (pas de donnée réelle dans le rôle)
+traefik_secrets_dir: "{{ playbook_dir }}/../.secrets"
+traefik_acme_email: "{{ lookup('file', traefik_secrets_dir ~ '/traefik-acme-email', errors='ignore') | default('admin@example.com', true) | trim }}"
 traefik_enable_letsencrypt: true
 traefik_dashboard_host: "traefik.{{ traefik_domain }}"
 traefik_http_port: 80
