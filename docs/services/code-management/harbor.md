@@ -25,7 +25,7 @@ ansible-playbook -i ansible/inventory.yml ansible/site.yml --tags harbor --limit
 ### Docker CLI Authentication
 
 ```bash
-docker login harbor.kamitbrains-minipc-k1.lab -u admin -p <ADMIN_PASSWORD>
+docker login harbor.homelab.lab -u admin -p <ADMIN_PASSWORD>
 ```
 
 ---

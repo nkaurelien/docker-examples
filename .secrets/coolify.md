@@ -1,7 +1,7 @@
 # Coolify PaaS Stack Credentials & Documentation
 
 - **Service**: Coolify Self-Hostable PaaS & App Store
-- **URL**: https://coolify.kamitbrains.fr
+- **URL**: https://coolify.example.com
 - **Database Engine**: PostgreSQL 15 (`postgres:15-alpine`)
 - **Cache Engine**: Redis 7 (`redis:7-alpine`)
 - **Root Admin Email File**: `.secrets/coolify-admin-email`

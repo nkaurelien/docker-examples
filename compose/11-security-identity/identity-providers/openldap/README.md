@@ -14,7 +14,7 @@ This stack provides an **OpenLDAP** directory server alongside **phpLDAPadmin**,
 
 2. Access **phpLDAPadmin**:
    - Local HTTP: `http://localhost:8088`
-   - Traefik HTTPS: `https://ldap.kamitbrains.local` (or your configured `PHPLDAPADMIN_HOSTNAME`)
+   - Traefik HTTPS: `https://ldap.example.local` (or your configured `PHPLDAPADMIN_HOSTNAME`)
 
    > ⚠️ **Note:** phpLDAPadmin requires the full **Login DN**, not just a username.
 
@@ -23,12 +23,12 @@ This stack provides an **OpenLDAP** directory server alongside **phpLDAPadmin**,
    Passwords come from the files in `.secrets/`; the values below are the defaults from `.secrets.example/`.
 
    - **Admin Login:**
-     - **Login DN:** `cn=admin,dc=kamitbrains,dc=local` (or your configured `LDAP_BASE_DN`)
+     - **Login DN:** `cn=admin,dc=example,dc=local` (or your configured `LDAP_BASE_DN`)
      - **Password:** `password` (`.secrets/ldap_admin_password.txt`)
-   - **User Login (e.g. Aurelien):**
-     - **Login DN:** `cn=aurelien,ou=devops,dc=kamitbrains,dc=local`
-     - **Password:** `Aurelien@123` (`.secrets/user_aurelien_password.txt`)
-     *(In services querying via `uid` like Nextcloud, Keycloak, etc., use `nkaurelien`).*
+   - **User Login (e.g. Alice):**
+     - **Login DN:** `cn=alice,ou=devops,dc=example,dc=local`
+     - **Password:** `Alice@123` (`.secrets/user_alice_password.txt`)
+     *(In services querying via `uid` like Nextcloud, Keycloak, etc., use `alice`).*
 
 ## Auto-initialization
 
@@ -36,10 +36,10 @@ When you launch `docker compose up -d`, a temporary `init-ldap` container is aut
 It waits for OpenLDAP to be healthy and then runs `scripts/init.sh` to automatically populate the database with:
 
 1. **OUs**: `ou=devops` and `ou=appdev`.
-2. **Users**: `cn=aurelien` (uid `nkaurelien`, devops), `cn=idriss` (uid `nnid`, appdev) and `cn=michel` (uid `edmich`, appdev), with `{SSHA}`-hashed passwords.
+2. **Users**: `cn=alice` (uid `alice`, devops), `cn=bob` (uid `bob`, appdev) and `cn=carol` (uid `carol`, appdev), with `{SSHA}`-hashed passwords.
 3. **memberOf overlay**: Reconfigured to track `groupOfNames`/`member` (osixia defaults to `groupOfUniqueNames`/`uniqueMember`).
-4. **Groups**: `appdev-team` (aurelien, idriss) and `devops-team` (aurelien, michel). The overlay maintains `memberOf` on users automatically.
-5. **ACLs**: Grants read access to `cn=aurelien`.
+4. **Groups**: `appdev-team` (alice, bob) and `devops-team` (alice, carol). The overlay maintains `memberOf` on users automatically.
+5. **ACLs**: Grants read access to `cn=alice`.
 6. **Password policy**: Loads and attaches the `ppolicy` overlay, then creates `cn=default,ou=policies`.
 
 The script is idempotent: "already exists" results (LDAP codes 68 and 20) are treated as success, and the `ppolicy` overlay is only attached if missing. It exits non-zero if a secret is missing/empty or if any real LDAP error occurs. To re-run it:
@@ -53,25 +53,25 @@ Once logged in as admin, the directory tree shows the groups, OUs and the passwo
 ![phpLDAPadmin directory tree after initialization](screenshots/phpldapadmin-tree.png)
 
 ### Verifying access
-You can verify that the user `cn=aurelien` has access by running an LDAP search from your host (if you have ldap-utils installed) or from inside the container:
+You can verify that the user `cn=alice` has access by running an LDAP search from your host (if you have ldap-utils installed) or from inside the container:
 ```bash
-docker exec -it openldap ldapsearch -x -D "cn=aurelien,ou=devops,dc=kamitbrains,dc=local" -w Aurelien@123 -b "dc=kamitbrains,dc=local"
+docker exec -it openldap ldapsearch -x -D "cn=alice,ou=devops,dc=example,dc=local" -w Alice@123 -b "dc=example,dc=local"
 ```
 
 ## Directory Structure & LDAP Objects
 
 ```text
-dc=kamitbrains,dc=local (Domain Root / Base DN)
+dc=example,dc=local (Domain Root / Base DN)
  │
  ├── cn=appdev-team        [groupOfNames]
  ├── cn=devops-team        [groupOfNames]
  │
  ├── ou=devops             [organizationalUnit]
- │    └── cn=aurelien      [inetOrgPerson] (uid: nkaurelien)
+ │    └── cn=alice      [inetOrgPerson] (uid: alice)
  │
  └── ou=appdev             [organizationalUnit]
-      ├── cn=idriss        [inetOrgPerson] (uid: nnid)
-      └── cn=michel        [inetOrgPerson] (uid: edmich)
+      ├── cn=bob        [inetOrgPerson] (uid: bob)
+      └── cn=carol        [inetOrgPerson] (uid: carol)
 ```
 
 ### Key LDAP Concepts:
@@ -90,13 +90,13 @@ Passwords are **never stored in cleartext**. The bootstrap script hashes user pa
 
 ### 2. Privilege Separation (Dual Secret Architecture)
 Two distinct administrator passwords are configured via **Docker Compose Secrets**:
-- **`ldap_admin_password`** (`cn=admin,dc=kamitbrains,dc=local`): Directory administrator (manages users, OUs, and groups).
+- **`ldap_admin_password`** (`cn=admin,dc=example,dc=local`): Directory administrator (manages users, OUs, and groups).
 - **`ldap_config_password`** (`cn=admin,cn=config`): Low-level OpenLDAP engine administrator (schemas, modules, ACLs).
 
 This prevents directory data managers from modifying the server's runtime configuration.
 
 ### 3. Password Policy Overlay (`ppolicy`) & Brute-force Protection
-The OpenLDAP **`ppolicy`** overlay is enabled and enforced globally (`cn=default,ou=policies,dc=kamitbrains,dc=local`):
+The OpenLDAP **`ppolicy`** overlay is enabled and enforced globally (`cn=default,ou=policies,dc=example,dc=local`):
 - **Quality Checking (`pwdCheckQuality: 1`)**: Required for `pwdMinLength` to be enforced at all.
 - **Minimum Password Length (`pwdMinLength`)**: 8 characters.
 - **Account Lockout (`pwdLockout`)**: Enabled (`TRUE`).

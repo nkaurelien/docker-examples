@@ -1,6 +1,6 @@
 # Helm values customisés pour ArgoCD sur K3s (K1 Mini)
 global:
-  domain: argocd.kamitbrains-minipc-k1.lab
+  domain: argocd.homelab.lab
 
 server:
   replicas: 1
@@ -11,7 +11,7 @@ server:
       cert-manager.io/cluster-issuer: homelab-ca-issuer
       traefik.ingress.kubernetes.io/router.entrypoints: websecure
       traefik.ingress.kubernetes.io/router.tls: "true"
-    hostname: argocd.kamitbrains-minipc-k1.lab
+    hostname: argocd.homelab.lab
     tls: true
 
 repoServer:

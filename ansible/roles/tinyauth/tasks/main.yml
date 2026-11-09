@@ -9,14 +9,13 @@
     - "{{ tinyauth_compose_dir }}/data"
     - "{{ tinyauth_compose_dir }}/resources"
 
-- name: Deploy TinyAuth custom background image and logo SVG file
+- name: Deploy TinyAuth custom background image
   ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ tinyauth_compose_dir }}/resources/{{ item.dest }}"
     mode: '0644'
   loop:
     - { src: 'background.jpg', dest: 'bg-red.jpg' }
-    - { src: 'logo.svg', dest: 'logo.svg' }
 
 
 - name: Generate bcrypt user entries for TinyAuth

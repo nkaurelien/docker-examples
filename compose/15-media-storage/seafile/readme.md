@@ -4,9 +4,9 @@
 
 ## Hostnames & Access
 
-- Main URL: `https://seafile.kamitbrains.fr`
-- Alias URL: `https://drive.kamitbrains.fr`
-- Admin Email: `admin@kamitbrains.fr`
+- Main URL: `https://seafile.example.com`
+- Alias URL: `https://drive.example.com`
+- Admin Email: `admin@example.com`
 
 ## Architecture
 

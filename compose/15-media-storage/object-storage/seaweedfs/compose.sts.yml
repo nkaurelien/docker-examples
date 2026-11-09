@@ -3,7 +3,7 @@
 #
 # Prérequis (cf. STS-KEYCLOAK.md) :
 #   - client Keycloak `seaweedfs-s3` dans le realm asone4health (KC local)
-#   - KEYCLOAK_HOST_IP = IP LAN de kamitbrains (défaut 192.168.0.195)
+#   - KEYCLOAK_HOST_IP = IP LAN du homelab (défaut 192.168.1.12)
 #   - MKCERT_CA = chemin du rootCA.pem mkcert (`mkcert -CAROOT`/rootCA.pem),
 #     ou copier ce fichier dans ./config/rootCA.pem
 
@@ -33,5 +33,5 @@ services:
       # POC : remplace le trust store ; le seul TLS sortant de s3 est le KC local.
       SSL_CERT_FILE: /etc/ssl/certs/mkcert-rootCA.pem
     extra_hosts:
-      # le conteneur doit résoudre le Keycloak local (LAN kamitbrains)
-      - "connect.asone4health.kamitbrains.local:${KEYCLOAK_HOST_IP:-192.168.0.195}"
+      # le conteneur doit résoudre le Keycloak local (LAN du homelab)
+      - "connect.app.example.local:${KEYCLOAK_HOST_IP:-192.168.1.12}"

@@ -13,7 +13,7 @@ tags: dev-tools, developer, developer-utilities, it-tools, web
 | Attribute | Details |
 | :--- | :--- |
 | **Service Name** | `it-tools` |
-| **Public URL** | `https://tools.kamitbrains.fr` |
+| **Public URL** | `https://tools.example.com` |
 | **Health Check** | `http://127.0.0.1:80/` |
 | **Docker Image** | `corentinth/it-tools:latest` |
 | **Internal Port** | `80` |

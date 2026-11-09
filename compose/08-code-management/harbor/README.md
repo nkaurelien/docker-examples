@@ -16,11 +16,11 @@ tags: harbor, oci, registry, docker, trivy, code-management
 ## Deployment via Ansible
 
 ```bash
-ansible-playbook -i ansible/inventory.yml ansible/site.yml --tags harbor --limit kamitbrains_homelab
+ansible-playbook -i ansible/inventory.yml ansible/site.yml --tags harbor --limit homelab_server
 ```
 
 ## Docker CLI Login
 
 ```bash
-docker login harbor.kamitbrains.fr -u admin -p <ADMIN_PASSWORD>
+docker login harbor.example.com -u admin -p <ADMIN_PASSWORD>
 ```

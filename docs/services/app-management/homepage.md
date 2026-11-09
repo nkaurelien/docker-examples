@@ -13,8 +13,8 @@ tags: app-management, dashboard, homepage, infrastructure
 | Attribute | Details |
 | :--- | :--- |
 | **Service Name** | `homepage` |
-| **Primary URL** | `https://home.kamitbrains.fr` |
-| **Alias URL** | `https://apps.kamitbrains.fr` |
+| **Primary URL** | `https://home.example.com` |
+| **Alias URL** | `https://apps.example.com` |
 | **Health Check** | `http://127.0.0.1:3000/` |
 | **Docker Image** | `ghcr.io/gethomepage/homepage:latest` |
 | **Reverse Proxy** | Traefik (`websecure` + Let's Encrypt TLS) |
@@ -25,17 +25,17 @@ tags: app-management, dashboard, homepage, infrastructure
 
 ## Access & Features
 
-- **Dual Domain Host Routing**: Access the portal from either `https://home.kamitbrains.fr` or `https://apps.kamitbrains.fr`.
+- **Dual Domain Host Routing**: Access the portal from either `https://home.example.com` or `https://apps.example.com`.
 - **Integrated Services**:
-  - **Passbolt** (`https://passwords.kamitbrains.fr`)
-  - **ChangeDetection** (`https://changedetection.kamitbrains.fr`)
-  - **IT-Tools** (`https://tools.kamitbrains.fr`)
-  - **Uptime Kuma** (`https://uptime.kamitbrains.fr`)
-  - **Ntfy** (`https://ntfy.kamitbrains.fr`)
-  - **Arcane** (`https://arcane.kamitbrains.fr`)
-  - **Glances** (`https://glances.kamitbrains.fr`)
-  - **TinyAuth** (`https://auth.kamitbrains.fr`)
-  - **Traefik** (`https://traefik.kamitbrains.fr`)
+  - **Passbolt** (`https://passwords.example.com`)
+  - **ChangeDetection** (`https://changedetection.example.com`)
+  - **IT-Tools** (`https://tools.example.com`)
+  - **Uptime Kuma** (`https://uptime.example.com`)
+  - **Ntfy** (`https://ntfy.example.com`)
+  - **Arcane** (`https://arcane.example.com`)
+  - **Glances** (`https://glances.example.com`)
+  - **TinyAuth** (`https://auth.example.com`)
+  - **Traefik** (`https://traefik.example.com`)
 - **System Metrics**: Real-time CPU, RAM, and disk utilization widgets.
 
 ---
@@ -57,7 +57,7 @@ services:
       - traefik-public
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.homepage.rule=Host(`home.kamitbrains.fr`) || Host(`apps.kamitbrains.fr`)"
+      - "traefik.http.routers.homepage.rule=Host(`home.example.com`) || Host(`apps.example.com`)"
       - "traefik.http.routers.homepage.entrypoints=websecure"
       - "traefik.http.routers.homepage.tls.certresolver=letsencrypt"
       - "traefik.http.routers.homepage.middlewares=crowdsec-bouncer@file"

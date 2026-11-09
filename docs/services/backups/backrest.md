@@ -23,7 +23,7 @@ Backrest is an open-source, web-based user interface and task orchestrator desig
 
 - **Service Container**: `garethgeorge/backrest:latest` (`backrest`)
 - **Port**: `9898`
-- **Reverse Proxy**: Traefik (`https://backrest.kamitbrains.fr`) with TLS (Let's Encrypt) and CrowdSec bouncer.
+- **Reverse Proxy**: Traefik (`https://backrest.example.com`) with TLS (Let's Encrypt) and CrowdSec bouncer.
 - **Volume Mounts**:
   - `backrest-config:/config` — Configuration database and credentials.
   - `backrest-cache:/cache` — Local Restic cache.
@@ -33,6 +33,6 @@ Backrest is an open-source, web-based user interface and task orchestrator desig
 
 ## Access & Credentials
 
-- **URL**: `https://backrest.kamitbrains.fr`
+- **URL**: `https://backrest.example.com`
 - **Default Username**: `admin`
 - **Secrets Path**: `.secrets/backrest-admin-login` & `.secrets/backrest-admin-password`

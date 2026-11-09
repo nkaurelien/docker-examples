@@ -23,7 +23,7 @@ services:
     labels:
       - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/gotify.svg"
       - "traefik.enable=true"
-      - "traefik.http.routers.gotify.rule=Host(`gotify.${DOMAIN:-kamitbrains.fr}`)"
+      - "traefik.http.routers.gotify.rule=Host(`gotify.${DOMAIN:-example.com}`)"
       - "traefik.http.routers.gotify.entrypoints=websecure"
       - "traefik.http.routers.gotify.tls.certresolver=letsencrypt"
       - "traefik.http.routers.gotify.middlewares=crowdsec-bouncer@file"

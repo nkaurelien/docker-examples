@@ -8,9 +8,9 @@
 
 Seafile provides a robust cloud storage interface with desktop/mobile client synchronization, public file link sharing, and encrypted library storage.
 
-- **Main Web GUI**: `https://seafile.kamitbrains.fr`
-- **Alias URL**: `https://drive.kamitbrains.fr`
-- **Default Admin Email**: `admin@kamitbrains.fr`
+- **Main Web GUI**: `https://seafile.example.com`
+- **Alias URL**: `https://drive.example.com`
+- **Default Admin Email**: `admin@example.com`
 - **Backend Stack**:
   - `seafile` : Seafile Server & Seahub Web Interface (`seafileltd/seafile-mc:latest`)
   - `seafile-db` : MariaDB 10.11 Database (`mariadb:10.11`)

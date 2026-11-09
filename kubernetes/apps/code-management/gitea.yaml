@@ -39,9 +39,9 @@ spec:
                   name: gitea-db-secret
                   key: password
             - name: GITEA__server__ROOT_URL
-              value: "https://gitea.kamitbrains-minipc-k1.lab/"
+              value: "https://gitea.homelab.lab/"
             - name: GITEA__server__SSH_DOMAIN
-              value: "gitea.kamitbrains-minipc-k1.lab"
+              value: "gitea.homelab.lab"
             - name: GITEA__server__SSH_PORT
               value: "2222"
           ports:
@@ -92,10 +92,10 @@ spec:
   ingressClassName: traefik
   tls:
     - hosts:
-        - gitea.kamitbrains-minipc-k1.lab
+        - gitea.homelab.lab
       secretName: gitea-ingress-tls
   rules:
-    - host: gitea.kamitbrains-minipc-k1.lab
+    - host: gitea.homelab.lab
       http:
         paths:
           - path: /

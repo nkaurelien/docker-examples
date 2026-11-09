@@ -23,7 +23,7 @@ Databasement is an open-source, self-hosted database backup management applicati
 
 - **Service Container**: `davidcrty/databasement:latest` (`databasement`)
 - **Port**: `2226`
-- **Reverse Proxy**: Traefik (`https://databasement.kamitbrains.fr`) with TLS (Let's Encrypt) and CrowdSec bouncer.
+- **Reverse Proxy**: Traefik (`https://databasement.example.com`) with TLS (Let's Encrypt) and CrowdSec bouncer.
 - **Volume Mounts**:
   - `databasement-data:/data` — SQLite database and job storage.
 
@@ -31,5 +31,5 @@ Databasement is an open-source, self-hosted database backup management applicati
 
 ## Access & Credentials
 
-- **URL**: `https://databasement.kamitbrains.fr`
+- **URL**: `https://databasement.example.com`
 - **Secrets Path**: `.secrets/databasement-admin-login` & `.secrets/databasement-admin-password`

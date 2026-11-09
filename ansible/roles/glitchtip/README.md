@@ -13,7 +13,7 @@ Ansible role to deploy [GlitchTip](https://glitchtip.com/) (open-source, Sentry 
   - `glitchtip-valkey`: Valkey 9 in-memory cache & task queue (`valkey/valkey:9`)
   - `glitchtip-init`: Superuser creation task (`createsuperuser`)
 - **Reverse Proxy**: Traefik (`websecure` + Let's Encrypt TLS)
-- **Public Domain**: `https://glitchtip.kamitbrains.fr` (or `https://glitchtip.{{ traefik_domain }}`)
+- **Public Domain**: `https://glitchtip.example.com` (or `https://glitchtip.{{ traefik_domain }}`)
 
 ---
 
@@ -25,13 +25,13 @@ Ansible role to deploy [GlitchTip](https://glitchtip.com/) (open-source, Sentry 
 | `glitchtip_image` | `"glitchtip/glitchtip:6"` | Full Docker image reference |
 | `glitchtip_postgres_image` | `"postgres:17"` | PostgreSQL image reference |
 | `glitchtip_valkey_image` | `"valkey/valkey:9"` | Valkey image reference |
-| `glitchtip_domain` | `"kamitbrains.fr"` | Primary base domain |
+| `glitchtip_domain` | `"example.com"` | Primary base domain |
 | `glitchtip_hostname` | `"glitchtip.{{ traefik_domain \| default(glitchtip_domain) }}"` | Public FQDN |
 | `glitchtip_compose_dir` | `"/opt/glitchtip"` | Host directory for Docker Compose |
 | `glitchtip_container_port` | `8000` | GlitchTip web server port |
 | `glitchtip_db_name` | `"glitchtip"` | PostgreSQL database name |
 | `glitchtip_db_user` | `"glitchtip"` | PostgreSQL database username |
-| `glitchtip_admin_email` | `"admin@kamitbrains.fr"` | Initial Django admin email |
+| `glitchtip_admin_email` | `"admin@example.com"` | Initial Django admin email |
 
 ---
 

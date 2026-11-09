@@ -8,8 +8,8 @@
 
 Syncthing replaces proprietary cloud sync services (like Dropbox or Google Drive) with a decentralized, private, peer-to-peer file synchronization system.
 
-- **Main Web GUI**: `https://syncthing.kamitbrains.fr`
-- **Alias URL**: `https://sync.kamitbrains.fr`
+- **Main Web GUI**: `https://syncthing.example.com`
+- **Alias URL**: `https://sync.example.com`
 - **Network Protocol Ports**:
   - `8384` : Web GUI (Proxied via Traefik HTTPS)
   - `22000/tcp` + `22000/udp` : P2P Sync Traffic

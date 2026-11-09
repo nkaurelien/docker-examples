@@ -14,7 +14,7 @@ Ce dossier contient les clés de chiffrement, de signature JWT, l'adresse email 
 
 ## 📄 Fichiers associés :
 * `arcane-admin-email` : Email de l'administrateur (par défaut `.secrets/admin-login`), injecté dynamiquement par le service seeder `arcane-db-seeder`.
-* `arcane-admin-password` : Mot de passe d'administration (stocké dans le passfile `.secrets/arcane-admin-password`) à utiliser lors du premier accès sur `https://arcane.kamitbrains.fr`.
+* `arcane-admin-password` : Mot de passe d'administration (stocké dans le passfile `.secrets/arcane-admin-password`) à utiliser lors du premier accès sur `https://arcane.example.com`.
 
 * `arcane-jwt-secret` : Clé secrète hexadécimale de 64 caractères (32 octets) utilisée pour la signature des jetons de session JWT Arcane.
 * `arcane-encryption-key` : Clé secrète hexadécimale de 64 caractères (32 octets) utilisée pour le chiffrement des données sensibles stockées en base SQLite.
@@ -23,7 +23,7 @@ Ce dossier contient les clés de chiffrement, de signature JWT, l'adresse email 
 Le rôle Ansible [`ansible/roles/arcane`](../ansible/roles/arcane) injecte les clés d'environnement et exécute `arcane-db-seeder` pour seeder les registres et l'adresse email de l'administrateur :
 
 ```yaml
-arcane_admin_email: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/arcane-admin-email', errors='ignore') | default('.secrets/admin-login', true) | trim }}"
+arcane_admin_email: "{{ lookup('file', playbook_dir ~ '/../.secrets/arcane-admin-email', errors='ignore') | default('.secrets/admin-login', true) | trim }}"
 ```
 
 ## 🔄 Générer/Renouveler une nouvelle clé :

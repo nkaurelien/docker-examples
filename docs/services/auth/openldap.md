@@ -42,10 +42,10 @@ docker compose up -d
 Nous avons inclus un conteneur nommé `init-ldap`. 
 Celui-ci attend que le serveur OpenLDAP soit prêt, puis injecte un script d'initialisation (`scripts/init.sh`) qui :
 1. Crée les OUs (Unités Organisationnelles) : `ou=devops`, `ou=appdev`.
-2. Crée les utilisateurs `cn=aurelien` (uid `nkaurelien`), `cn=idriss` (uid `nnid`) et `cn=michel` (uid `edmich`), avec des mots de passe hachés en `{SSHA}`.
+2. Crée les utilisateurs `cn=alice` (uid `alice`), `cn=bob` (uid `bob`) et `cn=carol` (uid `carol`), avec des mots de passe hachés en `{SSHA}`.
 3. Reconfigure l'overlay `memberof` pour suivre `groupOfNames`/`member` (osixia le configure par défaut pour `groupOfUniqueNames`/`uniqueMember`).
-4. Crée les groupes `appdev-team` (aurelien, idriss) et `devops-team` (aurelien, michel). L'overlay renseigne automatiquement `memberOf` sur chaque utilisateur.
-5. Modifie les ACL (Listes de Contrôle d'Accès) pour autoriser `cn=aurelien` à lire l'annuaire.
+4. Crée les groupes `appdev-team` (alice, bob) et `devops-team` (alice, carol). L'overlay renseigne automatiquement `memberOf` sur chaque utilisateur.
+5. Modifie les ACL (Listes de Contrôle d'Accès) pour autoriser `cn=alice` à lire l'annuaire.
 6. Active l'overlay `ppolicy` et crée la politique par défaut `cn=default,ou=policies`.
 
 *Ce conteneur s'arrête une fois sa tâche terminée (`restart: "no"`). Il sort en erreur (code 1) si un secret est absent ou vide, ou si une opération LDAP échoue réellement.*
@@ -61,20 +61,20 @@ docker logs init-ldap
 
 Une fois le serveur démarré, vous pouvez accéder à l'interface d'administration. Les mots de passe ci-dessous sont les valeurs par défaut de `.secrets.example/` ; ce sont les fichiers de `.secrets/` qui font foi.
 - **Accès direct (HTTP local)** : `http://localhost:8088`
-- **Accès via Traefik (HTTPS / TLS)** : `https://ldap.kamitbrains.local` (ou le nom d'hôte configuré dans `PHPLDAPADMIN_HOSTNAME`)
+- **Accès via Traefik (HTTPS / TLS)** : `https://ldap.example.local` (ou le nom d'hôte configuré dans `PHPLDAPADMIN_HOSTNAME`)
 
 > ⚠️ **Important pour la connexion :** phpLDAPadmin requiert le **DN complet** (Distinguished Name) dans le champ **Login DN**, et non pas un simple identifiant/username.
 
 ![Page de connexion phpLDAPadmin](https://raw.githubusercontent.com/nkaurelien/docker-examples/main/compose/11-security-identity/identity-providers/openldap/screenshots/phpldapadmin-login.png)
 
 #### Option A : Connexion Administrateur (Gestion complète)
-- **Login DN** : `cn=admin,dc=kamitbrains,dc=local`
+- **Login DN** : `cn=admin,dc=example,dc=local`
 - **Mot de passe** : `password` (`.secrets/ldap_admin_password.txt`)
 
-#### Option B : Connexion Utilisateur (ex: Aurelien)
-- **Login DN** : `cn=aurelien,ou=devops,dc=kamitbrains,dc=local`
-- **Mot de passe** : `Aurelien@123` (`.secrets/user_aurelien_password.txt`)
-*(Note : dans les applications tierces comme Nextcloud ou Grafana qui utilisent l'attribut `uid`, l'identifiant à saisir sera `nkaurelien`).*
+#### Option B : Connexion Utilisateur (ex: Alice)
+- **Login DN** : `cn=alice,ou=devops,dc=example,dc=local`
+- **Mot de passe** : `Alice@123` (`.secrets/user_alice_password.txt`)
+*(Note : dans les applications tierces comme Nextcloud ou Grafana qui utilisent l'attribut `uid`, l'identifiant à saisir sera `alice`).*
 
 Une fois connecté en admin, l'arbre de l'annuaire affiche les groupes, les OUs et le conteneur de politiques de mots de passe créés par `init-ldap` :
 
@@ -85,15 +85,15 @@ Une fois connecté en admin, l'arbre de l'annuaire affiche les groupes, les OUs 
 Vous pouvez tester l'accès LDAP directement depuis le conteneur principal avec la commande suivante :
 
 ```bash
-docker exec -it openldap ldapsearch -x -D "cn=aurelien,ou=devops,dc=kamitbrains,dc=local" -w Aurelien@123 -b "dc=kamitbrains,dc=local"
+docker exec -it openldap ldapsearch -x -D "cn=alice,ou=devops,dc=example,dc=local" -w Alice@123 -b "dc=example,dc=local"
 ```
-Cela vous confirmera que l'utilisateur `cn=aurelien` (uid `nkaurelien`) et son mot de passe sont correctement configurés et qu'il a l'accès en lecture.
+Cela vous confirmera que l'utilisateur `cn=alice` (uid `alice`) et son mot de passe sont correctement configurés et qu'il a l'accès en lecture.
 
 Pour vérifier les appartenances aux groupes calculées par l'overlay :
 
 ```bash
-docker exec openldap ldapsearch -x -LLL -D "cn=admin,dc=kamitbrains,dc=local" -w password \
-  -b "dc=kamitbrains,dc=local" "(objectClass=inetOrgPerson)" memberOf
+docker exec openldap ldapsearch -x -LLL -D "cn=admin,dc=example,dc=local" -w password \
+  -b "dc=example,dc=local" "(objectClass=inetOrgPerson)" memberOf
 ```
 
 ---
@@ -105,17 +105,17 @@ L'annuaire LDAP organise les données sous forme d'un **arbre hiérarchique** (D
 ### 1. Structure de l'annuaire déployé
 
 ```text
-dc=kamitbrains,dc=local (Racine / Domaine)
+dc=example,dc=local (Racine / Domaine)
  │
  ├── cn=appdev-team        [Classe: groupOfNames]
  ├── cn=devops-team        [Classe: groupOfNames]
  │
  ├── ou=devops             [Classe: organizationalUnit]
- │    └── cn=aurelien      [Classe: inetOrgPerson] (uid: nkaurelien)
+ │    └── cn=alice      [Classe: inetOrgPerson] (uid: alice)
  │
  └── ou=appdev             [Classe: organizationalUnit]
-      ├── cn=idriss        [Classe: inetOrgPerson] (uid: nnid)
-      └── cn=michel        [Classe: inetOrgPerson] (uid: edmich)
+      ├── cn=bob        [Classe: inetOrgPerson] (uid: bob)
+      └── cn=carol        [Classe: inetOrgPerson] (uid: carol)
 ```
 
 ### 2. Principaux types d'objets
@@ -130,7 +130,7 @@ dc=kamitbrains,dc=local (Racine / Domaine)
 
 ### 3. Relation Utilisateur / Groupe (`member` vs `memberOf`)
 
-- **`member` (sur le groupe)** : Contient le DN de chaque personne membre (ex: `member: cn=aurelien,ou=devops,dc=kamitbrains,dc=local`).
+- **`member` (sur le groupe)** : Contient le DN de chaque personne membre (ex: `member: cn=alice,ou=devops,dc=example,dc=local`).
 - **`memberOf` (sur l'utilisateur)** : Attribut miroir placé directement sur la fiche utilisateur pour simplifier les requêtes de droits d'accès depuis les applications clientes (Nextcloud, Keycloak, Grafana, Portainer).
 
 !!! warning "Ne jamais écrire `memberOf` à la main"
@@ -152,13 +152,13 @@ Dans l'annuaire, l'attribut `userPassword` contient uniquement cette empreinte. 
 
 ### 2. Ségrégation des Privilèges d'Administration (Double Secret)
 Deux comptes administrateurs distincts sont configurés avec des mots de passe séparés via **Docker Secrets** :
-- **`ldap_admin_password`** (`cn=admin,dc=kamitbrains,dc=local`) : Administrateur du DIT (données de l'annuaire : utilisateurs, groupes, OUs).
+- **`ldap_admin_password`** (`cn=admin,dc=example,dc=local`) : Administrateur du DIT (données de l'annuaire : utilisateurs, groupes, OUs).
 - **`ldap_config_password`** (`cn=admin,cn=config`) : Administrateur système du moteur OpenLDAP (schémas, overlays, ACLs, modules).
 
 Cette séparation empêche qu'un compte ayant des droits sur les données puisse compromettre ou altérer le moteur OpenLDAP sous-jacent.
 
 ### 3. Overlay Password Policy (`ppolicy`) & Protection Anti-Bruteforce
-L'overlay OpenLDAP **`ppolicy`** est activé automatiquement sur la base de données `mdb`. Une politique globale par défaut est appliquée sous `cn=default,ou=policies,dc=kamitbrains,dc=local` :
+L'overlay OpenLDAP **`ppolicy`** est activé automatiquement sur la base de données `mdb`. Une politique globale par défaut est appliquée sous `cn=default,ou=policies,dc=example,dc=local` :
 - **Contrôle qualité (`pwdCheckQuality: 1`)** : indispensable, sans lui `pwdMinLength` est ignoré.
 - **Longueur minimale (`pwdMinLength`)** : 8 caractères obligatoires.
 - **Verrouillage de compte (`pwdLockout`)** : Activé (`TRUE`).
@@ -170,7 +170,7 @@ L'overlay OpenLDAP **`ppolicy`** est activé automatiquement sur la base de donn
 La politique ne s'applique pas au root DN (`cn=admin,...`), qui contourne ppolicy. Test rapide (doit échouer avec `Constraint violation`) :
 
 ```bash
-docker exec openldap ldappasswd -x -D "cn=michel,ou=appdev,dc=kamitbrains,dc=local" -w Michel@123 -s abc
+docker exec openldap ldappasswd -x -D "cn=carol,ou=appdev,dc=example,dc=local" -w Carol@123 -s abc
 ```
 
 ### 4. Bonnes Pratiques en Production

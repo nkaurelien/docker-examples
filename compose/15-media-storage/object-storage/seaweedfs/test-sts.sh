@@ -9,7 +9,7 @@ set -euo pipefail
 _D="$(cd "$(dirname "$0")" && pwd)"
 [ -f "$_D/.env" ] && { set -a; . "$_D/.env"; set +a; }
 
-KC="${KC:-https://connect.asone4health.kamitbrains.local}"
+KC="${KC:-https://connect.app.example.local}"
 REALM="${REALM:-asone4health}"
 CLIENT_ID="${CLIENT_ID:-seaweedfs-s3}"
 CLIENT_SECRET="${CLIENT_SECRET:-}"

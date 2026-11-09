@@ -61,10 +61,10 @@ spec:
   ingressClassName: traefik
   tls:
     - hosts:
-        - it-tools.kamitbrains-minipc-k1.lab
+        - it-tools.homelab.lab
       secretName: it-tools-tls
   rules:
-    - host: it-tools.kamitbrains-minipc-k1.lab
+    - host: it-tools.homelab.lab
       http:
         paths:
           - path: /

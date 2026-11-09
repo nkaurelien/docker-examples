@@ -50,10 +50,10 @@ services:
       - DB_HOST=seafile-db
       - DB_ROOT_PASSWD=${DB_PASSWORD:-seafile_db_password_change_me}
       - TIME_ZONE=Europe/Paris
-      - SEAFILE_ADMIN_EMAIL=${SEAFILE_ADMIN_EMAIL:-admin@kamitbrains.fr}
+      - SEAFILE_ADMIN_EMAIL=${SEAFILE_ADMIN_EMAIL:-admin@example.com}
       - SEAFILE_ADMIN_PASSWORD=${SEAFILE_ADMIN_PASSWORD:-seafile_admin_password_change_me}
       - SEAFILE_SERVER_LETSENCRYPT=false
-      - SEAFILE_SERVER_HOSTNAME=seafile.${DOMAIN:-kamitbrains.fr}
+      - SEAFILE_SERVER_HOSTNAME=seafile.${DOMAIN:-example.com}
     volumes:
       - type: volume
         source: seafile-data
@@ -64,7 +64,7 @@ services:
     labels:
       - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/seafile.svg"
       - "traefik.enable=true"
-      - "traefik.http.routers.seafile.rule=Host(`seafile.${DOMAIN:-kamitbrains.fr}`) || Host(`drive.${DOMAIN:-kamitbrains.fr}`)"
+      - "traefik.http.routers.seafile.rule=Host(`seafile.${DOMAIN:-example.com}`) || Host(`drive.${DOMAIN:-example.com}`)"
       - "traefik.http.routers.seafile.entrypoints=websecure"
       - "traefik.http.routers.seafile.tls.certresolver=letsencrypt"
       - "traefik.http.routers.seafile.middlewares=crowdsec-bouncer@file"

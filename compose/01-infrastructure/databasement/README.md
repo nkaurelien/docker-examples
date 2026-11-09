@@ -9,5 +9,5 @@ Databasement is an open-source, self-hosted database backup management applicati
 - **Encrypted Storage**: gzip, zstd, and AES-256 encryption stored to S3, SFTP, SMB, or local storage.
 
 ## Access
-- **URL**: `https://databasement.kamitbrains.fr`
+- **URL**: `https://databasement.example.com`
 - **Port**: `2226`

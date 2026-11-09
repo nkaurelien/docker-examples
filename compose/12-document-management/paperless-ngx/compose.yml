@@ -21,7 +21,7 @@ services:
       - PAPERLESS_DBUSER=${POSTGRES_USER:-paperless}
       - PAPERLESS_DBPASS=${POSTGRES_PASSWORD:-paperless_db_password_change_me}
       - PAPERLESS_SECRET_KEY=${PAPERLESS_SECRET_KEY:-paperless_secret_key_change_me}
-      - PAPERLESS_URL=https://paperless.${DOMAIN:-kamitbrains.fr}
+      - PAPERLESS_URL=https://paperless.${DOMAIN:-example.com}
       - PAPERLESS_TIME_ZONE=Europe/Paris
       - PAPERLESS_OCR_LANGUAGE=fra+eng
       - PAPERLESS_ADMIN_USER=${PAPERLESS_ADMIN_USER:-admin}
@@ -47,7 +47,7 @@ services:
     labels:
       - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/paperless-ngx.svg"
       - "traefik.enable=true"
-      - "traefik.http.routers.paperless.rule=Host(`paperless.${DOMAIN:-kamitbrains.fr}`) || Host(`docs.${DOMAIN:-kamitbrains.fr}`)"
+      - "traefik.http.routers.paperless.rule=Host(`paperless.${DOMAIN:-example.com}`) || Host(`docs.${DOMAIN:-example.com}`)"
       - "traefik.http.routers.paperless.entrypoints=websecure"
       - "traefik.http.routers.paperless.tls.certresolver=letsencrypt"
       - "traefik.http.routers.paperless.middlewares=crowdsec-bouncer@file"

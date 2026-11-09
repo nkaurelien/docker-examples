@@ -1,6 +1,6 @@
 # Harbor Credentials & Configuration
 
-- **Web UI & OCI Registry URL**: `https://harbor.kamitbrains.fr`
+- **Web UI & OCI Registry URL**: `https://harbor.example.com`
 - **Admin Username**: `admin`
 - **Admin Password**: `<HARBOR_ADMIN_PASSWORD>`
 - **Database User**: `postgres`
@@ -9,5 +9,5 @@
 
 ## Docker CLI Login Command
 ```bash
-docker login harbor.kamitbrains.fr -u admin -p <HARBOR_ADMIN_PASSWORD>
+docker login harbor.example.com -u admin -p <HARBOR_ADMIN_PASSWORD>
 ```

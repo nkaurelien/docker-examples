@@ -17,7 +17,7 @@ Password: changeme
 
 
 ```text
-Email:    admin@kamitbrains.com
+Email:    admin@example.com
 Password: Secret2Login
 ```
 

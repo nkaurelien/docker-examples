@@ -14,4 +14,4 @@ Gotify is a self-hosted server for sending and receiving push notifications in r
 docker compose up -d
 ```
 
-Access the web UI at `https://gotify.kamitbrains.fr`.
+Access the web UI at `https://gotify.example.com`.

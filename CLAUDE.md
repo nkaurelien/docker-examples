@@ -96,8 +96,8 @@ cd docker-registry/
 ./push.sh
 
 # Tag and push manually
-docker tag <image> 192.168.0.201:25000/<image>:<tag>
-docker push 192.168.0.201:25000/<image>:<tag>
+docker tag <image> 192.168.1.11:25000/<image>:<tag>
+docker push 192.168.1.11:25000/<image>:<tag>
 ```
 
 ### Monitoring and Diagnostics

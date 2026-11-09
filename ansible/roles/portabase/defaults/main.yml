@@ -1,6 +1,6 @@
 ---
 # Portabase role defaults
-portabase_domain: "{{ traefik_domain | default('kamitbrains.fr') }}"
+portabase_domain: "{{ traefik_domain | default('example.com') }}"
 portabase_hostname: "portabase.{{ portabase_domain }}"
 portabase_alias_hostname: "portabase-backup.{{ portabase_domain }}"
 portabase_deploy_dir: "/opt/portabase"

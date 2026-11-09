@@ -9,10 +9,10 @@ spec:
   ingressClassName: traefik
   tls:
     - hosts:
-        - api.kamitbrains-minipc-k1.lab
+        - api.homelab.lab
       secretName: fastapi-api-tls
   rules:
-    - host: api.kamitbrains-minipc-k1.lab
+    - host: api.homelab.lab
       http:
         paths:
           - path: /

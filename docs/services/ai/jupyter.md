@@ -13,8 +13,8 @@ tags: ai, jupyter, notebook, jupyterlab, python, datascience
 | Attribute | Details |
 |---|---|
 | **Service Name** | JupyterLab |
-| **Primary Domain** | `https://jupyter.kamitbrains.fr` |
-| **Alias Domain** | `https://notebook.kamitbrains.fr` |
+| **Primary Domain** | `https://jupyter.example.com` |
+| **Alias Domain** | `https://notebook.example.com` |
 | **Docker Image** | `quay.io/jupyter/datascience-notebook:latest` |
 | **Container Name** | `jupyter` |
 | **Internal Port** | `8888` |
@@ -41,7 +41,7 @@ services:
       - ./data:/home/jovyan/work
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.jupyter.rule=Host(`jupyter.kamitbrains.fr`) || Host(`notebook.kamitbrains.fr`)"
+      - "traefik.http.routers.jupyter.rule=Host(`jupyter.example.com`) || Host(`notebook.example.com`)"
       - "traefik.http.routers.jupyter.entrypoints=websecure"
       - "traefik.http.routers.jupyter.tls.certresolver=letsencrypt"
       - "traefik.http.routers.jupyter.middlewares=crowdsec-bouncer@file"

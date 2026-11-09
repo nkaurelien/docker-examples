@@ -19,9 +19,9 @@ tags: bentopdf, client-side, dev-tools, pdf, pdf-tools, privacy-first
 
 ## 🌐 URLs & Accès
 
-- **URL Principale** : [https://pdf.kamitbrains.fr](https://pdf.kamitbrains.fr)
-- **Alias de domaine** : [https://bento.kamitbrains.fr](https://bento.kamitbrains.fr)
-- **Authentification** : TinyAuth SSO (`admin@kamitbrains.fr` / `admin`)
+- **URL Principale** : [https://pdf.example.com](https://pdf.example.com)
+- **Alias de domaine** : [https://bento.example.com](https://bento.example.com)
+- **Authentification** : TinyAuth SSO (`admin@example.com` / `admin`)
 
 ---
 
@@ -41,7 +41,7 @@ services:
       - traefik-public
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.bentopdf.rule=Host(`pdf.kamitbrains.fr`) || Host(`bento.kamitbrains.fr`)"
+      - "traefik.http.routers.bentopdf.rule=Host(`pdf.example.com`) || Host(`bento.example.com`)"
       - "traefik.http.routers.bentopdf.entrypoints=websecure"
       - "traefik.http.routers.bentopdf.tls.certresolver=letsencrypt"
       - "traefik.http.routers.bentopdf.middlewares=crowdsec-bouncer@file,tinyauth-auth@docker"
@@ -52,5 +52,5 @@ services:
 
 ## 📊 Surveillance & Intégrations
 
-- **Homepage Dashboard** : Carte dédiée sous `Core Services` (`pdf.kamitbrains.fr`).
+- **Homepage Dashboard** : Carte dédiée sous `Core Services` (`pdf.example.com`).
 - **Uptime Kuma** : Monitor #11 (`BentoPDF Toolkit`) configuré avec alertes Push Ntfy.

@@ -1,5 +1,5 @@
 # Databasement — Self-Hosted Database Backup Manager & Web UI
-# Web UI: https://databasement.kamitbrains.fr
+# Web UI: https://databasement.example.com
 
 x-arcane:
   icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/postgresql.svg
@@ -37,7 +37,7 @@ services:
       - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/postgresql.svg"
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-public"
-      - "traefik.http.routers.databasement.rule=Host(`databasement.kamitbrains.fr`) || Host(`db-backup.kamitbrains.fr`)"
+      - "traefik.http.routers.databasement.rule=Host(`databasement.example.com`) || Host(`db-backup.example.com`)"
       - "traefik.http.routers.databasement.entrypoints=websecure"
       - "traefik.http.routers.databasement.tls.certresolver=letsencrypt"
       - "traefik.http.routers.databasement.middlewares=crowdsec-bouncer@file"

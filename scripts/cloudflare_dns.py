@@ -29,7 +29,7 @@ def list_zones():
     for zone in response.result:
         print(f"- Domain: {zone.name} | Zone ID: {zone.id} | Status: {zone.status}")
 
-def list_dns_records(zone_name: str = "kamitbrains.fr"):
+def list_dns_records(zone_name: str = "example.com"):
     client = get_client()
     # Find Zone ID
     zones = client.zones.list()
@@ -76,7 +76,7 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         list_zones()
     elif sys.argv[1] == "list":
-        zone = sys.argv[2] if len(sys.argv) > 2 else "kamitbrains.fr"
+        zone = sys.argv[2] if len(sys.argv) > 2 else "example.com"
         list_dns_records(zone)
     elif sys.argv[1] == "add":
         if len(sys.argv) < 5:

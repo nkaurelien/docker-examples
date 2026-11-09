@@ -50,7 +50,7 @@ type: slide
 
 ## 🌐 URLs & Accès
 
-- **URL Principale** : [https://pad.kamitbrains.fr](https://pad.kamitbrains.fr)
+- **URL Principale** : [https://pad.example.com](https://pad.example.com)
 - **Authentification** : Protégé par TinyAuth / SSO
 
 ---
@@ -64,7 +64,7 @@ services:
     container_name: hedgedoc
     restart: unless-stopped
     environment:
-      - CMD_DOMAIN=pad.kamitbrains.fr
+      - CMD_DOMAIN=pad.example.com
       - CMD_URL_ADAPTER=https
       - CMD_PROTOCOL_USERRAG=true
       - CMD_DB_URL=sqlite:///hedgedoc/data/hedgedoc.sqlite
@@ -78,7 +78,7 @@ services:
       - traefik-public
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.hedgedoc.rule=Host(`pad.kamitbrains.fr`)"
+      - "traefik.http.routers.hedgedoc.rule=Host(`pad.example.com`)"
       - "traefik.http.routers.hedgedoc.entrypoints=websecure"
       - "traefik.http.routers.hedgedoc.tls.certresolver=letsencrypt"
       - "traefik.http.routers.hedgedoc.middlewares=crowdsec-bouncer@file,tinyauth-auth@docker"

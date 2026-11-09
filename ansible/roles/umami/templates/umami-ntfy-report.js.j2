@@ -8,7 +8,7 @@
  *   - Weekly (7d)  : node /app/scripts/umami-ntfy-report.js --weekly (ou PERIOD=weekly)
  */
 
-const UMAMI_URL = (process.env.UMAMI_URL || 'https://umami.kamitbrains.fr').replace(/\/$/, '');
+const UMAMI_URL = (process.env.UMAMI_URL || 'https://umami.example.com').replace(/\/$/, '');
 const UMAMI_USERNAME = process.env.UMAMI_USERNAME || 'admin';
 const UMAMI_PASSWORD = process.env.UMAMI_PASSWORD;
 const NTFY_TOPIC_URL = process.env.NTFY_TOPIC_URL;

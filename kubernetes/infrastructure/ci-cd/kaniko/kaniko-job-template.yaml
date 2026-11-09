@@ -27,11 +27,11 @@ spec:
             #   - "--context=dir:///workspace"   <- exige un PVC réellement peuplé,
             #     pas un emptyDir : celui-ci est vide au démarrage et le build échoue.
             - "--dockerfile=Dockerfile"
-            - "--destination=ghcr.io/kamitbrains/fastapi-api:latest"
+            - "--destination=ghcr.io/example-org/fastapi-api:latest"
             # Cache porté par le registre. --cache-dir sur un emptyDir serait inutile :
             # le volume est détruit avec le pod, donc jamais réutilisé d'un build à l'autre.
             - "--cache=true"
-            - "--cache-repo=ghcr.io/kamitbrains/fastapi-api/cache"
+            - "--cache-repo=ghcr.io/example-org/fastapi-api/cache"
             # Optionnel : si le registre local est en HTTP non-sécurisé :
             # - "--insecure"
             # - "--skip-tls-verify"

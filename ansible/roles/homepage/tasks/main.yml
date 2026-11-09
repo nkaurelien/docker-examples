@@ -16,34 +16,6 @@
     dest: "{{ homepage_compose_dir }}/docker-compose.yml"
     mode: '0644'
 
-- name: Deploy Homepage custom logo PNG file
-  ansible.builtin.copy:
-    src: logo.png
-    dest: "{{ item }}"
-    mode: '0644'
-  loop:
-    - "{{ homepage_config_dir }}/logo.png"
-    - "{{ homepage_compose_dir }}/images/logo.png"
-    - "{{ homepage_compose_dir }}/icons/logo.png"
-
-- name: Deploy Homepage SVG and PNG logo variants
-  ansible.builtin.copy:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    mode: '0644'
-  loop:
-    - { src: 'logo_white.png', dest: '{{ homepage_compose_dir }}/icons/logo_white.png' }
-    - { src: 'logo_black.png', dest: '{{ homepage_compose_dir }}/icons/logo_black.png' }
-    - { src: 'Kamitbrains-logo-sharp.png', dest: '{{ homepage_compose_dir }}/icons/Kamitbrains-logo-sharp.png' }
-    - { src: 'Kamitbrains-logo-egde4-picsvg_com.svg', dest: '{{ homepage_compose_dir }}/icons/Kamitbrains-logo-egde4-picsvg_com.svg' }
-    - { src: 'Kamitbrains-logo-internal1-picsvg_com.svg', dest: '{{ homepage_compose_dir }}/icons/Kamitbrains-logo-internal1-picsvg_com.svg' }
-    - { src: 'Kamitbrains-logo-internat-picsvg_com.svg', dest: '{{ homepage_compose_dir }}/icons/Kamitbrains-logo-internat-picsvg_com.svg' }
-    - { src: 'Kamitbrains-logo-sharp-picsvg_com.svg', dest: '{{ homepage_compose_dir }}/icons/Kamitbrains-logo-sharp-picsvg_com.svg' }
-    - { src: 'Kamitbrains-logo-sharp.png', dest: '{{ homepage_compose_dir }}/images/Kamitbrains-logo-sharp.png' }
-    - { src: 'Kamitbrains-logo-egde4.png', dest: '{{ homepage_compose_dir }}/images/Kamitbrains-logo-egde4.png' }
-    - { src: 'Kamitbrains-logo-internal1.png', dest: '{{ homepage_compose_dir }}/images/Kamitbrains-logo-internal1.png' }
-    - { src: 'Kamitbrains-logo-internat.png', dest: '{{ homepage_compose_dir }}/images/Kamitbrains-logo-internat.png' }
-
 - name: Deploy Homepage custom red background image
   ansible.builtin.copy:
     src: bg-red.jpg

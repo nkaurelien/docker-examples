@@ -22,7 +22,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`traefik.kamitbrains-minipc-k1.lab`)
+    - match: Host(`traefik.homelab.lab`)
       kind: Rule
       services:
         - name: api@internal
@@ -41,4 +41,4 @@ spec:
     name: homelab-ca-issuer
     kind: ClusterIssuer
   dnsNames:
-    - traefik.kamitbrains-minipc-k1.lab
+    - traefik.homelab.lab

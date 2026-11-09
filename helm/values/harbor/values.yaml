@@ -8,14 +8,14 @@ expose:
     certSource: none
   ingress:
     hosts:
-      core: harbor.kamitbrains-minipc-k1.lab
+      core: harbor.homelab.lab
     controller: default
     className: traefik
     annotations:
       cert-manager.io/cluster-issuer: homelab-ca-issuer
       traefik.ingress.kubernetes.io/router.entrypoints: websecure
 
-externalURL: https://harbor.kamitbrains-minipc-k1.lab
+externalURL: https://harbor.homelab.lab
 
 # Le mot de passe administrateur n'est PAS versionné dans ce fichier.
 # Il est injecté au déploiement via : --set harborAdminPassword="$(cat .secrets/harbor-admin-password)"

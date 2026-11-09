@@ -1,19 +1,22 @@
 ---
+# Inventaire d'EXEMPLE : remplacez les valeurs neutres ci-dessous par celles
+# de votre infrastructure (ou gardez-les dans un dépôt privé).
+# Les mots de passe sont lus depuis le dossier .secrets/ (non versionné).
 all:
   children:
     webservers_fr:
       hosts:
-        contabo_server_fr:
-          ansible_host: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ssh-contabo-server-ip') | trim }}"
-          ansible_user: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ssh-contabo-server-user-login') | trim }}"
-          ansible_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ssh-contabo-server-password') | trim }}"
+        vps_server:
+          ansible_host: 203.0.113.10
+          ansible_user: deploy
+          ansible_password: "{{ lookup('file', playbook_dir ~ '/../.secrets/ssh-vps-server-password', errors='ignore') | default('', true) | trim }}"
     homelab:
       hosts:
-        kamitbrains_homelab:
-          ansible_host: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ssh-kamitbrains-homelab-ip') | trim }}"
-          ansible_fqdn: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ssh-kamitbrains-homelab-fqdn') | trim }}"
-          ansible_user: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ssh-kamitbrains-homelab-user-login') | trim }}"
-          ansible_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ssh-kamitbrains-homelab-password') | trim }}"
+        homelab_server:
+          ansible_host: 192.168.1.10
+          ansible_fqdn: example.local
+          ansible_user: deploy
+          ansible_password: "{{ lookup('file', playbook_dir ~ '/../.secrets/ssh-homelab-password', errors='ignore') | default('', true) | trim }}"
     docker_hosts:
       children:
         webservers_fr:

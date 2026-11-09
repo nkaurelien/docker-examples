@@ -60,10 +60,10 @@ spec:
   ingressClassName: traefik
   tls:
     - hosts:
-        - glances.kamitbrains-minipc-k1.lab
+        - glances.homelab.lab
       secretName: glances-tls
   rules:
-    - host: glances.kamitbrains-minipc-k1.lab
+    - host: glances.homelab.lab
       http:
         paths:
           - path: /

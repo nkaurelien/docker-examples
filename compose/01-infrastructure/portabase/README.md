@@ -13,4 +13,4 @@ Portabase is an open-source, self-hosted platform designed for multi-database ba
 docker compose up -d
 ```
 
-Access the web UI at `https://portabase.kamitbrains.fr`.
+Access the web UI at `https://portabase.example.com`.

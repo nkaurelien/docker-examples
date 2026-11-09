@@ -150,10 +150,10 @@ spec:
   ingressClassName: traefik
   tls:
     - hosts:
-        - analytics.kamitbrains-minipc-k1.lab
+        - analytics.homelab.lab
       secretName: umami-tls
   rules:
-    - host: analytics.kamitbrains-minipc-k1.lab
+    - host: analytics.homelab.lab
       http:
         paths:
           - path: /

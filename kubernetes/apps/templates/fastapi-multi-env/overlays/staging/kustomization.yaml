@@ -22,10 +22,10 @@ patches:
     patch: |-
       - op: replace
         path: /spec/rules/0/host
-        value: api-stage.kamitbrains-minipc-k1.lab
+        value: api-stage.homelab.lab
       - op: replace
         path: /spec/tls/0/hosts/0
-        value: api-stage.kamitbrains-minipc-k1.lab
+        value: api-stage.homelab.lab
       - op: replace
         path: /spec/tls/0/secretName
         value: staging-fastapi-tls

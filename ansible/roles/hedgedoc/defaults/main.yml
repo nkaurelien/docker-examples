@@ -1,9 +1,9 @@
 ---
 # HedgeDoc role defaults
 hedgedoc_image: "quay.io/hedgedoc/hedgedoc:latest"
-hedgedoc_domain: "kamitbrains.fr"
+hedgedoc_domain: "example.com"
 hedgedoc_hostname: "pad.{{ traefik_domain | default(hedgedoc_domain) }}"
 hedgedoc_compose_dir: "/opt/hedgedoc"
 hedgedoc_container_port: 3000
-hedgedoc_admin_email: "admin@kamitbrains.fr"
-hedgedoc_admin_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/hedgedoc-admin-password') | trim }}"
+hedgedoc_admin_email: "admin@example.com"
+hedgedoc_admin_password: "{{ lookup('file', playbook_dir ~ '/../.secrets/hedgedoc-admin-password') | trim }}"

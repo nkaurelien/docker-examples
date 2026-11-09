@@ -7,7 +7,7 @@ lang: fr
 
 # K3s Kubernetes Homelab (Acemagic K1 Mini)
 
-Guide complet du cluster **K3s (Lightweight Kubernetes)** déployé sur le serveur physique **Acemagic K1 Mini** (`kamitbrains-minipc-k1.lab` / `192.168.0.210`).
+Guide complet du cluster **K3s (Lightweight Kubernetes)** déployé sur le serveur physique **Acemagic K1 Mini** (`homelab.lab` / `192.168.1.10`).
 
 ---
 
@@ -58,18 +58,18 @@ Toutes les applications exposées via Traefik Ingress bénéficient de certifica
 
 | Application | Namespace | URL d'accès HTTPS | Description |
 | :--- | :--- | :--- | :--- |
-| **Homepage** | `tools` | `https://home.kamitbrains-minipc-k1.lab` | Dashboard d'accueil et portail des services |
-| **Headlamp** | `headlamp` | `https://headlamp.kamitbrains-minipc-k1.lab` | Dashboard Kubernetes léger et moderne |
-| **Rancher Server** | `cattle-system` | `https://rancher.kamitbrains-minipc-k1.lab` | Console d'orchestration multi-cluster |
-| **IT-Tools** | `tools` | `https://it-tools.kamitbrains-minipc-k1.lab` | Boîte à outils développeur en ligne |
-| **Excalidraw** | `tools` | `https://draw.kamitbrains-minipc-k1.lab` | Tableaux blancs et schémas collaboratifs |
-| **Uptime Kuma** | `monitoring` | `https://status.kamitbrains-minipc-k1.lab` | Surveillance de disponibilité et status page |
-| **Glances** | `monitoring` | `https://glances.kamitbrains-minipc-k1.lab` | Métriques système matériel K1 Mini en direct |
-| **Umami Analytics** | `monitoring` | `https://analytics.kamitbrains-minipc-k1.lab` | Web Analytics privacy-first (Postgres backend) |
-| **CouchDB** | `databases` | `https://couchdb.kamitbrains-minipc-k1.lab` | Base NoSQL Document (Fauxton UI, PVC 10Gi) |
+| **Homepage** | `tools` | `https://home.homelab.lab` | Dashboard d'accueil et portail des services |
+| **Headlamp** | `headlamp` | `https://headlamp.homelab.lab` | Dashboard Kubernetes léger et moderne |
+| **Rancher Server** | `cattle-system` | `https://rancher.homelab.lab` | Console d'orchestration multi-cluster |
+| **IT-Tools** | `tools` | `https://it-tools.homelab.lab` | Boîte à outils développeur en ligne |
+| **Excalidraw** | `tools` | `https://draw.homelab.lab` | Tableaux blancs et schémas collaboratifs |
+| **Uptime Kuma** | `monitoring` | `https://status.homelab.lab` | Surveillance de disponibilité et status page |
+| **Glances** | `monitoring` | `https://glances.homelab.lab` | Métriques système matériel K1 Mini en direct |
+| **Umami Analytics** | `monitoring` | `https://analytics.homelab.lab` | Web Analytics privacy-first (Postgres backend) |
+| **CouchDB** | `databases` | `https://couchdb.homelab.lab` | Base NoSQL Document (Fauxton UI, PVC 10Gi) |
 | **PostgreSQL 16** | `databases` | `postgres.databases.svc:5432` | Base relationnelle interne (PVC 10Gi) |
 | **Faster-Whisper (STT)** | `ai` | `faster-whisper.ai.svc:10300` | Moteur Speech-To-Text Wyoming (Voice AI, PVC 10Gi) |
-| **HedgeDoc** | `productivity` | `https://pad.kamitbrains-minipc-k1.lab` | Éditeur de notes Markdown collaboratif |
+| **HedgeDoc** | `productivity` | `https://pad.homelab.lab` | Éditeur de notes Markdown collaboratif |
 
 ---
 
@@ -80,13 +80,13 @@ Pour déployer vos propres APIs (ex: FastAPI) avec le pattern **Base & Overlays 
 - **Emplacement du template** : `kubernetes/apps/fastapi-boilerplate/`
 - **Commandes** :
   ```bash
-  # Déployer DEV (https://api-dev.kamitbrains-minipc-k1.lab)
+  # Déployer DEV (https://api-dev.homelab.lab)
   kubectl --context k3s-ansible apply -k kubernetes/apps/fastapi-boilerplate/overlays/dev
 
-  # Déployer STAGING (https://api-stage.kamitbrains-minipc-k1.lab)
+  # Déployer STAGING (https://api-stage.homelab.lab)
   kubectl --context k3s-ansible apply -k kubernetes/apps/fastapi-boilerplate/overlays/staging
 
-  # Déployer PROD (https://api.kamitbrains-minipc-k1.lab - 2 répliques HA)
+  # Déployer PROD (https://api.homelab.lab - 2 répliques HA)
   kubectl --context k3s-ansible apply -k kubernetes/apps/fastapi-boilerplate/overlays/prod
   ```
 
@@ -102,7 +102,7 @@ Pour déployer vos propres APIs (ex: FastAPI) avec le pattern **Base & Overlays 
   - La résilience et le redémarrage des pannes sont gérés par le Kubelet (`livenessProbe` / `readinessProbe`).
   - L'empreinte mémoire par pod tombe à seulement **~50 à 80 Mo**.
 
-> 📖 Pour le Dockerfile complet et la configuration Kubernetes de production, consultez [kubernetes/apps/fastapi-boilerplate/README.md](file:///Volumes/X9%20Pro/Workspaces/nkaurelien/docker-examples/kubernetes/apps/fastapi-boilerplate/README.md).
+> 📖 Pour le Dockerfile complet et la configuration Kubernetes de production, consultez [kubernetes/apps/fastapi-boilerplate/README.md](../../../kubernetes/apps/fastapi-boilerplate/README.md).
 
 ---
 
@@ -110,7 +110,7 @@ Pour déployer vos propres APIs (ex: FastAPI) avec le pattern **Base & Overlays 
 
 Pour compiler vos images de conteneurs directement sur le cluster K3s (sans daemon Docker, sans droits root, en pur *userspace*) :
 - **Principe** : Exécution sous forme de `Job` Kubernetes, support natif des Dockerfiles multi-stage avec `uv`, et mise en cache des couches intermédiaires.
-- **Documentation et schéma Mermaid** : [kubernetes/infrastructure/ci-cd/kaniko/README.md](file:///Volumes/X9%20Pro/Workspaces/nkaurelien/docker-examples/kubernetes/infrastructure/ci-cd/kaniko/README.md).
+- **Documentation et schéma Mermaid** : [kubernetes/infrastructure/ci-cd/kaniko/README.md](../../../kubernetes/infrastructure/ci-cd/kaniko/README.md).
 
 ---
 
@@ -148,4 +148,4 @@ redis://redis.databases.svc.cluster.local:6379
 2. **Lens Desktop (GUI Mac)** :
    - Connecté via `~/.kube/config` (serveur MCP configuré).
 3. **Headlamp (Web UI)** :
-   - Accès via `https://headlamp.kamitbrains-minipc-k1.lab` avec le token administrateur.
+   - Accès via `https://headlamp.homelab.lab` avec le token administrateur.

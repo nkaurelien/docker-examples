@@ -10,8 +10,8 @@ After you pull or build an image:
 
 ```console
 
-docker tag <someimage> 192.168.0.201:25000/<someimage>:<tag>
-docker push 192.168.0.201:25000/<someimage>:<tag>
+docker tag <someimage> 192.168.1.11:25000/<someimage>:<tag>
+docker push 192.168.1.11:25000/<someimage>:<tag>
 
 ```
 
@@ -33,7 +33,7 @@ And save the following content:
 ```text
 {
   "insecure-registries": [
-    "192.168.0.201:25000"
+    "192.168.1.11:25000"
   ]
 }
 

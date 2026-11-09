@@ -1,6 +1,6 @@
 # Glances Monitoring - Identifiants d'Authentification
 
-Ce dossier contient le secret pour l'authentification au tableau de bord Glances (`https://glances.kamitbrains.fr`).
+Ce dossier contient le secret pour l'authentification au tableau de bord Glances (`https://glances.example.com`).
 
 ## 📄 Fichiers associés :
 * `glances-basic-auth-password` : Mot de passe généré pour l'utilisateur `admin` de Glances.
@@ -10,13 +10,13 @@ Le rôle Ansible [`ansible/roles/glances`](../ansible/roles/glances) génère un
 
 ```yaml
 glances_basic_auth_user: "admin"
-glances_basic_auth_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/glances-basic-auth-password') | trim }}"
+glances_basic_auth_password: "{{ lookup('file', playbook_dir ~ '/../.secrets/glances-basic-auth-password') | trim }}"
 ```
 
 ## 🔐 Tester la connexion en CLI :
 ```bash
 PASS=$(cat .secrets/glances-basic-auth-password)
-curl -u "admin:$PASS" https://glances.kamitbrains.fr
+curl -u "admin:$PASS" https://glances.example.com
 ```
 
 ## 🔄 Régénérer le mot de passe :

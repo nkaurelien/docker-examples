@@ -13,7 +13,7 @@ metadata:
 spec:
   acme:
     server: https://acme-staging-v02.api.letsencrypt.org/directory
-    email: admin@kamitbrains.fr
+    email: admin@example.com
     privateKeySecretRef:
       name: letsencrypt-staging-account-key
     solvers:
@@ -28,7 +28,7 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: admin@kamitbrains.fr
+    email: admin@example.com
     privateKeySecretRef:
       name: letsencrypt-prod-account-key
     solvers:

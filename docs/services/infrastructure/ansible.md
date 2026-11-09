@@ -60,9 +60,9 @@ make ansible-galaxy-install
 All sensitive values (IP addresses, SSH passwords, API tokens) are stored in `.secrets/` and dynamically fetched at runtime:
 
 ```yaml
-ansible_host: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ssh-contabo-server-ip') | trim }}"
-ansible_user: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ssh-contabo-server-user-login') | trim }}"
-ansible_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ssh-contabo-server-password') | trim }}"
+ansible_host: "{{ lookup('file', playbook_dir ~ '/../.secrets/ssh-vps-server-ip') | trim }}"
+ansible_user: "{{ lookup('file', playbook_dir ~ '/../.secrets/ssh-vps-server-user-login') | trim }}"
+ansible_password: "{{ lookup('file', playbook_dir ~ '/../.secrets/ssh-vps-server-password') | trim }}"
 ```
 
 For full setup guidelines, consult the guide at `ansible/INSTALL.md`.

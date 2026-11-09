@@ -35,7 +35,7 @@ spec:
             - name: NODE_ENV
               value: "production"
             - name: SITE_URL
-              value: "https://infisical.kamitbrains-minipc-k1.lab"
+              value: "https://infisical.homelab.lab"
           envFrom:
             - secretRef:
                 name: infisical-secrets
@@ -90,10 +90,10 @@ spec:
   ingressClassName: traefik
   tls:
     - hosts:
-        - infisical.kamitbrains-minipc-k1.lab
+        - infisical.homelab.lab
       secretName: infisical-tls
   rules:
-    - host: infisical.kamitbrains-minipc-k1.lab
+    - host: infisical.homelab.lab
       http:
         paths:
           - path: /

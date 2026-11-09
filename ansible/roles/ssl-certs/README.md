@@ -103,7 +103,7 @@ Override possible via `-e var=value` sur la ligne de commande.
 
 ```bash
 # Serveur
-ssh asone4health@188.165.198.81 'sudo ls -la /etc/ssl/asone4health.fr/ && sudo nginx -t'
+ssh deploy@203.0.113.20 'sudo ls -la /etc/ssl/asone4health.fr/ && sudo nginx -t'
 
 # Client (dates + chaine)
 openssl s_client -connect asone4health.fr:443 -servername asone4health.fr -showcerts </dev/null 2>/dev/null \

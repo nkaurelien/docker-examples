@@ -18,7 +18,7 @@ When running **Harbor OCI Registry** across both targets behind a unified **Trae
 flowchart TD
     Client["Client / Developer Machine (Docker CLI / Web Browser)"] --> Traefik["Traefik v3 Ingress & Proxy (Port 80 / 443)"]
     
-    subgraph K1_Mini_Host["Host Server (K1 Mini - 192.168.0.210)"]
+    subgraph K1_Mini_Host["Host Server (K1 Mini - 192.168.1.10)"]
         Traefik
         
         subgraph Docker_Compose_Stack["Docker Compose Stack (/opt/harbor)"]
@@ -36,8 +36,8 @@ flowchart TD
         end
     end
 
-    Traefik -- "harbor.kamitbrains.local" --> Harbor_Core_DC
-    Traefik -- "harbor.kamitbrains-minipc-k1.lab" --> Harbor_Ingress_K8s
+    Traefik -- "harbor.example.local" --> Harbor_Core_DC
+    Traefik -- "harbor.homelab.lab" --> Harbor_Ingress_K8s
 ```
 
 ---
@@ -61,7 +61,7 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-public"
       # HTTPS Router
-      - "traefik.http.routers.harbor.rule=Host(`harbor.kamitbrains-minipc-k1.lab`) || Host(`harbor.kamitbrains.local`) || Host(`harbor.kamitbrains.fr`)"
+      - "traefik.http.routers.harbor.rule=Host(`harbor.homelab.lab`) || Host(`harbor.example.local`) || Host(`harbor.example.com`)"
       - "traefik.http.routers.harbor.entrypoints=websecure"
       - "traefik.http.routers.harbor.tls=true"
       - "traefik.http.services.harbor.loadbalancer.server.port=8080"
@@ -83,14 +83,14 @@ expose:
     certSource: none
   ingress:
     hosts:
-      core: harbor.kamitbrains-minipc-k1.lab
+      core: harbor.homelab.lab
     controller: default
     className: traefik
     annotations:
       cert-manager.io/cluster-issuer: homelab-ca-issuer
       traefik.ingress.kubernetes.io/router.entrypoints: websecure
 
-externalURL: https://harbor.kamitbrains-minipc-k1.lab
+externalURL: https://harbor.homelab.lab
 
 persistence:
   enabled: true
@@ -114,9 +114,9 @@ trivy:
 
 ## 3. Avoiding Host & Ingress Routing Collisions
 
-When running both Docker Compose and K3s Traefik ingress on the same IP (`192.168.0.210`):
+When running both Docker Compose and K3s Traefik ingress on the same IP (`192.168.1.10`):
 
-1. **Explicit Host Assignment**: Assign distinct domain aliases for debugging if necessary (e.g., `harbor-dc.kamitbrains.local` for Compose vs `harbor.kamitbrains-minipc-k1.lab` for K3s).
+1. **Explicit Host Assignment**: Assign distinct domain aliases for debugging if necessary (e.g., `harbor-dc.example.local` for Compose vs `harbor.homelab.lab` for K3s).
 2. **Database Isolation**: Ensure persistence volumes (`/opt/harbor/data` vs K3s PVC `local-path-storage`) remain independent.
 3. **Registry Mirroring**: Use Harbor’s native replication rules to automatically sync images between host registry and K3s cluster registry.
 
@@ -128,9 +128,9 @@ Verify that both API endpoints are operational:
 
 ```bash
 # Test OCI Distribution API v2 Endpoint
-curl -u "admin:${HARBOR_ADMIN_PASSWORD}" -sk https://harbor.kamitbrains-minipc-k1.lab/v2/_catalog
+curl -u "admin:${HARBOR_ADMIN_PASSWORD}" -sk https://harbor.homelab.lab/v2/_catalog
 
 # Push a test image to the OCI registry
-docker tag alpine:latest harbor.kamitbrains-minipc-k1.lab/library/alpine:latest
-docker push harbor.kamitbrains-minipc-k1.lab/library/alpine:latest
+docker tag alpine:latest harbor.homelab.lab/library/alpine:latest
+docker push harbor.homelab.lab/library/alpine:latest
 ```

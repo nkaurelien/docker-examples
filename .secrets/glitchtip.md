@@ -5,7 +5,7 @@ Ce dossier contient les mots de passe et clés secrètes pour le service GlitchT
 ---
 
 ## 👤 Compte Admin par défaut :
-- **URL** : `https://glitchtip.kamitbrains.fr`
+- **URL** : `https://glitchtip.example.com`
 - **Login File** : `.secrets/glitchtip-admin-login`
 - **Mot de passe** : (voir `.secrets/glitchtip-admin-password`)
 
@@ -13,7 +13,7 @@ Ce dossier contient les mots de passe et clés secrètes pour le service GlitchT
 
 ## 📄 Fichiers associés :
 * `glitchtip-admin-login` : Identifiant email administrateur pour l'accès web.
-* `glitchtip-admin-password` : Mot de passe administrateur pour l'accès web sur `https://glitchtip.kamitbrains.fr`.
+* `glitchtip-admin-password` : Mot de passe administrateur pour l'accès web sur `https://glitchtip.example.com`.
 * `glitchtip-db-password` : Mot de passe de la base de données PostgreSQL 17 (`glitchtip-db`).
 * `glitchtip-secret-key` : Clé secrète hexadécimale de 64 caractères utilisée pour Django.
 

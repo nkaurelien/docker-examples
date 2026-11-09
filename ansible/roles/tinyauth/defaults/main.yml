@@ -1,7 +1,7 @@
 ---
 # TinyAuth role defaults
 tinyauth_image: "ghcr.io/steveiliop56/tinyauth:v4"
-tinyauth_domain: "kamitbrains.fr"
+tinyauth_domain: "example.com"
 tinyauth_hostname: "auth.{{ traefik_domain | default(tinyauth_domain) }}"
 tinyauth_compose_dir: "/opt/tinyauth"
 tinyauth_secret: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-secret', errors='ignore') | default('change-me-tinyauth-secret-key', true) | trim }}"
@@ -12,8 +12,8 @@ tinyauth_users:
     password: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-admin-password', errors='ignore') | default('change-me-tinyauth-admin-password', true) | trim }}"
   - username: "admin"
     password: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-admin-password', errors='ignore') | default('change-me-tinyauth-admin-password', true) | trim }}"
-  - username: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-user-nkaurelien-login', errors='ignore') | default('user@example.test', true) | trim }}"
-    password: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-user-nkaurelien-password', errors='ignore') | default('change-me-tinyauth-nkaurelien-password', true) | trim }}"
-  - username: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-user-etombe-login', errors='ignore') | default('user2@example.test', true) | trim }}"
-    password: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-user-etombe-password', errors='ignore') | default('change-me-tinyauth-etombe-password', true) | trim }}"
+  - username: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-user-deploy-login', errors='ignore') | default('user@example.test', true) | trim }}"
+    password: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-user-deploy-password', errors='ignore') | default('change-me-tinyauth-deploy-password', true) | trim }}"
+  - username: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-user-user2-login', errors='ignore') | default('user2@example.test', true) | trim }}"
+    password: "{{ lookup('file', playbook_dir ~ '/../.secrets/tinyauth-user-user2-password', errors='ignore') | default('change-me-tinyauth-user2-password', true) | trim }}"
 

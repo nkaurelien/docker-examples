@@ -17,7 +17,7 @@ services:
       - APP_URL=https://{{ tinyauth_hostname }}
       - TINYAUTH_APPURL=https://{{ tinyauth_hostname }}
       - COOKIE_SECURE=true
-      - COOKIE_DOMAIN={{ traefik_domain | default('kamitbrains.fr') }}
+      - COOKIE_DOMAIN={{ traefik_domain | default('example.com') }}
       - TINYAUTH_DATABASE_DRIVER=sqlite
       - TINYAUTH_DATABASE_PATH=/data/tinyauth.db
       - TINYAUTH_RESOURCES_ENABLED=true
@@ -25,7 +25,7 @@ services:
       - RESOURCES_DIR=/resources
       - TINYAUTH_UI_BACKGROUNDIMAGE=/resources/bg-red.jpg
       - BACKGROUND_IMAGE=/resources/bg-red.jpg
-      - TINYAUTH_UI_TITLE=KamitBrains Auth
+      - TINYAUTH_UI_TITLE=Example Auth
     volumes:
       - ./data:/data
       - ./resources:/resources:ro

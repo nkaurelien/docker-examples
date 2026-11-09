@@ -1,6 +1,6 @@
 # Traefik Dashboard - Identifiants d'Authentification
 
-Ce dossier contient le secret pour l'authentification au tableau de bord Traefik (`https://traefik.kamitbrains.fr`).
+Ce dossier contient le secret pour l'authentification au tableau de bord Traefik (`https://traefik.example.com`).
 
 ## 📄 Fichiers associés :
 * `traefik-dashboard-basic-auth-password` : Mot de passe généré pour l'utilisateur `admin` du dashboard Traefik.
@@ -10,13 +10,13 @@ Le rôle Ansible [`ansible/roles/traefik`](../ansible/roles/traefik) génère un
 
 ```yaml
 traefik_dashboard_basic_auth_user: "admin"
-traefik_dashboard_basic_auth_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/traefik-dashboard-basic-auth-password') | trim }}"
+traefik_dashboard_basic_auth_password: "{{ lookup('file', playbook_dir ~ '/../.secrets/traefik-dashboard-basic-auth-password') | trim }}"
 ```
 
 ## 🔐 Tester la connexion en CLI :
 ```bash
 PASS=$(cat .secrets/traefik-dashboard-basic-auth-password)
-curl -u "admin:$PASS" https://traefik.kamitbrains.fr
+curl -u "admin:$PASS" https://traefik.example.com
 ```
 
 ## 🔄 Régénérer le mot de passe :

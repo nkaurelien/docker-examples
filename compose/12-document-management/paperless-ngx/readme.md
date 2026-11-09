@@ -4,8 +4,8 @@
 
 ## Hostnames & Access
 
-- Main URL: `https://paperless.kamitbrains.fr`
-- Alias URL: `https://docs.kamitbrains.fr`
+- Main URL: `https://paperless.example.com`
+- Alias URL: `https://docs.example.com`
 - Default Admin Login: `admin`
 
 ## Features

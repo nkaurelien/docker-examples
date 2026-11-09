@@ -119,7 +119,7 @@ def generate_registry():
                 tags = [p.split('-', 1)[1] for p in clean_rel_dir.split(os.sep) if '-' in p]
             
             # Try to read x-arcane.icon from compose file
-            icon_url = "https://nkaurelien.kamitbrains.fr/favicon.ico"
+            icon_url = "https://www.example.com/favicon.ico"
             try:
                 with open(compose_path, 'r', encoding='utf-8') as f:
                     comp_content = f.read()

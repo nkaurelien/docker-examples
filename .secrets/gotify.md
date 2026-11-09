@@ -1,7 +1,7 @@
 # Gotify Credentials & Info
 
-- **URL**: `https://gotify.kamitbrains.fr`
-- **Alias**: `https://push.kamitbrains.fr`
+- **URL**: `https://gotify.example.com`
+- **Alias**: `https://push.example.com`
 - **Username**: `admin`
 - **Password**: `.secrets/gotify-admin-password`
 - **Container**: `gotify`

@@ -26,7 +26,7 @@ services:
     labels:
       - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/jupyter.svg"
       - "traefik.enable=true"
-      - "traefik.http.routers.jupyter.rule=Host(`jupyter.${DOMAIN:-kamitbrains.fr}`) || Host(`notebook.${DOMAIN:-kamitbrains.fr}`)"
+      - "traefik.http.routers.jupyter.rule=Host(`jupyter.${DOMAIN:-example.com}`) || Host(`notebook.${DOMAIN:-example.com}`)"
       - "traefik.http.routers.jupyter.entrypoints=websecure"
       - "traefik.http.routers.jupyter.tls.certresolver=letsencrypt"
       - "traefik.http.routers.jupyter.middlewares=crowdsec-bouncer@file"

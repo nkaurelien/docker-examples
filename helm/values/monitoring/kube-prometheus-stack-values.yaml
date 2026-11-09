@@ -27,11 +27,11 @@ grafana:
       cert-manager.io/cluster-issuer: homelab-ca-issuer
       traefik.ingress.kubernetes.io/router.entrypoints: websecure
     hosts:
-      - grafana.kamitbrains-minipc-k1.lab
+      - grafana.homelab.lab
     tls:
       - secretName: grafana-tls
         hosts:
-          - grafana.kamitbrains-minipc-k1.lab
+          - grafana.homelab.lab
   persistence:
     enabled: true
     storageClassName: local-path

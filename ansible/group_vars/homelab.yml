@@ -1,14 +1,13 @@
 ---
-# Configuration du serveur KamitBrains Homelab
-homelab_server_ip: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ssh-kamitbrains-homelab-ip') | trim }}"
-homelab_server_fqdn: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ssh-kamitbrains-homelab-fqdn') | trim }}"
-homelab_server_mac: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ssh-kamitbrains-homelab-mac') | trim }}"
+# Configuration d'EXEMPLE du serveur homelab (valeurs neutres à adapter)
+homelab_server_ip: "192.168.1.10"
+homelab_server_fqdn: "example.local"
 
 ansible_host: "{{ homelab_server_ip }}"
-ansible_user: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ssh-kamitbrains-homelab-user-login') | trim }}"
-ansible_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/ssh-kamitbrains-homelab-password') | trim }}"
+ansible_user: "deploy"
+ansible_password: "{{ lookup('file', playbook_dir ~ '/../.secrets/ssh-homelab-password', errors='ignore') | default('', true) | trim }}"
 ansible_become_password: "{{ ansible_password }}"
 
-app_namespace: kamitbrains
+app_namespace: homelab
 app_domain_tld: local
-traefik_domain: "kamitbrains.local"
+traefik_domain: "example.local"

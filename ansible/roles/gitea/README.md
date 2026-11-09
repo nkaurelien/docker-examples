@@ -19,7 +19,7 @@ Role Ansible pour le déploiement et la gestion d'une instance **Gitea** (Git & 
 
 ```yaml
 gitea_version: "1.22.6"
-gitea_domain: "kamitbrains-minipc-k1.lab"
+gitea_domain: "homelab.lab"
 gitea_hostname: "gitea.{{ gitea_domain }}"
 gitea_deploy_dir: "/opt/gitea"
 ```

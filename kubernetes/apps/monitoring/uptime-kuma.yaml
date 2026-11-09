@@ -83,10 +83,10 @@ spec:
   ingressClassName: traefik
   tls:
     - hosts:
-        - status.kamitbrains-minipc-k1.lab
+        - status.homelab.lab
       secretName: uptime-kuma-tls
   rules:
-    - host: status.kamitbrains-minipc-k1.lab
+    - host: status.homelab.lab
       http:
         paths:
           - path: /

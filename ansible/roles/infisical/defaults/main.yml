@@ -3,7 +3,7 @@
 infisical_image: "infisical/infisical:latest"
 infisical_compose_dir: "/opt/infisical"
 infisical_port: 8080
-infisical_site_url: "https://secrets.{{ traefik_domain | default('kamitbrains.fr') }}"
+infisical_site_url: "https://secrets.{{ traefik_domain | default('example.com') }}"
 # Secrets : fichiers lus dans ce dossier (non versionné). Aucun défaut : le rôle refuse de déployer sans.
 infisical_secrets_dir: "{{ playbook_dir }}/../.secrets"
 infisical_encryption_key: "{{ lookup('file', infisical_secrets_dir ~ '/infisical-encryption-key', errors='ignore') | default('', true) | trim }}"  # openssl rand -hex 16

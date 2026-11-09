@@ -13,7 +13,7 @@ services:
         condition: service_healthy
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER:-portabase}:${POSTGRES_PASSWORD:-portabase_password}@portabase-db:5432/${POSTGRES_DB:-portabase}
-      - PROJECT_URL=https://portabase.${DOMAIN:-kamitbrains.fr}
+      - PROJECT_URL=https://portabase.${DOMAIN:-example.com}
       - PROJECT_SECRET=${PROJECT_SECRET:-portabase_secret_key_change_me}
       - TZ=Europe/Paris
     volumes:
@@ -26,7 +26,7 @@ services:
     labels:
       - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/postgresql.svg"
       - "traefik.enable=true"
-      - "traefik.http.routers.portabase.rule=Host(`portabase.${DOMAIN:-kamitbrains.fr}`)"
+      - "traefik.http.routers.portabase.rule=Host(`portabase.${DOMAIN:-example.com}`)"
       - "traefik.http.routers.portabase.entrypoints=websecure"
       - "traefik.http.routers.portabase.tls.certresolver=letsencrypt"
       - "traefik.http.routers.portabase.middlewares=crowdsec-bouncer@file"

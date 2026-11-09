@@ -18,7 +18,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-umami_db_password_change_me}
       ADMIN_USER: ${UMAMI_ADMIN_USER:-admin}
       WEBSITE_NAME: "Personal Portfolio"
-      WEBSITE_DOMAIN: "nkaurelien.kamitbrains.fr"
+      WEBSITE_DOMAIN: "www.example.com"
     networks:
       - umami-internal
     entrypoint:
@@ -51,7 +51,7 @@ services:
     labels:
       - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/umami.svg"
       - "traefik.enable=true"
-      - "traefik.http.routers.umami.rule=Host(`umami.${DOMAIN:-kamitbrains.fr}`) || Host(`analytics.${DOMAIN:-kamitbrains.fr}`)"
+      - "traefik.http.routers.umami.rule=Host(`umami.${DOMAIN:-example.com}`) || Host(`analytics.${DOMAIN:-example.com}`)"
       - "traefik.http.routers.umami.entrypoints=websecure"
       - "traefik.http.routers.umami.tls.certresolver=letsencrypt"
       - "traefik.http.routers.umami.middlewares=crowdsec-bouncer@file"

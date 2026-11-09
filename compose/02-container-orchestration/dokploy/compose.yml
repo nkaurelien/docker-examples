@@ -1,5 +1,5 @@
 x-arcane:
-  icon: https://nkaurelien.kamitbrains.fr/favicon.ico
+  icon: https://www.example.com/favicon.ico
   urls:
     - https://dokploy.com/
     - https://github.com/dokploy/dokploy
@@ -89,7 +89,7 @@ services:
       - docker-proxy-network
       - traefik-public
     labels:
-      - "com.getarcaneapp.arcane.icon=https://nkaurelien.kamitbrains.fr/favicon.ico"
+      - "com.getarcaneapp.arcane.icon=https://www.example.com/favicon.ico"
       - "traefik.enable=true"
       - "traefik.http.routers.dokploy.rule=Host(`dokploy.apps.local`)"
       - "traefik.http.routers.dokploy.entrypoints=websecure"

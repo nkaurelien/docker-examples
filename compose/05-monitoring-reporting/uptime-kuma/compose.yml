@@ -27,7 +27,7 @@ services:
     labels:
       - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/uptime-kuma.svg"
       - "traefik.enable=true"
-      - "traefik.http.routers.uptime-kuma.rule=Host(`status.kamitbrains.fr`)"
+      - "traefik.http.routers.uptime-kuma.rule=Host(`status.example.com`)"
       - "traefik.http.routers.uptime-kuma.entrypoints=websecure"
       - "traefik.http.routers.uptime-kuma.tls.certresolver=letsencrypt"
       - "traefik.http.routers.uptime-kuma.middlewares=crowdsec-bouncer@file"

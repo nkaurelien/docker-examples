@@ -18,9 +18,9 @@ read_secret() {
 }
 ADMIN_PASSWORD=$(read_secret ldap_admin_password) || exit 1
 CONFIG_PASSWORD=$(read_secret ldap_config_password) || exit 1
-AURELIEN_RAW=$(read_secret user_aurelien_password) || exit 1
-IDRISS_RAW=$(read_secret user_idriss_password) || exit 1
-MICHEL_RAW=$(read_secret user_michel_password) || exit 1
+ALICE_RAW=$(read_secret user_alice_password) || exit 1
+BOB_RAW=$(read_secret user_bob_password) || exit 1
+CAROL_RAW=$(read_secret user_carol_password) || exit 1
 
 # Run an ldap command, treating "already exists" results as success so re-runs are idempotent
 # (68 = entry already exists, 20 = attribute/value already exists)
@@ -46,32 +46,32 @@ ou: appdev
 EOF
 
 echo "2. Generating SSHA password hashes from secrets..."
-AURELIEN_HASH=$(slappasswd -s "$AURELIEN_RAW")
-IDRISS_HASH=$(slappasswd -s "$IDRISS_RAW")
-MICHEL_HASH=$(slappasswd -s "$MICHEL_RAW")
+ALICE_HASH=$(slappasswd -s "$ALICE_RAW")
+BOB_HASH=$(slappasswd -s "$BOB_RAW")
+CAROL_HASH=$(slappasswd -s "$CAROL_RAW")
 
 echo "3. Creating User Accounts..."
 ldap ldapadd -c -x -H ldap://$LDAP_HOST -w "$ADMIN_PASSWORD" -D "$ADMIN_DN" << EOF
-dn: cn=aurelien,ou=devops,${LDAP_BASE_DN}
+dn: cn=alice,ou=devops,${LDAP_BASE_DN}
 objectClass: inetOrgPerson
-cn: aurelien
+cn: alice
 sn: Nkumbe
-uid: nkaurelien
-userPassword: $AURELIEN_HASH
+uid: alice
+userPassword: $ALICE_HASH
 
-dn: cn=idriss,ou=appdev,${LDAP_BASE_DN}
+dn: cn=bob,ou=appdev,${LDAP_BASE_DN}
 objectClass: inetOrgPerson
-cn: idriss
+cn: bob
 sn: Ngouen
-uid: nnid
-userPassword: $IDRISS_HASH
+uid: bob
+userPassword: $BOB_HASH
 
-dn: cn=michel,ou=appdev,${LDAP_BASE_DN}
+dn: cn=carol,ou=appdev,${LDAP_BASE_DN}
 objectClass: inetOrgPerson
-cn: michel
+cn: carol
 sn: Tchokouani
-uid: edmich
-userPassword: $MICHEL_HASH
+uid: carol
+userPassword: $CAROL_HASH
 EOF
 
 echo "4. Configuring memberOf overlay for groupOfNames/member..."
@@ -93,24 +93,24 @@ objectClass: top
 objectClass: groupOfNames
 cn: appdev-team
 description: App Development Team
-member: cn=aurelien,ou=devops,${LDAP_BASE_DN}
-member: cn=idriss,ou=appdev,${LDAP_BASE_DN}
+member: cn=alice,ou=devops,${LDAP_BASE_DN}
+member: cn=bob,ou=appdev,${LDAP_BASE_DN}
 
 dn: cn=devops-team,${LDAP_BASE_DN}
 objectClass: top
 objectClass: groupOfNames
 cn: devops-team
 description: DevOps Team
-member: cn=aurelien,ou=devops,${LDAP_BASE_DN}
-member: cn=michel,ou=appdev,${LDAP_BASE_DN}
+member: cn=alice,ou=devops,${LDAP_BASE_DN}
+member: cn=carol,ou=appdev,${LDAP_BASE_DN}
 EOF
 
-echo "6. Granting Read Access to user aurelien..."
+echo "6. Granting Read Access to user alice..."
 ldap ldapmodify -c -x -H ldap://$LDAP_HOST -w "$CONFIG_PASSWORD" -D "$CONFIG_DN" << EOF
 dn: olcDatabase={1}mdb,cn=config
 changetype: modify
 add: olcAccess
-olcAccess: {2}to * by dn="cn=aurelien,ou=devops,${LDAP_BASE_DN}" read
+olcAccess: {2}to * by dn="cn=alice,ou=devops,${LDAP_BASE_DN}" read
 EOF
 
 echo "7. Enabling and Configuring PPolicy Overlay..."

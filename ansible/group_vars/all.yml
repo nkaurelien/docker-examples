@@ -1,11 +1,11 @@
 ---
 # Global variables for Ansible infrastructure roles
-traefik_domain: "kamitbrains.fr"
+traefik_domain: "example.com"
 traefik_public_network: "traefik-public"
 rsync_host_install_required: false
-server_user: "nkaurelien"
-app_user_group: "nkaurelien"
-app_domain: "kamitbrains.fr"
+server_user: "deploy"
+app_user_group: "deploy"
+app_domain: "example.com"
 local_project_dir: "{{ playbook_dir }}/.."
 ssl_cert_file: "nginx_bundle.crt"
 ssl_key_file: "private.key"

@@ -32,7 +32,7 @@ services:
       - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/syncthing.svg"
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-public"
-      - "traefik.http.routers.syncthing.rule=Host(`syncthing.${DOMAIN:-kamitbrains.fr}`) || Host(`sync.${DOMAIN:-kamitbrains.fr}`)"
+      - "traefik.http.routers.syncthing.rule=Host(`syncthing.${DOMAIN:-example.com}`) || Host(`sync.${DOMAIN:-example.com}`)"
       - "traefik.http.routers.syncthing.entrypoints=websecure"
       - "traefik.http.routers.syncthing.tls.certresolver=letsencrypt"
       - "traefik.http.routers.syncthing.middlewares=crowdsec-bouncer@file"

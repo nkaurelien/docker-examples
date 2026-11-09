@@ -4,7 +4,7 @@ tags: ansible, automation, cloudflare, installation, utilisation
 
 # Guide d'Installation et d'Utilisation - Ansible & Cloudflare Automation
 
-Ce dossier contient la suite de déploiement Ansible et les outils d'automatisation Cloudflare pour nos infrastructures (dont le serveur Contabo FR).
+Ce dossier contient la suite de déploiement Ansible et les outils d'automatisation Cloudflare pour nos infrastructures (dont un serveur VPS).
 
 ---
 
@@ -22,9 +22,9 @@ Ce dossier contient la suite de déploiement Ansible et les outils d'automatisat
 
 2. **Fichiers de Secrets (`.secrets/`)** :
    Les informations sensibles sont stockées dans le dossier `.secrets/` à la racine du projet et lues dynamiquement par Ansible et par le SDK Cloudflare :
-   * `.secrets/ssh-contabo-server-ip` : Adresse IP du serveur.
-   * `.secrets/ssh-contabo-server-user-login` : Nom d'utilisateur SSH (ex: `nkaurelien`).
-   * `.secrets/ssh-contabo-server-password` : Mot de passe SSH.
+   * `.secrets/ssh-vps-server-ip` : Adresse IP du serveur.
+   * `.secrets/ssh-vps-server-user-login` : Nom d'utilisateur SSH (ex: `deploy`).
+   * `.secrets/ssh-vps-server-password` : Mot de passe SSH.
    * `.secrets/cloudflare-account-id` : ID du compte Cloudflare.
    * `.secrets/cloudflare-api-key` : Jeton d'API Bearer Cloudflare.
 
@@ -116,7 +116,7 @@ services:
       - traefik-public
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.mon-service.rule=Host(`mon-service.kamitbrains.fr`)"
+      - "traefik.http.routers.mon-service.rule=Host(`mon-service.example.com`)"
       - "traefik.http.routers.mon-service.entrypoints=web"
       - "traefik.http.services.mon-service.loadbalancer.server.port=80"
 

@@ -21,7 +21,7 @@ The Umami stack includes an automated reporting pipeline consisting of the `umam
 ```
  ┌─────────────────────────────────────────────────────────────┐
  │                       Umami Analytics                       │
- │  - Web UI & REST API v2 (https://umami.kamitbrains.fr)      │
+ │  - Web UI & REST API v2 (https://umami.example.com)      │
  └──────────────────────────────┬──────────────────────────────┘
                                 │ API Fetch (Token Auth)
                                 ▼
@@ -66,7 +66,7 @@ cd compose/05-monitoring-reporting/umami
 docker compose up -d
 ```
 
-Access dashboard at: `https://umami.kamitbrains.fr` (or `https://analytics.kamitbrains.fr`)
+Access dashboard at: `https://umami.example.com` (or `https://analytics.example.com`)
 
 ## Ansible Deployment
 

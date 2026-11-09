@@ -1,6 +1,6 @@
 ---
 # Default variables for Erugo role
-erugo_domain: "kamitbrains.fr"
+erugo_domain: "example.com"
 erugo_hostname: "share.{{ traefik_domain | default(erugo_domain) }}"
 erugo_image: "wardy784/erugo:latest"
 erugo_deploy_dir: "/opt/erugo"

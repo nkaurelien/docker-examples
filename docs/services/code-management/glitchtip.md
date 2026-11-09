@@ -13,14 +13,14 @@ tags: monitoring, apm, error-tracking, glitchtip, sentry, dev-tools, logging
 | Attribute | Details |
 | :--- | :--- |
 | **Service Name** | `glitchtip` |
-| **Public URL** | `https://glitchtip.kamitbrains.fr` |
-| **Health Check** | `https://glitchtip.kamitbrains.fr/_health/` |
+| **Public URL** | `https://glitchtip.example.com` |
+| **Health Check** | `https://glitchtip.example.com/_health/` |
 | **Docker Images** | `glitchtip/glitchtip:6`, `postgres:17`, `valkey/valkey:9` |
 | **Internal Port** | `8000` |
 | **Reverse Proxy** | Traefik (`websecure` + Let's Encrypt TLS) |
 | **Security** | CrowdSec ForwardAuth Bouncer |
 | **Storage Volumes** | `glitchtip-db-data`, `glitchtip-uploads` |
-| **Master Admin Email** | `admin@kamitbrains.fr` |
+| **Master Admin Email** | `admin@example.com` |
 
 ---
 
@@ -38,7 +38,7 @@ pip install sentry-sdk
 import sentry_sdk
 
 sentry_sdk.init(
-    dsn="https://<your-project-key>@glitchtip.kamitbrains.fr/<project-id>",
+    dsn="https://<your-project-key>@glitchtip.example.com/<project-id>",
     traces_sample_rate=1.0,
     environment="production",
 )
@@ -54,7 +54,7 @@ npm install @sentry/node
 const Sentry = require("@sentry/node");
 
 Sentry.init({
-  dsn: "https://<your-project-key>@glitchtip.kamitbrains.fr/<project-id>",
+  dsn: "https://<your-project-key>@glitchtip.example.com/<project-id>",
   tracesSampleRate: 1.0,
   environment: "production",
 });
@@ -66,7 +66,7 @@ Sentry.init({
 import * as Sentry from "@sentry/react";
 
 Sentry.init({
-  dsn: "https://<your-project-key>@glitchtip.kamitbrains.fr/<project-id>",
+  dsn: "https://<your-project-key>@glitchtip.example.com/<project-id>",
   integrations: [Sentry.browserTracingIntegration()],
   tracesSampleRate: 0.2,
 });
@@ -85,7 +85,7 @@ import (
 
 func main() {
 	err := sentry.Init(sentry.ClientOptions{
-		Dsn: "https://<your-project-key>@glitchtip.kamitbrains.fr/<project-id>",
+		Dsn: "https://<your-project-key>@glitchtip.example.com/<project-id>",
 	})
 	if err != nil {
 		log.Fatalf("sentry.Init: %s", err)
@@ -104,7 +104,7 @@ GlitchTip is deployed via Ansible using a 4-container stack defined in `ansible/
 ┌───────────────────────────────────────────────────────────┐
 │              Traefik Reverse Proxy (:443)                  │
 └─────────────────────────────┬─────────────────────────────┘
-                              │ https://glitchtip.kamitbrains.fr
+                              │ https://glitchtip.example.com
                               ▼
 ┌───────────────────────────────────────────────────────────┐
 │               glitchtip/glitchtip:6 (Granian)             │

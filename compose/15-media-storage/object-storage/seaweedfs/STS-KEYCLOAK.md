@@ -1,17 +1,17 @@
 ---
-tags: distributed-storage, docker-compose, iam, kamitbrains, keycloak, local
+tags: distributed-storage, docker-compose, iam, homelab, keycloak, local
 ---
 
-# POC STS/OIDC SeaweedFS ↔ Keycloak (local kamitbrains)
+# POC STS/OIDC SeaweedFS ↔ Keycloak (homelab local)
 
-Valide le flux : **JWT Keycloak → `AssumeRoleWithWebIdentity` → credentials S3 temporaires + droits par préfixe**, contre le Keycloak local `https://connect.asone4health.kamitbrains.local`.
+Valide le flux : **JWT Keycloak → `AssumeRoleWithWebIdentity` → credentials S3 temporaires + droits par préfixe**, contre le Keycloak local `https://connect.app.example.local`.
 
 ## ✅ Déjà configuré (03/09/2026)
 
 Côté **Keycloak local** (réalisé + validé) :
 - Client **`seaweedfs-s3`** créé dans le realm `asone4health` (confidential, ROPC activé). Secret dans le `.env` (gitignoré).
 - Compte de test **`seaweedfs-poc`** / `AsoneTest.2026`, rôle realm **`doctor`**.
-- **JWT ROPC validé** : `iss = https://connect.asone4health.kamitbrains.local/realms/asone4health`, `azp=seaweedfs-s3`, `realm_access.roles=[doctor,…]`. Le realm local n'a **pas** de `frontendUrl` divergent (iss correct).
+- **JWT ROPC validé** : `iss = https://connect.app.example.local/realms/asone4health`, `azp=seaweedfs-s3`, `realm_access.roles=[doctor,…]`. Le realm local n'a **pas** de `frontendUrl` divergent (iss correct).
 
 Côté **POC** (fichiers prêts) : `config/iam.json`, `compose.sts.yml`, `test-sts.sh`, `.env` (valeurs réelles), `config/rootCA.pem` (CA mkcert copié).
 
@@ -22,7 +22,7 @@ Côté **POC** (fichiers prêts) : `config/iam.json`, `compose.sts.yml`, `test-s
 - **Docker actif** (Docker Desktop / Colima / OrbStack démarré).
 - **`awscli` + `jq`** (`brew install awscli jq`).
 - **CA mkcert** : `MKCERT_CA=$(mkcert -CAROOT)/rootCA.pem` (ou copier ce fichier dans `config/rootCA.pem`).
-- **IP LAN de kamitbrains** (défaut `192.168.0.195`) → `KEYCLOAK_HOST_IP`.
+- **IP LAN du homelab** (défaut `192.168.1.12`) → `KEYCLOAK_HOST_IP`.
 - **Accès admin** au Keycloak local pour créer le client + un compte de test.
 
 ## Étape 1 — Client Keycloak `seaweedfs-s3`
@@ -45,7 +45,7 @@ Dans le realm **`asone4health`** (KC local ; utiliser `asone4health-sandbox` si 
 ## Étape 3 — Lancer (mode STS)
 
 ```bash
-export KEYCLOAK_HOST_IP=192.168.0.195
+export KEYCLOAK_HOST_IP=192.168.1.12
 export MKCERT_CA="$(mkcert -CAROOT)/rootCA.pem"
 docker compose -f compose.yml -f compose.sts.yml up -d
 docker compose logs -f s3     # vérifier le chargement de l'IAM/OIDC
@@ -65,7 +65,7 @@ Le script : obtient le JWT (ROPC), appelle `AssumeRoleWithWebIdentity`, puis lit
 ## Points à valider / pièges
 
 - **Flag IAM** : `-iam.config` (vu aussi `-s3.iam.config` selon versions) — vérifier dans les logs `weed s3`.
-- **`iss` exact** : le JWT doit porter `iss = https://connect.asone4health.kamitbrains.local/realms/asone4health` (pas de `frontendUrl` divergent côté realm local).
+- **`iss` exact** : le JWT doit porter `iss = https://connect.app.example.local/realms/asone4health` (pas de `frontendUrl` divergent côté realm local).
 - **TLS mkcert** : si le JWKS échoue en TLS, vérifier que `SSL_CERT_FILE` pointe bien le rootCA mkcert monté.
-- **Résolution DNS** : le conteneur `s3` doit résoudre `connect.asone4health.kamitbrains.local` → `extra_hosts` (IP kamitbrains).
+- **Résolution DNS** : le conteneur `s3` doit résoudre `connect.app.example.local` → `extra_hosts` (IP du homelab).
 - **Claim de rôle imbriqué** : si `realm_access.roles` n'est pas exploité par le roleMapping, utiliser `defaultRole`.

@@ -8,8 +8,8 @@ Gitea is a lightweight, self-hosted, all-in-one software development platform fe
 
 ## Architecture & Homelab Setup
 
-- **Host**: `192.168.0.210` (`kamitbrains_homelab`)
-- **Web Interface URL**: `https://gitea.kamitbrains-minipc-k1.lab` (also `gitea.kamitbrains.local`, `gitea.kamitbrains.fr`)
+- **Host**: `192.168.1.10` (`homelab_server`)
+- **Web Interface URL**: `https://gitea.homelab.lab` (also `gitea.example.local`, `gitea.example.com`)
 - **HTTP Internal Port**: `3000`
 - **SSH Port**: `2223` (mapped to container port `22` to avoid collision with Forgejo on `2222`)
 - **Database Engine**: PostgreSQL 16 (`postgres:16-alpine`)
@@ -47,23 +47,23 @@ ingress:
   enabled: true
   className: traefik
   hosts:
-    - host: gitea.kamitbrains-minipc-k1.lab
+    - host: gitea.homelab.lab
       paths:
         - path: /
           pathType: Prefix
   tls:
     - secretName: gitea-ingress-tls
       hosts:
-        - gitea.kamitbrains-minipc-k1.lab
+        - gitea.homelab.lab
 
 gitea:
   admin:
     username: "gitea_admin"
-    email: "admin@kamitbrains-minipc-k1.lab"
+    email: "admin@homelab.lab"
   config:
     server:
-      DOMAIN: gitea.kamitbrains-minipc-k1.lab
-      ROOT_URL: https://gitea.kamitbrains-minipc-k1.lab/
+      DOMAIN: gitea.homelab.lab
+      ROOT_URL: https://gitea.homelab.lab/
       SSH_PORT: 2223
 ```
 
@@ -83,7 +83,7 @@ To manage Gitea users via CLI inside the running Docker container:
 docker exec -u 1000 gitea gitea admin user list
 
 # Create an administrator user
-docker exec -u 1000 gitea gitea admin user create --admin --username gitea_admin --password "<PASSWORD>" --email "admin@kamitbrains-minipc-k1.lab" --must-change-password=false
+docker exec -u 1000 gitea gitea admin user create --admin --username gitea_admin --password "<PASSWORD>" --email "admin@homelab.lab" --must-change-password=false
 ```
 
 ## Secret Isolation

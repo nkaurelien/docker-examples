@@ -5,7 +5,7 @@ services:
     ports:
       - "8889:8888"
     volumes:
-      # - "./:/home/nkaurelien/work"
+      # - "./:/home/jovyan/work"
       - type: bind
         source: ./volumes/jupyter
         target: /home/jovyan/work

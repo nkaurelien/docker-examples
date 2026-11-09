@@ -56,10 +56,10 @@ spec:
   ingressClassName: traefik
   tls:
     - hosts:
-        - draw.kamitbrains-minipc-k1.lab
+        - draw.homelab.lab
       secretName: excalidraw-tls
   rules:
-    - host: draw.kamitbrains-minipc-k1.lab
+    - host: draw.homelab.lab
       http:
         paths:
           - path: /

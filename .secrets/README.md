@@ -7,7 +7,7 @@ Ce dossier `.secrets/` est ignoré par Git (via `.gitignore` : `.secrets/*`, exc
 ## 📋 Répertoire des Accès et Tokens
 
 ### 1. Headlamp (Dashboard Kubernetes)
-- **URL** : `https://headlamp.kamitbrains-minipc-k1.lab`
+- **URL** : `https://headlamp.homelab.lab`
 - **Méthode** : Token Bearer (ServiceAccount `headlamp` avec ClusterRole `cluster-admin`)
 - **Fichier du Token** : `.secrets/headlamp-token.txt`
 - **Commande de régénération si expiré** :
@@ -18,7 +18,7 @@ Ce dossier `.secrets/` est ignoré par Git (via `.gitignore` : `.secrets/*`, exc
 ---
 
 ### 2. Rancher Server
-- **URL** : `https://rancher.kamitbrains-minipc-k1.lab`
+- **URL** : `https://rancher.homelab.lab`
 - **Utilisateur initial** : `admin`
 - **Bootstrap Password initial** : `admin`
 - **Fichier des identifiants** : `.secrets/rancher-credentials.txt`
@@ -28,7 +28,7 @@ Ce dossier `.secrets/` est ignoré par Git (via `.gitignore` : `.secrets/*`, exc
 ### 3. Databases (Namespace `databases`)
 
 #### A. Apache CouchDB 3.4
-- **URL Web (Fauxton)** : `https://couchdb.kamitbrains-minipc-k1.lab`
+- **URL Web (Fauxton)** : `https://couchdb.homelab.lab`
 - **Utilisateur** : `admin`
 - **Mot de passe par défaut** : `couchdb_secure_password`
 - **Secret Erlang** : `couchdb_homelab_secret_key`
@@ -46,7 +46,7 @@ Ce dossier `.secrets/` est ignoré par Git (via `.gitignore` : `.secrets/*`, exc
 ### 4. Monitoring (Namespace `monitoring`)
 
 #### Umami Analytics
-- **URL Web** : `https://analytics.kamitbrains-minipc-k1.lab`
+- **URL Web** : `https://analytics.homelab.lab`
 - **Base de données dédiée** : `umami-db.monitoring.svc.cluster.local:5432` (user `umami` / pass `umami_secure_password`)
 - **Compte Administrateur Umami initial** :
   - **Login** : `admin`

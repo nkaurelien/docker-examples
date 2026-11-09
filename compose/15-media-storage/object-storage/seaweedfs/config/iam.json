@@ -11,10 +11,10 @@
       "type": "oidc",
       "enabled": true,
       "config": {
-        "issuer": "https://connect.asone4health.kamitbrains.local/realms/asone4health",
+        "issuer": "https://connect.app.example.local/realms/asone4health",
         "clientId": "seaweedfs-s3",
-        "jwksUri": "https://connect.asone4health.kamitbrains.local/realms/asone4health/protocol/openid-connect/certs",
-        "userInfoUri": "https://connect.asone4health.kamitbrains.local/realms/asone4health/protocol/openid-connect/userinfo",
+        "jwksUri": "https://connect.app.example.local/realms/asone4health/protocol/openid-connect/certs",
+        "userInfoUri": "https://connect.app.example.local/realms/asone4health/protocol/openid-connect/userinfo",
         "scopes": ["openid", "profile", "email", "roles"],
         "roleMapping": {
           "rules": [
@@ -61,7 +61,7 @@
             "Action": ["sts:AssumeRoleWithWebIdentity"],
             "Condition": {
               "StringEquals": {
-                "oidc:iss": "https://connect.asone4health.kamitbrains.local/realms/asone4health"
+                "oidc:iss": "https://connect.app.example.local/realms/asone4health"
               }
             }
           }

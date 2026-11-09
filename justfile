@@ -1,34 +1,34 @@
 # =============================================================================
-# Justfile — Operations for Docker Examples & KamitBrains Homelab
+# Justfile — Operations for Docker Examples & Homelab
 # =============================================================================
 set shell := ["bash", "-uc"]
 
-HOSTCTL_PROFILE := "kamitbrains-homelab"
-HOMELAB_IP      := "192.168.0.210"
-HOMELAB_TLD     := "kamitbrains.local"
+HOSTCTL_PROFILE := "homelab"
+HOMELAB_IP      := "192.168.1.10"
+HOMELAB_TLD     := "example.local"
 
-DOMAINS := "kamitbrains.local " + \
-    "traefik.kamitbrains.local " + \
-    "arcane.kamitbrains.local " + \
-    "auth.kamitbrains.local " + \
-    "passwords.kamitbrains.local " + \
-    "git.kamitbrains.local " + \
-    "share.kamitbrains.local " + \
-    "pad.kamitbrains.local " + \
-    "tools.kamitbrains.local " + \
-    "pdf.kamitbrains.local " + \
-    "draw.kamitbrains.local " + \
-    "logs.kamitbrains.local " + \
-    "status.kamitbrains.local " + \
-    "ntfy.kamitbrains.local " + \
-    "glances.kamitbrains.local " + \
-    "changedetection.kamitbrains.local"
+DOMAINS := "example.local " + \
+    "traefik.example.local " + \
+    "arcane.example.local " + \
+    "auth.example.local " + \
+    "passwords.example.local " + \
+    "git.example.local " + \
+    "share.example.local " + \
+    "pad.example.local " + \
+    "tools.example.local " + \
+    "pdf.example.local " + \
+    "draw.example.local " + \
+    "logs.example.local " + \
+    "status.example.local " + \
+    "ntfy.example.local " + \
+    "glances.example.local " + \
+    "changedetection.example.local"
 
 # Default target: List available recipes
 default:
     @just --list
 
-# 🌐 Add kamitbrains.local homelab domains to /etc/hosts via hostctl
+# 🌐 Add example.local homelab domains to /etc/hosts via hostctl
 hostctl-add:
     @echo "🌐 Adding {{ HOSTCTL_PROFILE }} local domains to /etc/hosts (IP: {{ HOMELAB_IP }})..."
     @command -v hostctl >/dev/null 2>&1 || { echo "❌ hostctl not found. Install: brew install guumaster/tap/hostctl"; exit 1; }
@@ -40,7 +40,7 @@ hostctl-add:
     fi
     @echo "✅ Local domains added for {{ HOMELAB_TLD }}. Verify with: just hostctl-list"
 
-# 🧹 Remove kamitbrains.local domains from /etc/hosts
+# 🧹 Remove example.local domains from /etc/hosts
 hostctl-remove:
     @echo "🧹 Removing {{ HOSTCTL_PROFILE }} domains from /etc/hosts..."
     @command -v hostctl >/dev/null 2>&1 || { echo "❌ hostctl not found. Install: brew install guumaster/tap/hostctl"; exit 1; }

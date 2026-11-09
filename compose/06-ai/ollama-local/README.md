@@ -30,4 +30,4 @@ Déploiement d'une instance **Ollama** s'exécutant localement sur votre machine
    ```
 
 ## Support GPU NVIDIA
-Si votre machine hôte dispose d'un GPU et que le toolkit NVIDIA est installé, décommentez le bloc `deploy` dans le fichier [`compose.yml`](file:///Volumes/X9%20Pro/Workspaces/nkaurelien/docker-examples/compose/06-ai/ollama-local/compose.yml) avant de lancer `docker compose up -d`.
+Si votre machine hôte dispose d'un GPU et que le toolkit NVIDIA est installé, décommentez le bloc `deploy` dans le fichier [`compose.yml`](compose.yml) avant de lancer `docker compose up -d`.

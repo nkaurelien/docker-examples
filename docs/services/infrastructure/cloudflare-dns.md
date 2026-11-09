@@ -29,13 +29,13 @@ The CLI tool `scripts/cloudflare_dns.py` provides a simple, robust interface to 
 .venv/bin/python3 scripts/cloudflare_dns.py
 
 # List all DNS records for a specific domain
-.venv/bin/python3 scripts/cloudflare_dns.py list kamitbrains.fr
+.venv/bin/python3 scripts/cloudflare_dns.py list example.com
 
 # Add an A record pointing to a server IP
-.venv/bin/python3 scripts/cloudflare_dns.py add kamitbrains.fr A app 161.97.89.185
+.venv/bin/python3 scripts/cloudflare_dns.py add example.com A app 203.0.113.10
 
 # Add a proxied A record (Cloudflare CDN / WAF enabled)
-.venv/bin/python3 scripts/cloudflare_dns.py add kamitbrains.fr A app 161.97.89.185 --proxied
+.venv/bin/python3 scripts/cloudflare_dns.py add example.com A app 203.0.113.10 --proxied
 ```
 
 ---
@@ -52,7 +52,7 @@ record = client.dns.records.create(
     zone_id="53e34787a1c669b8225e784e208259a3",
     type="A",
     name="app",
-    content="161.97.89.185",
+    content="203.0.113.10",
     proxied=False
 )
 ```

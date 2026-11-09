@@ -18,7 +18,7 @@ Role Ansible pour le déploiement et la gestion d'un registre d'artefacts d'entr
 
 ```yaml
 harbor_version: "v2.11.1"
-harbor_domain: "kamitbrains-minipc-k1.lab"
+harbor_domain: "homelab.lab"
 harbor_hostname: "harbor.{{ harbor_domain }}"
 harbor_deploy_dir: "/opt/harbor"
 harbor_data_dir: "/opt/harbor/data"

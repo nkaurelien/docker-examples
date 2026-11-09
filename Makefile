@@ -144,27 +144,27 @@ hosts-add:
 		echo "hostctl not found. Install from: https://guumaster.github.io/hostctl/"; \
 	fi
 
-# Add kamitbrains.local homelab domains to /etc/hosts pointing to 192.168.0.210 (requires sudo)
+# Add example.local homelab domains to /etc/hosts pointing to 192.168.1.10 (requires sudo)
 hosts-homelab-add:
-	@echo "Adding kamitbrains.local homelab domains to /etc/hosts via hostctl (requires sudo)..."
+	@echo "Adding example.local homelab domains to /etc/hosts via hostctl (requires sudo)..."
 	@if command -v hostctl >/dev/null 2>&1; then \
-		sudo hostctl add domains kamitbrains 192.168.0.210 \
-			kamitbrains.local \
-			traefik.kamitbrains.local \
-			arcane.kamitbrains.local \
-			auth.kamitbrains.local \
-			passwords.kamitbrains.local \
-			git.kamitbrains.local \
-			share.kamitbrains.local \
-			pad.kamitbrains.local \
-			tools.kamitbrains.local \
-			pdf.kamitbrains.local \
-			draw.kamitbrains.local \
-			logs.kamitbrains.local \
-			status.kamitbrains.local \
-			ntfy.kamitbrains.local \
-			glances.kamitbrains.local \
-			changedetection.kamitbrains.local; \
+		sudo hostctl add domains homelab 192.168.1.10 \
+			example.local \
+			traefik.example.local \
+			arcane.example.local \
+			auth.example.local \
+			passwords.example.local \
+			git.example.local \
+			share.example.local \
+			pad.example.local \
+			tools.example.local \
+			pdf.example.local \
+			draw.example.local \
+			logs.example.local \
+			status.example.local \
+			ntfy.example.local \
+			glances.example.local \
+			changedetection.example.local; \
 	else \
 		echo "hostctl not found. Install from: https://guumaster.github.io/hostctl/"; \
 	fi

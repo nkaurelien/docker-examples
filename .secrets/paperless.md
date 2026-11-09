@@ -1,7 +1,7 @@
 # Paperless-ngx Document Management Credentials & Documentation
 
 - **Service**: Paperless-ngx Open Source Document Management System & OCR
-- **URL**: https://paperless.kamitbrains.fr (or https://docs.kamitbrains.fr)
+- **URL**: https://paperless.example.com (or https://docs.example.com)
 - **Database Engine**: PostgreSQL 16 (`postgres:16-alpine`)
 - **Broker**: Valkey 8 (`valkey/valkey:8-alpine`)
 - **OCR Engine**: Tesseract (fra+eng)

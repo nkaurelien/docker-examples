@@ -1,9 +1,9 @@
 # Uptime Kuma Status Page - Identifiants d'Authentification
 
-Ce dossier contient le mot de passe pour le compte administrateur Uptime Kuma (`https://status.kamitbrains.fr`).
+Ce dossier contient le mot de passe pour le compte administrateur Uptime Kuma (`https://status.example.com`).
 
 ## 👤 Compte Administrateur Uptime Kuma :
-* **URL** : `https://status.kamitbrains.fr`
+* **URL** : `https://status.example.com`
 * **Nom d'utilisateur** : `admin`
 * **Mot de passe** : *(voir le passfile `.secrets/uptime-kuma-admin-password`)*
 

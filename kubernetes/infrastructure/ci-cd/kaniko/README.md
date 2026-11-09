@@ -112,7 +112,7 @@ kubectl create secret docker-registry kaniko-registry-secret \
 
 ### Étape 2 : Configurer la source du Contexte dans le Job
 
-Dans le fichier [kaniko-job-template.yaml](file:///Volumes/X9%20Pro/Workspaces/nkaurelien/docker-examples/kubernetes/infrastructure/ci-cd/kaniko/kaniko-job-template.yaml), Kaniko peut récupérer le code source directement depuis :
+Dans le fichier [kaniko-job-template.yaml](kaniko-job-template.yaml), Kaniko peut récupérer le code source directement depuis :
 
 1. **Un dépôt Git public ou privé** :
    ```yaml
@@ -191,7 +191,7 @@ flowchart LR
 #### 1. Promotion d'image instantanée (Zero Rebuild)
 Pour promouvoir une image validée en Staging vers la Production, Crane modifie simplement le tag sur le registre distant **en 200 millisecondes**, sans retélécharger l'image ni la recompiler :
 ```bash
-crane tag ghcr.io/kamitbrains/fastapi-api:staging-commit-abc v1.0.0
+crane tag ghcr.io/example-org/fastapi-api:staging-commit-abc v1.0.0
 ```
 
 #### 2. Copier une image d'un registre public vers votre registre local (Air-Gap / Cache)
@@ -202,27 +202,27 @@ La commande suit la convention standard UNIX (`cp <source> <destination>`) :
 crane copy <SOURCE> <DESTINATION>
 
 # Exemple concret :
-crane copy couchdb:3.4 ghcr.io/kamitbrains/couchdb:3.4
+crane copy couchdb:3.4 ghcr.io/example-org/couchdb:3.4
 #          ^^^^^^^^^^^ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #            SOURCE                 DESTINATION
 ```
 
 - **SOURCE (`couchdb:3.4`)** : Image d'origine. En l'absence de domaine, pointe vers **Docker Hub** officiel (`index.docker.io/library/couchdb:3.4`).
-- **DESTINATION (`ghcr.io/kamitbrains/couchdb:3.4`)** : Registre cible distant (**GitHub Container Registry**, dans le compte/orga `kamitbrains`).
+- **DESTINATION (`ghcr.io/example-org/couchdb:3.4`)** : Registre cible distant (**GitHub Container Registry**, dans le compte/orga `example-org`).
 
 > 💡 **Avantage clé** : Contrairement à Docker (`docker pull` puis `docker push`), le transfert s'effectue **directement de registre à registre en streaming HTTP** côté réseau, sans jamais télécharger l'image (couches et gigaoctets) sur le disque dur de votre Mac !
 
 #### 3. Inspecter le Manifeste OCI, les Layers et la taille réelle
 Voir l'architecture CPU (amd64/arm64), la taille et les variables d'environnement d'une image sans la télécharger :
 ```bash
-crane manifest ghcr.io/kamitbrains/fastapi-api:latest | jq .
-crane config ghcr.io/kamitbrains/fastapi-api:latest | jq .config.Env
+crane manifest ghcr.io/example-org/fastapi-api:latest | jq .
+crane config ghcr.io/example-org/fastapi-api:latest | jq .config.Env
 ```
 
 #### 4. Obtenir le SHA256 Digest immuable pour Kubernetes
 En production Kubernetes, il est recommandé de figer l'image par son SHA256 plutôt que le tag `:latest` :
 ```bash
-crane digest ghcr.io/kamitbrains/fastapi-api:latest
+crane digest ghcr.io/example-org/fastapi-api:latest
 # Sortie : sha256:4a2f1b88e...
 ```
 

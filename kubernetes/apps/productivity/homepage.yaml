@@ -5,7 +5,7 @@ metadata:
   namespace: tools
 data:
   settings.yaml: |
-    title: "Kamitbrains Homelab"
+    title: "My Homelab"
     background:
       image: ""
       blur: "sm"
@@ -35,43 +35,43 @@ data:
     - Infrastructure:
         - K3s Cluster:
             icon: k3s.png
-            href: "https://192.168.0.210:6443"
+            href: "https://192.168.1.10:6443"
             description: "Kubernetes Control-Plane"
         - Headlamp:
             icon: kubernetes.png
-            href: "https://headlamp.kamitbrains-minipc-k1.lab"
+            href: "https://headlamp.homelab.lab"
             description: "Cluster Dashboard"
         - Rancher:
             icon: rancher.png
-            href: "https://rancher.kamitbrains-minipc-k1.lab"
+            href: "https://rancher.homelab.lab"
             description: "Multi-Cluster Manager"
         - Glances:
             icon: glances.png
-            href: "https://glances.kamitbrains-minipc-k1.lab"
+            href: "https://glances.homelab.lab"
             description: "System & Hardware Metrics"
 
     - Management & Tools:
         - IT-Tools:
             icon: it-tools.png
-            href: "https://it-tools.kamitbrains-minipc-k1.lab"
+            href: "https://it-tools.homelab.lab"
             description: "Developer Toolbox"
         - Excalidraw:
             icon: excalidraw.png
-            href: "https://draw.kamitbrains-minipc-k1.lab"
+            href: "https://draw.homelab.lab"
             description: "Collaborative Whiteboard"
         - Uptime Kuma:
             icon: uptime-kuma.png
-            href: "https://status.kamitbrains-minipc-k1.lab"
+            href: "https://status.homelab.lab"
             description: "Services Status & Alerts"
         - Umami:
             icon: umami.png
-            href: "https://analytics.kamitbrains-minipc-k1.lab"
+            href: "https://analytics.homelab.lab"
             description: "Privacy-first Web Analytics"
 
     - Databases:
         - CouchDB:
             icon: couchdb.png
-            href: "https://couchdb.kamitbrains-minipc-k1.lab"
+            href: "https://couchdb.homelab.lab"
             description: "NoSQL Document Database"
         - PostgreSQL:
             icon: postgresql.png
@@ -87,7 +87,7 @@ data:
     - Productivity:
         - HedgeDoc:
             icon: hedgedoc.png
-            href: "https://pad.kamitbrains-minipc-k1.lab"
+            href: "https://pad.homelab.lab"
             description: "Collaborative Markdown Pad"
 
   widgets.yaml: |
@@ -95,7 +95,7 @@ data:
         icon: https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/kubernetes.png
     - greeting:
         text_size: xl
-        text: "Kamitbrains Homelab"
+        text: "My Homelab"
     - kubernetes:
         cluster:
           show: true
@@ -170,10 +170,10 @@ spec:
   ingressClassName: traefik
   tls:
     - hosts:
-        - home.kamitbrains-minipc-k1.lab
+        - home.homelab.lab
       secretName: homepage-tls
   rules:
-    - host: home.kamitbrains-minipc-k1.lab
+    - host: home.homelab.lab
       http:
         paths:
           - path: /

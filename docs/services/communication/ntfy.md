@@ -13,8 +13,8 @@ tags: communication, notification, ntfy, push, push-notifications
 | Attribute | Details |
 | :--- | :--- |
 | **Service Name** | `ntfy` |
-| **Public URL** | `https://ntfy.kamitbrains.fr` |
-| **Health Check** | `https://ntfy.kamitbrains.fr/v1/health` |
+| **Public URL** | `https://ntfy.example.com` |
+| **Health Check** | `https://ntfy.example.com/v1/health` |
 | **Docker Image** | `binwiederhier/ntfy:v2.11.0` |
 | **Internal Port** | `80` |
 | **Reverse Proxy** | Traefik (`websecure` + Let's Encrypt TLS) |
@@ -30,7 +30,7 @@ tags: communication, notification, ntfy, push, push-notifications
 ### 1. Publish a Message via cURL
 
 ```bash
-curl -d "Disk usage alert on Contabo server" https://ntfy.kamitbrains.fr/$(cat .secrets/ntfy-topic)
+curl -d "Disk usage alert on VPS server" https://ntfy.example.com/$(cat .secrets/ntfy-topic)
 ```
 
 ### 2. Publish with Title, Tags, and Priority
@@ -41,14 +41,14 @@ curl \
   -H "Tags: white_check_mark,database" \
   -H "Priority: high" \
   -d "Database backup completed successfully in 45 seconds." \
-  https://ntfy.kamitbrains.fr/$(cat .secrets/ntfy-topic)
+  https://ntfy.example.com/$(cat .secrets/ntfy-topic)
 ```
 
 ### 3. Subscribe to a Topic
 
-- **Android / iOS App**: Open the official **ntfy** mobile application, add custom server `https://ntfy.kamitbrains.fr`, and subscribe to the secret topic configured in `.secrets/ntfy-topic`.
+- **Android / iOS App**: Open the official **ntfy** mobile application, add custom server `https://ntfy.example.com`, and subscribe to the secret topic configured in `.secrets/ntfy-topic`.
 
-- **Web Interface**: Open `https://ntfy.kamitbrains.fr` in any browser to view live topics.
+- **Web Interface**: Open `https://ntfy.example.com` in any browser to view live topics.
 
 ---
 
@@ -76,7 +76,7 @@ services:
     command:
       - serve
     environment:
-      - NTFY_BASE_URL=https://ntfy.kamitbrains.fr
+      - NTFY_BASE_URL=https://ntfy.example.com
       - NTFY_CACHE_FILE=/var/cache/ntfy/cache.db
       - NTFY_BEHIND_PROXY=true
     volumes:
@@ -86,7 +86,7 @@ services:
       - traefik-public
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.ntfy.rule=Host(`ntfy.kamitbrains.fr`)"
+      - "traefik.http.routers.ntfy.rule=Host(`ntfy.example.com`)"
       - "traefik.http.routers.ntfy.entrypoints=websecure"
       - "traefik.http.routers.ntfy.tls.certresolver=letsencrypt"
       - "traefik.http.routers.ntfy.middlewares=crowdsec-bouncer@file"
@@ -97,7 +97,7 @@ services:
 
 ## Monitoring & Systemd Integration
 
-- **Uptime Kuma**: Automatically monitored at `https://ntfy.kamitbrains.fr/v1/health`.
+- **Uptime Kuma**: Automatically monitored at `https://ntfy.example.com/v1/health`.
 - **Systemd Service**: Managed via `ntfy.service` for automatic boot startup.
 
 ---

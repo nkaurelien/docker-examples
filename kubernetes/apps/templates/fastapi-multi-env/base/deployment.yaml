@@ -24,7 +24,7 @@ spec:
         runAsGroup: 10001
       containers:
         - name: api
-          image: ghcr.io/kamitbrains/fastapi-api:latest
+          image: ghcr.io/example-org/fastapi-api:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000

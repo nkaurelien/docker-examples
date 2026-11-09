@@ -13,7 +13,7 @@ tags: edition, manager, passbolt, password, password-manager, postgresql
 | Attribute | Details |
 | :--- | :--- |
 | **Service Name** | `passbolt` |
-| **Public URL** | `https://passwords.kamitbrains.fr` |
+| **Public URL** | `https://passwords.example.com` |
 | **Health Check** | `http://127.0.0.1/healthcheck/status.json` |
 | **Docker Image** | `passbolt/passbolt:latest` |
 | **Database** | PostgreSQL 16 Alpine (`postgres:16-alpine`) |
@@ -71,7 +71,7 @@ services:
       passbolt-db:
         condition: service_healthy
     environment:
-      - APP_FULL_BASE_URL=https://passwords.kamitbrains.fr
+      - APP_FULL_BASE_URL=https://passwords.example.com
       - DATASOURCES_DEFAULT_DRIVER=Cake\Database\Driver\Postgres
       - DATASOURCES_DEFAULT_HOST=passbolt-db
       - DATASOURCES_DEFAULT_PORT=5432

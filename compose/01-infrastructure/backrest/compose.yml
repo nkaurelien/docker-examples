@@ -1,5 +1,5 @@
 # Backrest — Web UI & Orchestrator for Restic Backup
-# Web UI: https://backrest.kamitbrains.fr
+# Web UI: https://backrest.example.com
 
 x-arcane:
   icon: https://raw.githubusercontent.com/selfhst/icons/main/svg/restic.svg
@@ -41,7 +41,7 @@ services:
       - "com.getarcaneapp.arcane.icon=https://raw.githubusercontent.com/selfhst/icons/main/svg/restic.svg"
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-public"
-      - "traefik.http.routers.backrest.rule=Host(`backrest.kamitbrains.fr`)"
+      - "traefik.http.routers.backrest.rule=Host(`backrest.example.com`)"
       - "traefik.http.routers.backrest.entrypoints=websecure"
       - "traefik.http.routers.backrest.tls.certresolver=letsencrypt"
       - "traefik.http.routers.backrest.middlewares=crowdsec-bouncer@file"

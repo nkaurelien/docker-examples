@@ -18,7 +18,7 @@ services:
       - |
         mkdir -p /data
         if [ ! -f /data/notifications.yml ]; then
-          printf 'subscriptions: []\ndispatchers:\n  - id: 1\n    name: ntfy\n    type: webhook\n    url: https://ntfy.${DOMAIN:-kamitbrains.fr}/${NTFY_TOPIC:-<INSERT_SECRET_NTFY_TOPIC>}\n    template: |-\n      {\n        "topic": "dozzle-{{ .Container.HostName }}",\n        "title": "{{ .Container.Name }}",\n        "message": "{{ .Detail }}"\n      }\n' > /data/notifications.yml
+          printf 'subscriptions: []\ndispatchers:\n  - id: 1\n    name: ntfy\n    type: webhook\n    url: https://ntfy.${DOMAIN:-example.com}/${NTFY_TOPIC:-<INSERT_SECRET_NTFY_TOPIC>}\n    template: |-\n      {\n        "topic": "dozzle-{{ .Container.HostName }}",\n        "title": "{{ .Container.Name }}",\n        "message": "{{ .Detail }}"\n      }\n' > /data/notifications.yml
         fi
         chmod -R 777 /data
     restart: "no"

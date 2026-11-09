@@ -19,11 +19,11 @@ tags: dev-tools, ocr, pdf, pdf-suite, stirling-pdf
 
 ## 🌐 URLs & Accès
 
-- **URL Principale** : [https://stirling.kamitbrains.fr](https://stirling.kamitbrains.fr)
+- **URL Principale** : [https://stirling.example.com](https://stirling.example.com)
 - **Aliases de domaine** :
-  - [https://stirling-pdf.kamitbrains.fr](https://stirling-pdf.kamitbrains.fr)
-  - [https://pdf2.kamitbrains.fr](https://pdf2.kamitbrains.fr)
-- **Authentification** : TinyAuth SSO (`admin@kamitbrains.fr` / `admin`)
+  - [https://stirling-pdf.example.com](https://stirling-pdf.example.com)
+  - [https://pdf2.example.com](https://pdf2.example.com)
+- **Authentification** : TinyAuth SSO (`admin@example.com` / `admin`)
 
 ---
 
@@ -52,7 +52,7 @@ services:
       - traefik-public
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.stirling-pdf.rule=Host(`stirling.kamitbrains.fr`) || Host(`stirling-pdf.kamitbrains.fr`) || Host(`pdf2.kamitbrains.fr`)"
+      - "traefik.http.routers.stirling-pdf.rule=Host(`stirling.example.com`) || Host(`stirling-pdf.example.com`) || Host(`pdf2.example.com`)"
       - "traefik.http.routers.stirling-pdf.entrypoints=websecure"
       - "traefik.http.routers.stirling-pdf.tls.certresolver=letsencrypt"
       - "traefik.http.routers.stirling-pdf.middlewares=crowdsec-bouncer@file,tinyauth-auth@docker"
@@ -63,5 +63,5 @@ services:
 
 ## 📊 Surveillance & Intégrations
 
-- **Homepage Dashboard** : Carte dédiée sous `Core Services` (`stirling.kamitbrains.fr`).
+- **Homepage Dashboard** : Carte dédiée sous `Core Services` (`stirling.example.com`).
 - **Uptime Kuma** : Monitor #12 (`Stirling-PDF Suite`) configuré avec alertes Push Ntfy.

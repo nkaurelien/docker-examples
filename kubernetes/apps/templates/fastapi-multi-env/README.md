@@ -13,9 +13,9 @@ Ce guide documente le pattern officiel Kubernetes / Kustomize (**Base & Overlays
 1. **Isolation par Namespaces** : Aucun risque de collision entre les environnements de Dev, Staging et Production.
 2. **Configuration Déclarative (Zero Duplication)** : Les manifestes communs (`Deployment`, `Service`, `Ingress`) sont mutualisés dans `base/`.
 3. **Différenciation par Overlays** :
-   - **DEV** : 1 réplique, `DEBUG=true`, accessible sur `https://api-dev.kamitbrains-minipc-k1.lab`.
-   - **STAGING** : 1 réplique, configuration proche de la prod, accessible sur `https://api-stage.kamitbrains-minipc-k1.lab`.
-   - **PROD** : 2 répliques (Haute Disponibilité), `DEBUG=false`, accessible sur `https://api.kamitbrains-minipc-k1.lab`.
+   - **DEV** : 1 réplique, `DEBUG=true`, accessible sur `https://api-dev.homelab.lab`.
+   - **STAGING** : 1 réplique, configuration proche de la prod, accessible sur `https://api-stage.homelab.lab`.
+   - **PROD** : 2 répliques (Haute Disponibilité), `DEBUG=false`, accessible sur `https://api.homelab.lab`.
 4. **Certificats TLS Automatiques** : Chaque environnement obtient un certificat SSL/TLS valide et sécurisé par `cert-manager` et votre Root CA local.
 
 ---
@@ -89,11 +89,11 @@ kubectl kustomize kubernetes/apps/templates/fastapi-multi-env/overlays/prod
 
 Pour accéder aux trois environnements depuis le navigateur de votre Mac :
 ```bash
-sudo hostctl add domains kamitbrains-homelab \
-  api-dev.kamitbrains-minipc-k1.lab \
-  api-stage.kamitbrains-minipc-k1.lab \
-  api.kamitbrains-minipc-k1.lab \
-  --ip 192.168.0.210
+sudo hostctl add domains homelab \
+  api-dev.homelab.lab \
+  api-stage.homelab.lab \
+  api.homelab.lab \
+  --ip 192.168.1.10
 ```
 
 ---

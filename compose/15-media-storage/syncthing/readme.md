@@ -4,8 +4,8 @@
 
 ## Hostnames & Access
 
-- Main URL: `https://syncthing.kamitbrains.fr`
-- Alias URL: `https://sync.kamitbrains.fr`
+- Main URL: `https://syncthing.example.com`
+- Alias URL: `https://sync.example.com`
 - Default GUI Admin Login: `admin`
 
 ## Network Ports

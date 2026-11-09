@@ -1,7 +1,7 @@
 ---
 # Stirling-PDF role defaults
 stirling_pdf_image: "stirlingtools/stirling-pdf:latest"
-stirling_pdf_domain: "kamitbrains.fr"
+stirling_pdf_domain: "example.com"
 stirling_pdf_hostname: "stirling.{{ traefik_domain | default(stirling_pdf_domain) }}"
 stirling_pdf_alias_hostname: "stirling-pdf.{{ traefik_domain | default(stirling_pdf_domain) }}"
 stirling_pdf_short_alias_hostname: "pdf2.{{ traefik_domain | default(stirling_pdf_domain) }}"

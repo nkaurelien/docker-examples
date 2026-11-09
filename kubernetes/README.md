@@ -4,7 +4,7 @@ tags: boilerplates, kubernetes, k3s, roadmap, homelab
 
 # Kubernetes Architecture & Homelab (K3s)
 
-Ce dossier regroupe les manifestes Kubernetes, configurations Kustomize et déploiements d'applications sur le cluster **K3s** du serveur **Acemagic K1 Mini** (`192.168.0.210`).
+Ce dossier regroupe les manifestes Kubernetes, configurations Kustomize et déploiements d'applications sur le cluster **K3s** du serveur **Acemagic K1 Mini** (`192.168.1.10`).
 
 ---
 
@@ -61,21 +61,21 @@ Tous les services ci-dessous sont exposés via **Traefik Ingress** et sécurisé
 
 | Application | Namespace | URL / Endpoint d'accès | Domaine / Rôle |
 | :--- | :--- | :--- | :--- |
-| **Harbor OCI Registry** | `code-management` | `https://harbor.kamitbrains-minipc-k1.lab` | Registre OCI & Dépôt d'Artefacts d'Entreprise (Helm + Trivy) |
-| **Homepage** | `tools` | `https://home.kamitbrains-minipc-k1.lab` | Portail d'accueil du Homelab |
-| **Infisical** | `security` | `https://infisical.kamitbrains-minipc-k1.lab` | Gestionnaire de Secrets & Clés (Mutualisé PG + Valkey) |
-| **Headlamp (UI K8s)** | `headlamp` | `https://headlamp.kamitbrains-minipc-k1.lab` | Dashboard cluster léger |
-| **Rancher Server** | `cattle-system` | `https://rancher.kamitbrains-minipc-k1.lab` | Console multi-cluster |
-| **IT-Tools** | `tools` | `https://it-tools.kamitbrains-minipc-k1.lab` | Outils dev en ligne |
-| **Excalidraw** | `tools` | `https://draw.kamitbrains-minipc-k1.lab` | Tableaux blancs virtuels |
-| **Uptime Kuma** | `monitoring` | `https://status.kamitbrains-minipc-k1.lab` | Surveillance & Status page |
-| **Glances** | `monitoring` | `https://glances.kamitbrains-minipc-k1.lab` | Métriques K1 Mini (CPU/RAM/I/O) |
-| **Umami Analytics** | `monitoring` | `https://analytics.kamitbrains-minipc-k1.lab` | Web Analytics privacy-first |
-| **CouchDB** | `databases` | `https://couchdb.kamitbrains-minipc-k1.lab` | Base NoSQL Document (Fauxton UI) |
+| **Harbor OCI Registry** | `code-management` | `https://harbor.homelab.lab` | Registre OCI & Dépôt d'Artefacts d'Entreprise (Helm + Trivy) |
+| **Homepage** | `tools` | `https://home.homelab.lab` | Portail d'accueil du Homelab |
+| **Infisical** | `security` | `https://infisical.homelab.lab` | Gestionnaire de Secrets & Clés (Mutualisé PG + Valkey) |
+| **Headlamp (UI K8s)** | `headlamp` | `https://headlamp.homelab.lab` | Dashboard cluster léger |
+| **Rancher Server** | `cattle-system` | `https://rancher.homelab.lab` | Console multi-cluster |
+| **IT-Tools** | `tools` | `https://it-tools.homelab.lab` | Outils dev en ligne |
+| **Excalidraw** | `tools` | `https://draw.homelab.lab` | Tableaux blancs virtuels |
+| **Uptime Kuma** | `monitoring` | `https://status.homelab.lab` | Surveillance & Status page |
+| **Glances** | `monitoring` | `https://glances.homelab.lab` | Métriques K1 Mini (CPU/RAM/I/O) |
+| **Umami Analytics** | `monitoring` | `https://analytics.homelab.lab` | Web Analytics privacy-first |
+| **CouchDB** | `databases` | `https://couchdb.homelab.lab` | Base NoSQL Document (Fauxton UI) |
 | **PostgreSQL 16** | `databases` | `postgres.databases.svc:5432` | Base relationnelle mutualisée |
 | **Valkey 8 (ex-Redis)** | `databases` | `redis.databases.svc:6379` | Cache in-memory & file de tâches mutualisé |
 | **Faster-Whisper (STT)** | `ai` | `faster-whisper.ai.svc:10300` | Moteur Speech-To-Text Wyoming (Voice AI) |
-| **HedgeDoc** | `productivity` | `https://pad.kamitbrains-minipc-k1.lab` | Éditeur Markdown partagé |
+| **HedgeDoc** | `productivity` | `https://pad.homelab.lab` | Éditeur Markdown partagé |
 
 > 💡 **Note sur Homepage et ses alternatives (Homarr & Heimdall) :**
 > - **Homepage (Choix actuel)** : Configuration 100% déclarative via fichiers YAML / ConfigMaps K8s (parfait pour GitOps), widgets Kubernetes natifs (statut des pods/nœuds), ultra-léger et rapide.
@@ -89,19 +89,19 @@ Tous les services ci-dessous sont exposés via **Traefik Ingress** et sécurisé
 Pour accéder à tous ces services depuis votre navigateur sans erreur DNS, ajoutez-les à votre `hostctl` :
 
 ```bash
-sudo hostctl add domains kamitbrains-homelab \
-  rancher.kamitbrains-minipc-k1.lab \
-  headlamp.kamitbrains-minipc-k1.lab \
-  home.kamitbrains-minipc-k1.lab \
-  analytics.kamitbrains-minipc-k1.lab \
-  it-tools.kamitbrains-minipc-k1.lab \
-  draw.kamitbrains-minipc-k1.lab \
-  status.kamitbrains-minipc-k1.lab \
-  glances.kamitbrains-minipc-k1.lab \
-  pad.kamitbrains-minipc-k1.lab \
-  couchdb.kamitbrains-minipc-k1.lab \
-  infisical.kamitbrains-minipc-k1.lab \
-  --ip 192.168.0.210
+sudo hostctl add domains homelab \
+  rancher.homelab.lab \
+  headlamp.homelab.lab \
+  home.homelab.lab \
+  analytics.homelab.lab \
+  it-tools.homelab.lab \
+  draw.homelab.lab \
+  status.homelab.lab \
+  glances.homelab.lab \
+  pad.homelab.lab \
+  couchdb.homelab.lab \
+  infisical.homelab.lab \
+  --ip 192.168.1.10
 ```
 
 ---

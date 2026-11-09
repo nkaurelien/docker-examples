@@ -9,5 +9,5 @@ Backrest is a web-based UI and backup orchestrator built for Restic.
 - **Hooks**: Pre- and post-backup hooks for database dumps (`pg_dump`, `mysqldump`).
 
 ## Access
-- **URL**: `https://backrest.kamitbrains.fr`
+- **URL**: `https://backrest.example.com`
 - **Port**: `9898`

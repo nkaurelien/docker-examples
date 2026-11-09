@@ -12,20 +12,17 @@ Ce dossier contient la suite de playbooks, rôles et inventaires Ansible pour l'
 
 | Environnement | Hôte / IP | Système | Rôle principal |
 | :--- | :--- | :--- | :--- |
-| **K1 Mini (Homelab)** | IP et nom : `.secrets/ssh-kamitbrains-homelab-{ip,fqdn}` | Ubuntu 26.04 LTS (4c/8t, 32 Go RAM) | **Cluster K3s Kubernetes** (Air-Gap / k3s-ansible) |
-| **Contabo (FR)** | `contabo_server_fr` | Ubuntu LTS | Docker Stacks & Reverse Proxy Traefik |
-| **Laptop AsOne4Health** | `kamitbrains-laptop.lab`<br>`192.168.0.205` | Linux | Services centraux AsOne4Health / CouchDB |
+| **Homelab (mini-PC)** | `homelab_server`<br>`192.168.1.10` | Ubuntu LTS | **Cluster K3s Kubernetes** (Air-Gap / k3s-ansible) + stacks Docker |
+| **VPS (FR)** | `vps_server`<br>`203.0.113.10` | Ubuntu LTS | Docker Stacks & Reverse Proxy Traefik |
 
-> ⚠️ **Deux machines distinctes, un seul nom d'hôte.** Le K1 Mini et le laptop AsOne4Health
-> repondent tous les deux a `kamitbrains.local` : seule l'IP les distingue. Verifier
-> `.secrets/ssh-kamitbrains-homelab-ip` avant tout `ansible-playbook`.
+> ℹ️ **Inventaire d'exemple.** Les hôtes, IP (`192.168.1.10`, `203.0.113.10`), utilisateurs (`deploy`)
+> et domaines (`example.com`, `example.local`) de ce dépôt sont des valeurs neutres : adaptez
+> `ansible/inventory.yml` et `ansible/group_vars/` à votre infrastructure. Les mots de passe
+> sont lus depuis `.secrets/` (non versionné).
 >
-> - **K1 Mini (`192.168.0.210`)** : cible de CE repo — K3s, Traefik, Gitea, stacks Docker perso.
-> - **Laptop AsOne4Health (`192.168.0.205`)** : pilote par l'IaC du repo `asone4health-global`
->   (`make kamit-central`) — **nginx + certificats mkcert** sur les ports 80/443.
->   N'y deployer aucun role de ce repo : Traefik y prend 80/443, desactive nginx et casse
->   TLS pour `*.asone4health.kamitbrains.local` (incident du 21/09/2026, cert
->   `TRAEFIK DEFAULT CERT` auto-signe → `CERTIFICATE_VERIFY_FAILED` cote backend).
+> ⚠️ Si plusieurs machines de votre réseau répondent au même nom d'hôte, vérifiez l'IP ciblée
+> avant tout `ansible-playbook` : déployer Traefik sur une machine qui sert déjà les ports 80/443
+> (nginx, etc.) casse le TLS existant.
 
 ---
 
@@ -35,7 +32,7 @@ Le déploiement de K3s est orchestré avec la collection officielle **[k3s-io/k3
 
 ### 1. Fichiers Dédiés K3s
 
-- **`k3s-io-inventory.yml`** : Inventaire ciblant le nœud `k1-mini` avec configuration du endpoint `192.168.0.210:6443` et activation d'Air-Gap (`airgap_dir`).
+- **`k3s-io-inventory.yml`** : Inventaire ciblant le nœud `k1-mini` avec configuration du endpoint `192.168.1.10:6443` et activation d'Air-Gap (`airgap_dir`).
 - **`k3s-io-deploy.yml`** : Playbook appelant `k3s.orchestration.site`.
 - **`k3s-io-reset.yml`** : Playbook de désinstallation et nettoyage complet appelant `k3s.orchestration.reset`.
 - **`scripts/prepare-airgap.sh`** : Télécharge localement les binaires et images K3s dans `airgap/`.

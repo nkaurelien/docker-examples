@@ -41,7 +41,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: CMD_DOMAIN
-              value: "pad.kamitbrains-minipc-k1.lab"
+              value: "pad.homelab.lab"
             - name: CMD_PROTOCOL_USEREVERSEPROXY
               value: "true"
             - name: CMD_ALLOW_ANONYMOUS
@@ -92,10 +92,10 @@ spec:
   ingressClassName: traefik
   tls:
     - hosts:
-        - pad.kamitbrains-minipc-k1.lab
+        - pad.homelab.lab
       secretName: hedgedoc-tls
   rules:
-    - host: pad.kamitbrains-minipc-k1.lab
+    - host: pad.homelab.lab
       http:
         paths:
           - path: /

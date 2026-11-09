@@ -22,7 +22,7 @@ cp .env.example .env
 docker compose up -d
 ```
 
-Access at: `https://paperless.kamitbrains.fr` (or `https://docs.kamitbrains.fr`)
+Access at: `https://paperless.example.com` (or `https://docs.example.com`)
 
 ## Ansible Deployment
 

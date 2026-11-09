@@ -1,12 +1,12 @@
 # Ntfy Push Notification Service Credentials & Configuration
 
 - **Service Name**: ntfy
-- **URL**: `https://ntfy.kamitbrains.fr`
-- **Healthcheck URL**: `https://ntfy.kamitbrains.fr/v1/health`
+- **URL**: `https://ntfy.example.com`
+- **Healthcheck URL**: `https://ntfy.example.com/v1/health`
 - **Admin Password File**: `.secrets/ntfy-admin-password`
 - **Topic File**: `.secrets/ntfy-topic`
-- **Base URL**: `https://ntfy.kamitbrains.fr`
-- **Pub/Sub Topic Example**: `curl -d "Test notification" https://ntfy.kamitbrains.fr/$(cat .secrets/ntfy-topic)`
+- **Base URL**: `https://ntfy.example.com`
+- **Pub/Sub Topic Example**: `curl -d "Test notification" https://ntfy.example.com/$(cat .secrets/ntfy-topic)`
 
 ## 🔄 Rotation du nom de topic secret :
 Pour renouveler ou pivoter le nom de topic en cas de besoin :

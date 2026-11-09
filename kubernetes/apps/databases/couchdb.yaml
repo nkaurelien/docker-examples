@@ -95,10 +95,10 @@ spec:
   ingressClassName: traefik
   tls:
     - hosts:
-        - couchdb.kamitbrains-minipc-k1.lab
+        - couchdb.homelab.lab
       secretName: couchdb-tls
   rules:
-    - host: couchdb.kamitbrains-minipc-k1.lab
+    - host: couchdb.homelab.lab
       http:
         paths:
           - path: /

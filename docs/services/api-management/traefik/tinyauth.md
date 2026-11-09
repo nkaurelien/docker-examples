@@ -13,7 +13,7 @@ tags: api-gateway, forwardauth, ingress, middleware, reverse-proxy, sso
 | Attribute | Details |
 | :--- | :--- |
 | **Service Name** | `tinyauth` |
-| **Public URL** | `https://auth.kamitbrains.fr` |
+| **Public URL** | `https://auth.example.com` |
 | **Health Check** | `http://127.0.0.1:3000/api/health` |
 | **Docker Image** | `ghcr.io/steveiliop56/tinyauth:v4` |
 | **Traefik Middleware** | `tinyauth-auth@docker` |
@@ -28,7 +28,7 @@ To protect any service with TinyAuth ForwardAuth SSO, add the middleware label:
 ```yaml
 labels:
   - "traefik.enable=true"
-  - "traefik.http.routers.myservice.rule=Host(`myservice.kamitbrains.fr`)"
+  - "traefik.http.routers.myservice.rule=Host(`myservice.example.com`)"
   - "traefik.http.routers.myservice.middlewares=tinyauth-auth@docker"
 ```
 
@@ -46,14 +46,14 @@ services:
     restart: unless-stopped
     environment:
       - SECRET=${TINYAUTH_SECRET}
-      - USERS=admin@kamitbrains.fr:${TINYAUTH_ADMIN_PASSWORD}
-      - APP_URL=https://auth.kamitbrains.fr
+      - USERS=admin@example.com:${TINYAUTH_ADMIN_PASSWORD}
+      - APP_URL=https://auth.example.com
       - COOKIE_SECURE=true
     networks:
       - traefik-public
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.tinyauth.rule=Host(`auth.kamitbrains.fr`)"
+      - "traefik.http.routers.tinyauth.rule=Host(`auth.example.com`)"
       - "traefik.http.routers.tinyauth.entrypoints=websecure"
       - "traefik.http.routers.tinyauth.tls.certresolver=letsencrypt"
       - "traefik.http.services.tinyauth.loadbalancer.server.port=3000"

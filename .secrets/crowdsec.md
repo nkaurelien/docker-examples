@@ -10,7 +10,7 @@ Ce dossier contient les clés de sécurité pour le moteur de détection d'intru
 Le rôle Ansible [`ansible/roles/crowdsec`](../ansible/roles/crowdsec) injecte la clé LAPI dans le bouncer Traefik :
 
 ```yaml
-crowdsec_lapi_key: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/crowdsec-lapi-key') | trim }}"
+crowdsec_lapi_key: "{{ lookup('file', playbook_dir ~ '/../.secrets/crowdsec-lapi-key') | trim }}"
 ```
 
 ## 🔄 Générer/Renouveler une nouvelle clé LAPI :

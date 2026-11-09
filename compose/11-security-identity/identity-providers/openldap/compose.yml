@@ -10,9 +10,9 @@ services:
     image: osixia/openldap:1.5.0
     container_name: openldap
     environment:
-      LDAP_ORGANISATION: ${LDAP_ORGANISATION:-kamitbrains-it}
-      LDAP_DOMAIN: ${LDAP_DOMAIN:-kamitbrains.local}
-      LDAP_BASE_DN: ${LDAP_BASE_DN:-dc=kamitbrains,dc=local}
+      LDAP_ORGANISATION: ${LDAP_ORGANISATION:-example-it}
+      LDAP_DOMAIN: ${LDAP_DOMAIN:-example.local}
+      LDAP_BASE_DN: ${LDAP_BASE_DN:-dc=example,dc=local}
       LDAP_ADMIN_PASSWORD_FILE: /run/secrets/ldap_admin_password
       LDAP_CONFIG_PASSWORD_FILE: /run/secrets/ldap_config_password
     secrets:
@@ -58,13 +58,13 @@ services:
       openldap:
         condition: service_healthy
     environment:
-      LDAP_BASE_DN: ${LDAP_BASE_DN:-dc=kamitbrains,dc=local}
+      LDAP_BASE_DN: ${LDAP_BASE_DN:-dc=example,dc=local}
     secrets:
       - ldap_admin_password
       - ldap_config_password
-      - user_aurelien_password
-      - user_idriss_password
-      - user_michel_password
+      - user_alice_password
+      - user_bob_password
+      - user_carol_password
     volumes:
       - type: bind
         source: ./scripts/init.sh
@@ -92,7 +92,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-public"
-      - "traefik.http.routers.phpldapadmin.rule=Host(`${PHPLDAPADMIN_HOSTNAME:-ldap.kamitbrains.local}`)"
+      - "traefik.http.routers.phpldapadmin.rule=Host(`${PHPLDAPADMIN_HOSTNAME:-ldap.example.local}`)"
       - "traefik.http.routers.phpldapadmin.entrypoints=websecure"
       - "traefik.http.routers.phpldapadmin.tls.certresolver=letsencrypt"
       - "traefik.http.services.phpldapadmin.loadbalancer.server.port=80"
@@ -116,12 +116,12 @@ secrets:
     file: ./.secrets/ldap_admin_password.txt
   ldap_config_password:
     file: ./.secrets/ldap_config_password.txt
-  user_aurelien_password:
-    file: ./.secrets/user_aurelien_password.txt
-  user_idriss_password:
-    file: ./.secrets/user_idriss_password.txt
-  user_michel_password:
-    file: ./.secrets/user_michel_password.txt
+  user_alice_password:
+    file: ./.secrets/user_alice_password.txt
+  user_bob_password:
+    file: ./.secrets/user_bob_password.txt
+  user_carol_password:
+    file: ./.secrets/user_carol_password.txt
 
 volumes:
   openldap-data:

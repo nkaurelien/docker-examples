@@ -1,7 +1,7 @@
 ---
 # Traefik role defaults
 traefik_version: "v3.6"
-traefik_domain: "kamitbrains.fr"
+traefik_domain: "example.com"
 traefik_public_network: "traefik-public"
 # E-mail ACME (Let's Encrypt) : .secrets/traefik-acme-email (pas de donnée réelle dans le rôle)
 traefik_secrets_dir: "{{ playbook_dir }}/../.secrets"
@@ -15,4 +15,4 @@ traefik_compose_dir: "/opt/traefik"
 
 # Dashboard authentication defaults
 traefik_dashboard_basic_auth_user: "admin"
-traefik_dashboard_basic_auth_password: "{{ lookup('file', '/Volumes/X9 Pro/Workspaces/nkaurelien/docker-examples/.secrets/traefik-dashboard-basic-auth-password', errors='ignore') | default('traefik-dashboard-password-change-me', true) | trim }}"
+traefik_dashboard_basic_auth_password: "{{ lookup('file', playbook_dir ~ '/../.secrets/traefik-dashboard-basic-auth-password', errors='ignore') | default('traefik-dashboard-password-change-me', true) | trim }}"
