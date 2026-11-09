@@ -1,4 +1,16 @@
 ---
+- name: Check Infisical secrets are provided
+  ansible.builtin.assert:
+    that:
+      - infisical_encryption_key | length >= 32
+      - infisical_auth_secret | length >= 32
+      - infisical_db_password | length >= 16
+    fail_msg: >-
+      Secrets Infisical manquants ou trop courts dans {{ infisical_secrets_dir }} :
+      infisical-encryption-key (openssl rand -hex 16), infisical-auth-secret (openssl rand -base64 32),
+      infisical-db-password (openssl rand -base64 24).
+    quiet: true
+
 - name: Ensure Infisical deployment directory exists
   ansible.builtin.file:
     path: "{{ infisical_compose_dir }}"

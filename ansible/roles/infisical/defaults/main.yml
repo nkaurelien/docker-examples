@@ -4,15 +4,17 @@ infisical_image: "infisical/infisical:latest"
 infisical_compose_dir: "/opt/infisical"
 infisical_port: 8080
 infisical_site_url: "https://secrets.{{ traefik_domain | default('kamitbrains.fr') }}"
-infisical_encryption_key: "6c2249821f29b253815f3a1a631b0bd8"
-infisical_auth_secret: "/7zCsI4mohBuDW7hkl19Y/bRfRDoCn3KblQrYgE6qxA="
+# Secrets : fichiers lus dans ce dossier (non versionné). Aucun défaut : le rôle refuse de déployer sans.
+infisical_secrets_dir: "{{ playbook_dir }}/../.secrets"
+infisical_encryption_key: "{{ lookup('file', infisical_secrets_dir ~ '/infisical-encryption-key', errors='ignore') | default('', true) | trim }}"  # openssl rand -hex 16
+infisical_auth_secret: "{{ lookup('file', infisical_secrets_dir ~ '/infisical-auth-secret', errors='ignore') | default('', true) | trim }}"  # openssl rand -base64 32
 # Paramètres DB & Redis (mutualisables)
 infisical_use_shared_postgres: true
 infisical_db_host: "passbolt-db"
 infisical_db_port: 5432
 infisical_db_name: "infisical"
 infisical_db_user: "postgres"
-infisical_db_password: "change_me_secure_db_password"
+infisical_db_password: "{{ lookup('file', infisical_secrets_dir ~ '/infisical-db-password', errors='ignore') | default('', true) | trim }}"  # openssl rand -base64 24
 
 infisical_use_shared_redis: true
 infisical_redis_host: "glitchtip-valkey"
